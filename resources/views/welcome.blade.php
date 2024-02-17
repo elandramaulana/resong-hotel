@@ -7,6 +7,9 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
+    <link href="{{ asset('assets/img/web-icon.png') }}" rel="icon" type="image/png">
+  <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
+
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
@@ -47,10 +50,11 @@
 		</div>
 	</section>
 
-	<script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+	<script src="{{asset('assets/js/jquery.min.js') }}"></script>
+
+  <script src="{{asset('asstes/js/popper.js')}}"></script>
+  <script src="{{asset('js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('js/main.js')}}"></script>
 
 	</body>
 </html>
