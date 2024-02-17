@@ -23,17 +23,20 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap py-5">
 
-						<form action="#" method="POST" class="login-form">
+						<form action="{{ route('login') }}" method="POST" class="login-form">
+              @csrf;
                         <div class="col-sm-12 d-flex justify-content-center">
                         <img width="200" class="mb-3" src="{{asset('assets/img/login-logo.png')}}" alt="">
                         </div>
                             <div class="form-group">
                                 <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-user"></span></div>
-                                <input type="text" class="form-control" placeholder="Username" required>
+                                <input name="username" type="text" class="form-control" placeholder="Username" :value="old('username')" required autofocus>
+                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
                             <div class="form-group">
                                 <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-lock"></span></div>
-                            <input  type="password" class="form-control" placeholder="Password" required>
+                            <input name="password" type="password" class="form-control" placeholder="Password" required>
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
                             </div>
                             <!-- <div class="form-group d-md-flex">
                                             <div class="w-100 text-md-right">
@@ -49,9 +52,7 @@
 			</div>
 		</div>
 	</section>
-
 	<script src="{{asset('assets/js/jquery.min.js') }}"></script>
-
   <script src="{{asset('asstes/js/popper.js')}}"></script>
   <script src="{{asset('js/bootstrap.min.js')}}"></script>
   <script src="{{asset('js/main.js')}}"></script>
