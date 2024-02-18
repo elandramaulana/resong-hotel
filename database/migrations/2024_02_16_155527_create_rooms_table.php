@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('room_no',5)->description('contains room number ex: 007');
-            $table->string('room_name',100)->description('contains room name ex: Bougenvile');
-            $table->string('room_type',30)->description('contains room type ex: VIP, VVIP, LUXURY, PRESIDENT SUITE');
-            $table->integer('room_capacity')->description('contains Max Guest in this room ex: 2 Adult');
-            $table->boolean('room_extrabed')->default(true)->description('its used for flaging that room can be using extrabed or not');
-            $table->integer('room_price')->description('contains price for this room in one night ex: 500000');
-            $table->enum('room_status', ['OCCUPIED', 'BOOKED', 'VACANT DIRTY', 'VACANT READY'])->description('contains room status : OCCUPIED, BOOKED, VACANT DIRTY, VACANT');
-            $table->string('bed_type', 50)->description('contains bed type for this room : Double Bed, SINGLE BED');
+            $table->string('room_no',5)->comment('contains room number ex: 007');
+            $table->string('room_name',100)->comment('contains room name ex: Bougenvile');
+            $table->string('room_type',30)->comment('contains room type ex: VIP, VVIP, LUXURY, PRESIDENT SUITE');
+            $table->integer('room_capacity')->comment('contains Max Guest in this room ex: 2 Adult');
+            $table->boolean('room_extrabed')->default(true)->comment('its used for flaging that room can be using extrabed or not');
+            $table->integer('room_price')->comment('contains price for this room in one night ex: 500000');
+            $table->enum('room_status', ['OCCUPIED', 'BOOKED', 'VACANT DIRTY', 'VACANT READY'])->comment('contains room status : OCCUPIED, BOOKED, VACANT DIRTY, VACANT');
+            $table->string('bed_type', 50)->comment('contains bed type for this room : Double Bed, SINGLE BED');
             $table->timestamps();
         });
     }
