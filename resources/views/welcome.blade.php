@@ -8,7 +8,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
     <link href="{{ asset('assets/img/web-icon.png') }}" rel="icon" type="image/png">
-  <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
+    <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
@@ -36,9 +36,9 @@
                             <input  type="password" class="form-control" placeholder="Password" required>
                             </div>
                             <!-- <div class="form-group d-md-flex">
-                                            <div class="w-100 text-md-right">
-                                                <a href="#">Forgot Password</a>
-                                            </div>
+                                <div class="w-100 text-md-right">
+                                    <a href="#">Forgot Password</a>
+                                </div>
                             </div> -->
                             <div class="form-group mt-5 pl-lg-5 pr-lg-5">
                                 <button type="submit" class=" form-control   submit px-3">Login</button>
