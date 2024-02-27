@@ -9,7 +9,7 @@ class Checkin extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'resercation_id',
+        'reservation_id',
         'room_id',
         'guest_id',
         'chanel_checkin',

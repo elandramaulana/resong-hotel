@@ -24,8 +24,13 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('template/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/css/sb-admin-2.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/waitMe/waitMe.min.css')}}" rel="stylesheet">
     <link href="{{asset('style.css')}}" rel="stylesheet">
-
+    <style>
+        .mt-2{
+            color: red;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -55,7 +60,6 @@
                     <i  class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -73,8 +77,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('checkin_normal')}}">Normal</a>
-                        <a class="collapse-item" href="{{route('checkin_speedy')}}">Speedy</a>
+                        <a class="collapse-item" href="{{route('checkin.normal')}}">Normal</a>
+                        <a class="collapse-item" href="{{route('checkin.speedy')}}">Speedy</a>
                     </div>
                 </div>
             </li>
@@ -207,7 +211,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin UCUP</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{asset('template/img/undraw_profile.svg')}}">
                             </a>
@@ -313,7 +317,9 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('template/js/demo/datatables-demo.js')}}"></script>
-
+    <script src="{{asset('assets/waitMe/waitMe.min.js')}}"></script>
+    
+    @yield('jsSection');
 </body>
 
 </html>
