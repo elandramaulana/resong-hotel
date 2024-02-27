@@ -9,6 +9,74 @@
     border-radius: 40px;
 }
 
+.btn-checkout{
+    background-color: #4AC0C7;
+}
+
+.btn-checkout:hover{
+    background-color: #48abb1;
+}
+
+.btn-extend{
+    background-color: #000;
+    color: #DBB04F;
+    font-weight: 800;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.btn-extend:hover{
+    background-color: #000;
+    color: #fff;
+    font-weight: 800;
+   
+}
+
+.btn-print{
+    background-color: #000;
+    color: #DBB04F;
+    font-weight: 800;
+    padding-left: 55px;
+    padding-right: 55px;
+}
+.btn-print:hover{
+    background-color: #000;
+    color: #fff;
+    font-weight: 800;
+   
+}
+
+.submit-btn{
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #DBB04F;
+    color: #000;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.submit-btn:hover{
+    color: #fff;
+    background-color: #DBB04F;
+}
+.cancel-btn:hover{
+    color: #fff;
+    background-color: #8b0909;
+}
+
+.cancel-btn{
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #FF3E3E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+
+
+
+
 /* End Login form */
 
 
@@ -56,32 +124,6 @@
     background: rgba(219, 176, 79, 0.2);
 }
 
-.submit-btn{
-    padding-left: 40px;
-    padding-right: 40px;
-    background-color: #DBB04F;
-    color: #000;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.submit-btn:hover{
-    color: #fff;
-    background-color: #DBB04F;
-}
-.cancel-btn:hover{
-    color: #fff;
-    background-color: #8b0909;
-}
-
-.cancel-btn{
-    padding-left: 40px;
-    padding-right: 40px;
-    background-color: #FF3E3E;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 700;
-}
 
 
 /* .nav-item.active {
