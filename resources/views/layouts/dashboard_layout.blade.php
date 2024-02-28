@@ -85,7 +85,7 @@
 
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{route('checkout')}}">
                 <i class="fas fa-fw fa-door-open"></i>
                     <span>Check-Out</span></a>
             </li>
@@ -100,7 +100,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Booking</a>
+                        <a class="collapse-item" href="{{route('booking')}}">Booking</a>
                         <a class="collapse-item" href="utilities-border.html">Reservation List</a>
                         <a class="collapse-item" href="utilities-animation.html">Cancel Reservation</a>
                         <a class="collapse-item" href="utilities-other.html">No Show Reserve</a>
@@ -295,6 +295,18 @@
         $('#cityTable').DataTable();
     });
 </script>
+
+<!-- script to print invoce checkout -->
+<script>
+    document.querySelector('.btn-print').addEventListener('click', function() {
+        var route = this.getAttribute('data-route');
+        window.location.href = route;
+    });
+</script>
+
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -314,6 +326,7 @@
         <!-- Page level plugins -->
     <script src="{{asset('template/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('template/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{asset('template/js/demo/datatables-demo.js')}}"></script>
