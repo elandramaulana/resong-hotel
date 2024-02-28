@@ -7,7 +7,7 @@
 <div class="container">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-start mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
+        <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
     </div>
 
 
@@ -25,12 +25,12 @@
                 <div class="row mt-4">
                 <div class="col-sm-2">
                         <button class="btn btn-success mb-4">
-                            <a href="{{route('checkin_normal_form')}}">1</a>
+                            <a href="{{route('booking_form')}}">1</a>
                         </button>
                     </div>
                 <div class="col-sm-2">
                         <button class="btn btn-success mb-4">
-                            <a href="{{route('checkin_normal_form')}}">1</a>
+                            <a href="{{route('booking_form')}}">1</a>
                         </button>
                     </div>
                 <div class="col-sm-2">

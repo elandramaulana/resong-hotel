@@ -107,20 +107,24 @@
                                         <td>12/2/2024</td>
                                         <td>15/2/2024</td>
                                         <td>
-                                            <button class="btn btn-warning rounded">
+                                            <button class="btn btn-warning rounded select-booking-button"
+                                                    data-booking-number="TR784234"
+                                                    data-nama="Elandra Maulana">
                                                 select
                                             </button>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Garrett Winters</td>
                                         <td>TR7908901</td>
+                                        <td>Garrett Winter</td>
                                         <td>7/2/2024</td>
                                         <td>10/2/2024</td>
                                         <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
+                                        <button class="btn btn-warning rounded select-booking-button"
+                                                data-booking-number="TR7908901"
+                                                data-nama="Garrett Winter">
+                                            select
+                                        </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -128,6 +132,33 @@
                         </div>
                     </div>
                 </div>
+
+
+<!-- scrip to input field from data in database -->
+
+<script>
+    // This function will be triggered when the "select" button is clicked
+    function selectBooking(bookingNumber, nama) {
+        // Set the value of the input with the selected booking number
+        document.getElementById('booking_number').value = bookingNumber;
+
+        // Close the modal
+        $('#modalBooking').modal('hide');
+    }
+
+    // Optional: If you want to attach the function to each "select" button dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectButtons = document.querySelectorAll('.select-booking-button');
+
+        selectButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var bookingNumber = this.dataset.bookingNumber;
+                var nama = this.dataset.nama;
+                selectBooking(bookingNumber, nama);
+            });
+        });
+    });
+</script>
       </div>
    
     </div>
