@@ -2,7 +2,6 @@
 <style>
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #4b5aea !important;
-   
     }
     a.disabled {
   pointer-events: none;
