@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\RoomAjaxRequest;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -40,8 +41,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkin-speedy', [CheckinController::class, 'speedy'])->name('checkin.speedy');
 });
 
+// route generate pdf in invoice view
+Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
-Route::view('/check-out', 'frontoffice/checkout')->name('checkout');
+//ajax route
+Route::middleware('auth')->group(function () {
+    Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
+});
+
+
+// checkout view
+Route::view('/check-out', 'frontoffice/checkout/checkout')->name('checkout');
+Route::view('/check-out-detail', 'frontoffice/checkout/checkout_detail')->name('checkout_detail');
 
 
 // Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('checkin_normal');
@@ -49,7 +60,10 @@ Route::view('/check-out', 'frontoffice/checkout')->name('checkout');
 Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name('checkin_speedy');
 
 
-//ajax route
-Route::middleware('auth')->group(function () {
-    Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
-});
+// reservation view
+Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
+Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
+Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
+Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
+Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
+Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');

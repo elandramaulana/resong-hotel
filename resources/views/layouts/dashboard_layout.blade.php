@@ -85,7 +85,7 @@
 
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{route('checkout')}}">
                 <i class="fas fa-fw fa-door-open"></i>
                     <span>Check-Out</span></a>
             </li>
@@ -100,10 +100,10 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Booking</a>
-                        <a class="collapse-item" href="utilities-border.html">Reservation List</a>
-                        <a class="collapse-item" href="utilities-animation.html">Cancel Reservation</a>
-                        <a class="collapse-item" href="utilities-other.html">No Show Reserve</a>
+                        <a class="collapse-item" href="{{route('booking')}}">Booking</a>
+                        <a class="collapse-item" href="{{route('reservation_list')}}">Reservation List</a>
+                        <a class="collapse-item" href="{{route('cancel_reservation_list')}}">Cancel Reservation</a>
+                        <a class="collapse-item" href="{{route('noshow_reservation_list')}}">No Show Reserve</a>
                     </div>
                 </div>
             </li>
@@ -286,15 +286,40 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- Script for table -->
 <script>
     $(document).ready(function () {
         $('#checkInTable'). DataTable();
+        $('#speedyCheckInTable'). DataTable();
         $('#checkOutTable').DataTable();
         $('#countryTable').DataTable();
         $('#ProvinceTable').DataTable();
         $('#cityTable').DataTable();
+        $('#reservationListTable').DataTable();
+        $('#cancelReservationListTable').DataTable();
     });
 </script>
+
+<!-- Script for date field -->
+<script>
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+</script>
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

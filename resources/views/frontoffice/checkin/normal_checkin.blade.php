@@ -14,6 +14,30 @@
         <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
     </div>
 
+    <!-- Legend Color -->
+    <div class="col-sm-12">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6>Terisi</h6>
+                    <button class="btn-primary btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Ready</h6>
+                    <button class="btn-success btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Booked</h6>
+                    <button class="btn-warning btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Kotor</h6>
+                    <button class="btn-danger btn"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row" id="showWaitme">
         <div id="ajax_select_rooms" class="col-lg-12" >
         </div>

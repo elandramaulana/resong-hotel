@@ -37,7 +37,7 @@
                             <!-- Check-in Time -->
                             <div class="mb-3">
                                 <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input name="speedy_checkin_time" value="" type="date" class="form-control" id="checkinTime">
+                                <input name="speedy_checkin_time" value="" type="date" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                             </div>
 
                             
@@ -46,17 +46,17 @@
                         <!-- Right Column -->
                         <div class="col-md-6">
 
-                            <!-- Check-out Time -->
+                            <!-- Nama -->
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input name="nama" value="" type="text" class="form-control" id="checkoutTime">
+                                <input name="nama" value="" type="text" class="form-control" id="nama" >
                             </div>
 
 
                             <!-- Check-out Time -->
                             <div class="mb-3">
                                 <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input name="speedy_checkout_time" value="" type="date" class="form-control" id="checkoutTime">
+                                <input name="speedy_checkout_time" value="" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                             </div>
                             
                         </div>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="checkInTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="speedyCheckInTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Booking Number</th>

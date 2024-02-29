@@ -11,6 +11,33 @@
 
 /* End Login form */
 
+/* Legenda */
+.kotak-kecil-biru{
+    width: 20px; /* Lebar kotak */
+    height: 20px; /* Tinggi kotak */
+    background-color: #2563ff; /* Warna latar belakang kotak */
+    border: 1px solid #000; /* Garis tepi kotak */
+}
+.kotak-kecil-hijau{
+    width: 20px; /* Lebar kotak */
+    height: 20px; /* Tinggi kotak */
+    background-color: #4ec640; /* Warna latar belakang kotak */
+    border: 1px solid #000; /* Garis tepi kotak */
+}
+.kotak-kecil-kuning{
+    width: 20px; /* Lebar kotak */
+    height: 20px; /* Tinggi kotak */
+    background-color: #dbcc6c; /* Warna latar belakang kotak */
+    border: 1px solid #000; /* Garis tepi kotak */
+}
+.kotak-kecil-merah{
+    width: 20px; /* Lebar kotak */
+    height: 20px; /* Tinggi kotak */
+    background-color: #ff6767; /* Warna latar belakang kotak */
+    border: 1px solid #000; /* Garis tepi kotak */
+}
+/* End Legenda */
+
 
 /*  --------------------   CONTENTS OF ADMIN PAGE     --------------------- */
 
