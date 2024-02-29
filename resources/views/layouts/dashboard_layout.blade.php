@@ -301,6 +301,38 @@
     });
 </script>
 
+<!-- Alert Form -->
+
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            e.preventDefault();  // Mencegah formulir untuk melakukan submit sebenarnya
+            
+            // Simpan URL formulir
+            var formAction = $(this).attr('action');
+            
+            // Kirim formulir menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: formAction,
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Tangani respons sukses
+                    $('#successAlert').show();
+                    $('#errorAlert').hide();
+                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit berhasil
+                },
+                error: function(error) {
+                    // Tangani respons gagal
+                    $('#errorAlert').show();
+                    $('#successAlert').hide();
+                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit gagal
+                }
+            });
+        });
+    });
+</script>
+
 <!-- Script for date field -->
 <script>
 function formatDate(date) {

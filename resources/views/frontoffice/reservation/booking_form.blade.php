@@ -251,6 +251,17 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Scripnya ada di view dashboard_layout.blade.php -->
+
+                    <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
+                        "Nama" at Room "Nomor room" Booking Succesfully
+                    </div>
+
+                    <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
+                        Booking Failed
+                    </div>
+
                 </form>
             </div>
         </div>
