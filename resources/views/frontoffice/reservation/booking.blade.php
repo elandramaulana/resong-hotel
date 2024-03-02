@@ -24,7 +24,8 @@
                             <!-- Check-in Time -->
                             <div class="mb-3">
                                 <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input name="booking_checkin_time" value="" type="date" class="form-control" id="checkinTime">
+                                <input value="" name="booking_checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                
                             </div>
 
                             
@@ -36,7 +37,8 @@
                             <!-- Check-out Time -->
                             <div class="mb-3">
                                 <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input name="booking_checkin_time" value="" type="date" class="form-control" id="checkoutTime">
+                                <input name="booking_checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                               
                             </div>
                             
                         </div>

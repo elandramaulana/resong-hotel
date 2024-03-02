@@ -101,9 +101,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('booking')}}">Booking</a>
-                        <a class="collapse-item" href="utilities-border.html">Reservation List</a>
-                        <a class="collapse-item" href="utilities-animation.html">Cancel Reservation</a>
-                        <a class="collapse-item" href="utilities-other.html">No Show Reserve</a>
+                        <a class="collapse-item" href="{{route('reservation_list')}}">Reservation List</a>
+                        <a class="collapse-item" href="{{route('cancel_reservation_list')}}">Cancel Reservation</a>
+                        <a class="collapse-item" href="{{route('noshow_reservation_list')}}">No Show Reserve</a>
                     </div>
                 </div>
             </li>
@@ -286,26 +286,69 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- Script for table -->
 <script>
     $(document).ready(function () {
         $('#checkInTable'). DataTable();
+        $('#speedyCheckInTable'). DataTable();
         $('#checkOutTable').DataTable();
         $('#countryTable').DataTable();
         $('#ProvinceTable').DataTable();
         $('#cityTable').DataTable();
+        $('#reservationListTable').DataTable();
+        $('#cancelReservationListTable').DataTable();
     });
 </script>
 
-<!-- script to print invoce checkout -->
+<!-- Alert Form -->
+
 <script>
-    document.querySelector('.btn-print').addEventListener('click', function() {
-        var route = this.getAttribute('data-route');
-        window.location.href = route;
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            e.preventDefault();  // Mencegah formulir untuk melakukan submit sebenarnya
+            
+            // Simpan URL formulir
+            var formAction = $(this).attr('action');
+            
+            // Kirim formulir menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: formAction,
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Tangani respons sukses
+                    $('#successAlert').show();
+                    $('#errorAlert').hide();
+                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit berhasil
+                },
+                error: function(error) {
+                    // Tangani respons gagal
+                    $('#errorAlert').show();
+                    $('#successAlert').hide();
+                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit gagal
+                }
+            });
+        });
     });
 </script>
 
+<!-- Script for date field -->
+<script>
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
 
+    return [year, month, day].join('-');
+}
+</script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>

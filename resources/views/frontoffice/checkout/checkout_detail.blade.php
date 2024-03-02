@@ -72,8 +72,8 @@
                                     <option value="Traveloka">Traveloka</option>
                                     <option value="Phone-in">Phone-in</option>
                                     <option value="Walk-in">Walk-in</option>
-                                    <option value="Walk-in">Tiket.com</option>
-                                    <option value="Walk-in">Syifa Travel</option>
+                                    <option value="Tiket.com">Tiket.com</option>
+                                    <option value="Syifa Travel">Syifa Travel</option>
                                 </select>
                             </div>
 
@@ -196,7 +196,7 @@
                         <div class="mt-5 mb-3 d-flex justify-content-start">
                             <div class="mr-3">
                                 <button type="submit" class="btn submit-btn">
-                                    Check In
+                                    Check Out
                                 </button>
                             </div>
                             <div>
@@ -205,6 +205,16 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Scripnya ada di view dashboard_layout.blade.php -->
+
+                            <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
+                                "Nama" at Room "Nomor room" Checked Out Succesfully
+                            </div>
+
+                            <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
+                                Failed To Checkout
+                            </div>
                     </form>
                 </div>
             </div>
@@ -239,7 +249,7 @@
                                 <!-- Check-in Time -->
                                 <div class="mb-3">
                                     <label for="checkinTime" class="form-label">Check-in Time</label>
-                                    <input value="14/02/2024" name="checkin_time_extend" type="date" class="form-control" id="checkinTime" >
+                                    <input value="14/02/2024" name="checkin_time_extend" type="date" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 </div>
 
                             </div>
@@ -250,7 +260,7 @@
                                 <!-- Check-out Time -->
                                 <div class="mb-3">
                                     <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                    <input name="checkout_time_extend" value="15/02/2024" type="date" class="form-control" id="checkoutTime" >
+                                    <input name="checkout_time_extend" value="15/02/2024" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" >
                                 </div>
 
                             </div>

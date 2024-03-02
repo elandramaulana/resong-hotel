@@ -53,7 +53,7 @@
                             <!-- Check-in Time -->
                             <div class="mb-3">
                                 <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input value="{{ old('checkin_time') }}" name="checkin_time" type="date" class="form-control" id="checkinTime">
+                                <input value="{{ old('checkin_time') }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
                             </div>
 
@@ -82,14 +82,14 @@
                             <!-- Check-out Time -->
                             <div class="mb-3">
                                 <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input name="checkout_time" type="date" class="form-control" id="checkoutTime">
+                                <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
                             </div>
 
                             <!-- Number of Children -->
                             <div class="mb-3">
                                 <label for="children" class="form-label">Jumlah Anak-anak</label>
-                                <input value="0" name="number_of_children" type="number" class="form-control" id="children" >
+                                <input value="{{ old('number_of_children') }}" name="number_of_children" type="number" class="form-control" id="children" >
                                 <x-input-error :messages="$errors->get('number_of_children')" class="mt-2" />
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <input value="{{ old('date_of_birth') }}" name="date_of_birth" type="text" class="form-control" id="idnumber">
+                                <input value="{{ old('date_of_birth') }}" name="date_of_birth" type="text" class="form-control" id="idnumber" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
                             </div>
                     </div>
@@ -343,8 +343,19 @@
                 
             </div>
         </div>
+        
     </div>
 </section>
+
+<!-- Scripnya ada di view dashboard_layout.blade.php -->
+
+<div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
+    "Nama" at Room "Nomor room" Checked in Succesfully
+</div>
+
+<div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
+    Failed To Sumbit
+</div>
 </form>
 
 <!-- Modal for name customer -->
@@ -542,5 +553,9 @@
 
     </div>
 </section>
+
+
+
+
 
 @endsection
