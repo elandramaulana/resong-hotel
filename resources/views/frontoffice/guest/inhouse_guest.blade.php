@@ -15,7 +15,7 @@
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="font-weight-bold text-warning">Reservation</h6>
+                        <h6 class="font-weight-bold text-warning">In-house Guest</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -47,9 +47,8 @@
                                                 Select
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Check-in</a></li>
-                                                <li><a class="dropdown-item" href="{{route('edit_reservation')}}">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Cancel Reservation</a></li>
+                                                <li><a class="dropdown-item" href="{{route('detail_inhouse_guest')}}">Lihat Detail</a></li>
+                                                <li><a class="dropdown-item" href="#">Checkout</a></li>
                                             </ul>
                                             </div>
                                         </td>

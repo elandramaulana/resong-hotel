@@ -61,5 +61,15 @@ Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
 Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
 Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
+Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
+
 Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
 Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
+
+
+
+// Guest View
+Route::view('/inhouse-guest', 'frontoffice/guest/inhouse_guest')->name('inhouse_guest');
+Route::view('/detail-inhouse-guest', 'frontoffice/guest/detail_inhouse_guest')->name('detail_inhouse_guest');
+Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
