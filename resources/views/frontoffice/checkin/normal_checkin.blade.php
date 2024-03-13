@@ -14,8 +14,6 @@
         <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
     </div>
 
-<<<<<<< HEAD
-=======
     <!-- Legend Color -->
     <div class="col-sm-12">
         <div class="container text-center">
@@ -40,7 +38,6 @@
         </div>
     </div>
 
->>>>>>> 66b13c4c2adf2e602b5f3f6c6c4432d3ebefe2fd
     <div class="row" id="showWaitme">
         <div id="ajax_select_rooms" class="col-lg-12" >
         </div>

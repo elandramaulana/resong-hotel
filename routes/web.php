@@ -1,15 +1,12 @@
 <?php
 
 use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\RoomAjaxRequest;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
-<<<<<<< HEAD
-use App\Http\Controllers\InvoiceController;
-=======
->>>>>>> 66b13c4c2adf2e602b5f3f6c6c4432d3ebefe2fd
 
 require __DIR__.'/auth.php';
 /*
@@ -55,11 +52,13 @@ Route::middleware('auth')->group(function () {
 
 
 // checkout view
-Route::view('/check-out', 'frontoffice/checkout/checkout')->name('checkout');
-Route::view('/check-out-detail', 'frontoffice/checkout/checkout_detail')->name('checkout_detail');
+Route::get('/check-out', [CheckoutController::class, 'index'])->name('checkout.list');
+Route::get('/check-out-detail/{id}', [CheckoutController::class, 'detail'])->name('checkout.detail');
+Route::post('/check-out-extend', [CheckoutController::class, 'extend'])->name('checkout.extend');
+Route::post('/check-out-action', [CheckoutController::class, 'action'])->name('checkout.action');
+Route::post('/check-out-editdate', [CheckoutController::class, 'edit_checkout_date'])->name('checkout.edit.outdate');
 
 
-<<<<<<< HEAD
 // Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('checkin_normal');
 // Route::view('/normal-checkin-form', 'frontoffice/checkin/normal_checkin_form')->name('checkin_normal_form');
 Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name('checkin_speedy');
@@ -68,25 +67,21 @@ Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name
 //ajax route
 Route::middleware('auth')->group(function () {
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
+    Route::get('/ajax-selectrooms-checkout', [RoomAjaxRequest::class, 'ajax_select_room_checkout'])->name('ajax.selectrooms.checkout');
 });
 // checkin view
 Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('checkin_normal');
 Route::view('/normal-checkin-form', 'frontoffice/checkin/normal_checkin_form')->name('checkin_normal_form');
 Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name('checkin_speedy');
-=======
->>>>>>> 66b13c4c2adf2e602b5f3f6c6c4432d3ebefe2fd
 
 // reservation view
 Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
 Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
 Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
-<<<<<<< HEAD
 
 
 // route generate pdf in invoice view
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
-=======
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
 Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
 Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
->>>>>>> 66b13c4c2adf2e602b5f3f6c6c4432d3ebefe2fd

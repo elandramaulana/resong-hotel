@@ -85,7 +85,7 @@
 
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
-                <a class="nav-link" href="{{route('checkout')}}">
+                <a class="nav-link" href="{{route('checkout.list')}}">
                 <i class="fas fa-fw fa-door-open"></i>
                     <span>Check-Out</span></a>
             </li>
@@ -279,10 +279,7 @@
             </div>
         </div>
     </div>
-
-
-  
-
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -305,31 +302,31 @@
 
 <script>
     $(document).ready(function(){
-        $('form').submit(function(e){
-            e.preventDefault();  // Mencegah formulir untuk melakukan submit sebenarnya
+        // $('form').submit(function(e){
+        //     e.preventDefault();  // Mencegah formulir untuk melakukan submit sebenarnya
             
-            // Simpan URL formulir
-            var formAction = $(this).attr('action');
+        //     // Simpan URL formulir
+        //     var formAction = $(this).attr('action');
             
-            // Kirim formulir menggunakan AJAX
-            $.ajax({
-                type: "POST",
-                url: formAction,
-                data: $(this).serialize(),
-                success: function(response) {
-                    // Tangani respons sukses
-                    $('#successAlert').show();
-                    $('#errorAlert').hide();
-                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit berhasil
-                },
-                error: function(error) {
-                    // Tangani respons gagal
-                    $('#errorAlert').show();
-                    $('#successAlert').hide();
-                    // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit gagal
-                }
-            });
-        });
+        //     // Kirim formulir menggunakan AJAX
+        //     $.ajax({
+        //         type: "POST",
+        //         url: formAction,
+        //         data: $(this).serialize(),
+        //         success: function(response) {
+        //             // Tangani respons sukses
+        //             $('#successAlert').show();
+        //             $('#errorAlert').hide();
+        //             // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit berhasil
+        //         },
+        //         error: function(error) {
+        //             // Tangani respons gagal
+        //             $('#errorAlert').show();
+        //             $('#successAlert').hide();
+        //             // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit gagal
+        //         }
+        //     });
+        // });
     });
 </script>
 

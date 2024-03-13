@@ -27,7 +27,7 @@ class NormalCheckinRequest extends FormRequest
             'checkin_time'=>['required'],
             'checkout_time'=>['required'],
             'number_of_adult'=>['required'],
-            'number_of_children'=>['required'],
+            'number_of_children'=>['nullable'],
             'channel'=>['required'],
             //detail guest
             'name_guest'=>['required'], 
@@ -47,6 +47,7 @@ class NormalCheckinRequest extends FormRequest
             'telp_number'=>['required'], 
             'document'=>['nullable'],
             'deposit'=>['required'], 
+            'payment_method'=>['required'], 
         ];
     }
 }

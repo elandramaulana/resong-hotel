@@ -319,12 +319,23 @@
                 
                  <!-- Deposit -->
                  <div class="row">
-                        <label for="deposit" class="col-sm-2 col-form-label">Total Deposit (Rp)</label>
-                        <div class="col-sm-8">
+                    <label for="deposit" class="col-sm-2 col-form-label">Total Deposit (Rp)</label>
+                        <div class="col-sm-6">
                         <input name="deposit" value="{{ old('deposit') }}" type="text" class="form-control" id="inputDeposit">
+
                         <x-input-error :messages="$errors->get('deposit')" class="mt-2" />
                     </div>
+                    <div class="col-sm-2">
+                        <select name="payment_method" class="form-control">
+                            <option value="Cash">Cash</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Qris">Qris</option>
+                            <option value="Dana">Dana</option>
+                            <option value="Go-Pay">Go-Pay</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('payment_method')" class="mt-2" />
                     </div>
+                </div>
 
 
                 <!-- Button -->
@@ -354,7 +365,7 @@
 </div>
 
 <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
-    Failed To Sumbit
+    Failed To Submit
 </div>
 </form>
 

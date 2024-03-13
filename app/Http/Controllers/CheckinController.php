@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NormalCheckinRequest;
 use App\Models\Checkin;
+use App\Models\CheckinDetail;
 use App\Models\Guest;
 use App\Models\Rooms;
 use Illuminate\Contracts\View\View;
@@ -57,8 +58,7 @@ class CheckinController extends Controller
         }else{
             $guest_id = $Guest->id;
         }
-
-
+        
         //checkin info
         $checkin = $request->checkin_time;
         $checkout = $request->checkout_time;
@@ -79,8 +79,26 @@ class CheckinController extends Controller
             // 'is_extrabed'=>null' not implemented
             'payment_status' =>'DEPOSIT',
             'payment'=>$request->deposit,
-            // 'payment_method',
+            'payment_method'=>$request->payment_method,
         ];
-        Checkin::create($CheckinDetail);
+        if($Checkin = Checkin::create($CheckinDetail)){
+            //get room detil
+            $Rooms = Rooms::find($request->room_id);
+            $Rooms->room_status = 'OCCUPIED';
+            $Rooms->save();
+            $days = daysInterval($checkin, $checkout);
+            //insert detail checkin
+            $DetailCheckin = [
+                'checkin_id'=>$Checkin->id,
+                'item_category'=>'Rooms',
+                'item_name'=>$Rooms->room_name,
+                'item_price'=>$Rooms->room_price,
+                'item_qty'=>$days,
+                'item_description'=>"Item Default Checkin"
+            ];
+            CheckinDetail::create($DetailCheckin);
+            $return = ['status'=>'success', 'message'=>'Checkin untuk '.$name_guest.' Berhasil'];
+            return redirect()->route('dashboard')->with($return);
+        }
     }
 }

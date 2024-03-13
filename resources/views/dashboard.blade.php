@@ -2,12 +2,20 @@
 
 @section('content')
 
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
-
-
+    @if (\Session::has('message'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('message') !!}</li>
+        </ul>
+    </div>
+@endif
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
 <section>
     <!-- Content Row -->
 <div class="row">
@@ -20,7 +28,6 @@
                     <h1 class="h3 mb-0 text-gray-800">Overview</h1>
                 </div>
                 <div class="row">
-
                     <!-- Available Rooms Content -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card bg-card shadow h-100 py-2">
