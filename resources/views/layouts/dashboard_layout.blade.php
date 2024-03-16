@@ -108,8 +108,24 @@
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+             <!-- Nav Item - Utilities Collapse Menu -->
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuest"
+                    aria-expanded="true" aria-controls="collapseGuest">
+                    <i class="fas fa-user"></i>
+                    <span>Guest</span>
+                </a>
+                <div id="collapseGuest" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('inhouse.list')}}">In-house Guest</a>
+                        <a class="collapse-item" href="{{route('guest_database')}}">Guest Database</a>
+                    </div>
+                </div>
+            </li>
+
+             <!-- Divider -->
+             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <!-- <div class="sidebar-heading">
@@ -282,7 +298,12 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
     <!-- Script for table -->
 <script>
@@ -293,8 +314,17 @@
         $('#countryTable').DataTable();
         $('#ProvinceTable').DataTable();
         $('#cityTable').DataTable();
-        $('#reservationListTable').DataTable();
+        // $('#reservationListTable').DataTable();
         $('#cancelReservationListTable').DataTable();
+        $('#inhouseGuest').DataTable();
+        $('#guestDatabase').DataTable();
+        $('#listServiceGuestFood').DataTable();
+        $('#listServiceGuestDrinks').DataTable();
+        $('#listServiceGuestLaundry').DataTable();
+        $('#listServiceGuestOther').DataTable();
+        $('#listServiceOrder').DataTable();
+        $('#GuestDatabaseTable').DataTable();
+        $('#historyGuestTable').DataTable();
     });
 </script>
 
@@ -347,6 +377,87 @@ function formatDate(date) {
 }
 </script>
 
+
+<!-- Script to qty and price service -->
+
+<script>
+    // Event listener untuk menghitung total saat nilai input berubah
+    $(document).on('input', '.quantity-input', function () {
+        calculateTotal($(this));
+    });
+
+    // Event listener untuk menghitung total saat tombol "Select" diklik
+    $(document).on('click', '.calculate-btn', function () {
+        calculateTotal($(this).closest('tr').find('.quantity-input'));
+    });
+
+    // Fungsi untuk menghitung total
+    function calculateTotal(input) {
+        // Ambil nilai quantity
+        const quantity = input.val();
+
+        // Ambil nilai unit price dari elemen terkait
+        const unitPriceText = input.closest('tr').find('.unit-price').text();
+        const unitPrice = parseFloat(unitPriceText.replace('Rp', '').replace(',', ''));
+
+        // Hitung total
+        const total = quantity * unitPrice;
+
+        // Tampilkan total di kolom Total
+        input.closest('tr').find('.total').text('Rp' + total.toLocaleString());
+    }
+</script>
+
+
+<!-- Scrip to add menu to order table -->
+<script>
+     $(document).ready(function () {
+        $(".add-button").on("click", function () {
+            var itemName = $(this).data("item");
+            var qty = 1; 
+            var unitPriceString = $("#listServiceGuestFood tbody tr:contains('" + itemName + "') td:eq(2)").text().replace('Rp', '').replace(',', '');
+            
+            // Gunakan parseFloat untuk mengkonversi string ke angka
+            var unitPrice = parseFloat(unitPriceString) || 0; // Jika tidak dapat dikonversi, beri nilai default 0
+
+
+
+            // Tambahkan baris ke tabel pesanan
+            $("#listServiceOrder tbody").append(
+                "<tr>" +
+                "<td>" + 'INV-0000121' + "</td>" +   
+                "<td>" + itemName + "</td>" +
+                "<td><input style='width: 50px;' type='number' class='quantity-input' value='" + qty + "'></td>" +
+                "<td class='unit-price'>Rp" + unitPrice + "</td>" +
+                "<td class='total'>Rp" + (qty * unitPrice) + "</td>" +
+                // untuk bagian pesanan ke ini agak bingung gimana nentuin iterasinya bang
+                "<td>" + 1 + "</td>" +
+                "<td><button class='btn btn-danger delete-button'>Delete</button></td>" +
+                "</tr>"
+            );
+
+            // Mengaktifkan event change pada input quantity
+            $(".quantity-input").on("change", function () {
+                var newQty = $(this).val();
+                var newTotal = newQty * unitPrice;
+                
+                // Update nilai total pada kolom total
+                $(this).closest('tr').find('.total').text("Rp" + newTotal);
+            });
+
+            // Menambahkan event click pada tombol delete
+            $(".delete-button").on("click", function () {
+                $(this).closest('tr').remove();
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -368,9 +479,12 @@ function formatDate(date) {
     <script src="{{asset('template/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
+    <script src="{{asset('template/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+
     <!-- Page level custom scripts -->
     <script src="{{asset('template/js/demo/datatables-demo.js')}}"></script>
     <script src="{{asset('assets/waitMe/waitMe.min.js')}}"></script>
+    <script src="{{asset('assets/js/isotope.js')}}"></script>
     
     @yield('jsSection');
 </body>

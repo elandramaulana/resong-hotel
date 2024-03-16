@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\InhouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\RoomAjaxRequest;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
@@ -52,11 +54,13 @@ Route::middleware('auth')->group(function () {
 
 
 // checkout view
+Route::middleware('auth')->group(function () {
 Route::get('/check-out', [CheckoutController::class, 'index'])->name('checkout.list');
 Route::get('/check-out-detail/{id}', [CheckoutController::class, 'detail'])->name('checkout.detail');
 Route::post('/check-out-extend', [CheckoutController::class, 'extend'])->name('checkout.extend');
 Route::post('/check-out-action', [CheckoutController::class, 'action'])->name('checkout.action');
 Route::post('/check-out-editdate', [CheckoutController::class, 'edit_checkout_date'])->name('checkout.edit.outdate');
+});
 
 
 // Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('checkin_normal');
@@ -70,18 +74,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax-selectrooms-checkout', [RoomAjaxRequest::class, 'ajax_select_room_checkout'])->name('ajax.selectrooms.checkout');
 });
 // checkin view
+Route::middleware('auth')->group(function () {
 Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('checkin_normal');
 Route::view('/normal-checkin-form', 'frontoffice/checkin/normal_checkin_form')->name('checkin_normal_form');
 Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name('checkin_speedy');
-
+});
 // reservation view
+Route::middleware('auth')->group(function () {
 Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
 Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
 Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
-
+});
 
 // route generate pdf in invoice view
+Route::middleware('auth')->group(function () {
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
+Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
+
 Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
 Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
+
+// Guest View
+Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+Route::get('/detail-inhouse-guest/{id}',[InhouseController::class, 'inhouse_detail'] )->name('inhouse.details');
+Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
+
+
+
+
+
+Route::get('/test', [TestController::class, 'index'])->name('test');
+
+});
+

@@ -48,7 +48,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#">Check-in</a></li>
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{route('edit_reservation')}}">Edit</a></li>
                                                 <li><a class="dropdown-item" href="#">Cancel Reservation</a></li>
                                             </ul>
                                             </div>
