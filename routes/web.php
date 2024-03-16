@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InhouseController;
@@ -103,7 +104,8 @@ Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_gue
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
 
 
-
+Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
 
 Route::get('/test', [TestController::class, 'index'])->name('test');

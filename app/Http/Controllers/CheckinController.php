@@ -20,8 +20,11 @@ class CheckinController extends Controller
     }
     public function form_normal($id) : View {
         $Room = Rooms::find($id);
+        $invoice = "RR".date('ymdhis');
         $Data = [
-            'Room'=>$Room
+            'Room'=>$Room,
+            'no_invoice'=>$invoice,
+            'checkin_time'=>date('Y-m-d')
         ];
         return view('frontoffice.checkin.normal_checkin_form', $Data);
     }

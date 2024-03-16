@@ -26,6 +26,9 @@
     <link href="{{asset('template/css/sb-admin-2.css')}}" rel="stylesheet">
     <link href="{{asset('assets/waitMe/waitMe.min.css')}}" rel="stylesheet">
     <link href="{{asset('style.css')}}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <style>
         .mt-2{
             color: red;
@@ -485,7 +488,7 @@ function formatDate(date) {
     <script src="{{asset('template/js/demo/datatables-demo.js')}}"></script>
     <script src="{{asset('assets/waitMe/waitMe.min.js')}}"></script>
     <script src="{{asset('assets/js/isotope.js')}}"></script>
-    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     @yield('jsSection');
 </body>
 

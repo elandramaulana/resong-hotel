@@ -10,6 +10,7 @@ class Checkin extends Model
     use HasFactory;
     protected $fillable = [
         'reservation_id',
+        'no_invoice',
         'room_id',
         'guest_id',
         'chanel_checkin',
