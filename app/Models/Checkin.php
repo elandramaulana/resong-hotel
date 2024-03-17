@@ -23,4 +23,17 @@ class Checkin extends Model
         'payment',
         'payment_method',
     ];
+
+
+    public function detCheckin($checkin_id) {
+        $Query = $this->join('rooms', 'rooms.id', '=', 'checkins.room_id')
+                ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                ->where('checkins.id', $checkin_id)
+                ->get()->first();
+        if($Query){
+            return $Query;
+        }else{
+            return false;
+        }
+    }
 }

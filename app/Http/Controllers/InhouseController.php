@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\CheckinDetail;
 use Illuminate\Http\Request;
 
 class InhouseController extends Controller
@@ -14,10 +15,15 @@ class InhouseController extends Controller
         return view('frontoffice.guest.inhouse_guest', $Data);
     }
     public function inhouse_detail($id) {
+        $ModelCheckin = new Checkin();
+        $DataCheckin = $ModelCheckin->detCheckin($id);
+        $invoice = CheckinDetail::where('checkin_id', $id)->get();
         $Data = [
-            'Title'=>"Detail Checkin"
+            'Title'=>"Detail Checkin",
+            'CheckinData'=>$DataCheckin,
+            'dataInvoice'=>$invoice
         ];
-        return view('frontoffice.guest.detail_inhouse_guest');
+        return view('frontoffice.guest.detail_inhouse_guest', $Data);
     }
     public function call_table(Request $request) {
     ## Read value

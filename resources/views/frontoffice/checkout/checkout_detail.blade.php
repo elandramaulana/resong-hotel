@@ -129,9 +129,7 @@
                 <button class="btn btn-print" data-route="{{ route('generate.invoice') }}">
                     Print
                 </button>
-
-
-
+                
                 </div>
 
             </div>

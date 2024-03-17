@@ -10,7 +10,6 @@
         <h2 class="h3 mb-0 text-gray-800">Detail In-house Guest</h2>
     </div>
     
-
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
         @csrf;
@@ -20,10 +19,10 @@
             <div class="card-body text-dark">
             <div class="row">
                 <div class="col-sm-4">
-                    <h2>Room Number: 12</h2>
+                    <h2>Room Number: {{ $CheckinData->room_no }}</h2>
                 </div>
                 <div class="col-sm-4 text-warning text-center">
-                    <h6 class="shape rounded p-2">STANDARD SINGLE (@RP245.000)</h6>
+                    <h6 class="shape rounded p-2">{{ $CheckinData->room_type }} (@RP{{ $CheckinData->room_price }})</h6>
                 </div>
 
                 <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
@@ -42,26 +41,26 @@
                             <!-- Invoice (Disabled) -->
                             <div class="mb-3">
                                 <label for="invoice" class="form-label">#Invoice</label>
-                                <input value="null" name="invoice" type="text" class="form-control" id="invoice" disabled>
+                                <input value="{{ $CheckinData->no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" disabled>
                             </div>
 
                             <!-- Nama (Disabled) -->
                             <div class="mb-3">
                                 <label for="name" class="form-label">#Invoice</label>
-                                <input value="Joni Alfiansyah" name="name" type="text" class="form-control" id="name" disabled>
+                                <input value="{{ $CheckinData->name_guest }}" name="name" type="text" class="form-control" id="name" disabled>
                             </div>
 
                             <!-- Check-in Time -->
                             <div class="mb-3">
                                 <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input value="2024-04-03" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                <input value="{{ $CheckinData->date_checkin }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
                                 <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
                             </div>
 
                             <!-- Number of Adults -->
                             <div class="mb-3">
                                 <label for="adults" class="form-label">Jumlah Dewasa</label>
-                                <input name="number_of_adult" value="1" type="number" class="form-control" id="adults" disabled>
+                                <input name="number_of_adult" value="{{ $CheckinData->guest_adult }}" type="number" class="form-control" id="adults" disabled>
                                 <x-input-error :messages="$errors->get('number_of_adult')" class="mt-2" />
                             </div>
                         </div>
@@ -71,33 +70,29 @@
                             <div class="mb-3">
                                 <label for="Channel" class="form-label">Channel</label>
                                 <select name="channel" class="form-control" id="channel" disabled>
-                                    <option value="Walk-in">Walk-in</option>
-                                    <option value="Traveloka" >Traveloka</option>
-                                    <option value="Phone-in" >Phone-in</option>
-                                    <option value="tiket.com" >Tiket.com</option>
-                                    <option value="syifa_travel" >Syifa Travel</option>
+                                    <option value="{{ $CheckinData->chanel_checkin }}">{{ $CheckinData->chanel_checkin }}</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('channel')" class="mt-2" />
                             </div>
 
                             <!-- Id Number -->
                             <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Id Number</label>
-                                <input value="140898346712123" name="id_number" type="text" class="form-control" id="checkoutTime" disabled>
+                                <label for="idnumber" class="form-label">Id Number</label>
+                                <input value="{{ $CheckinData->id_number }}" name="id_number" type="text" class="form-control" id="checkoutTime" disabled>
                                 <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
                             </div>
 
                             <!-- Check-out Time -->
                             <div class="mb-3">
                                 <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input value="2024-04-03" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                <input value="{{ $CheckinData->date_checkout }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
                                 <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
                             </div>
 
                             <!-- Number of Children -->
                             <div class="mb-3">
                                 <label for="children" class="form-label">Jumlah Anak-anak</label>
-                                <input value="2" name="number_of_children" type="number" class="form-control" id="children"  disabled>
+                                <input value="{{ $CheckinData->guest_kids }}" name="number_of_children" type="number" class="form-control" id="children"  disabled>
                                 <x-input-error :messages="$errors->get('number_of_children')" class="mt-2" />
                             </div>
                         </div>
@@ -123,9 +118,17 @@
                     <br>
                 </div>
                 <div class="col-sm-4 offset-sm-4" style="align-content: right">
-                        <button class="btn btn-extend" id="btn-extrabed ">
+
+                    @php
+                        if ($CheckinData->room_extrabed==1) {
+                    @endphp
+                    <button class="btn btn-extend" id="btn-extrabed ">
                             <i class="fas fa-plus"></i> Extra Bed
                         </button>
+                    @php
+                        }
+                    @endphp
+                    
                         <button class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#extendGuestData">
                             <i class="fas fa-plus"></i> AddOn Service
                         </button>
@@ -143,17 +146,38 @@
                     <table class="table" id="listServiceOrder" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>No. Invoice</th>
-                                <th>Item</th>
+                                <th>No.</th>
+                                <th>Product/Service</th>
                                 <th>Qty</th>
-                                <th>Harga</th>
+                                <th>Price</th>
                                 <th>Total</th>
-                                <th>Pesanan Ke</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- disini nanti data akan di tambahkan dari jsnya -->
+                            @php
+                                $subTotal = 0;
+                                $Total = 0;
+                            @endphp
+                            @foreach ($dataInvoice  as $invoice)
+                            @php
+                                $No = 1;
+                                $showprice = formatCurrency($invoice->item_price);
+                                $ShowTotal = formatCurrency($invoice->item_price * $invoice->item_qty);
+                                $subTotal += $invoice->item_price * $invoice->item_qty; 
+                            @endphp
+                                <tr>
+                                    <td>{{ $No }}</td>
+                                    <td>{{ $invoice->item_name }}</td>
+                                    <td>{{ $invoice->item_qty }}</td>
+                                    <td>{{ $showprice }}</td>
+                                    <td>{{ $ShowTotal }}</td>
+                                    <td></td>
+                                </tr>
+                                @php
+                                    $No++;
+                                @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
