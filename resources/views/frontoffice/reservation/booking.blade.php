@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body text-dark">
 
-                <form action="" method="POST">
+                <form action="{{ route('booking_room_number') }}" method="get">
                     <div class="row">
                         <!-- Left Column -->
                         <div class="col-md-6">

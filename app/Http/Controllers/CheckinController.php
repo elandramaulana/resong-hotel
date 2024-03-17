@@ -72,6 +72,7 @@ class CheckinController extends Controller
         //create data checkin
         $CheckinDetail = [
             'reservation_id'=>$request->reservation_id ?? null,
+            'no_invoice'=>$request->invoice,
             'room_id'=>$request->room_id,
             'guest_id'=>$guest_id,
             'chanel_checkin'=>$channel,
@@ -93,6 +94,7 @@ class CheckinController extends Controller
             //insert detail checkin
             $DetailCheckin = [
                 'checkin_id'=>$Checkin->id,
+
                 'item_category'=>'Rooms',
                 'item_name'=>$Rooms->room_name,
                 'item_price'=>$Rooms->room_price,

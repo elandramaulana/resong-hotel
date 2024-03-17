@@ -47,7 +47,9 @@
                             <!-- Invoice (Disabled) -->
                             <div class="mb-3">
                                 <label for="invoice" class="form-label">#Invoice</label>
-                                <input value="{{ $no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" disabled>
+                                <input value="{{ $no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" readonly>
+                                <x-input-error :messages="$errors->get('invoice')" class="mt-2" />
+            
                             </div>
 
                             <!-- Check-in Time -->
@@ -60,7 +62,7 @@
                             <!-- Number of Adults -->
                             <div class="mb-3">
                                 <label for="adults" class="form-label">Jumlah Dewasa</label>
-                                <input name="number_of_adult" value="{{ old('number_of_adult') }}" type="number" class="form-control" id="adults">
+                                <input name="number_of_adult" value="{{ $Room['room_capacity'] }}{{ old('number_of_adult') }}" type="number" class="form-control" id="adults">
                                 <x-input-error :messages="$errors->get('number_of_adult')" class="mt-2" />
                             </div>
                         </div>
@@ -248,7 +250,7 @@
                         <label for="province" class="col-sm-2 col-form-label">Provinsi</label>
                             <div class="col-sm-8">
                                 <input name="province" type="text" class="form-control clearable" value="{{ old('province') }}" id="provinsi">
-                                <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('province')" class="mt-2" />
                             </div>
                         <div class="col-sm-2">
                             <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#provinceData">

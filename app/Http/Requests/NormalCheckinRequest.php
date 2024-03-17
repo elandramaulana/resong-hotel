@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Rooms;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NormalCheckinRequest extends FormRequest
@@ -21,12 +22,14 @@ class NormalCheckinRequest extends FormRequest
      */
     public function rules(): array
     {
+        $Room_Info = Rooms::find($this->input('room_id'));
         return [
             //detail checkin
             'room_id'=>['required'],
+            'invoice'=>['required'],
             'checkin_time'=>['required'],
-            'checkout_time'=>['required'],
-            'number_of_adult'=>['required'],
+            'checkout_time'=>['required', 'after_or_equal:'.$this->input('checkin_time')],
+            'number_of_adult'=>['required','numeric', 'max:'.$Room_Info->room_capacity],
             'number_of_children'=>['nullable'],
             'channel'=>['required'],
             //detail guest
