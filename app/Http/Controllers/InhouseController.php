@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Checkin;
 use App\Models\CheckinDetail;
 use Illuminate\Http\Request;
+use Svg\Tag\Rect;
 
 class InhouseController extends Controller
 {
@@ -13,6 +14,27 @@ class InhouseController extends Controller
             'Title'=>"Daftar Tamu Checkin"
         ];
         return view('frontoffice.guest.inhouse_guest', $Data);
+    }
+    public function add_extrabed(Request $request) {
+        $chekin_id = $request->get('checkin_id');
+        $CheckinData = Checkin::find($chekin_id);
+        $CheckinData->is_extrabed = 1;
+        $CheckinData->save();
+        $detailData = [
+            'checkin_id'=>$chekin_id,
+            'item_category'=>'Services',
+            'item_name'=>"Extrabed",
+            'item_price'=>100000,
+            'item_qty'=>1,
+            'item_description'=>"Penambahan Extrabed "
+        ];
+        $Detail = CheckinDetail::create($detailData);
+        if($Detail){
+            $response = ['status'=>'success', 'msg'=>"Penambahan Extrabed Berhasil"];
+        }else{
+            $response = ['status'=>'error', 'msg'=>"Penambahan Extrabed Gagal"];    
+        }
+        echo json_encode($response);
     }
     public function inhouse_detail($id) {
         $ModelCheckin = new Checkin();

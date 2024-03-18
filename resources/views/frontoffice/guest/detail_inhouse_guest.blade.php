@@ -31,10 +31,8 @@
                     </button>
                 </div>
             </div>
-
-            
-
             <input type="text" name="room_id" value="" hidden>
+            <input type="text" name="checkin_id" value="{{ $CheckinData->checkin_id }}" hidden>
                     <div class="row">
                         <!-- Left Column -->
                         <div class="col-md-6">
@@ -120,18 +118,18 @@
                 <div class="col-sm-4 offset-sm-4" style="align-content: right">
 
                     @php
-                        if ($CheckinData->room_extrabed==1) {
+                        if ($CheckinData->room_extrabed==1 && $CheckinData->is_extrabed ==0) {
                     @endphp
-                    <button class="btn btn-extend" id="btn-extrabed ">
+                    <a class="btn btn-extend" id="btn-extrabed">
                             <i class="fas fa-plus"></i> Extra Bed
-                        </button>
+                        </a>
                     @php
                         }
                     @endphp
                     
-                        <button class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#extendGuestData">
+                        <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
                             <i class="fas fa-plus"></i> AddOn Service
-                        </button>
+                        </a>
                     
                 </div>
             </div>
@@ -158,10 +156,10 @@
                             @php
                                 $subTotal = 0;
                                 $Total = 0;
+                                $No = 1;
                             @endphp
                             @foreach ($dataInvoice  as $invoice)
                             @php
-                                $No = 1;
                                 $showprice = formatCurrency($invoice->item_price);
                                 $ShowTotal = formatCurrency($invoice->item_price * $invoice->item_qty);
                                 $subTotal += $invoice->item_price * $invoice->item_qty; 
@@ -178,19 +176,17 @@
                                     $No++;
                                 @endphp
                             @endforeach
+                            @php
+                                $TotalSemua = formatCurrency($subTotal);
+                            @endphp
                         </tbody>
                     </table>
                 </div>
                        <!-- Button -->
                        <div class="mt-5 mb-3 d-flex justify-content-start ">
                     <div class="">
-                        <button type="submit" class="btn submit-btn mr-5">
-                           Order
-                        </button>
-                    </div>
-                    <div class="">
-                        <button class="btn cancel-btn">
-                            Cancel
+                        <button class="btn submit-btn mr-5">
+                           Total : {{ $TotalSemua }}
                         </button>
                     </div>
             </form>
@@ -217,44 +213,64 @@
 
 
 <!-- Modal for extend form -->
-<div class="modal fade" id="extendGuestData" tabindex="-1" aria-labelledby="extendGuestData" aria-hidden="true">
+<div class="modal fade" id="formAddOns" tabindex="-1" aria-labelledby="formAddOns" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
       <div class="card shadow mb-4">
              <div class="card-header py-3">
-                <h3 class="font-weight-bolder">Extend</h3>
+                <h3 class="font-weight-bolder">AddOns</h3>
             </div>
-                   
                     <div class="card-body">
-                    <form action="" method="POST">
-                    
-                    
+                    <form action="{{ route('inhouse.postaddons') }}" method="POST">
+                        @csrf
                         <div class="row">
-
                             <!-- Left Column -->
-                            <div class="col-md-6">
-                                
+                            <div class="col-md-6">   
                                 <!-- Check-in Time -->
                                 <div class="mb-3">
-                                    <label for="checkinTime" class="form-label">Check-in Time</label>
-                                    <input value="14/02/2024" name="checkin_time_extend" type="date" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <label for="item_category" class="form-label">Kategori Layanan</label>
+                                    <select name="item_category" class="form-control" id="item_category">
+                                        <option value="Lain-Lain">Lain-Lain</option>
+                                        <option value="Resto">Resto</option>
+                                        <option value="House Keeping">House Keeping</option>
+                                    </select>    
                                 </div>
-
                             </div>
 
                             <!-- Right Column -->
                             <div class="col-md-6">
-
                                 <!-- Check-out Time -->
                                 <div class="mb-3">
-                                    <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                    <input name="checkout_time_extend" value="15/02/2024" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" >
+                                    <label for="item_name" class="form-label">Nama Item</label>
+                                    <input name="item_name" placeholder="Isi Nama Item Ex: Laundry Jas" type="text" class="form-control" id="item_name"  >
                                 </div>
+                            </div>
 
+                            <div class="col-md-6">   
+                                <!-- Check-in Time -->
+                                <div class="mb-3">
+                                    <label for="item_price" class="form-label">Harga</label>
+                                    <input type="text" name="item_price" id="item_price" class="form-control" placeholder="inputkan Harga Item">
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <!-- Check-out Time -->
+                                <div class="mb-3">
+                                    <label for="item_qty" class="form-label">Jumlah</label>
+                                    <input name="item_qty" placeholder="Inputkan Jumlah Item" type="text" class="form-control" id="item_qty"  >
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- Check-out Time -->
+                                <div class="mb-3">
+                                    <label for="item_description" class="form-label">Deskripsi</label>
+                                    <input name="item_description" placeholder="Inputkan Keterangan Jika Ada" type="text" class="form-control" id="item_description"  >
+                                </div>
                             </div>
                         </div>
-
                             <div class="mt-3 d-flex justify-content-center">
                                 <button type="submit" class="btn submit-btn">
                                     Submit
@@ -278,4 +294,7 @@
 
 
 
+@endsection
+@section('jsSection')
+  @include('frontoffice.guest.detail_inhouse_guest_js')
 @endsection

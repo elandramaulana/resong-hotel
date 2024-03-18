@@ -99,6 +99,8 @@ Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservat
 // Guest View
 Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
 Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
+Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
 Route::get('/detail-inhouse-guest/{id}',[InhouseController::class, 'inhouse_detail'] )->name('inhouse.details');
 Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');

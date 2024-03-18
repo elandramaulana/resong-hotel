@@ -28,6 +28,7 @@ class Checkin extends Model
     public function detCheckin($checkin_id) {
         $Query = $this->join('rooms', 'rooms.id', '=', 'checkins.room_id')
                 ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id')
                 ->where('checkins.id', $checkin_id)
                 ->get()->first();
         if($Query){
