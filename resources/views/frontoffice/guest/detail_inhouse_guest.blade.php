@@ -162,7 +162,8 @@
                             @php
                                 $showprice = formatCurrency($invoice->item_price);
                                 $ShowTotal = formatCurrency($invoice->item_price * $invoice->item_qty);
-                                $subTotal += $invoice->item_price * $invoice->item_qty; 
+                                $subTotal += $invoice->item_price * $invoice->item_qty;
+                                
                             @endphp
                                 <tr>
                                     <td>{{ $No }}</td>
@@ -170,7 +171,13 @@
                                     <td>{{ $invoice->item_qty }}</td>
                                     <td>{{ $showprice }}</td>
                                     <td>{{ $ShowTotal }}</td>
-                                    <td></td>
+                                    <td>@php
+                                        if ($invoice->item_category !="Rooms") {
+                                        @endphp
+                                        <a href="#" data-id="{{ $invoice->id }}" class="btn btn-sm btn-primary del-addons" title="Hapus AddOns"><i class="fa fa-trash"></i></a>    
+                                        @php
+                                        }
+                                    @endphp</td>
                                 </tr>
                                 @php
                                     $No++;
@@ -222,9 +229,11 @@
                 <h3 class="font-weight-bolder">AddOns</h3>
             </div>
                     <div class="card-body">
-                    <form action="{{ route('inhouse.postaddons') }}" method="POST">
+                        <small id="showerror">awdawdda</small>
+                    <form action="{{ route('inhouse.postaddons') }}" method="POST" id="frmAddons">
                         @csrf
                         <div class="row">
+                            <input type="text" name="checkin_id" id="form_checkin_id" value="{{ $CheckinData->checkin_id }}" hidden>
                             <!-- Left Column -->
                             <div class="col-md-6">   
                                 <!-- Check-in Time -->
@@ -235,6 +244,7 @@
                                         <option value="Resto">Resto</option>
                                         <option value="House Keeping">House Keeping</option>
                                     </select>    
+                                    <small class="showerror"></small>
                                 </div>
                             </div>
 
@@ -242,8 +252,9 @@
                             <div class="col-md-6">
                                 <!-- Check-out Time -->
                                 <div class="mb-3">
-                                    <label for="item_name" class="form-label">Nama Item</label>
+                                    <label for="item_name" class="form-label">Nama Item / Service</label>
                                     <input name="item_name" placeholder="Isi Nama Item Ex: Laundry Jas" type="text" class="form-control" id="item_name"  >
+                                    <small class="showerror"></small>
                                 </div>
                             </div>
 
@@ -252,6 +263,7 @@
                                 <div class="mb-3">
                                     <label for="item_price" class="form-label">Harga</label>
                                     <input type="text" name="item_price" id="item_price" class="form-control" placeholder="inputkan Harga Item">
+                                    <small class="showerror"></small>
                                 </div>
                             </div>
 
@@ -261,18 +273,20 @@
                                 <div class="mb-3">
                                     <label for="item_qty" class="form-label">Jumlah</label>
                                     <input name="item_qty" placeholder="Inputkan Jumlah Item" type="text" class="form-control" id="item_qty"  >
+                                    <small class="showerror"></small>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <!-- Check-out Time -->
                                 <div class="mb-3">
                                     <label for="item_description" class="form-label">Deskripsi</label>
-                                    <input name="item_description" placeholder="Inputkan Keterangan Jika Ada" type="text" class="form-control" id="item_description"  >
+                                    <textarea name="item_description" id="item_description" class="form-control" placeholder="Inputkan Keterangan terkait service ini"></textarea>
+                                    <small class="showerror"></small>
                                 </div>
                             </div>
                         </div>
                             <div class="mt-3 d-flex justify-content-center">
-                                <button type="submit" class="btn submit-btn">
+                                <button type="submit" class="btn submit-btn" id="btn-submit">
                                     Submit
                                 </button>
                             </div>

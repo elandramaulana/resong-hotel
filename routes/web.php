@@ -101,6 +101,7 @@ Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse
 Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
 Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
 Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
+Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
 Route::get('/detail-inhouse-guest/{id}',[InhouseController::class, 'inhouse_detail'] )->name('inhouse.details');
 Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');

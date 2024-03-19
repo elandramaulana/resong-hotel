@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostAddonsRequest;
 use App\Models\Checkin;
 use App\Models\CheckinDetail;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Svg\Tag\Rect;
 
 class InhouseController extends Controller
@@ -14,6 +16,37 @@ class InhouseController extends Controller
             'Title'=>"Daftar Tamu Checkin"
         ];
         return view('frontoffice.guest.inhouse_guest', $Data);
+    }
+    public function del_addons(Request $request){
+        $detail_id = $request->get('detail_id');
+        $dataDetail = CheckinDetail::destroy($detail_id);
+        if($dataDetail){
+            $response = ['status'=>'success', 'message'=>'Addons berhasil dihapus'];
+        }else{
+            $response = ['status'=>'error', 'message'=>'Addons gagal dihapus'];
+        }
+        return response()->json($response);
+    }
+    public function add_addons(PostAddonsRequest $request) {
+        try{
+            $detail = [
+                'checkin_id'=>$request->get('checkin_id'),
+                'item_category'=>$request->get('item_category'),
+                'item_name'=>$request->get('item_name'),
+                'item_price'=>$request->get('item_price'),
+                'item_qty'=>$request->get('item_qty'),
+                'item_description'=>$request->get('item_description')
+            ];
+            $Model= CheckinDetail::create($detail);
+            if($Model){
+                $response = ['status'=>'success', 'message'=>'Addons berhasil ditambahkan'];
+            }else{
+                $response = ['status'=>'error', 'message'=>'Addons gagal ditambahkan'];
+            }
+            return response()->json($response);
+        }catch (ValidationException $e){
+            return response()->json(['errors' => $e->errors()], 422);
+        }
     }
     public function add_extrabed(Request $request) {
         $chekin_id = $request->get('checkin_id');
