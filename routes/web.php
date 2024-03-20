@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AutocompleteController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InhouseController;
@@ -82,8 +83,8 @@ Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name
 });
 // reservation view
 Route::middleware('auth')->group(function () {
-Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
-Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
+Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+Route::post('/booking-pick-room', [BookingController::class, 'pick_room'])->name('booking.pick_room');
 Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
 });
 
