@@ -26,4 +26,9 @@ class Rooms extends Model
     $data = $this->where('room_type', $room_type)->get();
     return $data;
    }
+
+   public function reservations()
+   {
+       return $this->hasMany(Reservation::class, 'room_id');
+   }
 }
