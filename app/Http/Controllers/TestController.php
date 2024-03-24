@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\Rooms;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     public function index(){
-        $DataCheckin = Checkin::leftJoin('checkouts', 'checkins.id','=','checkouts.checkin_id')
-                        ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
-                        ->join('guests', 'guests.id', '=', 'checkins.guest_id')
-                        ->select('checkins.*', 'checkins.id as checkin_id')
-                        ->addselect('rooms.*', 'rooms.id as room_id')
-                        ->addselect('guests.name_guest', 'guests.id as guest_id')
-                        ->where('checkouts.id', null)
-                        ->get();
-        echo json_encode($DataCheckin);
+        $checkin = "2024-03-25";
+        $checkout = "2024-03-29";
+        $qtyGuest = 1;
+
+        $BookController = new BookingController();
+        $listRoom = $BookController->BookingEngine($checkin, $checkout, $qtyGuest);
+
+        
+        echo json_encode($listRoom);
     }
 }

@@ -49,6 +49,18 @@
                         </div>
                         <div class="row">
                             <h4>Data Reservasi</h4>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="reservation_chanel" class="form-label">Check-in Time</label>
+                                        <select name="reservation_chanel" id="reservation_chanel" class="form-control">
+                                            <option value="">Pilih Chanel</option>
+                                            <option value="Walk-in">Walk-in</option>
+                                            <option value="Traveloka">Traveloka</option>
+                                            <option value="Phone">Phone</option>
+                                        </select>
+                                    <x-input-error :messages="$errors->get('reservation_chanel')" class="mt-2" />
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="reservation_checkin" class="form-label">Check-in Time</label>
@@ -73,37 +85,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row">
-                            <h4>Data Pembayaran</h4>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="reservation_payment_status">Status Pembayaran</label>
-                                    <select name="reservation_payment_status"  id="reservation_payment_status" class="form-control">
-                                        <option value="">Pilih Status Pembayaran</option>
-                                        <option value="Lunas">Lunas</option>
-                                        <option value="DP">DP</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="reservation_payment_method">Metode Pembayaran</label>
-                                    <select name="reservation_payment_method"  id="reservation_payment_method" class="form-control">
-                                        <option value="">Pilih Metode Pembayaran</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Bank Transfer">Bank Transfer</option>
-                                        <option value="Qris">Qris</option>
-                                        <option value="eWallet">eWallet</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="reservation_payment">Pembayaran</label>
-                                    <input type="text" class="form-control" name="reservation_payment" id="reservation_payment">
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="mt-4 mb-3 d-flex justify-content-start ">
                             <div class="">
                                 <button type="submit" class="btn submit-btn mr-5">

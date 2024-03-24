@@ -106,7 +106,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('booking')}}">Booking</a>
-                        <a class="collapse-item" href="{{route('reservation_list')}}">Reservation List</a>
+                        <a class="collapse-item" href="{{route('reservation.list')}}">Reservation List</a>
                         <a class="collapse-item" href="{{route('cancel_reservation_list')}}">Cancel Reservation</a>
                         <a class="collapse-item" href="{{route('noshow_reservation_list')}}">No Show Reserve</a>
                     </div>
