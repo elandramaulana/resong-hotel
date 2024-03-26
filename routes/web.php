@@ -87,15 +87,19 @@ Route::post('/booking-pick-room', [BookingController::class, 'pick_room'])->name
 Route::get('/booking-table', [BookingController::class, 'call_table'])->name('booking.table');
 Route::get('/booking-payment/{id}', [BookingController::class, 'booking_payment'])->name('booking.payment');
 Route::post('/booking-payment-store/', [BookingController::class, 'booking_store'])->name('booking.store');
+Route::post('/booking-cancel/', [BookingController::class, 'booking_cancel'])->name('booking.cancel');
+Route::post('/booking-no-show/', [BookingController::class, 'set_no_show'])->name('booking.set_no_show');
 });
 
 // route generate pdf in invoice view
 Route::middleware('auth')->group(function () {
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 Route::get('/reservation-list', [BookingController::class, 'reservation_list'])->name('reservation.list');
+Route::get('/booking-canceled/', [BookingController::class, 'booking_canceled'])->name('booking.canceled');
+Route::get('/booking-no-showed/', [BookingController::class, 'no_showed'])->name('booking.no_showed');
 Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
 
-Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
+
 Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
 
 // Guest View

@@ -1,13 +1,7 @@
 @extends('layouts.dashboard_layout')
-
 @section('content')
-
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
-
-
 <section class="mt-5">
     <div class="container-fluid">
         <div class="row">
@@ -32,15 +26,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Elandra Maulana</td>
-                                        <td>106</td>
-                                        <td>2024-02-04</td>
-                                        <td>2024-02-07</td>
-                                        <td>Traveloka</td>
-                                        <td>Rp567.000</td>
-                                    </tr>
+                                    @php
+                                        $no =1;
+                                    @endphp
+                                    @foreach ($data as $dt)
+                                        @php
+                                            $showCheckinDate = tgl_indo($dt->reservation_checkin);
+                                            $showCheckoutDate = tgl_indo($dt->reservation_checkout);
+                                            $showDP = formatCurrency($dt->reservation_payment);
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $dt->reservation_name }}</td>
+                                            <td>{{ $dt->room_no }}</td>
+                                            <td>{{ $showCheckinDate }}</td>
+                                            <td>{{ $showCheckoutDate }}</td>
+                                            <td>{{ $dt->reservation_chanel }}</td>
+                                            <td>{{ $showDP }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

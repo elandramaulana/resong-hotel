@@ -58,7 +58,7 @@
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item" href="#">Check-in</a></li>
                                                         <li><a class="dropdown-item" href="{{route('edit_reservation')}}">Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#">Cancel Reservation</a></li>
+                                                        <li><a class="dropdown-item btn-cancel" data-id="{{ $dt->reservation_id }}" >Cancel Reservation</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -70,8 +70,6 @@
                     </div>
                 </div>
             </div>
-
-           
         </div>
     </div>
 </section>

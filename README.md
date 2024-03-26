@@ -22,11 +22,11 @@ Whats New ?
 Todo :
 - Dashboard
 - Fungsi Reservasi (baru sampai form awal)
-    - Todo next Select Room
-    - Booking Engine (logic belum dapat)
-    - list reservasi
-    - canceled reservasi
-    - no show reservasi
+    - Todo next Select Room (Done)
+    - Booking Engine (Done) 
+    - list reservasi (Done)
+    - canceled reservasi (Done)
+    - no show reservasi (Done)
     - speedy checkin
 - Kirim Invoice to email
     - Butuh Template HTML Email & pdf 

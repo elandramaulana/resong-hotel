@@ -16,16 +16,66 @@ class BookingController extends Controller
         ];
         return view('frontoffice.reservation.booking', $Data);
       }
+      public function set_no_show(Request $request) {
+        //get all new reservation, 
+        $reservationList = Reservation::where('reservation_status', 'new')
+                                        ->whereDate('reservation_date', '<', now())
+                                        ->get();
+        $reservationList->each(function ($reservation) {
+            $reservation->update(['reservation_status'=>'no_show']);
+        });
+        $response = ['status'=>'success', 'message'=>"Set Reservation no_show Success"];
+        return response()->json($response);
+      }
+      public function booking_cancel(Request $request) {
+        $reservation_id = $request->get('reservation_id');
+        $dataReservation = Reservation::find($reservation_id);
+        $dataReservation->reservation_status = 'canceled';
+        if($dataReservation->save()){
+          $response = ['status'=>'success', 'message'=>'Reservasi Berhasil di Batalkan'];
+        }else{
+          $response = ['status'=>'error', 'message'=>'Reservasi Gagal di Batalkan'];
+        }
+        return response()->json($response);
+      }
       public function reservation_list(Request $request) {
         //get reservation with status new
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
-                                  ->where('reservation_status','new')->get();
+                                  ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
+                                  ->where('reservation_status','new')
+                                  ->get();
 
         $Data = [
           'Title'=>'Input Detail Reservasi',
           'data'=>$Reservation
         ];
         return view('frontoffice.reservation.reservation_list', $Data);
+      }
+      public function booking_canceled(Request $request) {
+        //get reservation with status new
+        $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
+                                  ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
+                                  ->where('reservation_status','canceled')
+                                  ->get();
+
+        $Data = [
+          'Title'=>'Input Detail Reservasi',
+          'data'=>$Reservation
+        ];
+        return view('frontoffice.reservation.cancel_reservation_list', $Data);
+      }
+      public function no_showed(Request $request) {
+        //get reservation with status new
+        $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
+                                  ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
+                                  ->where('reservation_status','no_show')
+                                  ->get();
+
+        $Data = [
+          'Title'=>'Input Detail Reservasi',
+          'data'=>$Reservation
+        ];
+        return view('frontoffice.reservation.noshow_reservation_list', $Data);
       }
       public function booking_store(PaymentStoreRequest $request) {
         //collect data to be store
