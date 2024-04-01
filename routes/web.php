@@ -7,7 +7,9 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InhouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\RoomAjaxRequest;
+use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -52,7 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
 });
 
-
 // checkout view
 Route::middleware('auth')->group(function () {
 Route::get('/check-out', [CheckoutController::class, 'index'])->name('checkout.list');
@@ -88,7 +89,7 @@ Route::get('/booking-table', [BookingController::class, 'call_table'])->name('bo
 Route::get('/booking-payment/{id}', [BookingController::class, 'booking_payment'])->name('booking.payment');
 Route::post('/booking-payment-store/', [BookingController::class, 'booking_store'])->name('booking.store');
 Route::post('/booking-cancel/', [BookingController::class, 'booking_cancel'])->name('booking.cancel');
-Route::post('/booking-no-show/', [BookingController::class, 'set_no_show'])->name('booking.set_no_show');
+Route::get('/booking-no-show/', [BookingController::class, 'set_no_show'])->name('booking.set_no_show');
 });
 
 // route generate pdf in invoice view
@@ -118,6 +119,18 @@ Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'sele
 
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
+
+
+
+//route for laundry feature
+Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
+Route::get('/laundry_form', [LaundryController::class, 'form'])->name('laundry.form');
+Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.post');
+
+
+//select2 route
+Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
+
 
 });
 

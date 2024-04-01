@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="reservationListTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="noShowReservations" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>NO</th>
@@ -70,4 +70,7 @@
 </div>
 <!-- /.container-fluid -->
 
+@endsection
+@section('jsSection')
+  @include('frontoffice.reservation.reservation_noshow_js')
 @endsection

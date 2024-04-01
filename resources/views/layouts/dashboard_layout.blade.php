@@ -28,6 +28,7 @@
     <link href="{{asset('style.css')}}" rel="stylesheet">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -131,7 +132,15 @@
 
              <!-- Divider -->
              <hr class="sidebar-divider">
-
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Laundry
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('laundry')}}">
+                <i class="fas fa-fw fa-door-open"></i>
+                    <span>Laundry</span></a>
+            </li>
             <!-- Heading -->
             <!-- <div class="sidebar-heading">
                 BACK OFFICE
@@ -309,7 +318,7 @@
     <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-
+   
     <!-- Script for table -->
 <script>
     $(document).ready(function () {
@@ -458,11 +467,6 @@ function formatDate(date) {
     });
 </script>
 
-
-
-
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -491,7 +495,8 @@ function formatDate(date) {
     <script src="{{asset('assets/waitMe/waitMe.min.js')}}"></script>
     <script src="{{asset('assets/js/isotope.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    
+    <script src="{{ asset('plugins') }}/select2/js/select2.min.js"></script>
+ 
 {{-- <-- SweetAlert2 --> --}}
 <script src="{{ asset('/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     @yield('jsSection');

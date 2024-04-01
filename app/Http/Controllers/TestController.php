@@ -9,14 +9,11 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     public function index(){
-        $checkin = "2024-03-25";
-        $checkout = "2024-03-29";
-        $qtyGuest = 1;
-
-        $BookController = new BookingController();
-        $listRoom = $BookController->BookingEngine($checkin, $checkout, $qtyGuest);
-
-        
-        echo json_encode($listRoom);
+        $query = Checkin::leftJoin('checkouts', 'checkouts.checkin_id', '=', 'checkins.id')
+                        ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
+                        ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                        ->select('checkins.*','checkins.id as checkin_id', 'rooms.room_no', 'guests.name_guest')
+                        ->get();
+        echo json_encode($query);
     }
 }

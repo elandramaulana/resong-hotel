@@ -34,7 +34,7 @@ Todo :
 - Fungsi Laundry
     - insert transaction
     - direct payment / include rooms
-- Fungsi Resto
+- Fungsi Resto 
     - monitoring bahan baku
     - available menu
     - direct payment / include rooms
