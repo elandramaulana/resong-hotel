@@ -11,11 +11,11 @@
                 url: '{{ route('select2.room_inhouse') }}',
                 type: "GET",
                 dataType: "json",
-            }).done(function(data) {
-                $("#checkin_id").select2({
-                    data: data,
+                }).done(function(data) {
+                    $("#checkin_id").select2({
+                        data: data,
+                    });
                 });
-            });
             }else{
                 hiddenParagraph.style.display = "none";
             }

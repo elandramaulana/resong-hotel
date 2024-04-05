@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Resong Hotel Admin - Dashboard</title>
 
@@ -496,6 +497,7 @@ function formatDate(date) {
     <script src="{{asset('assets/js/isotope.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('plugins') }}/select2/js/select2.min.js"></script>
+    <script src="{{ asset('assets') }}/js/global.js"></script>
  
 {{-- <-- SweetAlert2 --> --}}
 <script src="{{ asset('/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

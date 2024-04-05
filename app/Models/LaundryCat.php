@@ -11,6 +11,7 @@ class LaundryCat extends Model
     public $fillable = [
         'catergory_name',
         'cat_price',
+        'cat_unit',
         'cat_desc'
     ];
 }

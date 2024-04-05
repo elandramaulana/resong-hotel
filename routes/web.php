@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckinController;
@@ -130,7 +131,10 @@ Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.
 
 //select2 route
 Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
+Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
 
+//ajax request
+Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 });
 

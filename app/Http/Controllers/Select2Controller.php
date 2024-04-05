@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\LaundryCat;
 use Illuminate\Http\Request;
 
 class Select2Controller extends Controller
@@ -24,4 +25,17 @@ class Select2Controller extends Controller
         }
         echo json_encode($show);
     }
+    public function cat_laundry() {
+        $query = LaundryCat::all();
+        $no=1;
+        foreach($query as $data){
+            $show[] = [
+                'id'=>$data['id'],
+                'text'=>$data['catergory_name']
+            ];
+            $no++;
+        }
+        echo json_encode($show);
+    }
+    
 }

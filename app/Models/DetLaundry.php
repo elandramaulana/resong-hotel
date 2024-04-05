@@ -12,7 +12,7 @@ class DetLaundry extends Model
         'laundry_id',
         'id_category',
         'det_laundry_price',
-        'det_laundry_qty'
+        'det_laundry_qty',
         'det_laundry_desc'
     ];
 }
