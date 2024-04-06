@@ -34,6 +34,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($listlaundry as $laundry)
+                                        
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

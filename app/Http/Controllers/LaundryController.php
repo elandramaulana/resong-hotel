@@ -8,12 +8,19 @@ use App\Models\DetLaundry;
 use App\Models\Laundry;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\select;
+
 class LaundryController extends Controller
 {
     public function index(){
+        $ListLaundry = Laundry::join('det_laundries', 'det_laundries.laundry_id', '=', 'laundries.id')
+                                ->where('checkin_id', '!=', null)
+                                ->sum('det_laundries.det_laundry_price')
+                                ->groupBy('laundries.id')
+                                ->get();
         $Data = [
             'Title'=>'List Laundry',
-
+            'listlaundry'=>$ListLaundry
         ];
         return view('laundry.laundry', $Data);
     }
@@ -66,14 +73,19 @@ class LaundryController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+            }else{
+                $det_checkin = false;
             }
         }
         //insert into laundry detail
         $createDetLaundry = DetLaundry::insert($det_laundry);
 
         //insert into chekin_detail if checkin_id != null
-        $detCheckin = CheckinDetail::insert($det_checkin);
-        return response()->json($det_laundry);
+        if($det_checkin){
+            $detCheckin = CheckinDetail::insert($det_checkin);
+        }
+        $response = ['status'=>'success','message'=>'Sukses, Transaksi Laundry Berhasil di simpan'];
+        return response()->json($response);
     }
     
 }

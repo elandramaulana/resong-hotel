@@ -13,4 +13,7 @@ class Laundry extends Model
         'checkin_id',
         'laundry_status',
     ];
+
+    
+    }
 }

@@ -170,7 +170,19 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data){
-                    console.log(data);
+                    if(data.status=='success'){
+                        Swal.fire({
+                                    icon: "success",
+                                    title: data.message,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                }).then((result) => {
+                                // Reload the page after a delay
+                                setTimeout(function() {
+                                    window.location.href = "{{ route('laundry') }}";
+                                }, 1000); // Adjust the delay as needed
+                            });
+                    }
                 },
                 error: function(error){
                     console.log(error);
