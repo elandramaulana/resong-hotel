@@ -8,6 +8,7 @@ use App\Http\Requests\ExtendRequest;
 use App\Models\Checkin;
 use App\Models\CheckinDetail;
 use App\Models\Checkout;
+use App\Models\Guest;
 use App\Models\Rooms;
 use DateTime;
 use Illuminate\Http\Request;

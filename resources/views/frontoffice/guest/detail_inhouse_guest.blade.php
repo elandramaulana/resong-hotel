@@ -111,25 +111,36 @@
         <div class="card">
             <div class="card-body text-dark">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-6">
                     <h2>List Order</h2>
                     <br>
                 </div>
-                <div class="col-sm-4 offset-sm-4" style="align-content: right">
+                <div class="col-sm-6" >
 
+                <div class="row">
+                    <div class="col-sm-6">
                     @php
                         if ($CheckinData->room_extrabed==1 && $CheckinData->is_extrabed ==0) {
                     @endphp
-                    <a class="btn btn-extend" id="btn-extrabed">
-                            <i class="fas fa-plus"></i> Extra Bed
-                        </a>
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-extend" id="btn-extrabed">
+                                <i class="fas fa-plus"></i> Extra Bed
+                            </a>
+                        </div>
                     @php
                         }
                     @endphp
-                    
-                        <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
-                            <i class="fas fa-plus"></i> AddOn Service
-                        </a>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
+                                <i class="fas fa-plus"></i> AddOn Service
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                          
                     
                 </div>
             </div>
@@ -137,6 +148,8 @@
             <!-- BANG UNTUK LIST ORDER INI JSNYA ADA DI VIEW "layout.dashboard_layout", DIBAGIAN BAWAH BANG -->
             <!-- SOALNYA LAN GA TAU GIMANA SISTEM GENERATE INVOICENYA -->
             
+            <br>
+
             <div class="col-sm-12">
 
             <form id="orderForm" >

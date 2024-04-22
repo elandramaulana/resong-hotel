@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,8 +31,15 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {{-- Vendor --}}
+    <link href="{{asset('assets/template/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/template/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/template/vendor/aos/aos.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/template/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
     <style>
         .mt-2{
             color: red;
@@ -39,6 +48,7 @@
 </head>
 
 <body id="page-top">
+    @include('sweetalert::alert')
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -129,51 +139,117 @@
                 </div>
             </li>
 
+               <!-- Nav Item - Check-out -->
+               <li class="nav-item">
+                    <a class="nav-link" href="{{route('cleaningroom.list')}}">
+                    <i class="fas fa-fw fa-broom"></i>
+                        <span>House Keeping</span></a>
+                </li>
+
+            
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
+                        aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-user"></i>
+                        <span>Report</span>
+                    </a>
+                    <div id="collapseReport" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{route('bill.report')}}">Bill Report</a>
+                            <a class="collapse-item" href="{{route('guest_database')}}">Channel Report</a>
+                            <a class="collapse-item" href="{{route('guest_database')}}">Room Report</a>
+                        </div>
+                    </div>
+                </li>
+
              <!-- Divider -->
              <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <!-- <div class="sidebar-heading">
-                BACK OFFICE
-            </div> -->
+             <!-- Heading -->
+             <div class="sidebar-heading">
+                INVENTORY KITCHEN
+            </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{ route('list.supplier') }}">
+                    <i class="fas fa-fw fa-handshake"></i>
+                    <span>Supplier</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li> -->
+            </li>
 
-            <!-- Nav Item - Charts -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li> -->
 
-            <!-- Nav Item - Tables -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('list.barang') }}">
+                    <i class="fas fa-fw fa-cubes"></i> <!-- Menggunakan ikon "cubes" -->
+                    <span>Barang</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Check-out -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('list.trans')}}">
+                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    <span>Transaksi Barang</span></a>
+            </li>
+
+
+            <!-- Nav Item - Check-out -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('list.kategori')}}">
+                    <i class="fas fa-fw fa-tags"></i>
+                    <span>Manage Kategori Barang</span></a>
+            </li>
+
+            
+
+             {{-- <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('list.barang.masuk')}}">
+                <i class="fas fa-fw fa-broom"></i>
+                    <span>Barang Masuk</span></a>
+            </li>
+
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('cleaningroom.list')}}">
+                <i class="fas fa-fw fa-broom"></i>
+                    <span>Barang Keluar</span></a>
+            </li> --}}
+
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('list.menu')}}">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Manage Menu List</span></a>
+            </li>
+            
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('daily.menu')}}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Manage Menu Daily</span></a>
+            </li>
+
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('kategori.menu')}}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Manage Kategori Menu</span></a>
+            </li>
+
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('resto.menu')}}">
+                    <i class="fas fa-fw fa-utensils"></i>
+                    <span>Resto</span></a>
+            </li>
+
+
 
             <!-- Divider -->
-            <!-- <hr class="sidebar-divider d-none d-md-block"> -->
+            <hr class="sidebar-divider">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -330,39 +406,36 @@
         $('#listServiceOrder').DataTable();
         $('#GuestDatabaseTable').DataTable();
         $('#historyGuestTable').DataTable();
+        $('#houseKeepingTable').DataTable();
+        $('#cleaningHistoryTable').DataTable();
+        $('#billReporTable').DataTable();
+        $('#supplierTable').DataTable();
+        $('#barangTable').DataTable();
+        $('#barangMasukTable').DataTable();
+        $('#manageMenuTable').DataTable();
+        $('#daftarMenuTable').DataTable();
+        $('#layananRestoTable').DataTable();
+        $('#detailLayananRestoTable').DataTable();
     });
 </script>
 
-<!-- Alert Form -->
 
+{{-- show menu image --}}
 <script>
-    $(document).ready(function(){
-        // $('form').submit(function(e){
-        //     e.preventDefault();  // Mencegah formulir untuk melakukan submit sebenarnya
-            
-        //     // Simpan URL formulir
-        //     var formAction = $(this).attr('action');
-            
-        //     // Kirim formulir menggunakan AJAX
-        //     $.ajax({
-        //         type: "POST",
-        //         url: formAction,
-        //         data: $(this).serialize(),
-        //         success: function(response) {
-        //             // Tangani respons sukses
-        //             $('#successAlert').show();
-        //             $('#errorAlert').hide();
-        //             // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit berhasil
-        //         },
-        //         error: function(error) {
-        //             // Tangani respons gagal
-        //             $('#errorAlert').show();
-        //             $('#successAlert').hide();
-        //             // Tambahan: Tambahkan logika lain yang perlu dilakukan setelah submit gagal
-        //         }
-        //     });
-        // });
-    });
+    function displaySelectedImage(event, elementId) {
+        const selectedImage = document.getElementById(elementId);
+        const fileInput = event.target;
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                selectedImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
 </script>
 
 <!-- Script for date field -->
@@ -459,6 +532,26 @@ function formatDate(date) {
 </script>
 
 
+{{-- Script tambah kolom di bagian menu --}}
+<script>
+    function tambahKolomBreakfast() {
+        var kolomBarang = document.querySelector('.kolom-breakfast');
+        var clone = kolomBarang.cloneNode(true);
+        document.getElementById('kolom-breakfast').appendChild(clone);
+    }
+    function tambahKolomLunch() {
+        var kolomBarang = document.querySelector('.kolom-lunch');
+        var clone = kolomBarang.cloneNode(true);
+        document.getElementById('kolom-lunch').appendChild(clone);
+    }
+    function tambahKolomDinner() {
+        var kolomBarang = document.querySelector('.kolom-dinner');
+        var clone = kolomBarang.cloneNode(true);
+        document.getElementById('kolom-dinner').appendChild(clone);
+    }
+</script>
+
+
 
 
 
@@ -491,6 +584,18 @@ function formatDate(date) {
     <script src="{{asset('assets/waitMe/waitMe.min.js')}}"></script>
     <script src="{{asset('assets/js/isotope.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+        <!-- Vendor JS Files -->
+    <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{asset('assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{asset('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
+
+     <!-- Template Main JS File -->
+  <script src="{{asset('assets/js/impact.js')}}"></script>
     
 {{-- <-- SweetAlert2 --> --}}
 <script src="{{ asset('/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

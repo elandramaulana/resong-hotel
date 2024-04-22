@@ -1,13 +1,25 @@
 <?php
 
 use App\Http\Controllers\AutocompleteController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BillReportController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DaftarMenuController;
+use App\Http\Controllers\HouseKeepingController;
 use App\Http\Controllers\InhouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\KategoriBarangController;
+use App\Http\Controllers\KategoriMenuController;
+use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\RestoMenuController;
 use App\Http\Controllers\RoomAjaxRequest;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TransBarangController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
@@ -90,6 +102,7 @@ Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('book
 // route generate pdf in invoice view
 Route::middleware('auth')->group(function () {
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
+
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
 Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
 
@@ -110,6 +123,79 @@ Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_
 Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
 Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
+// House Keeping 
+Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
+Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
+Route::get('/housekeeping-table', [HouseKeepingController::class, 'call_table'])->name('cleaningroom.table');
+Route::get('/edit-housekeeping-detail/{id}',[HouseKeepingController::class, 'cleaning_detail'] )->name('cleaningroom.details');
+
+
+// Report
+Route::get('/bill-report', [BillReportController::class, 'index'])->name('bill.report');
+Route::get('/bill-detail',[BillReportController::class, 'detail'] )->name('bill.detail');
+
+
+
+// Supplier
+Route::get('/supplier', [SupplierController::class, 'index'])->name('list.supplier');
+Route::get('/tambah-supplier', [SupplierController::class, 'create'])->name('tambah.supplier');
+Route::post('/store-supplier', [SupplierController::class, 'storeSupplier'])->name('store.supplier');
+Route::get('/edit-supplier-detail/{id}',[SupplierController::class, 'edit'] )->name('edit.supplier');
+Route::delete('/supplier/destroy/{id}', [SupplierController::class, 'destroy'])->name('destroy.supplier');
+Route::get('/supplier/update/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+
+
+// Barang
+Route::get('/barang', [BarangController::class, 'index'])->name('list.barang');
+Route::get('/tambah-barang', [BarangController::class, 'create'])->name('tambah.barang');
+Route::post('/store-barang', [BarangController::class, 'storeBarang'])->name('store.barang');
+Route::get('/edit-barang-detail/{id}',[BarangController::class, 'edit'] )->name('edit.barang');
+Route::delete('/barang/destroy/{id}', [BarangController::class, 'destroy'])->name('destroy.barang');
+
+// Kategori Barang
+Route::get('/kategori', [KategoriBarangController::class, 'index'])->name('list.kategori');
+Route::get('/tambah-kategori', [KategoriBarangController::class, 'create'])->name('tambah.kategori');
+Route::post('/store-kategori', [KategoriBarangController::class, 'storeCategori'])->name('store.kategori');
+Route::get('/edit-kategori-detail/{id}',[KategoriBarangController::class, 'edit'] )->name('edit.kategori');
+Route::delete('/kategori/destroy/{id}', [KategoriBarangController::class, 'destroy'])->name('destroy.kategori');
+
+// Kategori Menu
+Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
+Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
+Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
+Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
+
+
+// Barang
+Route::get('/list-trans-barang', [TransBarangController::class, 'index'])->name('list.trans');
+Route::get('/tambah-trans-barang', [TransBarangController::class, 'createMasuk'])->name('tambah.trans.barang');
+Route::get('/kurang-trans-barang', [TransBarangController::class, 'createKurang'])->name('kurang.trans.barang');
+Route::post('/store-trans-barang', [TransBarangController::class, 'stroreTrans'])->name('store.trans.barang');
+Route::get('/edit-trans-barang/{id}',[TransBarangController::class, 'edit'] )->name('edit.trans.barang');
+Route::delete('/trans-barang/destroy/{id}', [TransBarangController::class, 'destroy'])->name('destroy.trans.barang');
+
+// Manage Menu
+Route::get('/menu-list', [MenuController::class, 'index'])->name('list.menu');
+Route::get('/tambah-menu', [MenuController::class, 'create'])->name('tambah.menu');
+Route::post('/store-menu', [MenuController::class, 'storeMenu'])->name('store.menu');
+Route::get('/edit-menu-detail/{id}',[MenuController::class, 'edit'] )->name('edit.menu');
+Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('destroy.menu');
+
+
+// Daftar Menu
+Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
+Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
+Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
+Route::get('/edit-daily-menu-detail/{id}',[DaftarMenuController::class, 'edit'] )->name('edit.daily.menu');
+Route::delete('/daily-menu/destroy/{id}', [DaftarMenuController::class, 'destroy'])->name('destroy.daily.menu');
+
+
+
+// Daftar Menu
+// Route::get('/resto-menu', [RestoMenuController::class, 'getMenuForToday'])->name('resto.menu'); //get available menu by day
+Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
+Route::get('/resto_form', [RestoMenuController::class, 'form'])->name('resto.form');
+Route::get('/select2room_inhouse', [RestoMenuController::class, 'room_inhouse_resto'])->name('inhouse.resto');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
 

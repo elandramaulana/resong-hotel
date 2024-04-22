@@ -51,7 +51,7 @@
                     <input type="text" hidden name="checkin_id" value="{{ $detailCheckin->checkin_id }}" >
                     <div class="mb-3">
                         <label for="invoice" class="form-label">#Invoice</label>
-                        <input value="INV-0000121" name="invoice" type="text" class="form-control" id="invoice" disabled>
+                        <input value="{{ $detailCheckin->no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" disabled>
                     </div>
                     
                     <div class="row">
