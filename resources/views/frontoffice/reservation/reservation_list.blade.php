@@ -33,35 +33,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Elandra Maulana</td>
-                                        <td>106</td>
-                                        <td>2024-02-04</td>
-                                        <td>2024-02-07</td>
-                                        <td>Traveloka</td>
-                                        <td>Rp567.000</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-warning rounded dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Select
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Check-in</a></li>
-                                                <li><a class="dropdown-item" href="{{route('edit_reservation')}}">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Cancel Reservation</a></li>
-                                            </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @php
+                                        $no =1;
+                                    @endphp
+                                    @foreach ($data as $dt)
+                                        @php
+                                            $showCheckinDate = tgl_indo($dt->reservation_checkin);
+                                            $showCheckoutDate = tgl_indo($dt->reservation_checkout);
+                                            $showDP = formatCurrency($dt->reservation_payment);
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $dt->reservation_name }}</td>
+                                            <td>{{ $dt->room_no }}</td>
+                                            <td>{{ $showCheckinDate }}</td>
+                                            <td>{{ $showCheckoutDate }}</td>
+                                            <td>{{ $dt->reservation_chanel }}</td>
+                                            <td>{{ $showDP }}</td>
+                                            <td>        
+                                                <div class="dropdown">
+                                                    <button class="btn btn-warning rounded dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Select
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">Check-in</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('edit_reservation')}}">Edit</a></li>
+                                                        <li><a class="dropdown-item btn-cancel" data-id="{{ $dt->reservation_id }}" >Cancel Reservation</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-           
         </div>
     </div>
 </section>
@@ -75,4 +83,7 @@
 </div>
 <!-- /.container-fluid -->
 
+@endsection
+@section('jsSection')
+  @include('frontoffice.reservation.reservation_list_js')
 @endsection

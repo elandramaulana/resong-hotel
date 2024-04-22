@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Resong Hotel Admin - Dashboard</title>
 
@@ -30,6 +31,7 @@
     <link href="{{asset('style.css')}}" rel="stylesheet">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
     
     {{-- Vendor --}}
     <link href="{{asset('assets/template/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -116,9 +118,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('booking')}}">Booking</a>
-                        <a class="collapse-item" href="{{route('reservation_list')}}">Reservation List</a>
-                        <a class="collapse-item" href="{{route('cancel_reservation_list')}}">Cancel Reservation</a>
-                        <a class="collapse-item" href="{{route('noshow_reservation_list')}}">No Show Reserve</a>
+                        <a class="collapse-item" href="{{route('reservation.list')}}">Reservation List</a>
+                        <a class="collapse-item" href="{{route('booking.canceled')}}">Cancel Reservation</a>
+                        <a class="collapse-item" href="{{route('booking.no_showed')}}">No Show Reserve</a>
                     </div>
                 </div>
             </li>
@@ -170,6 +172,19 @@
              <div class="sidebar-heading">
                 INVENTORY KITCHEN
             </div>
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Laundry
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('laundry')}}">
+                <i class="fas fa-fw fa-door-open"></i>
+                    <span>Laundry</span></a>
+            </li>
+            <!-- Heading -->
+            <!-- <div class="sidebar-heading">
+                BACK OFFICE
+            </div> -->
 
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
@@ -385,7 +400,7 @@
     <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-
+   
     <!-- Script for table -->
 <script>
     $(document).ready(function () {
@@ -531,31 +546,6 @@ function formatDate(date) {
     });
 </script>
 
-
-{{-- Script tambah kolom di bagian menu --}}
-<script>
-    function tambahKolomBreakfast() {
-        var kolomBarang = document.querySelector('.kolom-breakfast');
-        var clone = kolomBarang.cloneNode(true);
-        document.getElementById('kolom-breakfast').appendChild(clone);
-    }
-    function tambahKolomLunch() {
-        var kolomBarang = document.querySelector('.kolom-lunch');
-        var clone = kolomBarang.cloneNode(true);
-        document.getElementById('kolom-lunch').appendChild(clone);
-    }
-    function tambahKolomDinner() {
-        var kolomBarang = document.querySelector('.kolom-dinner');
-        var clone = kolomBarang.cloneNode(true);
-        document.getElementById('kolom-dinner').appendChild(clone);
-    }
-</script>
-
-
-
-
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -597,6 +587,9 @@ function formatDate(date) {
      <!-- Template Main JS File -->
   <script src="{{asset('assets/js/impact.js')}}"></script>
     
+    <script src="{{ asset('plugins') }}/select2/js/select2.min.js"></script>
+    <script src="{{ asset('assets') }}/js/global.js"></script>
+ 
 {{-- <-- SweetAlert2 --> --}}
 <script src="{{ asset('/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     @yield('jsSection');

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AutocompleteController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BillReportController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DaftarMenuController;
@@ -13,11 +15,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriMenuController;
-use App\Http\Controllers\LaundryController;
+
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RestoMenuController;
-use App\Http\Controllers\RoomAjaxRequest;
+
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\RoomAjaxRequest;
+use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use Illuminate\Support\Facades\Route;
@@ -34,8 +39,6 @@ require __DIR__.'/auth.php';
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -65,7 +68,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
 });
 
-
 // checkout view
 Route::middleware('auth')->group(function () {
 Route::get('/check-out', [CheckoutController::class, 'index'])->name('checkout.list');
@@ -85,6 +87,7 @@ Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name
 Route::middleware('auth')->group(function () {
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
     Route::get('/ajax-selectrooms-checkout', [RoomAjaxRequest::class, 'ajax_select_room_checkout'])->name('ajax.selectrooms.checkout');
+    Route::get('/ajax-selectrooms-reservations', [RoomAjaxRequest::class, 'ajax_select_room_reservations'])->name('ajax.selectrooms.reservations');
 });
 // checkin view
 Route::middleware('auth')->group(function () {
@@ -94,9 +97,13 @@ Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name
 });
 // reservation view
 Route::middleware('auth')->group(function () {
-Route::view('/booking', 'frontoffice/reservation/booking')->name('booking');
-Route::view('/booking-room-number', 'frontoffice/reservation/booking_room_number')->name('booking_room_number');
-Route::view('/booking-form', 'frontoffice/reservation/booking_form')->name('booking_form');
+Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+Route::post('/booking-pick-room', [BookingController::class, 'pick_room'])->name('booking.pick_room');
+Route::get('/booking-table', [BookingController::class, 'call_table'])->name('booking.table');
+Route::get('/booking-payment/{id}', [BookingController::class, 'booking_payment'])->name('booking.payment');
+Route::post('/booking-payment-store/', [BookingController::class, 'booking_store'])->name('booking.store');
+Route::post('/booking-cancel/', [BookingController::class, 'booking_cancel'])->name('booking.cancel');
+Route::get('/booking-no-show/', [BookingController::class, 'set_no_show'])->name('booking.set_no_show');
 });
 
 // route generate pdf in invoice view
@@ -104,9 +111,12 @@ Route::middleware('auth')->group(function () {
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
+Route::get('/reservation-list', [BookingController::class, 'reservation_list'])->name('reservation.list');
+Route::get('/booking-canceled/', [BookingController::class, 'booking_canceled'])->name('booking.canceled');
+Route::get('/booking-no-showed/', [BookingController::class, 'no_showed'])->name('booking.no_showed');
 Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
 
-Route::view('/cancel-reservation-list', 'frontoffice/reservation/cancel_reservation_list')->name('cancel_reservation_list');
+
 Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
 
 // Guest View
@@ -198,6 +208,21 @@ Route::get('/resto_form', [RestoMenuController::class, 'form'])->name('resto.for
 Route::get('/select2room_inhouse', [RestoMenuController::class, 'room_inhouse_resto'])->name('inhouse.resto');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
+
+
+
+//route for laundry feature
+Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
+Route::get('/laundry_form', [LaundryController::class, 'form'])->name('laundry.form');
+Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.post');
+
+
+//select2 route
+Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
+Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
+
+//ajax request
+Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 });
 

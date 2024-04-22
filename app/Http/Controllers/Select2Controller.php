@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
-use App\Models\Rooms;
+use App\Models\LaundryCat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class TestController extends Controller
+class Select2Controller extends Controller
 {
-    public function index()  {
+    public function room_inhouse()  {
         //query room checkin id = checkin_id value = room_no
         $query = Checkin::leftJoin('checkouts', 'checkouts.checkin_id', '=', 'checkins.id')
                             ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
@@ -26,4 +25,17 @@ class TestController extends Controller
         }
         echo json_encode($show);
     }
+    public function cat_laundry() {
+        $query = LaundryCat::all();
+        $no=1;
+        foreach($query as $data){
+            $show[] = [
+                'id'=>$data['id'],
+                'text'=>$data['catergory_name']
+            ];
+            $no++;
+        }
+        echo json_encode($show);
+    }
+    
 }
