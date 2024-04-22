@@ -34,9 +34,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($listlaundry as $laundry)
+                                    {{-- @foreach ($listlaundry as $laundry)
                                         
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

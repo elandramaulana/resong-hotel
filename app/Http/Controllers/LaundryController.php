@@ -20,7 +20,7 @@ class LaundryController extends Controller
                                 ->get();
         $Data = [
             'Title'=>'List Laundry',
-            'listlaundry'=>$ListLaundry
+            'listlaundry'=>""
         ];
         return view('laundry.laundry', $Data);
     }

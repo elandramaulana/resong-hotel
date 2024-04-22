@@ -15,5 +15,5 @@ class Laundry extends Model
     ];
 
     
-    }
+
 }
