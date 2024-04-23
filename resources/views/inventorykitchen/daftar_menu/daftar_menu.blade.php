@@ -27,10 +27,9 @@
                     @csrf
                       <div class="row">
                             <div class="col-sm-12">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <!-- Left Column -->
                                     <div class="col-md-6">
-                    
                                         <div class="col-sm-12">
                                             <div class="mb-3">
                                                     <label for="Channel" class="form-label">Hari</label>
@@ -60,38 +59,75 @@
                                                 </div>
                                             </div>
                                     </div>
-                                </div>
+                                </div> --}}
                         </div>
                         <div class="col-sm-12">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="manageMenuTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Nama</th>
-                                            <th>Kategori</th>
-                                            <th>Harga</th>
-                                            <th>Gambar</th>
-                                            <th>Pilih</th>
+                                            <th>Hari</th>
+                                            <th>Breakfast</th>
+                                            <th>Lunch</th>
+                                            <th>Dinner</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                   
                                          @foreach($menus as $menu)
                                             <tr>
-                                                <td>{{$menu->menu_name}}</td>
-                                                <td>{{$menu->menu_category}}</td>
-                                                <td>{{$menu->menu_price}}</td>
+                                                <td>{{$menu['day_name']}}</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <img width="200" src="{{ asset('storage/' . $menu->menu_photo) }}" alt="">
-                                                    </div>
-                                                 
+                                                    <ul class="list-group list-group-flush">
+                                                    @foreach($menu['Breakfast'] as $key)
+                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
+                                                    @endforeach
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-group list-group-flush">
+                                                    @foreach($menu['Lunch'] as $key)
+                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
+                                                    @endforeach
+                                                    </ul></td>
+                                                <td>
+                                                    
+                                                    @foreach($menu['Dinner'] as $key)
+                                                        {{ $key['menu_name'] }}
+                                                    @endforeach
+                                                    </ul>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <div class="form-check d-flex justify-content-center">
-                                                            <input  name="menu_ids[]" style="width: 20px; height:20px" class="form-check-input" type="checkbox" value="{{ $menu->menu_id }}" id="flexCheckDefault">
-                                                        </div>
+                                                        <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
+                                                           <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
+                                                        </button>
+                                                        <form action="" method="POST" style="display: inline;" id="deleteForm">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal">
+                                                               <i style="color: black" class="fas fa-trash-alt"></i>
+                                                             </button>
+                                                        </form>
+        
+                                                                    <!-- Delete Confirmation Modal for each post -->
+                                                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-sm">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body d-flex justify-content-center">
+                                                                            <img class="" src="{{asset('assets/img/alert.png')}}" alt="">
+                                                                        </div>
+                                                                        <div class="col-sm-12 d-flex justify-content-center">
+                                                                            <p>Yakin hapus data?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer d-flex justify-content-center">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                                            <button type="submit" class="btn btn-danger" onclick="document.getElementById('deleteForm').submit()">Hapus</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                       
                                                     </div>
                                                 </td>
                                             </tr>

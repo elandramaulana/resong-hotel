@@ -69,7 +69,7 @@ class BarangController extends Controller
         // Hapus data post
         $barang->delete();
     
-        Alert::success('Success', 'Supplier Berhasil Dihapus');
-         return redirect()->route('list.suppplier');
+        Alert::success('Success', 'Barang Berhasil Dihapus');
+         return redirect()->route('list.barang');
     }
 }

@@ -11,7 +11,12 @@ use App\Models\Checkout;
 use App\Models\Guest;
 use App\Models\Rooms;
 use DateTime;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -40,6 +45,8 @@ class CheckoutController extends Controller
             'checkout_payment'=>$request->checkout_method,
             'discount'=>$request->inputDiscount
         ];
+
+        // dd($dataCheckout);
         Checkout::create($dataCheckout);
         echo json_encode($dataCheckout);
         //update room status to vacant dirty
@@ -59,11 +66,14 @@ class CheckoutController extends Controller
                                         ->join('guests', 'guests.id', '=', 'checkins.guest_id')
                                         ->first();
         $detailDataCheckin = CheckinDetail::where('checkin_id', $getCheckinbyRoom->checkin_id)->get();
+
         $Data = [
             'Title'=>'Halaman Detail Checkout',
             'detailCheckin'=>$getCheckinbyRoom,
             'dataDetailCheckin'=>$detailDataCheckin
         ];
+
+        
         return view('frontoffice.checkout.checkout_detail', $Data);
     }
     public function extend(ExtendRequest $request) {
@@ -90,5 +100,78 @@ class CheckoutController extends Controller
         }else{
             return false;
         }
+    }
+
+    public function generatePDF()
+    {
+       
+        $data = DB::table('checkins AS c')
+        ->select('c.id AS invoice_number',
+                'c.id AS checkin_id',
+                'g.name_guest AS guest_name',
+                'ci.date_checkin AS checkin_time',
+                'ci.date_checkout AS checkout_time',
+                'c.chanel_checkin AS channel',
+                'c.guest_adult AS adult_count',
+                'c.guest_kids AS kids_count',
+                'cd.item_category',
+                'cd.item_name',
+                'cd.item_price',
+                'cd.item_qty',
+                'cd.item_description')
+        ->join('checkin_details AS cd', 'c.id', '=', 'cd.checkin_id')
+        ->join('guests AS g', 'c.guest_id', '=', 'g.id')
+        ->join('checkins AS ci', 'c.id', '=', 'ci.id')
+        ->get();    
+
+        // Mulai buffering output
+        ob_start();
+
+        // Mulai HTML
+        ?>
+       <html>
+        <head>
+            <title>Invoice Details</title>
+            <style>
+                /* Tambahkan CSS Anda di sini */
+            </style>
+        </head>
+        <body>
+            <section id="form-detail">
+                <div class="container-fluid mt-4 mb-5">
+                    <div class="card">
+                        <div class="card-body text-dark">
+                            
+                            <?php echo View::make('invoice_pdf', ['data' => $data])->render(); ?>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </body>
+        </html>
+        <?php
+
+        // Simpan output ke variabel
+        $html = ob_get_clean();
+
+        // Konfigurasi Dompdf
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf($options);
+
+        // Muat HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Atur ukuran dan orientasi kertas
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render PDF (generate)
+        $dompdf->render();
+
+        // Keluarkan (output) file PDF ke browser
+        return $dompdf->stream('invoice.pdf');
     }
 }

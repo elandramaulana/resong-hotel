@@ -18,4 +18,5 @@ class DailyMenu extends Model
     {
         return $this->belongsToMany(Menu::class, 'detail_daily', 'daily_id', 'menu_id');
     }
+
 }

@@ -60,8 +60,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkin-speedy', [CheckinController::class, 'speedy'])->name('checkin.speedy');
 });
 
-// route generate pdf in invoice view
-Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
 
 //ajax route
 Route::middleware('auth')->group(function () {
@@ -75,6 +73,8 @@ Route::get('/check-out-detail/{id}', [CheckoutController::class, 'detail'])->nam
 Route::post('/check-out-extend', [CheckoutController::class, 'extend'])->name('checkout.extend');
 Route::post('/check-out-action', [CheckoutController::class, 'action'])->name('checkout.action');
 Route::post('/check-out-editdate', [CheckoutController::class, 'edit_checkout_date'])->name('checkout.edit.outdate');
+Route::get('/generate-invoice', [CheckoutController::class, 'generatePDF'])->name('generate.invoice');
+
 });
 
 
@@ -95,6 +95,7 @@ Route::view('/normal-check-in', 'frontoffice/checkin/normal_checkin')->name('che
 Route::view('/normal-checkin-form', 'frontoffice/checkin/normal_checkin_form')->name('checkin_normal_form');
 Route::view('/speedy-check-in', 'frontoffice/checkin/speedy_checkin_form')->name('checkin_speedy');
 });
+
 // reservation view
 Route::middleware('auth')->group(function () {
 Route::get('/booking', [BookingController::class, 'index'])->name('booking');
@@ -108,7 +109,7 @@ Route::get('/booking-no-show/', [BookingController::class, 'set_no_show'])->name
 
 // route generate pdf in invoice view
 Route::middleware('auth')->group(function () {
-Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate.invoice');
+
 
 Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
 Route::get('/reservation-list', [BookingController::class, 'reservation_list'])->name('reservation.list');
@@ -191,7 +192,6 @@ Route::post('/store-menu', [MenuController::class, 'storeMenu'])->name('store.me
 Route::get('/edit-menu-detail/{id}',[MenuController::class, 'edit'] )->name('edit.menu');
 Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('destroy.menu');
 
-
 // Daftar Menu
 Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
 Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
@@ -199,29 +199,27 @@ Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily']
 Route::get('/edit-daily-menu-detail/{id}',[DaftarMenuController::class, 'edit'] )->name('edit.daily.menu');
 Route::delete('/daily-menu/destroy/{id}', [DaftarMenuController::class, 'destroy'])->name('destroy.daily.menu');
 
-
-
 // Daftar Menu
 // Route::get('/resto-menu', [RestoMenuController::class, 'getMenuForToday'])->name('resto.menu'); //get available menu by day
 Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
 Route::get('/resto_form', [RestoMenuController::class, 'form'])->name('resto.form');
-Route::get('/select2room_inhouse', [RestoMenuController::class, 'room_inhouse_resto'])->name('inhouse.resto');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
-
-
 
 //route for laundry feature
 Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
 Route::get('/laundry_form', [LaundryController::class, 'form'])->name('laundry.form');
 Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.post');
 
-
 //select2 route
 Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
 Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
+Route::get('/select2menuActive', [Select2Controller::class, 'menu_active'])->name('select2.menu_active');
 
-//ajax request
+//detail
+Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
+
+//ajax request   
 Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 });

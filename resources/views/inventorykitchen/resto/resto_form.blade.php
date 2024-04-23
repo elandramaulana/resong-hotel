@@ -29,7 +29,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6" id="formSelectRoom">
+                                <div class="col-lg-6" id="formSelectRoom" style="display: none ">
                                     <div class="form-group">
                                         <label for="">Pilih No Kamar</label>
                                         <select name="checkin_id" id="checkin_id" class="form-control singleInput">
@@ -46,9 +46,7 @@
                                             <h4 class="font-weight-bold text-dark">Detail Resto</h4>
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-end">
-                                            <button class="btn btn-extend">
-                                                <a style="text-decoration: none; color:white" href="#" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalAddLaundry">Tambah</a>
-                                            </button>
+                                                <a class="btn btn-extend" style="text-decoration: none; color:white" href="#" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalAddLaundry">Tambah</a>
                                         </div>
                                     </div>
                                     <br>
@@ -99,18 +97,45 @@
                           <small id="showerror"></small>
                           <div class="row">
                               <!-- Left Column -->
-                              <div class="col-md-12">   
+                              <div class="col-md-4">   
                                   <!-- Check-in Time -->
                                   <div class="mb-3">
-                                      <label for="item_category" class="form-label">Pilih Menu</label>
+                                      <label for="hari" class="form-label">Hari</label>
+                                      <input type="text" value="{{ $dayName }}" readonly id="day_name" class="form-control"> 
+                                      <small class="showerror"></small>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">   
+                                  <!-- Check-in Time -->
+                                  <div class="mb-3">
+                                      <label for="item_category" class="form-label">Kategori</label>
                                       <select name="category_id" class="form-control" style="width:100%" id="category_id">
-                                        @foreach($menus as $menu)
-                                            <option value="{{ $menu->menu_id }}" {{ $menu->menu_name === old('channel') ? 'selected' : '' }} >{{ $menu->menu_name }}</option>
-                                        @endforeach
+                                        <option value="1">opsitkjas</option>
+                                        <option value="2">opsitkjasasdasd</option>
                                       </select>    
                                       <small class="showerror"></small>
                                   </div>
                               </div>
+                              <div class="col-md-4">   
+                                  <!-- Check-in Time -->
+                                  <div class="mb-3">
+                                    <label for="jam" class="form-label">Jam</label>
+                                    <input name="jam" value="7.12" placeholder="Harga" type="text" class="form-control" readonly id="jam"  >
+                                    <small class="showerror"></small>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-12">
+
+                                <div class="mb-3">
+                                    <label for="list_menu" class="form-label">Pilih Menu</label>
+                                    <select name="list_menu" class="form-control" style="width:100%" id="list_menu">
+                                        <option value="">Pilih Menu</option>
+                                    </select>    
+                                    <small class="showerror"></small>
+                                </div>
+                              </div>
+
                               <!-- Right Column -->
                               <div class="col-md-4">
                                 <input type="text" name="" hidden id="frm_cat_id">

@@ -63,7 +63,7 @@
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
                                                    <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
                                                 </button>
-                                                <form action="{{ route('destroy.supplier', $brg->id) }}" method="POST" style="display: inline;" id="deleteForm{{$brg->id}}">
+                                                <form action="{{ route('destroy.barang', $brg->id) }}" method="POST" style="display: inline;" id="deleteForm{{$brg->id}}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal{{$brg->id}}">

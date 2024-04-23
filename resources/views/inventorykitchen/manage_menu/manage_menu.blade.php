@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $counter_menu }}</td>
                                         <td>{{$menu->menu_name}}</td>
-                                        <td>{{$menu->menu_category}}</td>
+                                        <td>{{$menu->nama_kategori}}</td>
                                         <td>{{$menu->menu_price}}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">

@@ -3,11 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
+use App\Models\DailyMenu;
 use App\Models\LaundryCat;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class Select2Controller extends Controller
 {
+    public function detail_menu(Request $request) {
+        $menu_id = $request->menu_id;
+        $MenuData = Menu::find($menu_id);
+        echo json_encode($MenuData);
+    }
+    public function menu_active(Request $request) {
+        //query room checkin id = checkin_id value = room_no
+        $day_id = $request->day_id;
+        $cat_id = $request->cat_id;
+        $query = DailyMenu::join('detail_daily', 'detail_daily.daily_id', '=', 'daily_menus.id')
+                            ->join('menus', 'menus.menu_id', '=', 'detail_daily.menu_id')
+                            ->where('daily_menus.day_name', $day_id)
+                            ->where('menus.menu_category', $cat_id)
+                            ->get();
+          
+        foreach($query as $data){
+            $show[] = [
+                'id'=>$data['id'],
+                'text'=>$data['menu_name'].' ('.$data['menu_price'].')'
+            ];
+        }
+        echo json_encode($show);
+    }
     public function room_inhouse()  {
         //query room checkin id = checkin_id value = room_no
         $query = Checkin::leftJoin('checkouts', 'checkouts.checkin_id', '=', 'checkins.id')

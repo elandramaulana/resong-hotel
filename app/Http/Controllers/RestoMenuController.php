@@ -56,6 +56,8 @@ class RestoMenuController extends Controller
         $englishDayName = Carbon::now()->englishDayOfWeek;
         $dayName = $dayNameMapping[$englishDayName];
 
+
+
         // Query untuk mengambil menu berdasarkan day_name dan status
         $menus = DB::table('detail_daily as dd')
             ->select('dd.menu_id', 'm.menu_name', 'm.menu_price', 'm.menu_photo')
@@ -65,6 +67,6 @@ class RestoMenuController extends Controller
             ->where('dm.status', 'Active')
             ->get();    
 
-        return view('inventorykitchen.resto.resto_form', compact('menus'), $Data);
+        return view('inventorykitchen.resto.resto_form', compact('menus', 'dayName'), $Data);
     }
 }

@@ -61,7 +61,7 @@
                             <!-- Invoice (Disabled) -->
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input value="{{ $detailCheckin->name_guest }}" name="" type="text" class="form-control" id="invoice" disabled>
+                                <input value="{{ $detailCheckin->name_guest }}" name="nama" type="text" class="form-control" id="invoice" disabled>
                             </div>
  
                             <!-- Check-in Time -->
@@ -73,7 +73,7 @@
                             <!-- Number of Adults -->
                             <div class="mb-3">
                                 <label for="adults" class="form-label">Jumlah Dewasa</label>
-                                <input value="{{ $detailCheckin->guest_adult }}" name="" type="number" class="form-control" id="adults" disabled>
+                                <input value="{{ $detailCheckin->guest_adult }}" name="jumlah_dewasa" type="number" class="form-control" id="adults" disabled>
                             </div>
                         </div>
 
@@ -104,7 +104,7 @@
                             <!-- Number of Children -->
                             <div class="mb-3">
                                 <label for="children" class="form-label">Jumlah Anak-anak</label>
-                                <input name="" value="3" type="number" class="form-control" id="children" disabled>
+                                <input name="number_child" value="3" type="number" class="form-control" id="children" disabled>
                             </div>
                         </div>
                     </div>
@@ -126,9 +126,10 @@
                 </div>
 
                 <div class="col-sm-6 text-warning d-flex justify-content-end text-center">
-                <button class="btn btn-print" data-route="{{ route('generate.invoice') }}">
-                    Print
-                </button>
+                    <button class="btn btn-print" onclick="window.location='{{ route("generate.invoice") }}'">
+                        Print PDF
+                    </button>
+                    
                 
                 </div>
 
@@ -187,14 +188,14 @@
                                         @php
                                             $showDeposit = formatCurrency($detailCheckin->payment);
                                         @endphp
-                                        <input value="{{ $showDeposit }}" type="text" class="form-control" id="inputName" disabled>
+                                        <input name="deposit" value="{{ $showDeposit }}" type="text" class="form-control" id="inputName" disabled>
                                     </div>
                                 </div>
                                 <!-- Total -->
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-3 col-form-label">Total:</label>
                                     <div class="col-sm-8">
-                                        <input value="{{ $ShowTotal }}" type="text" class="form-control" id="inputName" disabled>
+                                        <input name="total" value="{{ $ShowTotal }}" type="text" class="form-control" id="inputName" disabled>
                                     </div>
                                 </div>
                                 <!-- Discount -->
@@ -229,7 +230,7 @@
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-3 col-form-label">Change:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="changeValue"  disabled>
+                                        <input type="text" name="changeValue" class="form-control" id="changeValue"  disabled>
                                     </div>
                                 </div>
                         </div>

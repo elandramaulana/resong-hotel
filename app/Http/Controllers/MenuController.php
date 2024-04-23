@@ -17,7 +17,7 @@ class MenuController extends Controller
             'Title'=>"Daftar Menu"
         ];
 
-        $menus = Menu::all();
+        $menus = Menu::join('kategori_menu', 'kategori_menu.id', '=', 'menus.menu_category')->get();
         $barang = Barang::all();
         return view('inventorykitchen.manage_menu.manage_menu', compact('menus', 'barang'), $Data);
     }
