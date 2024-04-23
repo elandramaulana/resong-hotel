@@ -114,14 +114,10 @@ Route::get('/detail-inhouse-guest/{id}',[InhouseController::class, 'inhouse_deta
 Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
 
-
 Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
 Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
-
 Route::get('/test', [TestController::class, 'index'])->name('test');
-
-
 
 //route for laundry feature
 Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
@@ -132,6 +128,10 @@ Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.
 //select2 route
 Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
 Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
+//datatable route
+Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
+
+
 
 //ajax request
 Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
