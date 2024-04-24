@@ -56,9 +56,8 @@ class CheckoutController extends Controller
         $Room = Rooms::find($room_id);
         $Room->room_status = 'VACANT DIRTY';
         $Room->save();
-
-        
-        return redirect('dashboard')->with('success', 'Proses Checkout Selesai');
+        $invoiceNeed = ['success'=>'Proses Checkout Selesai', 'checkin_id'=>$request->checkin_id];
+        return redirect('dashboard')->with($invoiceNeed);
 
     }
     public function  detail(Request $request, $id)  {

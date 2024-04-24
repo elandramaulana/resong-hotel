@@ -10,11 +10,14 @@
             <li>{!! \Session::get('message') !!}</li>
         </ul>
     </div>
-@endif
+    @endif
 @if(session('success'))
 <div class="alert alert-success">
     {{ session('success') }}
 </div>
+@endif
+@if(\Session::has('checkin_id'))
+    <script>window.location = {{ route('generate.invoice', \Session::get('checkin_id')) }};</script>
 @endif
 <section>
     <!-- Content Row -->
