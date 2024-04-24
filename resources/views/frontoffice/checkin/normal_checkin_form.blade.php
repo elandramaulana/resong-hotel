@@ -108,8 +108,6 @@
     <div class="container-fluid mt-4 mb-5 ">
         <div class="card">
             <div class="card-body text-dark">
-                
-
                 <!-- Id -->
                 <div class="row mt-3 ">
                     <label for="" class="col-sm-2 col-form-label">ID Number*</label>
