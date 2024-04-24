@@ -7,6 +7,7 @@ use App\Models\CheckinDetail;
 use App\Models\DetLaundry;
 use App\Models\Laundry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\select;
 
@@ -18,14 +19,37 @@ class LaundryController extends Controller
         // Query data based on filters
         $query = Laundry::query();
         $query->leftJoin('checkins', 'checkins.id', '=', 'laundries.checkin_id');
+        $query->leftJoin('rooms', 'rooms.id', '=', 'checkins.room_id');
         $query->leftJoin('guests', 'guests.id', '=', 'checkins.guest_id');
+        $query->select('checkins.id as checkin_id');
+        $query->addSelect('rooms.id as room_id', 'rooms.room_no');
+        $query->addSelect('guests.id as guest_id', 'guests.name_guest');
+        $query->addSelect('laundries.laundry_type', 'laundries.id as laundry_id');
         if (!empty($filters)) {
             $query->whereIn('laundry_type', $filters);
         }
-
         $data = $query->get();
 
-        return response()->json($data);
+        foreach ($data as $key) {
+            $price = $this->getSumPrice($key->laundry_id);
+            $return[] = [
+                'checkin_id'=>$key->checkin_id,
+                'room_id'=>$key->room_id,
+                'room_no'=>$key->room_no,
+                'guest_id'=>$key->guest_id,
+                'name_guest'=>$key->name_guest,
+                'laundry_id'=>$key->laundry_id,
+                'laundry_type'=>$key->laundry_type,
+                'total_price'=>formatCurrency($price)
+            ];
+        }
+        return response()->json($return);
+    }
+    public function getSumPrice($laundry_id){
+        $query = DetLaundry::select(DB::raw('SUM(det_laundry_price * det_laundry_qty) as jumlah'))
+                    ->where('laundry_id', $laundry_id)
+                    ->get()->first();
+        return $query->jumlah;
     }
     public function index(){
         $ListLaundry = Laundry::all();

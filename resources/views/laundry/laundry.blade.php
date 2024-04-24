@@ -1,5 +1,12 @@
 @extends('layouts.dashboard_layout')
 @section('content')
+<style>
+    .price {
+        text-align: right;
+        display: inline-block;
+        width: 100%; /* Ensure the width takes the whole column */
+    }
+</style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 <section class="mt-5">
@@ -41,17 +48,16 @@
                             <table class="table table-bordered" id="dtShow" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th width="5">No</th>
-                                        <th>Guest Name</th>
-                                        <th>Room</th>
-                                        <th>Kategory</th>
-                                        <th>Harga</th>
+                                        <th width="5%">No</th>
+                                        <th width="40%">Guest Name</th>
+                                        <th width="20">Room</th>
+                                        <th width="20">Kategory</th>
+                                        <th width="20">Harga</th>
                                         {{-- <th>Status</th> --}}
-                                        <th>Aksi</th>
+                                        <th width="40">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
                                 </tbody>
                             </table>
                         </div>

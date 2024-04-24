@@ -122,7 +122,9 @@ Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservat
 
 // Guest View
 Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
 Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
 Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
 Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
 Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');

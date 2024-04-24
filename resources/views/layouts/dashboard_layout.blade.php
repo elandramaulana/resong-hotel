@@ -136,6 +136,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('inhouse.list')}}">In-house Guest</a>
+                        <a class="collapse-item" href="{{route('checked_out.list')}}">Checkout History</a>
                         <a class="collapse-item" href="{{route('guest_database')}}">Guest Database</a>
                     </div>
                 </div>

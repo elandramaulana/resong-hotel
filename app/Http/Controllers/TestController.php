@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
-    public function index()  {
-        $c = new DaftarMenuController();
-        $show = $c->listDetail(1,2);
-        echo json_encode($show);
+    public function index(){
+        $laund = new LaundryController();
+        $jumlah = $laund->getSumPrice(5);
+        print_r($jumlah);
     }
 }
