@@ -20,15 +20,7 @@
                 <div class="row mt-4">
                     @foreach ($dt['detail_room'] as $dr)
                     <div class="col-sm-2">
-                        <button class="btn @if($dr['room_status']=='VACANT READY')
-                            {{ 'btn-success' }}
-                        @elseif($dr['room_status']=='VACANT DIRTY')
-                            {{ 'btn-danger' }}
-                        @elseif($dr['room_status']=='BOOKED')
-                            {{ 'btn-warning' }}
-                        @elseif($dr['room_status']=='OCCUPIED')
-                            {{ 'btn-primary' }}
-                        @endif mb-4">
+                        <button class="btn btn-primary">
                             <a data-toggle="tooltip" data-placement="top"  title="{{ $dr['room_status'] }}" href="{{route('checkout.detail', $dr['checkin_id'])}}">{{ $dr['room_no'] }}</a>
                         </button>
                     </div>        
