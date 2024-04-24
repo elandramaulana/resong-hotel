@@ -280,7 +280,7 @@ class InhouseController extends Controller
         $user->row_number = $start + $index + 1;
         });
         foreach($listData as $item_data){
-           $link_checkout = route('checkout.detail', $item_data->room_id);
+           $link_checkout = route('checkout.detail', $item_data->checkin_id);
            $link_detail = route('inhouse.details', $item_data->checkin_id);
             $btn_action = "<div class='dropdown'>
             <button class='btn btn-warning rounded dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>

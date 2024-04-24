@@ -29,7 +29,7 @@
                         @elseif($dr['room_status']=='OCCUPIED')
                             {{ 'btn-primary' }}
                         @endif mb-4">
-                            <a data-toggle="tooltip" data-placement="top"  title="{{ $dr['room_status'] }}" href="{{route('checkout.detail', $dr['id'])}}">{{ $dr['room_no'] }}</a>
+                            <a data-toggle="tooltip" data-placement="top"  title="{{ $dr['room_status'] }}" href="{{route('checkout.detail', $dr['checkin_id'])}}">{{ $dr['room_no'] }}</a>
                         </button>
                     </div>        
                     @endforeach

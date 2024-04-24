@@ -61,7 +61,7 @@ class CheckoutController extends Controller
 
     }
     public function  detail(Request $request, $id)  {
-        $getCheckinbyRoom = Checkin::where('room_id', $id)
+        $getCheckinbyRoom = Checkin::where('checkins.id', $id)
                                         ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id') 
                                         ->where('room_status', 'OCCUPIED')
                                         ->join('rooms', 'rooms.id', '=', 'checkins.room_id')

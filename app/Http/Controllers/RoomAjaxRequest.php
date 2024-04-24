@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkin;
 use App\Models\Rooms;
 use FontLib\Table\Type\fpgm;
 use Illuminate\Http\Request;
@@ -33,9 +34,16 @@ class RoomAjaxRequest extends Controller
                         ->select('room_type', 'room_price')
                         ->get();
         foreach ($FisrtQuery as $Rooms) {
-            $DetailRoom = Rooms::where('room_type', $Rooms['room_type'])
-                            ->where('room_price', $Rooms['room_price'])
-                            ->where('room_status', 'OCCUPIED')->get();
+            $DetailRoom = Checkin::leftJoin('checkouts', 'checkins.id','=','checkouts.checkin_id')
+                                ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
+                                ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                                ->where('checkouts.id', null)
+                                ->where('room_type', $Rooms['room_type'])
+                                ->where('room_price', $Rooms['room_price'])
+                                ->select('checkins.*', 'checkins.id as checkin_id')
+                                ->addselect('rooms.*', 'rooms.id as room_id')
+                                ->addselect('guests.name_guest', 'guests.id as guest_id')
+                                ->get();
             $DR[] = [
                 'room_type'=>$Rooms['room_type'],
                 'room_price'=>formatCurrency($Rooms['room_price']),
