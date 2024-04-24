@@ -19,24 +19,39 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="card text-left">
+                          <div class="card-body">
+                            <h4 class="card-title">Filter Data</h4>
+                            <div class="form-check form-switch form-check-inline">
+                                <input type="checkbox" value="Guest" class="form-check-input filterCheckbox" id="check-guest" autocomplete="off" checked >
+                                <label class="form-check-label " for="check-guest">Guest</label>
+                            </div>
+                        
+                            <div class="form-check form-switch form-check-inline">
+                                <input type="checkbox" value="Linen" class="form-check-input filterCheckbox" id="check-linen" autocomplete="off" checked >
+                                <label class="form-check-label " for="check-linen">Linen</label>
+                            </div>
+                            
+                            <div class="form-check form-switch form-check-inline">
+                                <input type="checkbox" value="Uniform" class="form-check-input filterCheckbox" id="check-uniform" autocomplete="off" checked >
+                                <label class="form-check-label " for="check-uniform">Uniform</label>
+                            </div>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="noShowReservations" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dtShow" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th width="5">No</th>
                                         <th>Guest Name</th>
                                         <th>Room</th>
                                         <th>Kategory</th>
-                                        <th>Quantity</th>
                                         <th>Harga</th>
-                                        <th>Status</th>
+                                        {{-- <th>Status</th> --}}
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($listlaundry as $laundry)
-                                        
-                                    @endforeach --}}
+                                    
                                 </tbody>
                             </table>
                         </div>

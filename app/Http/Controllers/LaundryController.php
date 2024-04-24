@@ -12,15 +12,26 @@ use function Laravel\Prompts\select;
 
 class LaundryController extends Controller
 {
+    public function list_laundry(Request $request){
+        $filters = $request->input('filters', []);
+
+        // Query data based on filters
+        $query = Laundry::query();
+        $query->leftJoin('checkins', 'checkins.id', '=', 'laundries.checkin_id');
+        $query->leftJoin('guests', 'guests.id', '=', 'checkins.guest_id');
+        if (!empty($filters)) {
+            $query->whereIn('laundry_type', $filters);
+        }
+
+        $data = $query->get();
+
+        return response()->json($data);
+    }
     public function index(){
-        $ListLaundry = Laundry::join('det_laundries', 'det_laundries.laundry_id', '=', 'laundries.id')
-                                ->where('checkin_id', '!=', null)
-                                ->sum('det_laundries.det_laundry_price')
-                                ->groupBy('laundries.id')
-                                ->get();
+        $ListLaundry = Laundry::all();
         $Data = [
             'Title'=>'List Laundry',
-            'listlaundry'=>""
+            'listlaundry'=>$ListLaundry
         ];
         return view('laundry.laundry', $Data);
     }

@@ -130,10 +130,8 @@ Route::get('/detail-inhouse-guest/{id}',[InhouseController::class, 'inhouse_deta
 Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
 
-
 Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
 Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
-
 // House Keeping 
 Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
 Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
@@ -218,6 +216,10 @@ Route::get('/select2menuActive', [Select2Controller::class, 'menu_active'])->nam
 
 //detail
 Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
+//datatable route
+Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
+
+
 
 //ajax request   
 Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
