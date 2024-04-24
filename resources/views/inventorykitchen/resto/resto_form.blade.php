@@ -4,7 +4,8 @@
 <div class="container-fluid">
 <section class="mt-5">
     <div class="container-fluid">
-        <form action="" method="POST" id="formInput">
+        <form action="{{ route('resto.resto_submit') }}" method="POST" id="formInput">
+            @csrf
             <div class="row">
                 <!-- Check-in Table -->
                 <div class="col-sm-12">
@@ -38,6 +39,30 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-sm-4" id="nama_customer" style="display: none">
+                                    <div class="mb-3" >
+                                        <label for="nama_customer" class="form-label">Nama</label>
+                                        <input name="nama_customer" value="Ujang" placeholder="Harga" type="text" class="form-control"   required
+                                        <small class="showerror"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" id="contact_customer" style="display: none">
+                                    <div class="mb-3" >
+                                        <label for="contact_customer" class="form-label">Kontak</label>
+                                        <input name="contact_customer" value="089785654" placeholder="Harga" type="text" class="form-control"   required
+                                        <small class="showerror"></small>
+                                    </div>
+                                    </div>
+                                <div class="col-sm-4" id="customer_email" style="display: none">
+                                    <div class="mb-3" >
+                                        <label for="customer_email" class="form-label">Email</label>
+                                        <input name="customer_email" value="ujangganteng@gmail.com" placeholder="Harga" type="text" class="form-control"  required >
+                                        <small class="showerror"></small>
+                                    </div>
+                                    </div>
+                                </div>
                             <br>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -70,7 +95,7 @@
                                         </table>
                                     </div>
                                     <div class="col-sm-12 d-flex justify-content-end">
-                                        <button disabled type="submit" class="btn submit-btn mr-5">
+                                        <button disabled id="btnSubmit" type="submit" class="btn submit-btn mr-5">
                                             <i class="fas fa-save"></i> Save
                                         </button>
                                     </div>
@@ -86,7 +111,7 @@
 </section>
 </div>
 <div class="modal fade" id="modalAddLaundry" tabindex="-1" aria-labelledby="modalAddLaundry" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
         <div class="card shadow mb-4">
@@ -110,8 +135,7 @@
                                   <div class="mb-3">
                                       <label for="item_category" class="form-label">Kategori</label>
                                       <select name="category_id" class="form-control" style="width:100%" id="category_id">
-                                        <option value="1">opsitkjas</option>
-                                        <option value="2">opsitkjasasdasd</option>
+                                        <option value="">Pilih Kategory</option>
                                       </select>    
                                       <small class="showerror"></small>
                                   </div>
@@ -125,7 +149,7 @@
                                 </div>
                               </div>
 
-                              <div class="col-sm-12">
+                              <div class="col-sm-4">
 
                                 <div class="mb-3">
                                     <label for="list_menu" class="form-label">Pilih Menu</label>
@@ -135,44 +159,23 @@
                                     <small class="showerror"></small>
                                 </div>
                               </div>
+                              <div class="col-sm-4">
 
-                              <!-- Right Column -->
-                              <div class="col-md-4">
-                                <input type="text" name="" hidden id="frm_cat_id">
-                                <input type="text" name="" hidden id="frm_cat_price">
-                                <input type="text" name="" hidden id="frm_cat_unit">
-                                <input type="text" name="" id="frm_cat_name" hidden>
-                                  <!-- Check-out Time -->
-                                  <div class="mb-3">
-                                      <label for="menu_price" class="form-label">Harga Satuan</label>
-                                      <input name="menu_price" value="" placeholder="Harga" type="text" class="form-control" readonly id="menu_price"  >
-                                      <small class="showerror"></small>
-                                  </div>
+                                 <!-- Check-out Time -->
+                                 <div class="mb-3">
+                                    <label for="menu_price" class="form-label">Harga Satuan</label>
+                                    <input name="menu_price" value="" placeholder="Harga" type="text" class="form-control" readonly id="menu_price"  >
+                                    <small class="showerror"></small>
+                                </div>
                               </div>
-  
-                              <div class="col-md-4">   
-                                  <!-- Check-in Time -->
-                                  <div class="mb-3">
-                                      <label for="cat_unit" class="form-label">Total</label>
-                                      <input type="text" name="menu_total" id="menu_total" class="form-control" placeholder="Total Biaya" readonly>
-                                      <small class="showerror"></small>
-                                  </div>
-                              </div>
+
   
                               <!-- Right Column -->
                               <div class="col-md-4">
                                   <!-- Check-out Time -->
                                   <div class="mb-3">
                                       <label for="item_qty" class="form-label">Jumlah</label>
-                                      <input class="form-control" type="number" name="menu_qty" id="menu_qty" placeholder="Jumlah ">
-                                      <small class="showerror"></small>
-                                  </div>
-                              </div>
-                              <div class="col-md-12">
-                                  <!-- Check-out Time -->
-                                  <div class="mb-3">
-                                      <label for="item_description" class="form-label">Deskripsi</label>
-                                      <textarea name="item_description" id="item_description" class="form-control" placeholder="Inputkan Keterangan terkait service ini"></textarea>
+                                      <input class="form-control" min="1" value="1" type="number" name="menu_qty" id="menu_qty" placeholder="Jumlah ">
                                       <small class="showerror"></small>
                                   </div>
                               </div>

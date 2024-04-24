@@ -26,20 +26,20 @@
               
                       <div class="row">
                             <div class="col-sm-12">
-                                {{-- <div class="row">
+                                <div class="row">
                                     <!-- Left Column -->
                                     <div class="col-md-6">
                                         <div class="col-sm-12">
                                             <div class="mb-3">
                                                     <label for="Channel" class="form-label">Hari</label>
                                                     <select name="day_name" class="form-control" id="channel">
-                                                        <option value="Senin">Senin</option>
-                                                        <option value="Selasa">Selasa</option>
-                                                        <option value="Rabu">Rabu</option>
-                                                        <option value="Kamis">Kamis</option>
-                                                        <option value="Jumat">Jum'at</option>
-                                                        <option value="Sabtu">Sabtu</option>
-                                                        <option value="Minggu">Minggu</option>
+                                                        <option value="1">Senin</option>
+                                                        <option value="2">Selasa</option>
+                                                        <option value="3">Rabu</option>
+                                                        <option value="4">Kamis</option>
+                                                        <option value="5">Jum'at</option>
+                                                        <option value="6">Sabtu</option>
+                                                        <option value="7">Minggu</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -58,7 +58,7 @@
                                                 </div>
                                             </div>
                                     </div>
-                                </div> --}}
+                                </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="table-responsive">
@@ -73,39 +73,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         @foreach($menus as $menu)
+                                        
                                             <tr>
-                                                <td>{{$menu['day_name']}}</td>
                                                 <td>
-                                                    <ul class="list-group list-group-flush">
-                                                    @foreach($menu['Breakfast'] as $key)
-                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
-                                                    @endforeach
-                                                    </ul>
+
                                                 </td>
                                                 <td>
-                                                    <ul class="list-group list-group-flush">
-                                                    @foreach($menu['Lunch'] as $key)
-                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
-                                                    @endforeach
-                                                    </ul></td>
-                                                <td>
                                                     
-                                                    @foreach($menu['Dinner'] as $key)
-                                                        {{ $key['menu_name'] }}
-                                                    @endforeach
-                                                    </ul>
+                                                </td>
+                                                <td>
+                                                   
+                                                <td>
+                                            
                                                 </td>
                                                 <td>
                                                     <div>
                                                         <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                           <a style="color: black" href="{{route('manage.daily')}}">  <i class="fas fa-edit"></i></a>
+                                                           <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
                                                         </button>
                                                     </div>
                                                 </td>
                                             </tr>
                                        
-                                            @endforeach
+                                        
                                       
                                         </tbody>
                                 </table>

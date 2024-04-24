@@ -36,10 +36,9 @@ class DaftarMenuController extends Controller
         return view('inventorykitchen.daftar_menu.daftar_menu', compact('menus', 'dailyMenu'), $Data);
     }
 
-    public function create() {
-        $menus = Menu::all();
-        $dailyMenu = DailyMenu::all();
-        return view('inventorykitchen.daftar_menu.tambah_daftar_menu', compact('menus', 'dailyMenu'));
+    public function manage() {
+       
+        return view('inventorykitchen.daftar_menu.manage_daily');
     }
     private function listDetail($daily_id, $kat_id){
         $Model = new DetailDaily();
@@ -49,6 +48,11 @@ class DaftarMenuController extends Controller
             }
         return $show;
     }
+
+    public function update(){
+
+    }
+
     public function storeMenuDaily (Request $request)
     {
 

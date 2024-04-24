@@ -27,11 +27,9 @@
                         data: data,
                     });
             });
-
             }else{
                 element.style.display = 'none';
             }
-
             enBtnSubmit();
          });
         $(document).on('change', '#formSelectRoom', function(e){

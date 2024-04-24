@@ -17,6 +17,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CheckoutController extends Controller
 {
@@ -55,6 +56,8 @@ class CheckoutController extends Controller
         $Room = Rooms::find($room_id);
         $Room->room_status = 'VACANT DIRTY';
         $Room->save();
+
+        
         return redirect('dashboard')->with('success', 'Proses Checkout Selesai');
 
     }
@@ -101,29 +104,38 @@ class CheckoutController extends Controller
             return false;
         }
     }
-
-    public function generatePDF()
+    private function detCheckin($checkin_id, $cat){
+        $detCheckin = CheckinDetail::where('checkin_id', $checkin_id)
+                                    ->where('item_category', $cat)
+                                    ->get();
+        return $detCheckin;
+    }
+    public function generatePDF($checkin_id)
     {
-       
-        $data = DB::table('checkins AS c')
-        ->select('c.id AS invoice_number',
-                'c.id AS checkin_id',
-                'g.name_guest AS guest_name',
-                'ci.date_checkin AS checkin_time',
-                'ci.date_checkout AS checkout_time',
-                'c.chanel_checkin AS channel',
-                'c.guest_adult AS adult_count',
-                'c.guest_kids AS kids_count',
-                'cd.item_category',
-                'cd.item_name',
-                'cd.item_price',
-                'cd.item_qty',
-                'cd.item_description')
-        ->join('checkin_details AS cd', 'c.id', '=', 'cd.checkin_id')
-        ->join('guests AS g', 'c.guest_id', '=', 'g.id')
-        ->join('checkins AS ci', 'c.id', '=', 'ci.id')
-        ->get();    
-
+        $checkin_info = Checkin::join('guests', 'guests.id', '=', 'Checkins.guest_id')
+                                ->where('checkins.id', $checkin_id)
+                                ->get()->first();
+        $guestInfo = [
+            'no_invoice'=>$checkin_info->no_invoice,
+            'name_guest'=>$checkin_info->name_guest,
+            'guest_contact'=>$checkin_info->guest_contact,
+            'guest_email'=>$checkin_info->guest_email,
+            'deposit'=>$checkin_info->payment
+        ];
+        
+        $detCheckout = Checkout::where('checkin_id', $checkin_id)
+                                ->get()->first();
+        $checkoutInfo = [
+            'checkout_payment'=>$detCheckout->checkout_payment,
+            'discount'=>$detCheckout->discount
+        ];                     
+        $data = [
+            'checkin_info'=>$guestInfo,
+            'detail_vacant'=>$this->detCheckin($checkin_id, 'Rooms'),
+            'detail_resto'=>$this->detCheckin($checkin_id, 'Resto'),
+            'detail_laundry'=>$this->detCheckin($checkin_id, 'Laundry'),
+            'detail_checkout'=>$checkoutInfo,
+        ];
         // Mulai buffering output
         ob_start();
 
@@ -141,7 +153,6 @@ class CheckoutController extends Controller
                 <div class="container-fluid mt-4 mb-5">
                     <div class="card">
                         <div class="card-body text-dark">
-                            
                             <?php echo View::make('invoice_pdf', ['data' => $data])->render(); ?>
                         </div>
                     </div>
@@ -174,4 +185,5 @@ class CheckoutController extends Controller
         // Keluarkan (output) file PDF ke browser
         return $dompdf->stream('invoice.pdf');
     }
+
 }

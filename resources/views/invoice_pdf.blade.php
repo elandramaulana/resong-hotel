@@ -4,14 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Invoice</title>
-   
+    <title>Invoice</title>   
 </head>
 <body>
 
    <div class="row">
     <div class="col-sm-6">
-        <h2>Invoice Id: 8234623</h2>
+        <h2>Invoice Id: {{ $data['checkin_info']['no_invoice'] }} </h2>
     </div>
     <div class="col-sm-6">
         {{-- <img src="{{ asset('img/login-logo.png') }}" /> --}}
@@ -24,13 +23,15 @@
         <table style="width:100%" class="w-full">
             <tr>
                 <td style="width: 50%" class="w-half">
-                    <div><h4>To:</h4></div>
-                    <div>Ujang</div>
-                    <div></div>
+                    <div style="padding-bottom:8px">To:</div>
+                    <div style="padding-bottom:5px;padding-left: 10px; font-weight:bold"> {{ $data['checkin_info']['name_guest'] }}</div>
+                    <div style="padding-bottom:5px;padding-left: 10px"> {{ $data['checkin_info']['guest_contact'] }}</div>  
+                    <div style="padding-bottom:5px;padding-left: 10px"> {{ $data['checkin_info']['guest_email'] }} </div> 
+                    
                     <br>
                 </td>
                 <td style="width: 50%" class="w-half">
-                    <div><h4>From:</h4></div>
+                    <div style="padding-bottom:8px">From:</div>
                     <div>Resong Residence</div>
                     <div></div>
                     <br>
@@ -38,75 +39,104 @@
             </tr>
         </table>
     </div>
- 
-    <div class="margin-top">
-        <table style=" font-size: 0.875rem; width: 100%;" class="products">
+    <div>
+        <table style=" font-size: 0.875rem; width: 100%;">
             <tr style=" background-color: #d3c54a;">
-                <th style="color: #ffffff; padding: 0.5rem;">product Service</th>
+                <th style="color: #ffffff; padding: 0.5rem;">Product Service</th>
                 <th style="color: #ffffff; padding: 0.5rem;">Qty</th>
                 <th style="color: #ffffff; padding: 0.5rem;">Price</th>
                 <th style="color: #ffffff; padding: 0.5rem;">Total</th>
+            </tr>       
+            @php
+                $det = $data['detail_vacant'];
+                $TotalVacant = 0;
+                foreach ($det as $key) {
+                    $total = $key['item_qty']*$key['item_price'];
+                    $showTotal = formatCurrency($total);
+                    $showPrice = formatCurrency($key['item_price']);  
+                        @endphp
+                            <tr>
+                                <td style="font-size:15px;font-weight:bold;padding-left:20px" colspan="4">Vacant</td>
+                            </tr> 
+                            <tr >
+                                <td style="padding-left:30px;">{{ $key['item_name'] }}</td>
+                                <td style="padding-left:20px;">{{ $key['item_qty'] }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showPrice }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showTotal }}</td>  
+                            </tr>
+                        @php
+                        $TotalVacant =  $TotalVacant + $total;
+                }     
+                $det = $data['detail_resto'];
+                $TotalResto = 0;
+                if(count($det)>0){
+                    echo '
+                    <tr>
+                        <td style="font-size:15px;font-weight:bold;padding-left:20px" colspan="4">Resto</td>
+                    </tr> ';
+                }
+                foreach ($det as $key) {
+                    $total = $key['item_qty']*$key['item_price'];
+                    $showTotal = formatCurrency($total);
+                    $showPrice = formatCurrency($key['item_price']);  
+                        @endphp
+                           
+                            <tr >
+                                <td style="padding-left:30px;">{{ $key['item_name'] }}</td>
+                                <td style="padding-left:20px;">{{ $key['item_qty'] }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showPrice }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showTotal }}</td>  
+                            </tr>
+                        @php
+                        $TotalResto = $TotalResto + $total;
+                }               
+                $det = $data['detail_laundry'];
+                $TotalLaundry = 0;
+                if(count($det)>0){
+                echo    '<tr>
+                            <td style="font-size:15px;font-weight:bold;padding-left:20px" colspan="4">Laundry</td>
+                        </tr> ';
+                }
+                foreach ($det as $key) {
+                    $total = $key['item_qty']*$key['item_price'];
+                    $showTotal = formatCurrency($total);
+                    $showPrice = formatCurrency($key['item_price']);  
+                        @endphp
+                            <tr >
+                                <td style="padding-left:30px;">{{ $key['item_name'] }}</td>
+                                <td style="padding-left:20px;">{{ $key['item_qty'] }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showPrice }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showTotal }}</td>  
+                            </tr>
+                        @php
+                        $TotalLaundry = $TotalLaundry + $total;
+                }               
+            @endphp
+            
+        </table>
+        @php
+            $grandTotal = $TotalVacant + $TotalResto + $TotalLaundry;
+            $show_total = formatCurrency($grandTotal);
+            $show_deposit = formatCurrency($data['checkin_info']['deposit']);
+        @endphp
+        <table style=" font-size: 0.875rem; width: 100%;">
+            <tr style="background-color: #d3c54a;" >
+                <td colspan="3"></td>
+                <td>{{ $show_total }}</td>
             </tr>
-            <tr class="items" style="width: 100%;" >
-              
-                    <td style="padding: 0.5rem; background-color: #f7efaa; ">
-                        Room PREMIUM
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        1
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-         
-            </tr>
-            <tr class="items" style="width: 100%;" >
-              
-                    <td style="padding: 0.5rem; background-color: #f7efaa; ">
-                        Resto
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        1
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-         
-            </tr>
-            <tr class="items" style="width: 100%;" >
-              
-                    <td style="padding: 0.5rem; background-color: #f7efaa; ">
-                        Laundry
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        1
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-                    <td style="padding: 0.5rem;background-color: #f7efaa;">
-                        Rp.567.000,00
-                    </td>
-         
-            </tr>
-        </table><br>
+        </table>
     </div>
 
   <div class="container">
     <div class="row">
         <div class="col-sm-12 ">
             <div style=" text-align: left">
-                Deposit : Rp400.000,00
+              
+                Deposit : {{ $show_deposit }}
             </div>
             <br>
             <div style=" text-align: left">
-                Discount : 10%
+                Discount : {{ $data['detail_checkout']['discount'] }}%
             </div>
             <br>
            </div>

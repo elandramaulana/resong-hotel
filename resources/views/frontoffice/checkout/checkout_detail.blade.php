@@ -37,15 +37,12 @@
                 <div class="col-sm-4 text-warning text-center">
                     <h6 class="shape rounded p-2">{{ $detailCheckin->room_type }} (@RP {{ $detailCheckin->room_price }})</h6>
                 </div>
-
                 <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
                     <button class="btn btn-extend"  data-bs-toggle="modal" data-bs-target="#extendData">
                         <i class="fas fa-plus"></i> Extend
                     </button>
                 </div>
-
             </div>
-
                 <form action="{{ route("checkout.edit.outdate") }}" method="POST" id="formDetailCheckin">
                     @csrf
                     <input type="text" hidden name="checkin_id" value="{{ $detailCheckin->checkin_id }}" >
@@ -53,9 +50,8 @@
                         <label for="invoice" class="form-label">#Invoice</label>
                         <input value="{{ $detailCheckin->no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" disabled>
                     </div>
-                    
-                    <div class="row">
 
+                    <div class="row">
                         <!-- Left Column -->
                         <div class="col-md-6">
                             <!-- Invoice (Disabled) -->
@@ -126,7 +122,7 @@
                 </div>
 
                 <div class="col-sm-6 text-warning d-flex justify-content-end text-center">
-                    <button class="btn btn-print" onclick="window.location='{{ route("generate.invoice") }}'">
+                    <button class="btn btn-print" onclick="window.location='{{ route('generate.invoice', $detailCheckin->checkin_id) }}'">
                         Print PDF
                     </button>
                     
@@ -237,8 +233,12 @@
                         <!-- Button -->
                         <div class="mt-5 mb-3 d-flex justify-content-start">
                             <div class="mr-3">
-                                <button type="submit" class="btn submit-btn">
+                                {{-- <button type="submit"  class="btn ">
                                     Check Out
+                                </button> --}}
+
+                                <button type="submit" class="btn submit-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                   Chcekout
                                 </button>
                             </div>
                             <div>
@@ -265,7 +265,24 @@
 
 
 
-
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Cetak Invoice</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Ingin Cetak Invoice?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Cetak</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 <!-- Modal for extend form -->

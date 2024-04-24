@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trans_resto', function (Blueprint $table) {
-            $table->id();
-            $table->string('checkin_id')->nullable();
-            $table->string('guest_name');
-            $table->string('guest_contact');
-            $table->string('guest_email');
-            $table->timestamps();
+        Schema::table('detail_trans_resto', function (Blueprint $table) {
+            $table->integer('det_price')->after('qty');
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trans_resto');
+        Schema::table('detail_trans_resto', function (Blueprint $table) {
+            //
+        });
     }
 };

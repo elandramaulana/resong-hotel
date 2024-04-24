@@ -34,14 +34,14 @@
     <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
     
     {{-- Vendor --}}
-    <link href="{{asset('assets/template/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('assets/template/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet"> --}}
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('assets/css/main.css')}}" rel="stylesheet"> --}}
     <style>
         .mt-2{
             color: red;
@@ -546,7 +546,7 @@ function formatDate(date) {
     });
 </script>
 
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.btn-print').addEventListener('click', function() {
             // Kirim permintaan AJAX ke server untuk generate PDF
@@ -564,7 +564,7 @@ function formatDate(date) {
             xhr.send();
         });
     });
-    </script>
+    </script> --}}
     
 
     <!-- Bootstrap core JavaScript-->
@@ -577,13 +577,13 @@ function formatDate(date) {
     <!-- Custom scripts for all pages-->
     <script src="{{asset('template/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{asset('template/vendor/chart.js/Chart.min.js')}}"></script>
+    {{-- <!-- Page level plugins -->
+    <script src="{{asset('template/vendor/chart.js/Chart.min.js')}}"></script> --}}
 
     <!-- Page level custom scripts -->
-    <script src="{{asset('template/js/demo/chart-area-demo.js')}}"></script>
+    {{-- <script src="{{asset('template/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('template/js/demo/chart-pie-demo.js')}}"></script>
-        <!-- Page level plugins -->
+        <!-- Page level plugins --> --}}
     <script src="{{asset('template/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('template/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -597,17 +597,17 @@ function formatDate(date) {
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
         <!-- Vendor JS Files -->
-    <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
     <script src="{{asset('assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
     <script src="{{asset('assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
     <script src="{{asset('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
     <script src="{{asset('assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
+    <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script> --}}
 
      <!-- Template Main JS File -->
-  <script src="{{asset('assets/js/impact.js')}}"></script>
-    
+  {{-- <script src="{{asset('assets/js/impact.js')}}"></script>
+     --}}
     <script src="{{ asset('plugins') }}/select2/js/select2.min.js"></script>
     <script src="{{ asset('assets') }}/js/global.js"></script>
  

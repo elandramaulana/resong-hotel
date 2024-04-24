@@ -28,18 +28,60 @@
                                         <th>No</th>
                                         <th>Guest Name</th>
                                         <th>Room</th>
-                                        <th>Kategory</th>
-                                        <th>Quantity</th>
                                         <th>Harga</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($listlaundry as $laundry)
-                                        
-                                    @endforeach --}}
-                                </tbody>
+                                    @php
+                                        $counter_trans = 1;
+                                    @endphp
+                                     @foreach($data as $item)
+                                        <tr>
+                                            <td>{{ $counter_trans }}</td>
+                                            <td>{{$item->guest_name}}</td>
+                                            <td>{{$item->room}}</td>
+                                            <td>{{$item->harga}}</td>
+                                            <td>
+                                                <div>
+                                                    <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
+                                                       <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
+                                                    </button>
+                                                    <form action="" method="POST" style="display: inline;" id="deleteForm">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal">
+                                                           <i style="color: black" class="fas fa-trash-alt"></i>
+                                                         </button>
+                                                    </form>
+    
+                                                                <!-- Delete Confirmation Modal for each post -->
+                                                        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-sm">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body d-flex justify-content-center">
+                                                                        <img class="" src="{{asset('assets/img/alert.png')}}" alt="">
+                                                                    </div>
+                                                                    <div class="col-sm-12 d-flex justify-content-center">
+                                                                        <p>Yakin hapus data?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer d-flex justify-content-center">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                                        <button type="submit" class="btn btn-danger" onclick="document.getElementById('deleteForm').submit()">Hapus</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                   
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @php
+                                        $counter_trans++;
+                                    @endphp
+                                        @endforeach
+                                  
+                                    </tbody>
                             </table>
                         </div>
                     </div>

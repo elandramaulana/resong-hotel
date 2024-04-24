@@ -73,7 +73,7 @@ Route::get('/check-out-detail/{id}', [CheckoutController::class, 'detail'])->nam
 Route::post('/check-out-extend', [CheckoutController::class, 'extend'])->name('checkout.extend');
 Route::post('/check-out-action', [CheckoutController::class, 'action'])->name('checkout.action');
 Route::post('/check-out-editdate', [CheckoutController::class, 'edit_checkout_date'])->name('checkout.edit.outdate');
-Route::get('/generate-invoice', [CheckoutController::class, 'generatePDF'])->name('generate.invoice');
+Route::get('/generate-invoice/{id}', [CheckoutController::class, 'generatePDF'])->name('generate.invoice');
 
 });
 
@@ -193,14 +193,15 @@ Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('d
 // Daftar Menu
 Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
 Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
+Route::get('/manage-daily-menu', [DaftarMenuController::class, 'manage'])->name('manage.daily');
 Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
-Route::get('/edit-daily-menu-detail/{id}',[DaftarMenuController::class, 'edit'] )->name('edit.daily.menu');
-Route::delete('/daily-menu/destroy/{id}', [DaftarMenuController::class, 'destroy'])->name('destroy.daily.menu');
+
 
 // Daftar Menu
 // Route::get('/resto-menu', [RestoMenuController::class, 'getMenuForToday'])->name('resto.menu'); //get available menu by day
 Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
 Route::get('/resto_form', [RestoMenuController::class, 'form'])->name('resto.form');
+Route::post('/resto_submit', [RestoMenuController::class, 'PostResto'])->name('resto.resto_submit');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
 
@@ -213,6 +214,7 @@ Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.
 Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
 Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
 Route::get('/select2menuActive', [Select2Controller::class, 'menu_active'])->name('select2.menu_active');
+Route::get('/select2menuCategory', [Select2Controller::class, 'menu_category'])->name('select2.menu_category');
 
 //detail
 Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');

@@ -178,7 +178,7 @@ class InhouseController extends Controller
                 "name_guest" => $item_data->name_guest,
                 "room_no" => $item_data->room_no,
                 "date_checkin" => $item_data->date_checkin,
-                "date_checkout" => $item_data->date_checkin,
+                "date_checkout" => $item_data->date_checkout,
                 "chanel_checkin" => $item_data->chanel_checkin,
                 "payment" => formatCurrency($item_data->payment),
                 "btn-action" => $btn_action,

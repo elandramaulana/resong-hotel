@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Checkin;
 use App\Models\DailyMenu;
+use App\Models\KategoriMenu;
 use App\Models\LaundryCat;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class Select2Controller extends Controller
 {
+    public function menu_category() {
+        $query = KategoriMenu::all();
+        foreach($query as $data){
+            
+            $show[] = [
+                'id'=>$data['id'],
+                'text'=>$data['nama_kategori']
+            ];
+        }
+        echo json_encode($show);
+    }
     public function detail_menu(Request $request) {
         $menu_id = $request->menu_id;
         $MenuData = Menu::find($menu_id);
@@ -23,12 +35,14 @@ class Select2Controller extends Controller
                             ->join('menus', 'menus.menu_id', '=', 'detail_daily.menu_id')
                             ->where('daily_menus.day_name', $day_id)
                             ->where('menus.menu_category', $cat_id)
+                            ->select('detail_daily.*', 'menus.*','daily_menus.*', 'menus.menu_id as menu_id')
                             ->get();
           
         foreach($query as $data){
+            $show_price = formatCurrency($data['menu_price']);
             $show[] = [
-                'id'=>$data['id'],
-                'text'=>$data['menu_name'].' ('.$data['menu_price'].')'
+                'id'=>$data['menu_id'],
+                'text'=>$data['menu_name'].' ('.$show_price.')'
             ];
         }
         echo json_encode($show);
