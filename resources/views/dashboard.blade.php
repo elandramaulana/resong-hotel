@@ -38,7 +38,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h1 font-weight-bold text-white text-uppercase mb-1">
-                                        28
+                                            {{$vacantRoomCount}}
                                         </div>
                                         <div class="h5 font-weight-bold text-white">Available Rooms</div>
                                     </div>
@@ -57,7 +57,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="h1 font-weight-bold text-white text-uppercase mb-1">
-                                            7
+                                                {{$occupiedRoomCount}}
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-white">Used Rooms</div>
                                         </div>
@@ -76,7 +76,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="h1 font-weight-bold text-white text-uppercase mb-1">
-                                            2
+                                                {{$bookedRoomCount}}
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-white">Reserved Rooms</div>
                                         </div>
@@ -95,7 +95,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h1 font-weight-bold text-white text-uppercase mb-1">
-                                        4
+                                            {{$vacantDirtyRoomCount}}
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-white">Cleaning Rooms</div>
                                     </div>
@@ -134,16 +134,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($todayCheckin as $guest)
                                     <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>Room 101</td>
-                                        <td>2024-02-17 10:30 AM</td>
+                                        <td>{{$guest->customer_name}}</td>
+                                        <td>Room {{$guest->room_no }}</td>
+                                        <td>{{$guest->checkin_time}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Room 102</td>
-                                        <td>2024-02-17 11:45 AM</td>
-                                    </tr>
+                                    @endforeach
+                                    
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -168,16 +167,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($todayCheckout as $data)
                                     <tr>
-                                        <td>John Doe</td>
-                                        <td>Room 201</td>
-                                        <td>2024-02-17 02:00 PM</td>
+                                        <td>{{$data->guest_name }}</td>
+                                        <td>Room {{$data->room_no }}</td>
+                                        <td>{{$data->checkout_date}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Jane Smith</td>
-                                        <td>Room 202</td>
-                                        <td>2024-02-17 03:15 PM</td>
-                                    </tr>
+                                    @endforeach
+                                    
                                 </tbody>
                             </table>
                         </div>

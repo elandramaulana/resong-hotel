@@ -9,6 +9,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DaftarMenuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HouseKeepingController;
 use App\Http\Controllers\InhouseController;
 use App\Http\Controllers\ProfileController;
@@ -40,9 +41,18 @@ require __DIR__.'/auth.php';
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
