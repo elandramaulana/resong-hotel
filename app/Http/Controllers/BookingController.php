@@ -16,7 +16,7 @@ class BookingController extends Controller
         ];
         return view('frontoffice.reservation.booking', $Data);
       }
-      public function set_no_show(Request $request) {
+      public function set_no_show() {
         //get all new reservation, 
         $reservationList = Reservation::where('reservation_status', 'new')
                                         ->whereDate('reservation_date', '<', now())

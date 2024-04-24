@@ -52,6 +52,7 @@ class Select2Controller extends Controller
         $query = Checkin::leftJoin('checkouts', 'checkouts.checkin_id', '=', 'checkins.id')
                             ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
                             ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                            ->where('checkouts.id', null)
                             ->select('checkins.*','checkins.id as checkin_id', 'rooms.room_no', 'guests.name_guest')
                             ->get();
         $no=1;
