@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkin-normal', [CheckinController::class, 'store'])->name('checkin.normal.store');
     Route::get('/checkin-normal-form/{id}', [CheckinController::class, 'form_normal'])->name('checkin.normal.form');
     Route::get('/checkin-speedy', [CheckinController::class, 'speedy'])->name('checkin.speedy');
+    Route::post('/speedy-post', [CheckinController::class, 'speedy_post'])->name('checkin.speedy_post');
 });
 
 
@@ -143,6 +144,7 @@ Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_gue
 Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
 
 Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
 Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 // House Keeping 
 Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
@@ -214,6 +216,7 @@ Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily']
 Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
 Route::get('/resto_form', [RestoMenuController::class, 'form'])->name('resto.form');
 Route::post('/resto_submit', [RestoMenuController::class, 'PostResto'])->name('resto.resto_submit');
+Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
 

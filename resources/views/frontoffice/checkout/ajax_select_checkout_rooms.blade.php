@@ -16,14 +16,14 @@
                     <h4 class="text-dark">{{ $dt['room_type'] }} (@ {{ $dt['room_price'] }})</h4>
                 </div>
             </div>
-            <div class="container d-flex justify-content-center">
+            <div class="container">
                 <div class="row mt-4">
                     @foreach ($dt['detail_room'] as $dr)
                     <div class="col-sm-2">
                         <button class="btn btn-primary">
                             <a data-toggle="tooltip" data-placement="top"  title="{{ $dr['room_status'] }}" href="{{route('checkout.detail', $dr['checkin_id'])}}">{{ $dr['room_no'] }}</a>
                         </button>
-                    </div>        
+                    </div>
                     @endforeach
                 </div>
             </div>

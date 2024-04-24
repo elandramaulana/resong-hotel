@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guest;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class AutocompleteController extends Controller
@@ -25,5 +26,27 @@ class AutocompleteController extends Controller
                         ->get()->first();
         return response()->json($Guest);
     }
+    
 
+    public function speedy(Request $request) {
+        $term = $request->input('term');
+        $tags = Reservation::where('reservation_status', 'New')
+                        ->where('reservation_name', 'LIKE', '%' . $term . '%')
+                        ->pluck('reservation_name');
+        return response()->json($tags);
+    }
+
+    public function selected_speedy(Request $request) {
+        $reservation_name = $request->input('reservation_name');
+        // $reservation_contact = $request->input('reservation_contact');
+        // $reservation_checkin = $request->input('reservation_checkin');
+        // $reservation_checkout = $request->input('reservation_checkout');
+
+        $Guest = Reservation::where('reservation_name', $reservation_name)
+                        // ->where('reservation_contact', $reservation_contact)
+                        // ->where('reservation_checkin', $reservation_checkin)
+                        // ->where('reservation_checkout', $reservation_checkout)
+                        ->get()->first();
+        return response()->json($Guest);
+    }
 }
