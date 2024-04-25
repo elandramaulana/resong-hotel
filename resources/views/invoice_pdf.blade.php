@@ -115,9 +115,15 @@
             
         </table>
         @php
+            $deposit = $data['checkin_info']['deposit'];
+            $discount = $data['detail_checkout']['discount'];
             $grandTotal = $TotalVacant + $TotalResto + $TotalLaundry;
             $show_total = formatCurrency($grandTotal);
             $show_deposit = formatCurrency($data['checkin_info']['deposit']);
+            $potonganDiscount = ($grandTotal * $discount) / 100;
+            $TotalPotongan = $potonganDiscount + $deposit;
+            $ShowTotalSemua = formatCurrency($grandTotal - $TotalPotongan);
+            
         @endphp
         <table style=" font-size: 0.875rem; width: 100%;">
             <tr style="background-color: #d3c54a;" >
@@ -136,7 +142,7 @@
             </div>
             <br>
             <div style=" text-align: left">
-                Discount : {{ $data['detail_checkout']['discount'] }}%
+                Discount : {{ formatCurrency($potonganDiscount) }} <small> ({{ $data['detail_checkout']['discount'] }}%)</small> 
             </div>
             <br>
            </div>
@@ -147,7 +153,7 @@
         <hr style="border-color: black; margin-left:-10px" class="col-12 mt-3 mb-2 border-bottom border-3">
     </div>
     <div style=" text-align: right; font-weight:bold;">
-        Grand Total: Rp2.268.000,00
+        Grand Total: {{ $ShowTotalSemua }}
     </div>
     <div class="container-fluid">
         <hr style="border-color: black; margin-left:-10px" class="col-12 mt-3 mb-2 border-bottom border-3">

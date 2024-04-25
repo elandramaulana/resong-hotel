@@ -111,7 +111,7 @@ class CheckoutController extends Controller
     }
     public function generatePDF($checkin_id)
     {
-        $checkin_info = Checkin::join('guests', 'guests.id', '=', 'Checkins.guest_id')
+        $checkin_info = Checkin::join('guests', 'guests.id', '=', 'checkins.guest_id')
                                 ->where('checkins.id', $checkin_id)
                                 ->get()->first();
         $guestInfo = [
