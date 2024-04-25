@@ -144,7 +144,7 @@
                                   <!-- Check-in Time -->
                                   <div class="mb-3">
                                     <label for="jam" class="form-label">Jam</label>
-                                    <input name="jam" value="7.12" placeholder="Harga" type="text" class="form-control" readonly id="jam"  >
+                                    <input name="jam" value="" placeholder="Harga" type="text" class="form-control" readonly id="jam"  >
                                     <small class="showerror"></small>
                                 </div>
                               </div>
