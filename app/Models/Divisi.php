@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Divisi extends Model
 {
+    public $timestamps = false;
     use HasFactory;
     protected $table = 'divisis';
     protected $fillable = [
@@ -16,4 +17,14 @@ class Divisi extends Model
         'd_jobdesc',
         'd_OT_approver',
     ];
+
+    public function shift()
+    {
+        return $this->hasMany(Shift::class, 'id_divisi', 'id');
+    }
+
+    public static function getAllCategories()
+    {
+        return self::all();
+    }
 }

@@ -36,10 +36,26 @@ class DaftarMenuController extends Controller
         return view('inventorykitchen.daftar_menu.daftar_menu', compact('menus', 'dailyMenu'), $Data);
     }
 
-    public function manage() {
-       
-        return view('inventorykitchen.daftar_menu.manage_daily');
+
+    public function manage($id) {
+        $day = DailyMenu::find($id);
+    
+        // Ambil ID menu yang sudah ada di hari ini
+        $Breakfast = $this->listDetail($day->id, 1)->pluck('menu_id')->toArray();
+        $Lunch = $this->listDetail($day->id, 2)->pluck('menu_id')->toArray();
+        $Dinner = $this->listDetail($day->id, 3)->pluck('menu_id')->toArray();
+    
+        $existingMenus = array_merge($Breakfast, $Lunch, $Dinner);
+    
+        // Ambil semua data dari tabel menu
+        $allMenus = Menu::join('kategori_menu', 'kategori_menu.id', '=', 'menus.menu_category')
+                        ->select('menus.*', 'kategori_menu.nama_kategori')
+                        ->get();
+    
+        return view('inventorykitchen.daftar_menu.manage_daily', compact('allMenus', 'existingMenus', 'day'));
     }
+    
+
     private function listDetail($daily_id, $kat_id){
         $Model = new DetailDaily();
         $show = $Model->listDetailDaily($daily_id,$kat_id);
@@ -48,10 +64,40 @@ class DaftarMenuController extends Controller
             }
         return $show;
     }
+    
+    public function update(Request $request, $id) {
+        // Debugging: Menampilkan semua data request
+        // dd($request->all());
+    
+        // Find the DailyMenu record by its ID
+        $day = DailyMenu::find($id);
+    
+        // Ensure the daily menu exists
+        if (!$day) {
+            return redirect()->route('daily.menu')->with('error', 'Daily menu not found');
+        }
+    
+        // Hapus semua menu yang sudah ada
+        DetailDaily::where('daily_id', $id)->delete();
+    
+        // Retrieve selected menu IDs from the request
+        // $menuIds = $request->input('menu_ids[]');
 
-    public function update(){
-
+        // dd($menuIds);
+        
+    
+        // Insert new records for each selected menu
+        foreach ($request->input('menu_ids') as $menuId) {
+            DetailDaily::create([
+                'daily_id' => $id,
+                'menu_id' => $menuId,
+            ]);
+        }
+        
+    
+        return redirect()->route('daily.menu')->with('success', 'Menu updated successfully');
     }
+    
 
     public function storeMenuDaily (Request $request)
     {

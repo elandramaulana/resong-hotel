@@ -10,10 +10,12 @@ use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DaftarMenuController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\HouseKeepingController;
 use App\Http\Controllers\InhouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriMenuController;
 
@@ -24,6 +26,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\Select2Controller;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use Illuminate\Support\Facades\Route;
@@ -46,18 +49,14 @@ require __DIR__.'/auth.php';
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+   
 });
 
 
 
 
-
-
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -207,7 +206,8 @@ Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('d
 // Daftar Menu
 Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
 Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
-Route::get('/manage-daily-menu', [DaftarMenuController::class, 'manage'])->name('manage.daily');
+Route::get('/manage-daily-menu/{id}', [DaftarMenuController::class, 'manage'])->name('manage.daily');
+Route::post('/update-daily-menu/{id}', [DaftarMenuController::class, 'update'])->name('update.daily');
 Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
 
 
@@ -235,11 +235,27 @@ Route::get('/select2menuCategory', [Select2Controller::class, 'menu_category'])-
 Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
 //datatable route
 Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-
-
-
 //ajax request   
 Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
+
+
+//Kepegawaian
+Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
+Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
+Route::get('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
+Route::get('/edit-karyawan', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+Route::get('/update-karyawan', [KaryawanController::class, 'update'])->name('update.karyawan');
+
+//Divisi
+Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
+Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
+Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.divisi');
+
+//Divisi
+Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
+Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
+Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
+
 
 });
 

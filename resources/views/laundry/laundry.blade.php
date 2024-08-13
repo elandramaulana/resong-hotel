@@ -17,11 +17,11 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-6">
                                 <h6 class="font-weight-bold text-warning left">Daftar Layanan Laundry</h6>
                             </div>
-                            <div class="col-lg-4 right">
-                                <a  class="btn btn-success right btn-sm" href="{{ route('laundry.form') }}" id="btnAddLaundry"><i class="fa fa-plus"></i> Tambah</a>
+                            <div class="col-lg-6 d-flex justify-content-end">
+                                <a  class="btn btn-extend right btn-sm" href="{{ route('laundry.form') }}" id="btnAddLaundry"><i class="fa fa-plus"></i> Tambah</a>
                             </div>
                         </div>
                     </div>

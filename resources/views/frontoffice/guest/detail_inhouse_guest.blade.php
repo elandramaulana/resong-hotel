@@ -202,13 +202,13 @@
                         </tbody>
                     </table>
                 </div>
-                       <!-- Button -->
+                       {{-- <!-- Button -->
                        <div class="mt-5 mb-3 d-flex justify-content-start ">
                     <div class="">
                         <button class="btn submit-btn mr-5">
                            Total : {{ $TotalSemua }}
                         </button>
-                    </div>
+                    </div> --}}
             </form>
             </div>
 

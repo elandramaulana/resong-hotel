@@ -91,18 +91,22 @@
                                                     </ul></td>
                                                 <td>
                                                     
-                                                    @foreach($menu['Dinner'] as $key)
-                                                        {{ $key['menu_name'] }}
-                                                    @endforeach
-                                                    </ul>
+                                                    <ul class="list-group list-group-flush">
+                                                        @foreach($menu['Dinner'] as $key)
+                                                            <li class="list-group-item">{{ $key['menu_name'] }}</li>
+                                                        @endforeach
+                                                        </ul></td>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                           <a style="color: black" href="{{route('manage.daily')}}">  <i class="fas fa-edit"></i></a>
+                                                        <button style="margin-right: 10px" type="button" class="btn btn-warning btn-sm mt-2">
+                                                            <a style="color: black" href="{{ route('manage.daily', ['id' => $menu['id']]) }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
                                                         </button>
                                                     </div>
                                                 </td>
+                                                
                                             </tr>
                                        
                                             @endforeach

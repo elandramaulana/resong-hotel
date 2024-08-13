@@ -173,15 +173,7 @@
              <div class="sidebar-heading">
                 INVENTORY KITCHEN
             </div>
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Laundry
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('laundry')}}">
-                <i class="fas fa-fw fa-door-open"></i>
-                    <span>Laundry</span></a>
-            </li>
+           
             <!-- Heading -->
             <!-- <div class="sidebar-heading">
                 BACK OFFICE
@@ -203,6 +195,13 @@
                 </a>
             </li>
 
+             <!-- Nav Item - Check-out -->
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('list.kategori')}}">
+                    <i class="fas fa-fw fa-tags"></i>
+                    <span>Manage Kategori Barang</span></a>
+            </li>
+
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
                 <a class="nav-link" href="{{route('list.trans')}}">
@@ -210,14 +209,17 @@
                     <span>Transaksi Barang</span></a>
             </li>
 
-
-            <!-- Nav Item - Check-out -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Laundry
+            </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('list.kategori')}}">
-                    <i class="fas fa-fw fa-tags"></i>
-                    <span>Manage Kategori Barang</span></a>
+                <a class="nav-link" href="{{route('laundry')}}">
+                    <i class="fas fa-fw fa-tshirt"></i>
+                    <span>Laundry</span></a>
             </li>
-
+            <hr class="sidebar-divider">
             
 
              {{-- <!-- Nav Item - Check-out -->
@@ -234,6 +236,18 @@
                     <span>Barang Keluar</span></a>
             </li> --}}
 
+             <!-- Heading -->
+             <div class="sidebar-heading">
+                Resto
+            </div>
+
+              <!-- Nav Item - Check-out -->
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('kategori.menu')}}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Manage Kategori Menu</span></a>
+            </li>
+
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
                 <a class="nav-link" href="{{route('list.menu')}}">
@@ -248,18 +262,50 @@
                     <span>Manage Menu Daily</span></a>
             </li>
 
-             <!-- Nav Item - Check-out -->
-             <li class="nav-item">
-                <a class="nav-link" href="{{route('kategori.menu')}}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Manage Kategori Menu</span></a>
-            </li>
+           
 
              <!-- Nav Item - Check-out -->
              <li class="nav-item">
                 <a class="nav-link" href="{{route('resto.menu')}}">
                     <i class="fas fa-fw fa-utensils"></i>
                     <span>Resto</span></a>
+            </li>            
+<br>
+
+            
+             <!-- Heading -->
+             <div class="sidebar-heading">
+                Kepegawaian
+            </div>
+
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <i class="fas fa-fw fa-calendar"></i>
+                        <span>Dashboard Karyawan</span></a>
+                </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
+                    aria-expanded="true" aria-controls="collapseGuest">
+                    <i class="fas fa-user"></i>
+                    <span>Master</span>
+                </a>
+                <div id="collapseKaryawan" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('daftar.karyawan')}}">Data Karyawan</a>
+                        <a class="collapse-item" href="{{route('daftar.divisi')}}">Data Divisi</a>
+                        <a class="collapse-item" href="{{route('daftar.shift')}}">Data Shift</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Check-out -->
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Absensi Kehadiran</span></a>
             </li>
 
 
@@ -432,6 +478,9 @@
         $('#daftarMenuTable').DataTable();
         $('#layananRestoTable').DataTable();
         $('#detailLayananRestoTable').DataTable();
+        $('#dataKaryawanTable').DataTable();
+        $('#dataDivisiTable').DataTable();
+        $('#dataShiftTable').DataTable();
     });
 </script>
 

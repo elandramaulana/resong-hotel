@@ -45,10 +45,12 @@
                                         <div class="col-lg-8">
                                             <h4>Detail Laundry</h4>
                                         </div>
-                                        <div class="col-lg-4 right">
-                                            <a  class="btn btn-success right btn-sm" href="#" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalAddLaundry"><i class="fa fa-plus"></i> Tambah</a>
+                                        <div class="col-lg-4  d-flex justify-content-end">
+                                            <a  class="btn btn-extend" href="#" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalAddLaundry"><i class="fa fa-plus"></i> Tambah</a>
                                         </div>
+                                        
                                     </div>
+                                    <br>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="listLaundry">
                                             <thead>

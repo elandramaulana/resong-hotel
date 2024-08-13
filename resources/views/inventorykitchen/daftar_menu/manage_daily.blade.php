@@ -24,83 +24,38 @@
                     </div>
                     <div class="card-body">
               
-                      <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <!-- Left Column -->
-                                    <div class="col-md-6">
-                                        <div class="col-sm-12">
-                                            <div class="mb-3">
-                                                    <label for="Channel" class="form-label">Hari</label>
-                                                    <select name="day_name" class="form-control" id="channel">
-                                                        <option value="1">Senin</option>
-                                                        <option value="2">Selasa</option>
-                                                        <option value="3">Rabu</option>
-                                                        <option value="4">Kamis</option>
-                                                        <option value="5">Jum'at</option>
-                                                        <option value="6">Sabtu</option>
-                                                        <option value="7">Minggu</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                    </div>
                     
-                                    <!-- Right Column -->
-                                    <div class="col-md-6">
-                    
-                                        <div class="col-sm-12">
-                                            <div class="mb-3">
-                                                    <label for="Channel" class="form-label">Set Status</label>
-                                                    <select name="status" class="form-control" id="channel">
-                                                        <option value="Active">Active</option>
-                                                        <option value="Non-Active">Non-Active</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                        </div>
                         <div class="col-sm-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="manageMenuTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Hari</th>
-                                            <th>Breakfast</th>
-                                            <th>Lunch</th>
-                                            <th>Dinner</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
+                            <div class="container">
+                                <h1>Manage Menu for {{ $day->day_name }}</h1>
+                                <form action="{{ route('update.daily', ['id' => $day->id]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <table class="table table-bordered">
+                                        <thead>
                                             <tr>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    
-                                                </td>
-                                                <td>
-                                                   
-                                                <td>
-                                            
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                           <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                <th>Menu Name</th>
+                                                <th>Category</th>
+                                                <th>Select</th>
                                             </tr>
-                                       
-                                        
-                                      
+                                        </thead>
+                                        <tbody>
+                                            @foreach($allMenus as $menu)
+                                                <tr>
+                                                    <td>{{ $menu->menu_name }}</td>
+                                                    <td>{{ $menu->menu_name }}</td>
+                                                    <td>{{ $menu->nama_kategori }}</td>
+                                                    <td>
+                                                        <input type="checkbox" name="menu_ids[]" value="{{ $menu->menu_id }}">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
-                                </table>
-                            
+                                    </table>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                                
                             </div>
+                            
                         </div>
                       </div>
                       <br>

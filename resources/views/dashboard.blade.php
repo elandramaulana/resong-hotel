@@ -38,6 +38,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h1 font-weight-bold text-white text-uppercase mb-1">
+                                            
                                             {{$vacantRoomCount}}
                                         </div>
                                         <div class="h5 font-weight-bold text-white">Available Rooms</div>
@@ -76,6 +77,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="h1 font-weight-bold text-white text-uppercase mb-1">
+                                                
                                                 {{$bookedRoomCount}}
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-white">Reserved Rooms</div>
@@ -95,6 +97,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h1 font-weight-bold text-white text-uppercase mb-1">
+                                            
                                             {{$vacantDirtyRoomCount}}
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-white">Cleaning Rooms</div>
@@ -108,6 +111,46 @@
                     </div>
 
                 </div>
+
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="card bg-card shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h1 font-weight-bold text-white text-uppercase mb-1">
+                                            
+                                            {{$vacantRoomCount}}
+                                        </div>
+                                        <div class="h5 font-weight-bold text-white">Jumlah Karyawan</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user fa-5x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="card bg-card shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="h1 font-weight-bold text-white text-uppercase mb-1">
+                                            
+                                            {{$vacantRoomCount}}
+                                        </div>
+                                        <div class="h5 font-weight-bold text-white">Absen Hari ini</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar-check fa-5x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

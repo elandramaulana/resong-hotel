@@ -122,9 +122,9 @@
                 </div>
 
                 <div class="col-sm-6 text-warning d-flex justify-content-end text-center">
-                    <button class="btn btn-print" onclick="window.location='{{ route('generate.invoice', $detailCheckin->checkin_id) }}'">
+                    {{-- <button class="btn btn-print" onclick="window.location='{{ route('generate.invoice', $detailCheckin->checkin_id) }}'">
                         Print PDF
-                    </button>
+                    </button> --}}
                     
                 
                 </div>

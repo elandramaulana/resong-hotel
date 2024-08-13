@@ -127,8 +127,7 @@
         @endphp
         <table style=" font-size: 0.875rem; width: 100%;">
             <tr style="background-color: #d3c54a;" >
-                <td colspan="3"></td>
-                <td>{{ $show_total }}</td>
+                <td style="text-align: right">{{ $show_total }}</td>
             </tr>
         </table>
     </div>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
+    public $timestamps = false;
     use HasFactory;
     protected $table = 'shifts';
     protected $fillable = [
@@ -16,4 +17,15 @@ class Shift extends Model
         's_clock_in',
         's_clock_out',
     ];
+
+    public static function getAllDivision()
+    {
+        return self::all();
+    }
+
+    public function divisi()
+{
+    return $this->belongsTo(Divisi::class, 'id_divisi', 'id');
 }
+}
+
