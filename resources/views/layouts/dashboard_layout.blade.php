@@ -303,7 +303,7 @@
 
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{route('daftar.hadir')}}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
@@ -481,6 +481,7 @@
         $('#dataKaryawanTable').DataTable();
         $('#dataDivisiTable').DataTable();
         $('#dataShiftTable').DataTable();
+        $('#dataAbsensiTable').DataTable();
     });
 </script>
 

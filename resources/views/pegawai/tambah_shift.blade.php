@@ -34,10 +34,10 @@
                     <div class="row">
 
                         <div class="mb-3">
-                            <label for="Channel" class="form-label">Kategori</label>
-                            <select name="barang_kategori" class="form-control" id="channel">
-                                @foreach($shifts as $shift)
-                                    <option value="{{ $shift->id_divisi }}" {{ $shift->id_divsi === old('channel') ? 'selected' : '' }} >{{ $shift->id_divisi }}</option>
+                            <label for="Channel" class="form-label">Divisi</label>
+                            <select name="id_divisi" class="form-control" id="channel">
+                                @foreach($divisis as $divisi)
+                                    <option value="{{ $divisi->id }}" {{ $divisi->id === old('channel') ? 'selected' : '' }} >{{ $divisi->d_nama }}</option>
                                 @endforeach
                             
                             </select>
@@ -45,34 +45,35 @@
                         </div>
 
                      <div class="mb-3">
-                        <label for="k_nama" class="form-label">Nama Lengkap</label>
-                        <input value="" name="k_nama" type="text" class="form-control" id="k_nama">
-                        <x-input-error :messages="$errors->get('k_nama')" class="mt-2" />
+                        <label for="k_nama" class="form-label">Nama Shift</label>
+                        <input value="" name="s_nama" type="text" class="form-control" id="k_nama">
+                        <x-input-error :messages="$errors->get('s_nama')" class="mt-2" />
                     </div>
 
-                     <div class="mb-3">
-                        <label for="k_nik" class="form-label">Nama Lengkap</label>
-                        <input value="" name="k_nik" type="text" class="form-control" id="k_nik">
-                        <x-input-error :messages="$errors->get('k_nik')" class="mt-2" />
+                      <!-- Left Column -->
+                      <div class="col-md-6">
+                        @php
+                            $showJamIn = date("H:i");
+                        @endphp
+                        <!-- Jam -->
+                        <div class="mb-3">
+                            <label for="jam" class="form-label">Clock In</label>
+                            <input name="s_clock_in" value="{{ $showJamIn }}" type="time" class="form-control" id="jam">
+                        </div>
                     </div>
 
-                     <div class="mb-3">
-                        <label for="k_contact" class="form-label">No Telp</label>
-                        <input value="" name="k_contact" type="text" class="form-control" id="k_contact">
-                        <x-input-error :messages="$errors->get('k_contact')" class="mt-2" />
-                    </div>
-
-                     <div class="mb-3">
-                        <label for="k_email" class="form-label">No Telp</label>
-                        <input value="" name="k_email" type="text" class="form-control" id="k_email">
-                        <x-input-error :messages="$errors->get('k_email')" class="mt-2" />
-                    </div>
-
-                     <div class="mb-3">
-                        <label for="alamat_karyawan" class="form-label">Alamat</label>
-                        <input value="" name="alamat_karyawan" type="text" class="form-control" id="alamat_karyawan">
-                        <x-input-error :messages="$errors->get('alamat_karyawan')" class="mt-2" />
-                    </div>
+                       <!-- Right Column -->
+                       <div class="col-md-6">
+                            @php
+                                $showJamOut = date("H:i");
+                            @endphp
+                            <!-- Jam -->
+                            <div class="mb-3">
+                                <label for="jam" class="form-label">Clock Out</label>
+                                <input name="s_clock_out" value="{{ $showJamOut }}" type="time" class="form-control" id="jam">
+                            </div>
+                        </div>
+                    
 
                         <div class="mt-4 mb-3 d-flex justify-content-start ">
                             <div class="">

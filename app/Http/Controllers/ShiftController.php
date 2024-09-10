@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShiftRequest;
+use App\Models\Divisi;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,7 +16,8 @@ class ShiftController extends Controller
         ];
 
         $shifts = Shift::all();
-        return view('pegawai.data_shift', compact('shifts'), $Data);
+        $divisis = Divisi::all();
+        return view('pegawai.data_shift', compact('shifts', 'divisis'), $Data);
     }
 
     public function add(){
@@ -24,7 +26,8 @@ class ShiftController extends Controller
         ];
 
         $shifts = Shift::all();
-        return view('pegawai.tambah_shift', compact('shifts'), $Data);
+        $divisis = Divisi::all();
+        return view('pegawai.tambah_shift', compact('shifts', 'divisis'), $Data);
     }
 
     public function store(StoreShiftRequest $request)

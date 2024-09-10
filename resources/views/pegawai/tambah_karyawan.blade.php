@@ -33,11 +33,11 @@
                      @csrf
                     <div class="row">
 
-                     <div class="mb-3">
+                     {{-- <div class="mb-3">
                         <label for="id_karyawan" class="form-label">Id Karyawan</label>
                         <input value="random generate" name="id_karyawan" type="text" class="form-control" id="id_karyawan" disabled>
                         <x-input-error :messages="$errors->get('id_karyawan')" class="mt-2" />
-                    </div>
+                    </div> --}}
 
                      <div class="mb-3">
                         <label for="k_nama" class="form-label">Nama Lengkap</label>
@@ -46,28 +46,51 @@
                     </div>
 
                      <div class="mb-3">
-                        <label for="k_nik" class="form-label">Nama Lengkap</label>
+                        <label for="k_nik" class="form-label">NIK</label>
                         <input value="" name="k_nik" type="text" class="form-control" id="k_nik">
                         <x-input-error :messages="$errors->get('k_nik')" class="mt-2" />
                     </div>
 
                      <div class="mb-3">
-                        <label for="k_contact" class="form-label">No Telp</label>
+                        <label for="k_contact" class="form-label">No Telepon</label>
                         <input value="" name="k_contact" type="text" class="form-control" id="k_contact">
                         <x-input-error :messages="$errors->get('k_contact')" class="mt-2" />
                     </div>
 
+                    <div class="mb-3">
+                        <label for="Channel" class="form-label">Divisi</label>
+                        <select name="k_divisi" class="form-control" id="channel">
+                            @foreach($divisis as $divisi)
+                                <option value="{{ $divisi->id }}" {{ $divisi->id === old('channel') ? 'selected' : '' }} >{{ $divisi->d_nama }}</option>
+                            @endforeach
+                        
+                        </select>
+                        <x-input-error :messages="$errors->get('channel')" class="mt-2" />
+                    </div>
+
                      <div class="mb-3">
-                        <label for="k_email" class="form-label">No Telp</label>
+                        <label for="k_email" class="form-label">Email</label>
                         <input value="" name="k_email" type="text" class="form-control" id="k_email">
                         <x-input-error :messages="$errors->get('k_email')" class="mt-2" />
                     </div>
 
                      <div class="mb-3">
-                        <label for="alamat_karyawan" class="form-label">Alamat</label>
-                        <input value="" name="alamat_karyawan" type="text" class="form-control" id="alamat_karyawan">
-                        <x-input-error :messages="$errors->get('alamat_karyawan')" class="mt-2" />
+                        <label for="k_alamat" class="form-label">Alamat</label>
+                        <input value="" name="K_alamat" type="text" class="form-control" id="alamat_karyawan">
+                        <x-input-error :messages="$errors->get('K_alamat')" class="mt-2" />
                     </div>
+
+                     {{-- <div class="mb-3">
+                        <label for="k_pin" class="form-label">PIN</label>
+                        <input value="" name="k_pin" type="number" class="form-control" id="alamat_karyawan">
+                        <x-input-error :messages="$errors->get('k_pin')" class="mt-2" />
+                    </div> --}}
+
+                    {{-- <div class="mb-3">
+                        <label for="k_pin" class="form-label">Status Biometric</label>
+                        <input value="" name="k_biometric_status" type="bool" class="form-control" id="alamat_karyawan">
+                        <x-input-error :messages="$errors->get('k_biometric_status')" class="mt-2" />
+                    </div> --}}
 
                         <div class="mt-4 mb-3 d-flex justify-content-start ">
                             <div class="">

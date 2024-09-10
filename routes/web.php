@@ -18,7 +18,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KategoriMenuController;
-
+use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RestoMenuController;
 
@@ -242,7 +242,7 @@ Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByI
 //Kepegawaian
 Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
 Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
-Route::get('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
+Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
 Route::get('/edit-karyawan', [KaryawanController::class, 'edit'])->name('edit.karyawan');
 Route::get('/update-karyawan', [KaryawanController::class, 'update'])->name('update.karyawan');
 
@@ -255,6 +255,12 @@ Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.di
 Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
 Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
 Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
+
+
+//Kehadiran
+Route::get('/daftar-hadir', [KehadiranController::class, 'index'])->name('daftar.hadir');
+Route::get('/get-shift-by-divisi/{id}', [ShiftController::class, 'getShiftsByDivisi']);
+Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
 
 });

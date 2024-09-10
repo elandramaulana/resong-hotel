@@ -9,6 +9,8 @@ class KaryawanHasDivision extends Model
 {
     use HasFactory;
     protected $table = 'karyawan_has_divisions';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $fillable = [
         'id',
         'karyawan_id',

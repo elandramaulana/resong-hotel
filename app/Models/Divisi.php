@@ -9,6 +9,7 @@ class Divisi extends Model
 {
     public $timestamps = false;
     use HasFactory;
+    protected $primaryKey = 'id';
     protected $table = 'divisis';
     protected $fillable = [
         'id',
@@ -21,6 +22,11 @@ class Divisi extends Model
     public function shift()
     {
         return $this->hasMany(Shift::class, 'id_divisi', 'id');
+    }
+
+    public function karyawan()
+    {
+        return $this->hasMany(Karyawan::class, 'id_divisi', 'id');
     }
 
     public static function getAllCategories()

@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
+    use HasFactory;
     public $timestamps = false;
     use HasFactory;
     protected $table = 'shifts';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'id',
         'id_divisi',
@@ -24,8 +26,8 @@ class Shift extends Model
     }
 
     public function divisi()
-{
-    return $this->belongsTo(Divisi::class, 'id_divisi', 'id');
-}
+    {
+        return $this->belongsTo(Divisi::class, 'id_divisi', 'id');
+    }
 }
 
