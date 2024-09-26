@@ -2,34 +2,39 @@
 if (!function_exists('Durasi')){
     function Durasi($Dari, $Ke){
         $d1 = new DateTime($Dari);
-        $d2 = new DateTime($Ke);
-        $interval = $d1->diff($d2);
-        $diffInSeconds = $interval->s; //45
-        $diffInMinutes = $interval->i; //23
-        $diffInHours   = $interval->h; //8
-        $diffInDays    = $interval->d; //21
-        $diffInMonths  = $interval->m; //4
-        $diffInYears   = $interval->y; //1
-        $return = "";
-        if($diffInYears!=0){
-            $return .= $diffInYears.' Tahun ';
+        $dtcompare = DateTime::createFromFormat('Y-m-d H:i:s', $Ke);
+        if($dtcompare){
+            $d2 = new DateTime($Ke);
+            $interval = $d1->diff($d2);
+            $diffInSeconds = $interval->s; //45
+            $diffInMinutes = $interval->i; //23
+            $diffInHours   = $interval->h; //8
+            $diffInDays    = $interval->d; //21
+            $diffInMonths  = $interval->m; //4
+            $diffInYears   = $interval->y; //1
+            $return = "";
+            if($diffInYears!=0){
+                $return .= $diffInYears.' Tahun ';
+            }
+            if($diffInMonths!=0){
+                $return .= $diffInMonths.' Bulan ';
+            }
+            if($diffInDays!=0){
+                $return .= $diffInDays. ' Hari ';
+            }
+            if($diffInHours!=0){
+                $return .= $diffInHours. ' Jam ';
+            }
+            if($diffInMinutes!=0){
+                $return .= $diffInMinutes. ' Menit ';
+            }
+            if($diffInSeconds!=0){
+                $return .= $diffInSeconds. ' Detik ';
+            }
+            return $return;
+        }else{
+            return "-";
         }
-        if($diffInMonths!=0){
-            $return .= $diffInMonths.' Bulan ';
-        }
-        if($diffInDays!=0){
-            $return .= $diffInDays. ' Hari ';
-        }
-        if($diffInHours!=0){
-            $return .= $diffInHours. ' Jam ';
-        }
-        if($diffInMinutes!=0){
-            $return .= $diffInMinutes. ' Menit ';
-        }
-        if($diffInSeconds!=0){
-            $return .= $diffInSeconds. ' Detik ';
-        }
-        return $return;
     }
 }
 
