@@ -1,0 +1,27 @@
+import:
+  - recipe/laravel.php
+  - contrib/npm.php
+
+config:
+  repository: "https://github.com/elandramaulana/resong-hotel.git"
+
+hosts:
+  prod:
+    remote_user: n1577433
+    hostname: staging-resonghotel.metrosoftware.id
+    deploy_path: '/var/www/{{hostname}}'
+
+tasks:
+  deploy:
+    - deploy:prepare
+    - deploy:vendors
+    - artisan:storage:link
+    - artisan:view:cache
+    - artisan:config:cache
+    - npm:install
+    - deploy:publish
+  build:
+    - run: uptime
+
+after:
+  deploy:failed: deploy:unlock
