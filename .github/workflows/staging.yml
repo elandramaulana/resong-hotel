@@ -14,4 +14,4 @@ jobs:
         server: ftp.ramerion.com
         username: resong@staging-resonghotel.metrosoftware.id
         password: Resong123*
-        server-dir: /home/n1577433/resong-hotel
+        server-dir: /home/n1577433/resong-hotel/
