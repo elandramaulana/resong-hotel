@@ -11,7 +11,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ftp.ramerion.com
+          server: 36.86.63.182
           username: resong@staging-resonghotel.metrosoftware.id
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /home/n1577433/resong-hotel/
