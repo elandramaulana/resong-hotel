@@ -14,4 +14,3 @@ jobs:
           server: 36.86.63.182
           username: resong@staging-resonghotel.metrosoftware.id
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /home/n1577433/resong-hotel/
