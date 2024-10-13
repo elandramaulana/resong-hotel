@@ -263,6 +263,6 @@ Route::get('/get-karyawan-by-divisi/{divisiId}', [KehadiranController::class, 'g
 Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
 Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
-Route::get('/absensi', [KehadiranController::class, 'absensi'])->name('absensi');
+
 });
 
