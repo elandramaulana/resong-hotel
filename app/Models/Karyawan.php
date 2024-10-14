@@ -14,6 +14,7 @@ class Karyawan extends Model
         'id',
         'k_nama',
         'k_contact',
+        'k_gender',
         'k_email',
         'K_alamat',
         'k_nik',
@@ -29,6 +30,16 @@ class Karyawan extends Model
 
     public function divisi()
     {
-        return $this->belongsTo(Divisi::class, 'id_divisi', 'id');
+        return $this->belongsTo(Divisi::class, 'k_divisi', 'id');
+    }
+
+    public function shifts()
+    {
+        return $this->hasMany(KaryawanShift::class, 'karyawan_id');
+    }
+
+    public function karyawanHasDivisions()
+    {
+        return $this->belongsTo(KaryawanHasDivision::class, 'karyawan_id', 'id');
     }
 }

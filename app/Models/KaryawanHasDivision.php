@@ -19,4 +19,15 @@ class KaryawanHasDivision extends Model
         'khr_isActive',
         'khr_tglOut'
     ];
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
+    }
+
+    // Relasi ke model Divisi
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'divisi_id', 'id');
+    }
 }

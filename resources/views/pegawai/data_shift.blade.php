@@ -33,26 +33,24 @@
                                         <th style="width: 10px">NO</th>
                                         <th>Nama Divisi</th>
                                         <th>Nama Shift</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Keluar</th>
+                                        <th>Jam Masuk (Wib)</th>
+                                        <th>Jam Keluar (Wib)</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    @php $no = 1; @endphp
+                                    @foreach ($shifts as $shift)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$no}}</td>
+                                        <td>{{$shift->divisi->d_nama}}</td>
+                                        <td>{{$shift->s_nama}}</td>
+                                        <td>{{$shift->s_clock_in}}</td>
+                                        <td>{{$shift->s_clock_out}}</td>
                                         <td>
                                             <div>
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                    <a style="color: black" href=""> <i class="fas fa-eye"></i></a>
-                                                </button>
-                                                <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                    <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
+                                                    <a style="color: black" href="{{ route('edit.shift', ['id' => $shift->id ]) }}">  <i class="fas fa-edit"></i></a>
                                                 </button>
                                                 <form action="" method="POST" style="display: inline;" id="deleteForm">
                                                     @csrf
@@ -82,7 +80,10 @@
                                         </td>
                                     </tr>
                              
-                              
+                                    @php
+                                    $no++;
+                                @endphp
+                            @endforeach
                                 </tbody>
                             </table>
                         </div>

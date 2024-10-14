@@ -33,12 +33,14 @@ class BarangController extends Controller
 
         $barang = Barang::all();
         $kategori = CategoryBarang::all();
+       
         return view('inventorykitchen.barang.data_barang', compact('barang','stokBarang','kategori'), $Data);
     }
 
     public function create() {
         $barang = Barang::all();
         $kategori = CategoryBarang::all();
+
         return view('inventorykitchen.barang.tambah_barang', compact('barang', 'kategori'));
     }
 

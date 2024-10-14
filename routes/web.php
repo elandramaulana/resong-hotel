@@ -28,6 +28,7 @@ use App\Http\Controllers\RestoMenuController;
 
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\ShiftController;
@@ -146,7 +147,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
-    // House Keeping
+    // House Keeping 
     Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
     Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
     Route::get('/housekeeping-table', [HouseKeepingController::class, 'call_table'])->name('cleaningroom.table');
@@ -236,7 +237,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     //datatable route
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    //ajax request
+    //ajax request   
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 
@@ -244,18 +245,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
     Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
-    Route::get('/edit-karyawan', [KaryawanController::class, 'edit'])->name('edit.karyawan');
-    Route::get('/update-karyawan', [KaryawanController::class, 'update'])->name('update.karyawan');
-
+    Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+    Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
+    Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+    
+    
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
     Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
     Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.divisi');
+    Route::get('/divisi/{id}/edit', [DivisiController::class, 'edit'])->name('edit.divisi');
+    Route::put('/divisi/{id}', [DivisiController::class, 'update'])->name('update.divisi');
 
-    //Divisi
+    //Shift
     Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
     Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
     Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
+    Route::get('/shift/{id}/edit', [ShiftController::class, 'edit'])->name('edit.shift');
+    Route::put('/shift/{id}', [ShiftController::class, 'update'])->name('update.shift');
 
 
     //Kehadiran
@@ -304,4 +311,14 @@ Route::middleware('auth')->group(function () {
         // Route::delete('/destroy/{id}', [AssetController::class, 'destroy'])->name('inventory-assets.asset.destroy');
     });
     // end Inventory Asset
+    // payroll
+    Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
+    Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
+    Route::get('/proses-gaji', [PayrollController::class, 'prosesGaji'])->name('proses.gaji');
+    Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
+    Route::post('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update_gaji');
+
+
+    //
+    Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
 });

@@ -46,10 +46,20 @@
                             </div>
                     
                             <!-- Filter Tanggal -->
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="tanggal" class="form-label">Date</label>
                                     <input name="tanggal_absen" type="date" class="form-control" id="tanggal">
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="tanggal" class="form-label">Pilih Tanggal</label>
+                                    <input value="" name="tanggal_absen" type="text" class="form-control"
+                                        id="tanggal" onfocus="(this.type='date');this.focus()"
+                                        onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <x-input-error :messages="$errors->get('tanggal_absen')" class="mt-2" />
                                 </div>
                             </div>
                         </div>

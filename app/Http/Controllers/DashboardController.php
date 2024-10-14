@@ -48,6 +48,10 @@ class DashboardController extends Controller
                 ->whereNull('checkouts.id') // Tambahkan kondisi untuk memeriksa checkin_id yang belum ada di checkout
                 ->get();
 
+                $coutSupplier = DB::table('suppliers')->count();
+
+                $coutKaryawan = DB::table('karyawan_has_divisions')->where('khr_isActive', '1')->count();
+               
 
                 $vacantRoomCount = DB::table('rooms')
                     ->where('room_status', 'VACANT READY')
@@ -67,7 +71,7 @@ class DashboardController extends Controller
               
                     // dd($vacantRoomCount);
 
-            return view('dashboard', compact('todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
+            return view('dashboard', compact('coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
 
     }
 }
