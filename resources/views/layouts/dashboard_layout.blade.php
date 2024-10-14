@@ -278,18 +278,27 @@
                 Kepegawaian
             </div>
 
-                <!-- Nav Item - Check-out -->
+
+              <!-- Nav Item - Check-out -->
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('daftar.hadir')}}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Absensi Kehadiran</span></a>
+            </li>
+
+
+                {{-- <!-- Nav Item - Check-out -->
                 <li class="nav-item">
                     <a class="nav-link" href="">
                         <i class="fas fa-fw fa-calendar"></i>
                         <span>Dashboard Karyawan</span></a>
-                </li>
+                </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-user"></i>
-                    <span>Master</span>
+                    <span>Pegawai</span>
                 </a>
                 <div id="collapseKaryawan" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -301,11 +310,22 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Check-out -->
+          
+
             <li class="nav-item">
-                <a class="nav-link" href="{{route('daftar.hadir')}}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Absensi Kehadiran</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
+                    aria-expanded="true" aria-controls="collapseGuest">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Payroll</span>
+                </a>
+                <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
+                        <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
+                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                    </div>
+                </div>
             </li>
 
 
@@ -482,6 +502,9 @@
         $('#dataDivisiTable').DataTable();
         $('#dataShiftTable').DataTable();
         $('#dataAbsensiTable').DataTable();
+        $('#dataGajiTable').DataTable();
+        $('#dataProsesTable').DataTable();
+        $('#dataBillTable').DataTable();
     });
 </script>
 

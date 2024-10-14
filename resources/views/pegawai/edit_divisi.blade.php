@@ -20,7 +20,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-start">
-        <h1 class="h3 mb-0 text-gray-800">Tambah Divisi</h1>
+        <h1 class="h3 mb-0 text-gray-800">Edit Divisi</h1>
     </div>
 </div>
 
@@ -29,32 +29,33 @@
         <div class="card">
             <div class="card-body text-dark">
 
-                <form action="{{route('store.divisi')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('update.divisi', $divisi->id)}}" method="post" enctype="multipart/form-data">
                      @csrf
+                     @method('PUT')
                     <div class="row">
 
                      <div class="mb-3">
                         <label for="d_nama" class="form-label">Nama Divisi</label>
-                        <input value="" name="d_nama" type="text" class="form-control" id="d_nama">
+                        <input value="{{ $divisi->d_nama }}" name="d_nama" type="text" class="form-control" id="d_nama">
                         <x-input-error :messages="$errors->get('d_nama')" class="mt-2" />
                     </div>
 
                      <div class="mb-3">
                         <label for="d_deskripsi" class="form-label">Deskripsi</label>
-                        <input value="" name="d_deskripsi" type="text" class="form-control" id="d_deskripsi">
+                        <input value="{{ $divisi->d_deskripsi }}" name="d_deskripsi" type="text" class="form-control" id="d_deskripsi">
                         <x-input-error :messages="$errors->get('d_deskripsi')" class="mt-2" />
                     </div>
 
                      <div class="mb-3">
-                        <label for="d_jobdesc" class="form-label">Jobdesc</label>
-                        <textarea rows="3" value="" name="d_jobdesc" type="text" class="form-control" id="d_jobdesc"></textarea>
+                        <label for="d_jobdesc" class="form-label">Jobdesk</label>
+                        <textarea rows="3" value="{{ $divisi->d_jobdesc }}" name="d_jobdesc" type="text" class="form-control" id="d_jobdesc"></textarea>
                         <x-input-error :messages="$errors->get('d_jobdesc')" class="mt-2" />
                     </div>
 
                     <div class="mb-3">
                         <label for="d_OT_approver" class="form-label">Over Time</label>
                         <select name="d_OT_approver" class="form-control" id="d_OT_approver">
-                            <option value="" disabled selected>Pilih</option>
+                            <option value="{{ $divisi->d_OT_approver }}" disabled selected>{{ $divisi->d_OT_approver }}</option>
                             <option value="Approve">Approve</option>
                             <option value="Reject">Reject</option>
                         </select>
