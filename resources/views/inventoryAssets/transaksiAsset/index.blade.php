@@ -14,15 +14,15 @@
                             <div class="card-header py-3">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3 class="font-weight-bold text-dark">Belanja Barang Masuk</h3>
+                                        <h3 class="font-weight-bold text-dark">Belanja Asset Masuk</h3>
                                     </div>
                                     <div class="col-sm-6 d-flex justify-content-end gap-2">
                                         <a style="text-decoration: none; color:white"
-                                            href="{{ route('kurang.trans.barang') }}" class="btn btn-extend">Barang
-                                            Keluar</a>
+                                            href="{{ route('inventory-assets.trans.create-keluar') }}"
+                                            class="btn btn-extend">Asset Keluar</a>
                                         <a style="text-decoration: none; color:white"
-                                            href="{{ route('tambah.trans.barang') }}" class="btn btn-extend">Barang
-                                            Masuk</a>
+                                            href="{{ route('inventory-assets.trans.create-masuk') }}"
+                                            class="btn btn-extend">Asset Masuk</a>
                                     </div>
                                 </div>
                             </div>
@@ -32,8 +32,9 @@
                                         cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th style="width: 10px">NO</th>
+                                                <th style="width: 10px">No</th>
                                                 <th>Tanggal Masuk</th>
+                                                <th>Tanggal Update Data</th>
                                                 <th>Barang</th>
                                                 <th>Supplier</th>
                                                 <th>Jenis Transaksi</th>
@@ -43,7 +44,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($transMasuk as $index => $trans)
+                                            {{-- @foreach ($transMasuk as $index => $trans)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $trans->tgl_masuk }}</td>
@@ -101,7 +102,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
 
                                         </tbody>
                                     </table>
