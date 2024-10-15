@@ -13,6 +13,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\HouseKeepingController;
 use App\Http\Controllers\InhouseController;
+use App\Http\Controllers\InventoryAsset\AssetController;
+use App\Http\Controllers\InventoryAsset\KategoriController;
+use App\Http\Controllers\InventoryAsset\SupplierController as InventoryAssetSupplierController;
+use App\Http\Controllers\InventoryAsset\TransAssetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KaryawanController;
@@ -44,6 +48,10 @@ require __DIR__ . '/auth.php';
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {});
 
@@ -139,7 +147,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
-    // House Keeping 
+    // House Keeping
     Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
     Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
     Route::get('/housekeeping-table', [HouseKeepingController::class, 'call_table'])->name('cleaningroom.table');
@@ -229,7 +237,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     //datatable route
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    //ajax request   
+    //ajax request
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 
@@ -237,24 +245,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
     Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
-    Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
-    Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
-    Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
-    
-    
+    Route::get('/edit-karyawan', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+    Route::get('/update-karyawan', [KaryawanController::class, 'update'])->name('update.karyawan');
+
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
     Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
     Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.divisi');
-    Route::get('/divisi/{id}/edit', [DivisiController::class, 'edit'])->name('edit.divisi');
-    Route::put('/divisi/{id}', [DivisiController::class, 'update'])->name('update.divisi');
 
-    //Shift
+    //Divisi
     Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
     Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
     Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
-    Route::get('/shift/{id}/edit', [ShiftController::class, 'edit'])->name('edit.shift');
-    Route::put('/shift/{id}', [ShiftController::class, 'update'])->name('update.shift');
 
 
     //Kehadiran
@@ -263,15 +265,46 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
+    // Inventory Asset
 
-    // payroll
-    Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
-    Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
-    Route::get('/proses-gaji', [PayrollController::class, 'prosesGaji'])->name('proses.gaji');
-    Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
-    Route::post('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update_gaji');
+    // supplier
+    Route::prefix('inventory-assets/supplier')->group(function () {
+        Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
+        Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
+        Route::post('/store', [InventoryAssetSupplierController::class, 'store'])->name('inventory-assets.supplier.store');
+        Route::get('/edit/{id}', [InventoryAssetSupplierController::class, 'edit'])->name('inventory-assets.supplier.edit');
+        Route::post('/update/{id}', [InventoryAssetSupplierController::class, 'update'])->name('inventory-assets.supplier.update');
+        Route::delete('/destroy/{id}', [InventoryAssetSupplierController::class, 'destroy'])->name('inventory-assets.supplier.destroy');
+    });
 
+    Route::prefix('inventory-assets/category')->group(function () {
+        Route::get('/show', [KategoriController::class, 'index'])->name('inventory-assets.kategori.show');
+        Route::get('/create', [KategoriController::class, 'create'])->name('inventory-assets.kategori.create');
+        Route::post('/store', [KategoriController::class, 'store'])->name('inventory-assets.kategori.store');
+        Route::get('/edit/{id}', [KategoriController::class, 'edit'])->name('inventory-assets.kategori.edit');
+        Route::post('/update/{id}', [KategoriController::class, 'update'])->name('inventory-assets.kategori.update');
+        Route::delete('/destroy/{id}', [KategoriController::class, 'destroy'])->name('inventory-assets.kategori.destroy');
+    });
 
-    //
-    Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
+    Route::prefix('inventory-assets/asset')->group(function () {
+        Route::get('/show', [AssetController::class, 'index'])->name('inventory-assets.asset.show');
+        Route::get('/create', [AssetController::class, 'create'])->name('inventory-assets.asset.create');
+        Route::post('/store', [AssetController::class, 'store'])->name('inventory-assets.asset.store');
+        Route::get('/edit/{id}', [AssetController::class, 'edit'])->name('inventory-assets.asset.edit');
+        Route::post('/update/{id}', [AssetController::class, 'update'])->name('inventory-assets.asset.update');
+        Route::delete('/destroy/{id}', [AssetController::class, 'destroy'])->name('inventory-assets.asset.destroy');
+    });
+
+    Route::prefix('inventory-assets/trans')->group(function () {
+        Route::get('/show', [TransAssetController::class, 'index'])->name('inventory-assets.trans.show');
+        Route::get('/create-masuk', [TransAssetController::class, 'createMasuk'])->name('inventory-assets.trans.create-masuk');
+        Route::get('/create-keluar', [TransAssetController::class, 'createKeluar'])->name('inventory-assets.trans.create-keluar');
+        Route::post('/store-masuk', [TransAssetController::class, 'storeMasuk'])->name('inventory-assets.trans.store-masuk');
+        Route::post('/store-keluar', [TransAssetController::class, 'storeKeluar'])->name('inventory-assets.trans.store-keluar');
+        Route::get('/edit/{id}', [TransAssetController::class, 'edit'])->name('inventory-assets.trans.edit');
+        Route::post('/update-masuk/{id}', [TransAssetController::class, 'updateMasuk'])->name('inventory-assets.trans.update-masuk');
+        Route::post('/update-keluar/{id}', [TransAssetController::class, 'updateKeluar'])->name('inventory-assets.trans.update-keluar');
+        Route::delete('/destroy/{id}', [TransAssetController::class, 'destroy'])->name('inventory-assets.trans.destroy');
+    });
+    // end Inventory Asset
 });
