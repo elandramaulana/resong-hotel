@@ -7,6 +7,7 @@ use App\Models\Gaji;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PayrollController extends Controller
 {
@@ -41,7 +42,7 @@ class PayrollController extends Controller
             'divisis.d_nama as divisi_karyawan',
             'karyawan_has_divisions.khr_isActive as status_karyawan',
             'gaji.gaji_pokok',
-            
+            'gaji.no_rek' 
         )
         ->join('karyawan_has_divisions', 'karyawan.id', '=', 'karyawan_has_divisions.karyawan_id')
         ->join('divisis', 'karyawan_has_divisions.divisi_id', '=', 'divisis.id')
@@ -58,23 +59,37 @@ class PayrollController extends Controller
     public function updateGaji(Request $request, $id)
     {
         $request->validate([
+            'karyawan_id' => 'required',
             'gaji_pokok' => 'required|numeric',
             'no_rek' => 'required|string',
         ]);
     
-        $gaji = Gaji::findOrFail($id);
-
+        $gaji = Gaji::where('karyawan_id', $request->karyawan_id)->first();
+    
+        if (!$gaji) {
+            $gaji = new Gaji;
+            $gaji->karyawan_id = $request->karyawan_id;
+        }
+    
         $gaji->gaji_pokok = $request->gaji_pokok;
         $gaji->no_rek = $request->no_rek;
     
-        return redirect()->route('data_gaji')->with('success', 'Data gaji berhasil diperbarui');
+        $gaji->save();
+    
+        Alert::success('success', 'Gaji berhasil di Update');
+        return redirect()->route('data.gaji');
     }
 
-
+//Proses Gaji
     public function prosesGaji() {
         $karyawan = Karyawan::all();
 
         return view('payroll.proses_gaji', compact('karyawan'));
+    }
+
+
+    public function detailProsesGaji(){
+        return view('payroll.detail_proses');
     }
 
     public function billGaji(){

@@ -43,7 +43,7 @@
                                                     <div>
                                                         <button class="btn btn-warning rounded " type="button">
                                                             <a style="text-decoration: none;color:black;"
-                                                                href="{{ route('detail_guest') }}">Proses</a>
+                                                                href="{{ route('detail.proses') }}">Proses</a>
                                                         </button>
                                                     </div>
                                                 </td>

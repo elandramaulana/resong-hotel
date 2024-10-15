@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td>{{$no}}</td>
                                                 <td>{{$pyr->id_karyawan}}</td>
-                                                <td>{{$pyr->nama_karyawan}}</td>
+                                                <td>{{$pyr->karyawan_nama}}</td>
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
                                                 <td>{{$pyr->status_karyawan}}</td>

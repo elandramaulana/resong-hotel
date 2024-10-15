@@ -38,7 +38,7 @@ class BarangController extends Controller
     }
 
     public function create() {
-        $barang = Barang::all();
+        $barang = Barang::whereHas('kategori')->get(); 
         $kategori = CategoryBarang::all();
 
         return view('inventorykitchen.barang.tambah_barang', compact('barang', 'kategori'));
@@ -62,6 +62,32 @@ class BarangController extends Controller
     }
 
 
+    public function edit($id){
+        $barang = Barang::find($id);
+        $kategori = CategoryBarang::all();
+        return view('inventorykitchen.barang.edit_barang', compact('barang', 'kategori'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'barang_nama' => 'required|string|max:255',
+            'barang_kategori' => 'required|string|max:255',
+            'barang_satuan' => 'required|string|max:255',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+
+        $barang->barang_nama = $request->barang_nama;
+        $barang->barang_kategori = $request->barang_kategori;
+        $barang->barang_satuan = $request->barang_satuan;
+
+        $barang->save();
+
+        Alert::success('success', 'Barang berhasil di Update');
+        return redirect()->route('list.barang');
+
+    }
+
     
     public function destroy($id)
     {
@@ -74,4 +100,6 @@ class BarangController extends Controller
         Alert::success('Success', 'Barang Berhasil Dihapus');
          return redirect()->route('list.barang');
     }
+
+    
 }
