@@ -27,8 +27,11 @@
 .btn-extend:hover{
     background-color: #000;
     color: #fff;
-    font-weight: 800;
-   
+    font-weight: 800;  
+}
+
+.hidden-number {
+  display: none; 
 }
 
 .btn-print{

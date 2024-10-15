@@ -26,39 +26,7 @@
               
                       <div class="row">
                             <div class="col-sm-12">
-                                {{-- <div class="row">
-                                    <!-- Left Column -->
-                                    <div class="col-md-6">
-                                        <div class="col-sm-12">
-                                            <div class="mb-3">
-                                                    <label for="Channel" class="form-label">Hari</label>
-                                                    <select name="day_name" class="form-control" id="channel">
-                                                        <option value="Senin">Senin</option>
-                                                        <option value="Selasa">Selasa</option>
-                                                        <option value="Rabu">Rabu</option>
-                                                        <option value="Kamis">Kamis</option>
-                                                        <option value="Jumat">Jum'at</option>
-                                                        <option value="Sabtu">Sabtu</option>
-                                                        <option value="Minggu">Minggu</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                    </div>
-                    
-                                    <!-- Right Column -->
-                                    <div class="col-md-6">
-                    
-                                        <div class="col-sm-12">
-                                            <div class="mb-3">
-                                                    <label for="Channel" class="form-label">Set Status</label>
-                                                    <select name="status" class="form-control" id="channel">
-                                                        <option value="Active">Active</option>
-                                                        <option value="Non-Active">Non-Active</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div> --}}
+                               
                         </div>
                         <div class="col-sm-12">
                             <div class="table-responsive">
@@ -66,37 +34,34 @@
                                     <thead>
                                         <tr>
                                             <th>Hari</th>
-                                            <th>Breakfast</th>
-                                            <th>Lunch</th>
-                                            <th>Dinner</th>
+                                    
+                                           
+                                            @foreach($categories as $category)
+                                                <th>{{ $category->nama_kategori }}</th>
+                                            @endforeach
+                                            
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         @foreach($menus as $menu)
+                                        @php $counter = 1; @endphp <!-- Inisialisasi counter -->
+                                        @foreach($menus as $menu)
                                             <tr>
-                                                <td>{{$menu['day_name']}}</td>
                                                 <td>
-                                                    <ul class="list-group list-group-flush">
-                                                    @foreach($menu['Breakfast'] as $key)
-                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
-                                                    @endforeach
-                                                    </ul>
+                                                    <span class="hidden-number">{{ $counter }}</span> <!-- Menyimpan nomor di sini -->
+                                                    {{ $menu['day_name'] }} <!-- Tampilkan nama hari -->
                                                 </td>
-                                                <td>
-                                                    <ul class="list-group list-group-flush">
-                                                    @foreach($menu['Lunch'] as $key)
-                                                        <li class="list-group-item">{{ $key['menu_name'] }}</li>
-                                                    @endforeach
-                                                    </ul></td>
-                                                <td>
-                                                    
-                                                    <ul class="list-group list-group-flush">
-                                                        @foreach($menu['Dinner'] as $key)
-                                                            <li class="list-group-item">{{ $key['menu_name'] }}</li>
-                                                        @endforeach
-                                                        </ul></td>
-                                                </td>
+                                    
+                                                @foreach($menu['categories'] as $category_name => $category_menus)
+                                                    <td>
+                                                        <ul class="list-group list-group-flush">
+                                                            @foreach($category_menus as $key)
+                                                                <li class="list-group-item">{{ $key['menu_name'] }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
+                                                @endforeach
+                                    
                                                 <td>
                                                     <div>
                                                         <button style="margin-right: 10px" type="button" class="btn btn-warning btn-sm mt-2">
@@ -106,12 +71,12 @@
                                                         </button>
                                                     </div>
                                                 </td>
-                                                
                                             </tr>
-                                       
-                                            @endforeach
-                                      
-                                        </tbody>
+                                            @php $counter++; @endphp <!-- Increment counter -->
+                                        @endforeach
+                                    </tbody>
+                                    
+                                    
                                 </table>
                             
                             </div>

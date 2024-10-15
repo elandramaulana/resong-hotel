@@ -46,7 +46,9 @@
                                     <tr>
                                         <td>{{ $counter_menu }}</td>
                                         <td>{{$menu->menu_name}}</td>
-                                        <td>{{$menu->nama_kategori}}</td>
+                                        <td>
+                                            {{ $menu->nama_kategori ? $menu->nama_kategori : 'Kategori Tidak Tersedia' }} <!-- Cek apakah nama_kategori null -->
+                                        </td>
                                         <td>{{$menu->menu_price}}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
@@ -57,7 +59,7 @@
                                         <td>
                                             <div>
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                   <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
+                                                   <a style="color: black" href="{{route('edit.menu', $menu->menu_id)}}">  <i class="fas fa-edit"></i></a>
                                                 </button>
                                                 <form action="{{ route('destroy.kategori', $menu->menu_id) }}" method="POST" style="display: inline;" id="deleteForm{{$menu->menu_id}}">
                                                     @csrf

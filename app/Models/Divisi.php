@@ -26,11 +26,11 @@ class Divisi extends Model
 
     public function karyawan()
     {
-        return $this->hasMany(Karyawan::class, 'id_divisi', 'id');
+        return $this->hasMany(Karyawan::class, 'k_divisi', 'id');
     }
 
-    public static function getAllCategories()
+    public function karyawanHasDivision()
     {
-        return self::all();
+        return $this->hasMany(KaryawanHasDivision::class, 'divisi_id', 'id');
     }
 }
