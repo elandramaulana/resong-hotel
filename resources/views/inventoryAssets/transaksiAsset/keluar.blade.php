@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body text-dark">
 
-                        <form action="{{ route('store.trans.barang') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('inventory-assets.trans.store-keluar') }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
 
@@ -23,11 +24,9 @@
                                 <div class="mb-3">
                                     <label for="trans_jenis" class="form-label">Jenis Transaksi</label>
                                     <select name="trans_jenis" class="form-control" id="trans_jenis">
-                                        <option value="TERPAKAI">
-                                            TERPAKAI</option>
+                                        <option value="BAIK">
+                                            BAIK</option>
                                         <option value="RUSAK">RUSAK
-                                        </option>
-                                        <option value="EXPIRED">EXPIRED
                                         </option>
                                     </select>
                                     <x-input-error :messages="$errors->get('trans_jenis')" class="mt-2" />

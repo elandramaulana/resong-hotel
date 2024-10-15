@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('asset_id')->constrained('assets');
             $table->integer('trans_jml');
             $table->integer('trans_harga')->nullable();
-            $table->foreignId('supplier_asset_id')->constrained('supplier_assets')->nullable();
+            $table->foreignId('supplier_asset_id')->nullable()->constrained('supplier_assets');
             $table->string('trans_jenis');
             $table->timestamps();
         });

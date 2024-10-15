@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body text-dark">
 
-                        <form action="{{ route('store.trans.barang') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('inventory-assets.trans.store-masuk') }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
 
@@ -48,14 +49,14 @@
 
                                 <div class="mb-3">
                                     <label for="Channel" class="form-label">Supplier</label>
-                                    <select name="trans_suplier" class="form-control" id="supplier">
+                                    <select name="supplier_asset_id" class="form-control" id="supplier_asset_id">
                                         @foreach ($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">
                                                 {{ $supplier->supplier_name }}</option>
                                         @endforeach
 
                                     </select>
-                                    <x-input-error :messages="$errors->get('trans_suplier')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('supplier_asset_id')" class="mt-2" />
                                 </div>
 
                                 <div class="mb-3">

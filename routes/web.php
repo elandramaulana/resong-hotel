@@ -298,10 +298,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/show', [TransAssetController::class, 'index'])->name('inventory-assets.trans.show');
         Route::get('/create-masuk', [TransAssetController::class, 'createMasuk'])->name('inventory-assets.trans.create-masuk');
         Route::get('/create-keluar', [TransAssetController::class, 'createKeluar'])->name('inventory-assets.trans.create-keluar');
-        // Route::post('/store', [AssetController::class, 'store'])->name('inventory-assets.asset.store');
-        // Route::get('/edit/{id}', [AssetController::class, 'edit'])->name('inventory-assets.asset.edit');
-        // Route::post('/update/{id}', [AssetController::class, 'update'])->name('inventory-assets.asset.update');
-        // Route::delete('/destroy/{id}', [AssetController::class, 'destroy'])->name('inventory-assets.asset.destroy');
+        Route::post('/store-masuk', [TransAssetController::class, 'storeMasuk'])->name('inventory-assets.trans.store-masuk');
+        Route::post('/store-keluar', [TransAssetController::class, 'storeKeluar'])->name('inventory-assets.trans.store-keluar');
+        Route::get('/edit/{id}', [TransAssetController::class, 'edit'])->name('inventory-assets.trans.edit');
+        Route::post('/update-masuk/{id}', [TransAssetController::class, 'updateMasuk'])->name('inventory-assets.trans.update-masuk');
+        Route::post('/update-keluar/{id}', [TransAssetController::class, 'updateKeluar'])->name('inventory-assets.trans.update-keluar');
+        Route::delete('/destroy/{id}', [TransAssetController::class, 'destroy'])->name('inventory-assets.trans.destroy');
     });
     // end Inventory Asset
 });

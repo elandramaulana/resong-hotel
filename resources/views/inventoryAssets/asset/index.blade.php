@@ -42,27 +42,11 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $item->nama ?? '' }}</td>
-                                                    <td>{{ $item->rCategoryAssets?->nama_kategori }}</td>
+                                                    <td>{{ $item->rCategoryAssets?->nama_kategori ?? '' }}</td>
                                                     <td>
-                                                        {{-- @php
-                                                            // Menghitung StockAvailable
-                                                            $stockAvailable =
-                                                                $stokBarang
-                                                                    ->where('barang_id', $brg->id)
-                                                                    ->sum('stock_masuk') -
-                                                                ($stokBarang
-                                                                    ->where('barang_id', $brg->id)
-                                                                    ->sum('stock_keluar') +
-                                                                    $stokBarang
-                                                                        ->where('barang_id', $brg->id)
-                                                                        ->sum('stock_rusak') +
-                                                                    $stokBarang
-                                                                        ->where('barang_id', $brg->id)
-                                                                        ->sum('stock_expired'));
-                                                        @endphp --}}
-                                                        {{-- {{ $stockAvailable }} --}}
+                                                        {{ $stockAvailableArray[$item->id] ?? 0 }}
                                                     </td>
-                                                    <td>{{ $item->satuan }}</td>
+                                                    <td>{{ $item->satuan ?? '' }}</td>
                                                     <td>
                                                         <div>
                                                             <button style="margin-right: 10px" type="submit"
