@@ -2,30 +2,6 @@
 
 @section('content')
 
-<section id="normal-checkin">
-    <!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-start">
-        <h2 class="h3 mb-0 text-gray-800">Proses Payroll</h2>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <h4>Error Message</h4>
-        <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    <!-- Checkout Detail -->
-    
     
 
 <!-- Invoice Detail  -->
@@ -120,11 +96,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-</section>
+    </section>
+  
 
 
 @endsection

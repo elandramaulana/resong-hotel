@@ -24,7 +24,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 10px">NO</th>
-                                                <th>Id Karyawan</th>
+                                                <th style="width: 10px">Id</th>
                                                 <th>Nama</th>
                                                 <th>Divisi</th>
                                                 <th>Status</th>
@@ -32,23 +32,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            @php
+                                                $no = 1;
+                                            @endphp
+                                        @foreach($processData as $prs)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{$no}}</td>
+                                                <td>{{$prs->id_karyawan}}</td>
+                                                <td>{{$prs->karyawan_nama}}</td>
+                                                <td>{{$prs->divisi_karyawan}}</td>
+                                                <td> {{ $prs->status_karyawan  ? 'Aktif' : 'Tidak Aktif' }}</td>
                                                 <td>
                                                     <div>
                                                         <button class="btn btn-warning rounded " type="button">
                                                             <a style="text-decoration: none;color:black;"
-                                                                href="{{ route('detail.proses') }}">Proses</a>
+                                                                href="{{ route('detail.proses', $prs->id_karyawan) }}">Proses</a>
                                                         </button>
                                                     </div>
                                                 </td>
                                             </tr>
-
+                                            @php
+                                                $no++
+                                            @endphp
+                                            @endforeach
 
                                         </tbody>
                                     </table>
