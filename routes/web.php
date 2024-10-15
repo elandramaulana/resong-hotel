@@ -271,6 +271,46 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
+      // supplier
+      Route::prefix('inventory-assets/supplier')->group(function () {
+        Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
+        Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
+        Route::post('/store', [InventoryAssetSupplierController::class, 'store'])->name('inventory-assets.supplier.store');
+        Route::get('/edit/{id}', [InventoryAssetSupplierController::class, 'edit'])->name('inventory-assets.supplier.edit');
+        Route::post('/update/{id}', [InventoryAssetSupplierController::class, 'update'])->name('inventory-assets.supplier.update');
+        Route::delete('/destroy/{id}', [InventoryAssetSupplierController::class, 'destroy'])->name('inventory-assets.supplier.destroy');
+    });
+
+    Route::prefix('inventory-assets/category')->group(function () {
+        Route::get('/show', [KategoriController::class, 'index'])->name('inventory-assets.kategori.show');
+        Route::get('/create', [KategoriController::class, 'create'])->name('inventory-assets.kategori.create');
+        Route::post('/store', [KategoriController::class, 'store'])->name('inventory-assets.kategori.store');
+        Route::get('/edit/{id}', [KategoriController::class, 'edit'])->name('inventory-assets.kategori.edit');
+        Route::post('/update/{id}', [KategoriController::class, 'update'])->name('inventory-assets.kategori.update');
+        Route::delete('/destroy/{id}', [KategoriController::class, 'destroy'])->name('inventory-assets.kategori.destroy');
+    });
+
+    Route::prefix('inventory-assets/asset')->group(function () {
+        Route::get('/show', [AssetController::class, 'index'])->name('inventory-assets.asset.show');
+        Route::get('/create', [AssetController::class, 'create'])->name('inventory-assets.asset.create');
+        Route::post('/store', [AssetController::class, 'store'])->name('inventory-assets.asset.store');
+        Route::get('/edit/{id}', [AssetController::class, 'edit'])->name('inventory-assets.asset.edit');
+        Route::post('/update/{id}', [AssetController::class, 'update'])->name('inventory-assets.asset.update');
+        Route::delete('/destroy/{id}', [AssetController::class, 'destroy'])->name('inventory-assets.asset.destroy');
+    });
+
+    Route::prefix('inventory-assets/trans')->group(function () {
+        Route::get('/show', [TransAssetController::class, 'index'])->name('inventory-assets.trans.show');
+        Route::get('/create-masuk', [TransAssetController::class, 'createMasuk'])->name('inventory-assets.trans.create-masuk');
+        Route::get('/create-keluar', [TransAssetController::class, 'createKeluar'])->name('inventory-assets.trans.create-keluar');
+        Route::post('/store-masuk', [TransAssetController::class, 'storeMasuk'])->name('inventory-assets.trans.store-masuk');
+        Route::post('/store-keluar', [TransAssetController::class, 'storeKeluar'])->name('inventory-assets.trans.store-keluar');
+        Route::get('/edit/{id}', [TransAssetController::class, 'edit'])->name('inventory-assets.trans.edit');
+        Route::post('/update-masuk/{id}', [TransAssetController::class, 'updateMasuk'])->name('inventory-assets.trans.update-masuk');
+        Route::post('/update-keluar/{id}', [TransAssetController::class, 'updateKeluar'])->name('inventory-assets.trans.update-keluar');
+        Route::delete('/destroy/{id}', [TransAssetController::class, 'destroy'])->name('inventory-assets.trans.destroy');
+    });
+    // end Inventory Asset
 
     // payroll
     Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
@@ -281,6 +321,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
 
 
-    //
-    Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
+    
 });
