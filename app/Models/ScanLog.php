@@ -11,9 +11,9 @@ class ScanLog extends Model
     protected $fillable = [
         'pin',
         'scanlog_id',
-        'work_code',
-        'verify_mode',
-        'io_mode',
+        'workcode',
+        'verifymode',
+        'iomode',
         'scan_date',
         'sync_date',
     ];

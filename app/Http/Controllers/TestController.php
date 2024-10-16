@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function index(){
-        $laund = new LaundryController();
-        $jumlah = $laund->getSumPrice(5);
-        print_r($jumlah);
+        $test = new InhouseController();
+        $isCheckedout = $test->isCheckedOut(7);
+        print_r($isCheckedout);
     }
 }
