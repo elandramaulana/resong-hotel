@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function index(){
-        $laund = new LaundryController();
-        $jumlah = $laund->getSumPrice(5);
-        print_r($jumlah);
+        $AttendanceController = new AttendanceController();
+        $ok = $AttendanceController->ProsessLatePoint(1, '2024-10-14');
+        print_r($ok);
     }
 }
