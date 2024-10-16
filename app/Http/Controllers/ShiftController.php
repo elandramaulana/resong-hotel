@@ -82,4 +82,12 @@ class ShiftController extends Controller
         Alert::success('success', 'Shift berhasil diperbarui');
         return redirect()->route('daftar.shift');
     }
+
+    public function destroy($id) {
+        $shift = Shift::findOrFail($id);
+
+        $shift->delete();
+        Alert::success('Success', 'Shift Berhasil Dihapus');
+        return redirect()->route('daftar.shift');
+    }
 }

@@ -75,4 +75,16 @@ class DivisiController extends Controller
         Alert::success('success', 'Divisi berhasil di Update');
       return redirect()->route('daftar.divisi');
     }
+
+    public function destroy($id)
+    {
+        $divisi = Divisi::findOrFail($id);
+       
+    
+        // Hapus data post
+        $divisi->delete();
+    
+        Alert::success('Success', 'Divisi Berhasil Dihapus');
+         return redirect()->route('daftar.divisi');
+    }
 }

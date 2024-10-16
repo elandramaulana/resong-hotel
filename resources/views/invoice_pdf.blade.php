@@ -111,6 +111,27 @@
                         @php
                         $TotalLaundry = $TotalLaundry + $total;
                 }               
+                $det = $data['detail_extrabed'];
+                $TotalExtrabed = 0;
+                if(count($det)>0){
+                echo    '<tr>
+                            <td style="font-size:15px;font-weight:bold;padding-left:20px" colspan="4">Extrabed</td>
+                        </tr> ';
+                }
+                foreach ($det as $key) {
+                    $total = $key['item_qty']*$key['item_price'];
+                    $showTotal = formatCurrency($total);
+                    $showPrice = formatCurrency($key['item_price']);  
+                        @endphp
+                            <tr >
+                                <td style="padding-left:30px;">{{ $key['item_name'] }}</td>
+                                <td style="padding-left:20px;">{{ $key['item_qty'] }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showPrice }}</td>  
+                                <td align="right" style="padding-left:20px;">{{ $showTotal }}</td>  
+                            </tr>
+                        @php
+                        $TotalExtrabed = $TotalExtrabed + $total;
+                }               
             @endphp
             
         </table>

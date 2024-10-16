@@ -49,6 +49,8 @@ class BookingController extends Controller
           'Title'=>'Input Detail Reservasi',
           'data'=>$Reservation
         ];
+
+        // dd($Data);
         return view('frontoffice.reservation.reservation_list', $Data);
       }
       public function booking_canceled(Request $request) {
@@ -102,6 +104,8 @@ class BookingController extends Controller
             return redirect()->route('dashboard')->with($return);
         }
       }
+
+
       public function pick_room(ReserveRoomRequest $request) {
         $formData = $request->all();
         $request->session()->put('form_data', $formData);

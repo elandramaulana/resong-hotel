@@ -42,10 +42,10 @@
                                             <tr>
                                                 <td>{{$no}}</td>
                                                 <td>{{$pyr->id_karyawan}}</td>
-                                                <td>{{$pyr->nama_karyawan}}</td>
+                                                <td>{{$pyr->karyawan_nama}}</td>
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
-                                                <td>{{$pyr->status_karyawan}}</td>
+                                                <td>{{$pyr->status_karyawan ? 'Aktif' : 'Tidak Aktif'}}</td>
                                                 <td>{{ number_format($pyr->gaji_karyawan, 0, ',', '.') }}</td>
                                                 <td>{{$pyr->rek_karyawan}}</td>
                                                 <td>

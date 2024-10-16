@@ -24,8 +24,32 @@ class AssetController extends Controller
         $Data = [
             'Title' => "Data Asset"
         ];
-        $assets = Assets::with('rCategoryAssets')->latest()->get();
-        return view('inventoryAssets.asset.index', compact('Data', 'assets'));
+
+        // Ambil semua asset beserta relasinya
+        $assets = Assets::with('rCategoryAssets', 'rTransAssets')->latest()->get();
+
+        // Array untuk menyimpan stok yang tersedia
+        $stockAvailableArray = [];
+
+        // Menghitung stok untuk setiap asset dan menyimpannya di array
+        foreach ($assets as $item) {
+            // Menghitung stok masuk (jenis transaksi MASUK)
+            $stockMasuk = $item->rTransAssets()
+                ->where('trans_jenis', 'MASUK')
+                ->sum('trans_jml');
+
+            // Menghitung stok keluar atau rusak (jenis transaksi TERPAKAI, RUSAK, EXPIRED)
+            $stockKeluar = $item->rTransAssets()
+                ->whereIn('trans_jenis', ['BAIK', 'RUSAK'])
+                ->sum('trans_jml');
+
+            // Menghitung stok tersedia
+            $stockAvailable = $stockMasuk - $stockKeluar;
+
+            // Menyimpan stok tersedia ke dalam array baru
+            $stockAvailableArray[$item->id] = $stockAvailable;
+        }
+        return view('inventoryAssets.asset.index', compact('Data', 'assets', 'stockAvailableArray'));
     }
 
     public function create()

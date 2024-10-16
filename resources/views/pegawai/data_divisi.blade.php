@@ -55,7 +55,7 @@
                                                                 <a style="color: black" href="{{ route('edit.divisi', ['id' => $d->id ]) }}"> <i
                                                                         class="fas fa-edit"></i></a>
                                                             </button>
-                                                            <form action="" method="POST" style="display: inline;"
+                                                            <form action="{{route('destroy.divisi',['id' => $d->id ])}}" method="POST" style="display: inline;"
                                                                 id="deleteForm">
                                                                 @csrf
                                                                 @method('DELETE')

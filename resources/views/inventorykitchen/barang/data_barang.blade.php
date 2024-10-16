@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $counter_barang }}</td>
                                         <td>{{$brg->barang_nama}}</td>
-                                        <td>{{$brg->kategori->nama_kategori}}</td>
+                                        <td>{{ optional($brg->kategori)->nama_kategori ?? 'Kategori Tidak Tersedia' }}</td>
                                         <td>
                                             @php
                                                 // Menghitung StockAvailable
@@ -61,7 +61,7 @@
                                         <td>
                                             <div>
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                   <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
+                                                   <a style="color: black" href="{{ route('edit.barang', $brg->id) }}">  <i class="fas fa-edit"></i></a>
                                                 </button>
                                                 <form action="{{ route('destroy.barang', $brg->id) }}" method="POST" style="display: inline;" id="deleteForm{{$brg->id}}">
                                                     @csrf

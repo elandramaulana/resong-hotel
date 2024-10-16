@@ -164,7 +164,7 @@ class CheckinController extends Controller
             'date_checkout'=>$checkout,
             'guest_adult'=>$adults,
             'guest_kids'=>$children,
-            // 'is_extrabed'=>null' not implemented
+            // 'is_extrabed'=>1, 
             'payment_status' =>'DEPOSIT',
             'payment'=>$request->deposit,
             'payment_method'=>$request->payment_method,

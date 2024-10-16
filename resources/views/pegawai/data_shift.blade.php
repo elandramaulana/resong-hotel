@@ -52,7 +52,7 @@
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
                                                     <a style="color: black" href="{{ route('edit.shift', ['id' => $shift->id ]) }}">  <i class="fas fa-edit"></i></a>
                                                 </button>
-                                                <form action="" method="POST" style="display: inline;" id="deleteForm">
+                                                <form action="{{route('destroy.shift',['id' => $shift->id ])}}" method="POST" style="display: inline;" id="deleteForm">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal">

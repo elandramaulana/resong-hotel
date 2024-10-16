@@ -55,7 +55,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -305,27 +305,11 @@
                 Kepegawaian
             </div>
 
-            <!-- Nav Item - Check-out -->
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Dashboard Karyawan</span></a>
-            </li>
-
-              <!-- Nav Item - Check-out -->
-              <li class="nav-item">
                 <a class="nav-link" href="{{route('daftar.hadir')}}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
-
-
-                {{-- <!-- Nav Item - Check-out -->
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="fas fa-fw fa-calendar"></i>
-                        <span>Dashboard Karyawan</span></a>
-                </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
@@ -343,12 +327,7 @@
                 </div>
             </li>
 
-          
-
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('daftar.hadir') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Absensi Kehadiran</span></a>
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-dollar-sign"></i>
@@ -509,44 +488,41 @@
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
     <!-- Script for table -->
-<script>
-    $(document).ready(function () {
-        $('#checkInTable'). DataTable();
-        $('#speedyCheckInTable'). DataTable();
-        $('#checkOutTable').DataTable();
-        $('#countryTable').DataTable();
-        $('#ProvinceTable').DataTable();
-        $('#cityTable').DataTable();
-        // $('#reservationListTable').DataTable();
-        $('#cancelReservationListTable').DataTable();
-        $('#inhouseGuest').DataTable();
-        $('#guestDatabase').DataTable();
-        $('#listServiceGuestFood').DataTable();
-        $('#listServiceGuestDrinks').DataTable();
-        $('#listServiceGuestLaundry').DataTable();
-        $('#listServiceGuestOther').DataTable();
-        $('#listServiceOrder').DataTable();
-        $('#GuestDatabaseTable').DataTable();
-        $('#historyGuestTable').DataTable();
-        $('#houseKeepingTable').DataTable();
-        $('#cleaningHistoryTable').DataTable();
-        $('#billReporTable').DataTable();
-        $('#supplierTable').DataTable();
-        $('#barangTable').DataTable();
-        $('#barangMasukTable').DataTable();
-        $('#manageMenuTable').DataTable();
-        $('#daftarMenuTable').DataTable();
-        $('#layananRestoTable').DataTable();
-        $('#detailLayananRestoTable').DataTable();
-        $('#dataKaryawanTable').DataTable();
-        $('#dataDivisiTable').DataTable();
-        $('#dataShiftTable').DataTable();
-        $('#dataAbsensiTable').DataTable();
-        $('#dataGajiTable').DataTable();
-        $('#dataProsesTable').DataTable();
-        $('#dataBillTable').DataTable();
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $('#checkInTable').DataTable();
+            $('#speedyCheckInTable').DataTable();
+            $('#checkOutTable').DataTable();
+            $('#countryTable').DataTable();
+            $('#ProvinceTable').DataTable();
+            $('#cityTable').DataTable();
+            // $('#reservationListTable').DataTable();
+            $('#cancelReservationListTable').DataTable();
+            $('#inhouseGuest').DataTable();
+            $('#guestDatabase').DataTable();
+            $('#listServiceGuestFood').DataTable();
+            $('#listServiceGuestDrinks').DataTable();
+            $('#listServiceGuestLaundry').DataTable();
+            $('#listServiceGuestOther').DataTable();
+            $('#listServiceOrder').DataTable();
+            $('#GuestDatabaseTable').DataTable();
+            $('#historyGuestTable').DataTable();
+            $('#houseKeepingTable').DataTable();
+            $('#cleaningHistoryTable').DataTable();
+            $('#billReporTable').DataTable();
+            $('#supplierTable').DataTable();
+            $('#barangTable').DataTable();
+            $('#barangMasukTable').DataTable();
+            $('#manageMenuTable').DataTable();
+            $('#daftarMenuTable').DataTable();
+            $('#layananRestoTable').DataTable();
+            $('#detailLayananRestoTable').DataTable();
+            $('#dataKaryawanTable').DataTable();
+            $('#dataDivisiTable').DataTable();
+            $('#dataShiftTable').DataTable();
+            $('#dataAbsensiTable').DataTable();
+        });
+    </script>
 
 
     {{-- show menu image --}}
@@ -662,26 +638,6 @@
             });
         });
     </script>
-
-    {{-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector('.btn-print').addEventListener('click', function() {
-            // Kirim permintaan AJAX ke server untuk generate PDF
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '{{ route("generate.invoice") }}', true);
-            xhr.responseType = 'blob';
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    var blob = new Blob([xhr.response], { type: 'application/pdf' });
-                    var url = window.URL.createObjectURL(blob);
-                    // Buka link PDF dalam tab baru
-                    window.open(url);
-                }
-            };
-            xhr.send();
-        });
-    });
-    </script> --}}
 
 
     <!-- Bootstrap core JavaScript-->

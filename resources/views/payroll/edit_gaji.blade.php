@@ -30,27 +30,28 @@
     <div class="container-fluid mt-4">
         <div class="card">
             <div class="card-body text-dark">
-                <form action="{{ route('update_gaji', $detailGaji->id_karyawan) }}" method="POST" id="formDetailCheckin">
+                <form action="{{ route('update.gaji', $detailGaji->id_karyawan) }}" method="POST" id="formDetailCheckin">
                     @csrf
                     @method('PUT')
 
                     <div class="row">
                         <!-- Left Column -->
                         <div class="col-md-6">
-                            <!-- Invoice (Disabled) -->
+                           
                             <div class="mb-3">
+                                <input hidden value="{{ $detailGaji->id_karyawan }}" name="karyawan_id" type="text" class="form-control" id="karyawan_id" readonly>
                                 <label for="nama" class="form-label">Nama</label>
                                 <input value="{{ $detailGaji->karyawan_nama }}" name="nama" type="text" class="form-control" id="nama" readonly>
                             </div>
  
-                            <!-- Check-in Time -->
+                           
                             <div class="mb-3">
                                 <label for="gaji_pokok" class="form-label">Gaji Pokok</label>
-                                <input value="{{ $detailGaji->gaji_pokok }}" name="gaji_pokok" type="text" class="form-control" id="gaji_pokok">
+                                <input value="{{ $detailGaji->gaji_pokok }}" name="gaji_pokok" type="number" class="form-control" id="gaji_pokok">
                                 <x-input-error :messages="$errors->get('gaji_pokok')" class="mt-2"/>
                             </div>
                         </div>
-                        <!-- Right Column -->
+                    
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="divisi" class="form-label">Divisi</label>
@@ -74,9 +75,9 @@
                             </button>
                         </div>
                     </div>
-
-                    
                 </form>
+
+                
             </div>
         </div>
     </div>

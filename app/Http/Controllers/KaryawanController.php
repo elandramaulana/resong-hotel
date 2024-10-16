@@ -17,34 +17,34 @@ use RealRashid\SweetAlert\Facades\Alert;
 class KaryawanController extends Controller
 {
     public function index()
-    {
-        $Data = [
-            'Title' => "Daftar Karyawan"
-        ];
+{
+    $Data = [
+        'Title' => "Daftar Karyawan"
+    ];
 
-        $karyawanData = DB::table('karyawan as k')
-            ->join('karyawan_has_divisions as khd', 'k.id', '=', 'khd.karyawan_id')
-            ->join('divisis as d', 'khd.divisi_id', '=', 'd.id')
-            ->join('karyawan_shifts as ks', 'k.id', '=', 'ks.karyawan_id')
-            ->join('shifts as s', 'ks.shift_id', '=', 's.id')
-            ->select(
-                'k.id as karyawan_id',
-                'k.k_nama as nama_karyawan',
-                'k.k_contact as kontak_karyawan',
-                'k.k_alamat as alamat_karyawan',
-                'k.k_gender as gender_karyawan',
-                'khd.khr_tgljoin as tanggal_bergabung',
-                'khd.khr_isActive as status_karyawan',
-                'khd.khr_tglOut as tanggal_keluar',
-                'd.d_nama as nama_divisi',
-                'd.d_deskripsi as deskripsi_divisi',
-                's.s_nama as shift_karyawan',
-                'k.k_pin as pin_karyawan'
-            )
-            ->get();
+    $karyawanData = DB::table('karyawan as k')
+        ->join('karyawan_has_divisions as khd', 'k.id', '=', 'khd.karyawan_id')
+        ->leftJoin('divisis as d', 'khd.divisi_id', '=', 'd.id') // Ubah join menjadi leftJoin
+        ->join('karyawan_shifts as ks', 'k.id', '=', 'ks.karyawan_id')
+        ->join('shifts as s', 'ks.shift_id', '=', 's.id')
+        ->select(
+            'k.id as karyawan_id',
+            'k.k_nama as nama_karyawan',
+            'k.k_contact as kontak_karyawan',
+            'k.k_alamat as alamat_karyawan',
+            'k.k_gender as gender_karyawan',
+            'khd.khr_tgljoin as tanggal_bergabung',
+            'khd.khr_isActive as status_karyawan',
+            'khd.khr_tglOut as tanggal_keluar',
+            DB::raw("COALESCE(d.d_nama, 'Divisi tidak tersedia') as nama_divisi"), // Tambahkan kondisi ini
+            'd.d_deskripsi as deskripsi_divisi',
+            's.s_nama as shift_karyawan',
+            'k.k_pin as pin_karyawan'
+        )
+        ->get();
 
-        return view('pegawai.data_karyawan', compact('karyawanData'), $Data);
-    }
+    return view('pegawai.data_karyawan', compact('karyawanData'), $Data);
+}
 
     public function add()
     {
@@ -145,6 +145,8 @@ class KaryawanController extends Controller
 
         return view('pegawai.edit_karyawan', compact('karyawan', 'divisis'));
     }
+
+    
 
     public function update(Request $request, $id)
     {

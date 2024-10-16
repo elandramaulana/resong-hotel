@@ -20,4 +20,9 @@ class Assets extends Model
     {
         return $this->belongsTo(CategoryAsset::class, 'category_asset_id', 'id');
     }
+
+    public function rTransAssets()
+    {
+        return $this->hasMany(TransAsset::class, 'asset_id');
+    }
 }

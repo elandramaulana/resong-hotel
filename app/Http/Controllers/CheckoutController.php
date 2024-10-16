@@ -57,7 +57,7 @@ class CheckoutController extends Controller
         $Room->room_status = 'VACANT DIRTY';
         $Room->save();
         $invoiceNeed = ['success'=>'Proses Checkout Selesai', 'checkin_id'=>$request->checkin_id];
-        return redirect('dashboard')->with($invoiceNeed);
+        return redirect()->route('dashboard')->with($invoiceNeed);
 
     }
     public function  detail(Request $request, $id)  {
@@ -107,6 +107,9 @@ class CheckoutController extends Controller
         $detCheckin = CheckinDetail::where('checkin_id', $checkin_id)
                                     ->where('item_category', $cat)
                                     ->get();
+        
+        // dd($detCheckin);
+
         return $detCheckin;
     }
     public function generatePDF($checkin_id)
@@ -133,8 +136,11 @@ class CheckoutController extends Controller
             'detail_vacant'=>$this->detCheckin($checkin_id, 'Rooms'),
             'detail_resto'=>$this->detCheckin($checkin_id, 'Resto'),
             'detail_laundry'=>$this->detCheckin($checkin_id, 'Laundry'),
+            'detail_extrabed'=>$this->detCheckin($checkin_id, 'Services'),
             'detail_checkout'=>$checkoutInfo,
         ];
+
+        // dd($data);
         // Mulai buffering output
         ob_start();
 

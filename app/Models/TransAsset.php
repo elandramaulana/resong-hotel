@@ -10,16 +10,16 @@ class TransAsset extends Model
     use HasFactory;
     protected $table = 'trans_assets';
     protected $fillable = [
-        'assets_id',
+        'asset_id',
         'trans_jml',
         'trans_harga',
-        'trans_suplier',
+        'supplier_asset_id',
         'trans_jenis',
     ];
 
     public function rAssets()
     {
-        return $this->belongsTo(Assets::class, 'assets_id');
+        return $this->belongsTo(Assets::class, 'asset_id');
     }
 
     public function rSupplierAsset()

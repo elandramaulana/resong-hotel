@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DaftarMenu;
 use App\Models\DailyMenu;
 use App\Models\DetailDaily;
+use App\Models\KategoriMenu;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,26 +16,39 @@ class DaftarMenuController extends Controller
 {
     public function index() {
         $Data = [
-            'Title'=>"Daftar Daily Menu"
+            'Title' => "Daftar Daily Menu"
         ];
-
-        $days = DailyMenu::all();
+    
+        // Ambil semua kategori dari tabel kategori_menu
+        $categories = KategoriMenu::all();
+    
+        // Ambil data dari DailyMenu dan urutkan berdasarkan id secara ascending
+        $days = DailyMenu::orderBy('id', 'asc')->get();
+        $menus = [];
+    
         foreach ($days as $day) {
-            $Breakfast = $this->listDetail($day->id, 1);
-            $Lunch = $this->listDetail($day->id, 2);
-            $Dinner = $this->listDetail($day->id, 3);
+            $menuDetails = [];
+    
+            // Loop melalui setiap kategori secara dinamis
+            foreach ($categories as $category) {
+                $menuDetails[$category->nama_kategori] = $this->listDetail($day->id, $category->id);
+            }
+    
             $menus[] = [
-                'id'=>$day->id,
-                'status'=>$day->status,
-                'day_name'=>$day->day_name,
-                'Breakfast'=>$Breakfast,
-                'Lunch'=>$Lunch,
-                'Dinner'=>$Dinner,
+                'id' => $day->id,
+                'status' => $day->status,
+                'day_name' => $day->day_name,
+                'categories' => $menuDetails
             ];
         }
+    
         $dailyMenu = DailyMenu::all();
-        return view('inventorykitchen.daftar_menu.daftar_menu', compact('menus', 'dailyMenu'), $Data);
+        
+        return view('inventorykitchen.daftar_menu.daftar_menu', compact('menus', 'dailyMenu', 'categories'), $Data);
     }
+    
+    
+    
 
 
     public function manage($id) {
@@ -80,11 +94,6 @@ class DaftarMenuController extends Controller
         // Hapus semua menu yang sudah ada
         DetailDaily::where('daily_id', $id)->delete();
     
-        // Retrieve selected menu IDs from the request
-        // $menuIds = $request->input('menu_ids[]');
-
-        // dd($menuIds);
-        
     
         // Insert new records for each selected menu
         foreach ($request->input('menu_ids') as $menuId) {
