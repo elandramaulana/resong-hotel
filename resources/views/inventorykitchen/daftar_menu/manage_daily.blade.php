@@ -70,7 +70,7 @@
 
 
 
-</div>
+
 <!-- /.container-fluid -->
 
 @endsection

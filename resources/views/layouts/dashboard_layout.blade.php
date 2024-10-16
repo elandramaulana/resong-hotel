@@ -55,7 +55,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -638,26 +638,6 @@
             });
         });
     </script>
-
-    {{-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector('.btn-print').addEventListener('click', function() {
-            // Kirim permintaan AJAX ke server untuk generate PDF
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '{{ route("generate.invoice") }}', true);
-            xhr.responseType = 'blob';
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    var blob = new Blob([xhr.response], { type: 'application/pdf' });
-                    var url = window.URL.createObjectURL(blob);
-                    // Buka link PDF dalam tab baru
-                    window.open(url);
-                }
-            };
-            xhr.send();
-        });
-    });
-    </script> --}}
 
 
     <!-- Bootstrap core JavaScript-->

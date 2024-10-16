@@ -46,7 +46,7 @@
                                                     <div>
                                                         <button class="btn btn-warning rounded " type="button">
                                                             <a style="text-decoration: none;color:black;"
-                                                                href="{{ route('detail.proses', $prs->id_karyawan) }}">Proses</a>
+                                                                href="{{ route('detail.proses', ['id' => $prs->id_karyawan]) }}">Proses</a>
                                                         </button>
                                                     </div>
                                                 </td>
