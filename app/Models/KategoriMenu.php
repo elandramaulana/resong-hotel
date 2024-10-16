@@ -12,10 +12,11 @@ class KategoriMenu extends Model
     protected $table = 'kategori_menu';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'id',
         'nama_kategori',
     ];
 
-    public function barang()
+    public function menus()
     {
         return $this->hasMany(Menu::class, 'menu_category', 'id');
     }

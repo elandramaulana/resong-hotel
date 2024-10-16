@@ -28,6 +28,7 @@ use App\Http\Controllers\RestoMenuController;
 
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\ShiftController;
@@ -47,10 +48,6 @@ require __DIR__ . '/auth.php';
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {});
 
@@ -146,7 +143,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
-    // House Keeping
+    // House Keeping 
     Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
     Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
     Route::get('/housekeeping-table', [HouseKeepingController::class, 'call_table'])->name('cleaningroom.table');
@@ -174,6 +171,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-barang', [BarangController::class, 'storeBarang'])->name('store.barang');
     Route::get('/edit-barang-detail/{id}', [BarangController::class, 'edit'])->name('edit.barang');
     Route::delete('/barang/destroy/{id}', [BarangController::class, 'destroy'])->name('destroy.barang');
+    Route::put('/update-barang/{id}', [BarangController::class, 'update'])->name('update.barang');
 
     // Kategori Barang
     Route::get('/kategori', [KategoriBarangController::class, 'index'])->name('list.kategori');
@@ -203,13 +201,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-menu', [MenuController::class, 'storeMenu'])->name('store.menu');
     Route::get('/edit-menu-detail/{id}', [MenuController::class, 'edit'])->name('edit.menu');
     Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('destroy.menu');
+    Route::put('/update-menu/{id}', [MenuController::class, 'update'])->name('update.menu');
 
     // Daftar Menu
     Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
     Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
     Route::get('/manage-daily-menu/{id}', [DaftarMenuController::class, 'manage'])->name('manage.daily');
     Route::post('/update-daily-menu/{id}', [DaftarMenuController::class, 'update'])->name('update.daily');
-    Route::post('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
+    Route::get('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
 
 
     // Daftar Menu
@@ -236,7 +235,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     //datatable route
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    //ajax request
+    //ajax request   
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 
@@ -244,18 +243,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
     Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
-    Route::get('/edit-karyawan', [KaryawanController::class, 'edit'])->name('edit.karyawan');
-    Route::get('/update-karyawan', [KaryawanController::class, 'update'])->name('update.karyawan');
-
+    Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+    Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
+    Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+    
+    
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
     Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
     Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.divisi');
+    Route::get('/divisi/{id}/edit', [DivisiController::class, 'edit'])->name('edit.divisi');
+    Route::put('/divisi/{id}', [DivisiController::class, 'update'])->name('update.divisi');
+    Route::delete('/divisi/destroy/{id}', [DivisiController::class, 'destroy'])->name('destroy.divisi');
 
-    //Divisi
+    //Shift
     Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
     Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
     Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
+    Route::get('/shift/{id}/edit', [ShiftController::class, 'edit'])->name('edit.shift');
+    Route::put('/shift/{id}', [ShiftController::class, 'update'])->name('update.shift');
+    Route::delete('/shift/destroy/{id}', [ShiftController::class, 'destroy'])->name('destroy.shift');
 
 
     //Kehadiran
@@ -264,10 +271,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
-    // Inventory Asset
-
-    // supplier
-    Route::prefix('inventory-assets/supplier')->group(function () {
+      // supplier
+      Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
         Route::post('/store', [InventoryAssetSupplierController::class, 'store'])->name('inventory-assets.supplier.store');
@@ -306,4 +311,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', [TransAssetController::class, 'destroy'])->name('inventory-assets.trans.destroy');
     });
     // end Inventory Asset
+
+    // payroll
+    Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
+    Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
+    Route::get('/proses-gaji', [PayrollController::class, 'prosesGaji'])->name('proses.gaji');
+    Route::get('/detai-proses-gaji', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses'); //tambahkan parameternya id keryawan
+    Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
+    Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
+
+
+    
 });
