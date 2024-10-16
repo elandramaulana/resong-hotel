@@ -17,7 +17,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <p class="font-weight-bold fs-5">Laporan Harian</p>
-                                    <p class="font-weight-bold">Selasa / 15 Oktober 2024</p>
+                                    <p class="font-weight-bold">{{ $Tanggal }}</p>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" style="width: 100%;" cellspacing="0">
@@ -38,40 +38,53 @@
                                         <tbody>
                                             <tr>
                                                 <td style="max-width: 10px; width: 10px;">1</td>
-                                                <td>Resto</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 200.000</td>
+                                                <td>Rooms</td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. {{ number_format($Vacant, 0, ',', '.') }}</td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td>2</td>
-                                                <td>Lorem</td>
-                                                <td>Rp. 200.000</td>
-                                                <td>Rp. 200.000</td>
+                                                <td>Services</td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. {{ number_format($Service, 0, ',', '.') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td>Resto</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 100.000</td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. {{ number_format($Resto, 0, ',', '.') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>4</td>
-                                                <td>Lorem</td>
-                                                <td>Rp. 200.000</td>
-                                                <td>Rp. 200.000</td>
+                                                <td>Laundry</td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. {{ number_format($Laundry, 0, ',', '.') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Barang Resto</td>
+                                                <td>Rp. {{ number_format($Barang, 0, ',', '.') }}</td>
+                                                <td>Rp. 0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Asset</td>
+                                                <td>Rp. {{ number_format($Asset, 0, ',', '.') }}</td>
+                                                <td>Rp. 0</td>
                                             </tr>
 
                                             {{-- Subtotal --}}
                                             <tr>
                                                 <td colspan="2" class="text-center font-weight-bold">Sub Total</td>
-                                                <td>Rp. 300.000</td>
-                                                <td>Rp. 300.000</td>
+                                                <td>Rp. {{ number_format($SubTotalDebit, 0, ',', '.') }}</td>
+                                                <td>Rp. {{ number_format($SubTotalKredit, 0, ',', '.') }}</td>
                                             </tr>
 
                                             {{-- Total --}}
                                             <tr>
                                                 <td colspan="2" class="text-center font-weight-bold">Total</td>
-                                                <td colspan="2">Rp. 600.000</td>
+                                                <td colspan="2">Rp. {{ number_format($Total, 0, ',', '.') }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
