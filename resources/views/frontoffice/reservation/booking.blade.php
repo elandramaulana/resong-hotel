@@ -51,12 +51,12 @@
                             <h4>Data Reservasi</h4>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="reservation_chanel" class="form-label">Check-in Time</label>
+                                    <label for="reservation_chanel" class="form-label">Check-in Channel</label>
                                         <select name="reservation_chanel" id="reservation_chanel" class="form-control">
-                                            <option value="">Pilih Chanel</option>
-                                            <option value="Walk-in">Walk-in</option>
-                                            <option value="Traveloka">Traveloka</option>
-                                            <option value="Phone">Phone</option>
+                                            <option value=""            >Pilih Chanel</option>
+                                            <option value="Walk-in"   {{ old('reservation_chanel') == 'Walk-in' ? 'selected' : '' }}  >Walk-in</option>
+                                            <option value="Traveloka" {{ old('reservation_chanel') == 'Traveloka' ? 'selected' : '' }}  >Traveloka</option>
+                                            <option value="Phone"     {{ old('reservation_chanel') == 'Phone' ? 'selected' : '' }}  >Phone</option>
                                         </select>
                                     <x-input-error :messages="$errors->get('reservation_chanel')" class="mt-2" />
                                 </div>
