@@ -305,14 +305,12 @@
                 Kepegawaian
             </div>
 
-<<<<<<< HEAD
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Dashboard Karyawan</span></a>
             </li>
-=======
 
               <!-- Nav Item - Check-out -->
               <li class="nav-item">
@@ -328,7 +326,6 @@
                         <i class="fas fa-fw fa-calendar"></i>
                         <span>Dashboard Karyawan</span></a>
                 </li> --}}
->>>>>>> 024fc09e69028ccd6530efaa4bfd27ad2837710a
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
@@ -349,11 +346,9 @@
           
 
             <li class="nav-item">
-<<<<<<< HEAD
                 <a class="nav-link" href="{{ route('daftar.hadir') }}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
-=======
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-dollar-sign"></i>
@@ -367,7 +362,6 @@
                         <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
                     </div>
                 </div>
->>>>>>> 024fc09e69028ccd6530efaa4bfd27ad2837710a
             </li>
 
 

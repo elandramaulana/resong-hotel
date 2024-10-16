@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
+use App\Models\KaryawanHasDivision;
+use App\Models\Kehadiran;
 use App\Models\ScanLog;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -29,8 +33,11 @@ class APIController extends Controller
 
         // Collect data into an array
         $scanlogData = [];
+        $KaryawanController = new KaryawanController();
+        $AttendanceController = new AttendanceController();
         foreach ($validatedData as $entry) {
-            $scanlogData[] = [
+            //get shift info
+            $scanlogData = [
                 'pin' => $entry['pin'],
                 'workcode' => $entry['workcode'],
                 'verifymode' => $entry['verifymode'], // Ensure correct key
@@ -39,9 +46,18 @@ class APIController extends Controller
                 'scanlog_id' => $entry['scanlog_id'],
                 'sync_date' => $entry['datetime_scan'],
             ];
+            ScanLog::create($scanlogData);
+            $scandatetime = new DateTime($entry['scandate']);
+            $scandate = $scandatetime->format('Y-m-d');
+            $karyawan = $KaryawanController->DetailKaryawanByPIN($entry['pin']);
+            $karyawan_id = $karyawan->karyawan_id ?? null;
+            if ($karyawan_id) {
+                Log::info('Proccess Latepoint Called'.$scandate);
+                $AttendanceController->ProsessLatePoint($karyawan_id, $scandate);
+            }
         }
         //save it to the database
-        ScanLog::insert($scanlogData);
+        // ScanLog::insert($scanlogData);
         // Return the collected data
         return response()->json(['message' => 'Data received successfully', 'data' => $scanlogData], 200);
         }

@@ -48,11 +48,11 @@ if ($request->filled('id_shift')) {
 }
 
 // Tambahkan kondisi untuk mengambil data hanya dari karyawan yang ada di scan_logs
-$query->whereExists(function ($subquery) {
-    $subquery->select(DB::raw(1))
-        ->from('scan_logs')
-        ->whereRaw('scan_logs.pin = karyawan.k_pin');
-});
+    $query->whereExists(function ($subquery) {
+        $subquery->select(DB::raw(1))
+            ->from('scan_logs')
+            ->whereRaw('scan_logs.pin = karyawan.k_pin');
+    });
 
    $tgl = $request->get('tanggal_absen');
 
