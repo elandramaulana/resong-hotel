@@ -42,13 +42,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>Elandra Maulana</td>
-                                <td>1</td>
-                                <td>100000</td>
-                                <td>200000</td>
-                                <td>12936123678123</td>
-                            </tr>
+                        <tr>
+                            <td>{{ $detailData->karyawan_nama }}</td>
+                            <td>{{ $detailData->divisi_karyawan }}</td>
+                            <td>{{ $detailData->status_karyawan ? 'Aktif' : 'Tidak Aktif' }}</td>
+                            <td>{{ $detailData->gaji_pokok ? number_format($detailData->gaji_pokok, 0, ',', '.') : '-' }}</td>
+                            <td>{{ $detailData->no_rek ? $detailData->no_rek : '-' }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

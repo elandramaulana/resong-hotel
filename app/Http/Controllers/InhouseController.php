@@ -196,6 +196,7 @@ class InhouseController extends Controller
             'CheckinData'=>$DataCheckin,
             'dataInvoice'=>$invoice
         ];
+
         return view('frontoffice.guest.detail_inhouse_guest', $Data);
     }
     public function call_table(Request $request) {
