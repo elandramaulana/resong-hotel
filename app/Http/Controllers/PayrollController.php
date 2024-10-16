@@ -104,8 +104,28 @@ class PayrollController extends Controller
 
 
     public function detailProsesGaji($id){
-        $prosesGaji = Karyawan::findOrFail($id);
-        return view('payroll.detail_proses');
+        $detailData = Karyawan::select(
+            'karyawan.id as id_karyawan',
+            'karyawan.k_nama as karyawan_nama',
+            'karyawan.k_gender as gender_karyawan',
+            'divisis.d_nama as divisi_karyawan',
+            'karyawan_has_divisions.khr_isActive as status_karyawan',
+            'gaji.gaji_pokok',
+            'gaji.no_rek' 
+        )
+        ->join('karyawan_has_divisions', 'karyawan.id', '=', 'karyawan_has_divisions.karyawan_id')
+        ->join('divisis', 'karyawan_has_divisions.divisi_id', '=', 'divisis.id')
+        ->leftJoin('gaji', 'karyawan.id', '=', 'gaji.karyawan_id')
+        ->where('karyawan.id', $id)
+        ->first();
+
+        if (!$detailData) {
+            abort(404, 'Karyawan tidak ditemukan');
+        }
+
+        // dd($detailData);
+
+        return view('payroll.detail_proses', compact('detailData'));
     }
 
     public function billGaji(){

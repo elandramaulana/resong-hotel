@@ -272,7 +272,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
       // supplier
-      Route::prefix('inventory-assets/supplier')->group(function () {
+    Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
         Route::post('/store', [InventoryAssetSupplierController::class, 'store'])->name('inventory-assets.supplier.store');
@@ -316,7 +316,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
     Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
     Route::get('/proses-gaji', [PayrollController::class, 'prosesGaji'])->name('proses.gaji');
-    Route::get('/detai-proses-gaji', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses'); //tambahkan parameternya id keryawan
+    Route::get('/detai-proses-gaji/{id}', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses');
     Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
 
