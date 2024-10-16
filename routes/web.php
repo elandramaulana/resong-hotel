@@ -49,6 +49,11 @@ require __DIR__ . '/auth.php';
 |
 */
 
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::middleware(['auth', 'verified'])->group(function () {});
 
 
@@ -262,8 +267,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
     Route::get('/shift/{id}/edit', [ShiftController::class, 'edit'])->name('edit.shift');
     Route::put('/shift/{id}', [ShiftController::class, 'update'])->name('update.shift');
-    Route::delete('/shift/destroy/{id}', [ShiftController::class, 'destroy'])->name('destroy.shift');
 
+    Route::delete('/shift/destroy/{id}', [ShiftController::class, 'destroy'])->name('destroy.shift');
 
     //Kehadiran
     Route::get('/daftar-hadir', [KehadiranController::class, 'index'])->name('daftar.hadir');
@@ -271,7 +276,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
-      // supplier
     Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
@@ -311,7 +315,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', [TransAssetController::class, 'destroy'])->name('inventory-assets.trans.destroy');
     });
     // end Inventory Asset
-
     // payroll
     Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
     Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
@@ -320,6 +323,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
 
-
-    
+    Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
+ 
 });

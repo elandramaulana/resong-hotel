@@ -114,7 +114,38 @@ class KaryawanController extends Controller
     }
 
 
-    
+    public function edit($id)
+    {
+        $divisis = $divisis = Divisi::all();
+        $karyawan = DB::table('karyawan as k')
+            ->join('karyawan_has_divisions as khd', 'k.id', '=', 'khd.karyawan_id')
+            ->join('divisis as d', 'khd.divisi_id', '=', 'd.id')
+            ->join('karyawan_shifts as ks', 'k.id', '=', 'ks.karyawan_id')
+            ->join('shifts as s', 'ks.shift_id', '=', 's.id')
+            ->select(
+                'k.id as karyawan_id',
+                'k.k_nama as nama_karyawan',
+                'k.k_nik as nik_karyawan',
+                'k.k_email as email_karyawan',
+                'k.k_contact as kontak_karyawan',
+                'k.k_alamat as alamat_karyawan',
+                DB::raw('CASE WHEN k.k_gender = "L" THEN "Laki-laki" ELSE "Perempuan" END as gender_karyawan_text'),
+                'khd.khr_tgljoin as tanggal_bergabung',
+                DB::raw('CASE WHEN khd.khr_isActive = 1 THEN "Active" ELSE "Non-Active" END as status_karyawan_text'),
+                'khd.khr_tglOut as tanggal_keluar',
+                'd.d_nama as nama_divisi',
+                's.s_nama as shift_karyawan',
+                'k.k_pin as pin_karyawan'
+            )
+            ->where('k.id', $id)
+            ->first();
+
+        if (!$karyawan) {
+            abort(404);
+        }
+
+        return view('pegawai.edit_karyawan', compact('karyawan', 'divisis'));
+    }
 
     public function update(Request $request, $id)
     {
@@ -165,4 +196,62 @@ class KaryawanController extends Controller
         Alert::success('Success', 'Barang Berhasil Dihapus');
         return redirect()->route('daftar.karyawan');
     }
+
+    function DetailKaryawan($karyawan_id) {
+        $Karyawan = Karyawan::join('karyawan_has_divisions as khd', 'karyawan.id', '=', 'khd.karyawan_id')
+                            ->join('divisis as d', 'khd.divisi_id', '=', 'd.id')
+                            ->join('karyawan_shifts as ks', 'karyawan.id', '=', 'ks.karyawan_id')
+                            ->join('shifts as s', 'ks.shift_id', '=', 's.id')
+                            ->where('khd.khr_isActive', 1)
+                            ->where('karyawan.id', $karyawan_id)
+                            ->select(
+                                'karyawan.id as karyawan_id',
+                                'karyawan.k_nama as nama_karyawan',
+                                'karyawan.k_nik as nik_karyawan',
+                                'karyawan.k_email as email_karyawan',
+                                'karyawan.k_contact as kontak_karyawan',
+                                'karyawan.k_alamat as alamat_karyawan',
+                                DB::raw('CASE WHEN karyawan.k_gender = "L" THEN "Laki-laki" ELSE "Perempuan" END as gender_karyawan_text'),
+                                'khd.khr_tgljoin as tanggal_bergabung',
+                                DB::raw('CASE WHEN khd.khr_isActive = 1 THEN "Active" ELSE "Non-Active" END as status_karyawan_text'),
+                                'khd.khr_tglOut as tanggal_keluar',
+                                'd.d_nama as nama_divisi',
+                                's.s_nama as shift_karyawan',
+                                'karyawan.k_pin as pin_karyawan',
+                                's.s_clock_in',
+                                's.s_clock_out'
+                            )
+                            ->first();
+        $dataKaryawan = $Karyawan??null;
+        return $dataKaryawan;
+    }
+    function DetailKaryawanByPIN($biometric_pin) {
+        $Karyawan = Karyawan::join('karyawan_has_divisions as khd', 'karyawan.id', '=', 'khd.karyawan_id')
+                            ->join('divisis as d', 'khd.divisi_id', '=', 'd.id')
+                            ->join('karyawan_shifts as ks', 'karyawan.id', '=', 'ks.karyawan_id')
+                            ->join('shifts as s', 'ks.shift_id', '=', 's.id')
+                            ->where('khd.khr_isActive', 1)
+                            ->where('karyawan.k_pin', $biometric_pin)
+                            ->select(
+                                'karyawan.id as karyawan_id',
+                                'karyawan.k_nama as nama_karyawan',
+                                'karyawan.k_nik as nik_karyawan',
+                                'karyawan.k_email as email_karyawan',
+                                'karyawan.k_contact as kontak_karyawan',
+                                'karyawan.k_alamat as alamat_karyawan',
+                                DB::raw('CASE WHEN karyawan.k_gender = "L" THEN "Laki-laki" ELSE "Perempuan" END as gender_karyawan_text'),
+                                'khd.khr_tgljoin as tanggal_bergabung',
+                                DB::raw('CASE WHEN khd.khr_isActive = 1 THEN "Active" ELSE "Non-Active" END as status_karyawan_text'),
+                                'khd.khr_tglOut as tanggal_keluar',
+                                'd.d_nama as nama_divisi',
+                                's.s_nama as shift_karyawan',
+                                'karyawan.k_pin as pin_karyawan',
+                                's.s_clock_in',
+                                's.s_clock_out'
+                            )
+                            ->first();
+        $dataKaryawan = $Karyawan??null;
+        return $dataKaryawan;
+    }
+    
 }

@@ -304,8 +304,14 @@
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
-
             <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Dashboard Karyawan</span></a>
+            </li>
+
+              <!-- Nav Item - Check-out -->
+              <li class="nav-item">
                 <a class="nav-link" href="{{route('daftar.hadir')}}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
@@ -328,6 +334,11 @@
             </li>
 
             <li class="nav-item">
+
+                <a class="nav-link" href="{{ route('daftar.hadir') }}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Absensi Kehadiran</span></a>
+
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-dollar-sign"></i>
@@ -488,41 +499,45 @@
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
     <!-- Script for table -->
-    <script>
-        $(document).ready(function() {
-            $('#checkInTable').DataTable();
-            $('#speedyCheckInTable').DataTable();
-            $('#checkOutTable').DataTable();
-            $('#countryTable').DataTable();
-            $('#ProvinceTable').DataTable();
-            $('#cityTable').DataTable();
-            // $('#reservationListTable').DataTable();
-            $('#cancelReservationListTable').DataTable();
-            $('#inhouseGuest').DataTable();
-            $('#guestDatabase').DataTable();
-            $('#listServiceGuestFood').DataTable();
-            $('#listServiceGuestDrinks').DataTable();
-            $('#listServiceGuestLaundry').DataTable();
-            $('#listServiceGuestOther').DataTable();
-            $('#listServiceOrder').DataTable();
-            $('#GuestDatabaseTable').DataTable();
-            $('#historyGuestTable').DataTable();
-            $('#houseKeepingTable').DataTable();
-            $('#cleaningHistoryTable').DataTable();
-            $('#billReporTable').DataTable();
-            $('#supplierTable').DataTable();
-            $('#barangTable').DataTable();
-            $('#barangMasukTable').DataTable();
-            $('#manageMenuTable').DataTable();
-            $('#daftarMenuTable').DataTable();
-            $('#layananRestoTable').DataTable();
-            $('#detailLayananRestoTable').DataTable();
-            $('#dataKaryawanTable').DataTable();
-            $('#dataDivisiTable').DataTable();
-            $('#dataShiftTable').DataTable();
-            $('#dataAbsensiTable').DataTable();
-        });
-    </script>
+
+<script>
+    $(document).ready(function () {
+        $('#checkInTable'). DataTable();
+        $('#speedyCheckInTable'). DataTable();
+        $('#checkOutTable').DataTable();
+        $('#countryTable').DataTable();
+        $('#ProvinceTable').DataTable();
+        $('#cityTable').DataTable();
+        // $('#reservationListTable').DataTable();
+        $('#cancelReservationListTable').DataTable();
+        $('#inhouseGuest').DataTable();
+        $('#guestDatabase').DataTable();
+        $('#listServiceGuestFood').DataTable();
+        $('#listServiceGuestDrinks').DataTable();
+        $('#listServiceGuestLaundry').DataTable();
+        $('#listServiceGuestOther').DataTable();
+        $('#listServiceOrder').DataTable();
+        $('#GuestDatabaseTable').DataTable();
+        $('#historyGuestTable').DataTable();
+        $('#houseKeepingTable').DataTable();
+        $('#cleaningHistoryTable').DataTable();
+        $('#billReporTable').DataTable();
+        $('#supplierTable').DataTable();
+        $('#barangTable').DataTable();
+        $('#barangMasukTable').DataTable();
+        $('#manageMenuTable').DataTable();
+        $('#daftarMenuTable').DataTable();
+        $('#layananRestoTable').DataTable();
+        $('#detailLayananRestoTable').DataTable();
+        $('#dataKaryawanTable').DataTable();
+        $('#dataDivisiTable').DataTable();
+        $('#dataShiftTable').DataTable();
+        $('#dataAbsensiTable').DataTable();
+        $('#dataGajiTable').DataTable();
+        $('#dataProsesTable').DataTable();
+        $('#dataBillTable').DataTable();
+    });
+</script>
 
 
     {{-- show menu image --}}
