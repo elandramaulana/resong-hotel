@@ -25,49 +25,38 @@
                                             <tr class="text-center">
                                                 <th rowspan="2" class="text-white" style="background-color: black">No
                                                 </th>
-                                                <th rowspan="2" class="text-white" style="background-color: black">
-                                                    Deskripsi Item</th>
-                                                <th colspan="2" class="text-white" style="background-color: black">Qty
+                                                <th rowspan="2" class="text-white" style="background-color: black">Item
                                                 </th>
-                                            </tr>
-                                            <tr class="text-center">
-                                                <th class="text-white" style="background-color: black">Debit</th>
-                                                <th class="text-white" style="background-color: black">Kredit</th>
+                                                <th class="text-white"
+                                                    style="max-width: 300px; width: 300px; background-color: black">
+                                                    Debit</th>
+                                                <th class="text-white"
+                                                    style="max-width: 300px; width: 300px; background-color: black">Kredit
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- In Come --}}
                                             <tr>
-                                                <td style="max-width: 10px; width: 10px;" class="bg-warning">A</td>
-                                                <td colspan="3" class="bg-warning">In Come</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>* Resto</td>
+                                                <td style="max-width: 10px; width: 10px;">1</td>
+                                                <td>Resto</td>
                                                 <td>Rp. 100.000</td>
                                                 <td>Rp. 200.000</td>
                                             </tr>
                                             <tr>
-                                                <td></td>
-                                                <td>* Lorem</td>
+                                                <td>2</td>
+                                                <td>Lorem</td>
                                                 <td>Rp. 200.000</td>
                                                 <td>Rp. 200.000</td>
                                             </tr>
-
-                                            {{-- Out Come --}}
                                             <tr>
-                                                <td style="max-width: 10px; width: 10px;" class="bg-warning">B</td>
-                                                <td colspan="3" class="bg-warning">Out Come</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>* Resto</td>
+                                                <td>3</td>
+                                                <td>Resto</td>
                                                 <td>Rp. 100.000</td>
                                                 <td>Rp. 100.000</td>
                                             </tr>
                                             <tr>
-                                                <td></td>
-                                                <td>* Lorem</td>
+                                                <td>4</td>
+                                                <td>Lorem</td>
                                                 <td>Rp. 200.000</td>
                                                 <td>Rp. 200.000</td>
                                             </tr>
