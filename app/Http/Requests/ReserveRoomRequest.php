@@ -24,6 +24,7 @@ class ReserveRoomRequest extends FormRequest
         return [
             'reservation_name'=>['required', 'min:5'],
             'reservation_contact'=>['required'],
+            'reservation_chanel'=>['required'],
             'reservation_email'=>['required', 'email'],
             'qty_guest'=>['nullable', 'numeric' ],
             'reservation_checkin'=>['required', 'date', 'after:'.date('Y-m-d')],
