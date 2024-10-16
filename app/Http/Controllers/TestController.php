@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function index(){
-        $AttendanceController = new AttendanceController();
-        $ok = $AttendanceController->ProsessLatePoint(1, '2024-10-14');
-        print_r($ok);
+        $test = new InhouseController();
+        $isCheckedout = $test->isCheckedOut(7);
+        print_r($isCheckedout);
     }
 }
