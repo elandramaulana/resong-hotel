@@ -140,6 +140,21 @@
                     </div>
                 </div>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
+                    aria-expanded="true" aria-controls="collapseGuest">
+                    <i class="fas fa-user"></i>
+                    <span>Rooms</span>
+                </a>
+                <div id="collapseRooms" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('daftar.room') }}">Room List</a>
+                        <a class="collapse-item" href="{{ route('daftar.roomcat') }}">Room Type</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
@@ -147,6 +162,8 @@
                     <i class="fas fa-fw fa-broom"></i>
                     <span>House Keeping</span></a>
             </li>
+
+           
 
 
             <li class="nav-item">
@@ -304,11 +321,11 @@
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Dashboard Karyawan</span></a>
-            </li>
+            </li> --}}
 
               <!-- Nav Item - Check-out -->
               <li class="nav-item">
@@ -335,9 +352,7 @@
 
             <li class="nav-item">
 
-                <a class="nav-link" href="{{ route('daftar.hadir') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Absensi Kehadiran</span></a>
+              
 
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -503,6 +518,9 @@
 
 <script>
     $(document).ready(function () {
+        $(document).on('click', '#btnLogout', function(e){
+            $("#frmLogout").submit();
+        });
         $('#checkInTable'). DataTable();
         $('#speedyCheckInTable'). DataTable();
         $('#checkOutTable').DataTable();
@@ -537,6 +555,7 @@
         $('#dataGajiTable').DataTable();
         $('#dataProsesTable').DataTable();
         $('#dataBillTable').DataTable();
+        $('#dataRoomTable').DataTable();
     });
 </script>
 
