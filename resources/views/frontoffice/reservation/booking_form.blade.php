@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <input name="born_date" type="text" class="form-control" id="idnumber">
+                                <input name="born_date" type="date" class="form-control" id="bornDate" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                             </div>
                     </div>
 
@@ -251,6 +251,17 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Scripnya ada di view dashboard_layout.blade.php -->
+
+                    <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
+                        "Nama" at Room "Nomor room" Booking Succesfully
+                    </div>
+
+                    <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
+                        Booking Failed
+                    </div>
+
                 </form>
             </div>
         </div>
