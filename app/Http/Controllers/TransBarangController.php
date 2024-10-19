@@ -19,6 +19,7 @@ class TransBarangController extends Controller
 
         $transMasuk = Barang::join('trans_barang', 'trans_barang.barang_id', '=', 'barang.id')
             ->select('barang.*', 'trans_barang.*', 'trans_barang.created_at as tgl_masuk')
+            ->orderBy('tgl_masuk', 'desc')
             ->get();
 
         $supplier = Supplier::all();

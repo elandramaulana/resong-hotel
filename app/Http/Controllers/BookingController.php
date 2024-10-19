@@ -43,12 +43,15 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','new')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
 
         $Data = [
           'Title'=>'Input Detail Reservasi',
           'data'=>$Reservation
         ];
+
+        // dd($Data);
         return view('frontoffice.reservation.reservation_list', $Data);
       }
       public function booking_canceled(Request $request) {
@@ -56,6 +59,7 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','canceled')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
 
         $Data = [
@@ -69,7 +73,9 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','no_show')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
+
 
         $Data = [
           'Title'=>'Input Detail Reservasi',
@@ -102,6 +108,8 @@ class BookingController extends Controller
             return redirect()->route('dashboard')->with($return);
         }
       }
+
+
       public function pick_room(ReserveRoomRequest $request) {
         $formData = $request->all();
         $request->session()->put('form_data', $formData);
