@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\LatePoint;
+use App\Models\LatePointSetting;
 use App\Models\ScanLog;
 use DateTime;
 use Illuminate\Http\Request;
@@ -60,13 +61,26 @@ class AttendanceController extends Controller
         $shift_clockin_time = DateTime::createFromFormat('H:i', $shift_in);
         $punch_in_time_obj = DateTime::createFromFormat('H:i', $punchinTime);
         //setData for LatePoint
-        if($shift_clockin_time < $punch_in_time_obj){
-            $countLate = $this->countLateRecord($karyawan_id, $date);
-            Log::info($countLate);
-            if($countLate >= 3 ){
-                $latePoint = 10;
-            }else{
-                $latePoint = 0;
+        
+        $interval = $shift_clockin_time->diff($punch_in_time_obj);
+        $hours = $interval->h;
+        $minutes = $interval->i;
+        if ($interval->invert) {
+            $totalMinutes = -($hours * 60 + $minutes); // Datang Awal
+        } else {
+            $totalMinutes = ($hours * 60) + $minutes; // terlambat
+        }
+        $getLateSetting = LatePointSetting::first();
+        $latePoint = 0;  
+        if ($totalMinutes > 0) {
+            if ($totalMinutes <= $getLateSetting->first_late) { 
+                $latePoint = $getLateSetting->first_latepoint;
+            } elseif ($totalMinutes <= $getLateSetting->second_late) {
+                $latePoint = $getLateSetting->second_latepoint;
+            } elseif ($totalMinutes <= $getLateSetting->third_late) {
+                $latePoint = $getLateSetting->third_latepoint;
+            } else {
+                $latePoint = $getLateSetting->third_latepoint; 
             }
             $dataLate = [
                 'karyawan_id'=>$karyawan_id,
@@ -76,14 +90,8 @@ class AttendanceController extends Controller
             ];
             LatePoint::create($dataLate);
         }
-        Log::info("Karyawan ID".$karyawan_id.'shift :'.$shift_clockin.'ckin:'.$punch_in);
+       
+        Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
     }
-    public function countLateRecord($karyawan_id, $date) {
-        $dateObj = new DateTime($date);
-        $month = $dateObj->format('m');
-        $lateRecord = LatePoint::where('karyawan_id', $karyawan_id)
-                                ->where('month', $month)
-                                ->count();
-        return $lateRecord;
-    }
+    
 }

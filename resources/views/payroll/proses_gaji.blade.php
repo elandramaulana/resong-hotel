@@ -45,8 +45,8 @@
                                                 <td>
                                                     <div>
                                                         <button class="btn btn-warning rounded " type="button">
-                                                            <a style="text-decoration: none;color:black;"
-                                                                href="{{ route('detail.proses', ['id' => $prs->id_karyawan]) }}">Proses</a>
+                                                            {{-- <a style="text-decoration: none;color:black;"
+                                                                href="{{ route('detail.proses', ['id' => $prs->id_karyawan]) }}">Proses</a> --}}
                                                         </button>
                                                     </div>
                                                 </td>

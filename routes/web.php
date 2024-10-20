@@ -271,6 +271,7 @@ Route::middleware('auth')->group(function () {
 
     //Kehadiran
     Route::get('/daftar-hadir', [KehadiranController::class, 'index'])->name('daftar.hadir');
+    Route::post('/post_latepoint_setting', [KehadiranController::class, 'postUpdateLatePoint'])->name('latepoint.update');
     Route::get('/get-karyawan-by-divisi/{divisiId}', [KehadiranController::class, 'getKaryawanByDivisi'])->name('get.karyawan.by.divisi');
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');

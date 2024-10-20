@@ -26,9 +26,9 @@
                                                 <th style="width: 10px">NO</th>
                                                 <th>Id Karyawan</th>
                                                 <th>Nama</th>
-                                                <th>Jenis Kelamin</th>
                                                 <th>Divisi</th>
                                                 <th>Status Karyawan</th>
+                                                <th>Komponen Gaji</th>
                                                 <th>Besar Gaji (Rp)</th>
                                                 <th>Nomor Rekening</th>
                                                 <th>Aksi</th>
@@ -73,9 +73,9 @@
                 </div>
             </div>
         </section>
-
-
-
     </div>
     <!-- /.container-fluid -->
+@endsection
+@section('jsSection')
+  @include('payroll.data_gaji_js')
 @endsection

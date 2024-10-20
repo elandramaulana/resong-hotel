@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
@@ -52,12 +51,20 @@ class APIController extends Controller
             $karyawan = $KaryawanController->DetailKaryawanByPIN($entry['pin']);
             $karyawan_id = $karyawan->karyawan_id ?? null;
             if ($karyawan_id) {
-                Log::info('Proccess Latepoint Called'.$scandate);
-                $AttendanceController->ProsessLatePoint($karyawan_id, $scandate);
+                     //count scanlog with current karyawan_id and given date 
+                    //to makesure Proccess Late only executed for checkin 
+                    $scanlogCount = ScanLog::where('pin', $entry['pin'])
+                                            ->whereDate('scan_date', $scandate)
+                                            ->count();
+
+                if ($scanlogCount == 1) {
+                    $AttendanceController->ProsessLatePoint($karyawan_id, $scandate);
+                } else {
+                    // Log the skipped message
+                    Log::info('Latepoint processing skipped for subsequent scans on '.$scandate);
+                }
             }
         }
-        //save it to the database
-        // ScanLog::insert($scanlogData);
         // Return the collected data
         return response()->json(['message' => 'Data received successfully', 'data' => $scanlogData], 200);
         }

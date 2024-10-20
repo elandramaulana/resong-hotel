@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateLatePointRequest;
 use App\Models\Divisi;
 use App\Models\Karyawan;
+use App\Models\LatePointSetting;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Spatie\LaravelIgnition\Http\Requests\UpdateConfigRequest;
 
 class KehadiranController extends Controller
 {
@@ -15,9 +18,25 @@ class KehadiranController extends Controller
     {
         $divisis = Divisi::all();
         $shifts = Shift::all();
-        return view('pegawai.absensi', compact('divisis', 'shifts'));
+        $latePointSetting = LatePointSetting::first();
+        
+        return view('pegawai.absensi', compact('divisis', 'shifts', 'latePointSetting'));
     }
 
+    public function postUpdateLatePoint(UpdateLatePointRequest $request){
+        $getSettings = LatePointSetting::first();
+        $getSettings->first_late = $request->first_late;
+        $getSettings->first_latepoint = $request->first_latepoint;
+        $getSettings->second_late = $request->second_late;
+        $getSettings->second_latepoint = $request->second_latepoint;
+        $getSettings->third_late = $request->third_late;
+        $getSettings->third_latepoint = $request->third_latepoint;
+        $getSettings->besar_potongan = $request->besar_potongan;
+        $getSettings->besar_point = $request->besar_point;
+        $getSettings->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Setting berhasil diperbarui']);
+    }
     public function getKaryawanByDivisi($divisiId)
     {
         $karyawan = Karyawan::whereHas('karyawanHasDivisions', function ($query) use ($divisiId) {

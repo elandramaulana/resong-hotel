@@ -45,6 +45,9 @@
         .mt-2 {
             color: red;
         }
+        .showerror{
+            color: red;
+        }
     </style>
 </head>
 
@@ -493,7 +496,7 @@
         $(document).ready(function() {
             $(document).on('click', '#btnLogout', function (e) {
 			  $("#frmLogout").submit();
-            })
+            });
             $('#checkInTable').DataTable();
             $('#speedyCheckInTable').DataTable();
             $('#checkOutTable').DataTable();

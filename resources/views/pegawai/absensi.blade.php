@@ -18,6 +18,9 @@
                             <div class="col-sm-6">
                                 <h3 class="font-weight-bold text-dark">Daftar Absensi</h3>
                             </div>
+                            <div class="col-lg-6">
+                                <a href="" class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#modalSettings">Pengaturan Kehadiran</a>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -93,11 +96,150 @@
 
 
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Pengaturan Point Keterlambatan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('latepoint.update') }}" method="post" id="frmUpdate">
+            <div class="row">
+                <h6 class="font-weight-bold text-dark">Checkpoint I</h6>
+                <div class="form-group col-lg-6">
+                    <label for="">Keterlambatan (Menit)</label>
+                    <input type="number" value="{{ $latePointSetting['first_late'] }}" name="first_late" id="first_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="">Point Keterlambatan</label>
+                    <input type="number" value="{{ $latePointSetting['first_latepoint'] }}" name="first_latepoint" id="first_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="font-weight-bold text-dark">Checkpoint II</h6>
+                <div class="form-group col-lg-6">
+                    <label for="">Keterlambatan (Menit)</label>
+                    <input type="number" name="second_late" value="{{ $latePointSetting['second_late'] }}" id="second_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <i class="showerror"></i>                    
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="">Point Keterlambatan</label>
+                    <input type="number" name="second_latepoint" value="{{ $latePointSetting['second_latepoint'] }}" id="second_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="font-weight-bold text-dark">Checkpoint III</h6>
+                <div class="form-group col-lg-6">
+                    <label for="">Keterlambatan (Menit)</label>
+                    <input type="number" name="third_late" value="{{ $latePointSetting['third_late'] }}" id="third_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="">Point Keterlambatan</label>
+                    <input type="number" name="third_latepoint" value="{{ $latePointSetting['third_latepoint'] }}" id="third_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="font-weight-bold text-dark">Potongan Gaji Keterlambatan</h6>
+                <div class="form-group col-lg-6">
+                    <label for="">Besar Potongan (Rp)</label>
+                    <input value="{{ $latePointSetting['besar_potongan'] }}" type="number" name="besar_potongan" id="besar_potongan" class="form-control" placeholder="Masukan besar potongan keterlambatan" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="">Per Point Keterlambatan</label>
+                    <input value="{{ $latePointSetting['besar_point'] }}" type="number" name="besar_point" id="besar_point" class="form-control" placeholder="Masukan jumlah point perpotongan" aria-describedby="helpId">
+                    <i class="showerror"></i>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-submit">Save changes</button>
+        </div>
+        @csrf
+    </form>
+      </div>
+    </div>
+  </div>
 <!-- Tambahkan ini di bagian <head> atau tepat sebelum </body> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $(document).ready(function() {
+           
+            $("#frmUpdate").on('submit', function (e) { 
+                e.preventDefault();
+                const buttonSubmit = document.querySelector('.btn-submit');
+                var form = $(this)[0];
+                let frmData = new FormData(form);
+                buttonSubmit.setAttribute('disabled', true);
+                let formAction = $(this).attr("action");
+                $('.showerror').text(''); 
+                 $('input, select, textarea').removeClass('error-border'); // Remove error styling
+
+                $.ajax({
+                        type: 'POST',
+                        url: formAction, 
+                        data: frmData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) { 
+                           if(data.status=='success'){
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                           }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: data.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                           }
+                        },
+                        error: function (xhr, status, error) {               
+                        if (xhr.status === 413) {
+                                var inputElement = $('[name="evidence_transfer"]');
+                                var errorMessage = "The file you are trying to upload is too large";
+                                inputElement.siblings('.showerror').text(errorMessage);
+                                inputElement.addClass('error-border');
+                        } else {
+                            var errors = xhr.responseJSON.errors;
+                            $('.showerror').text('');
+                            $('select, textarea, input').removeClass('error-border');
+                            $.each(errors, function (field, messages) {
+                                    var inputElement = $('[name="' + field + '"]');
+                                    var errorMessage = messages.join(', ');
+                                    inputElement.siblings('.showerror').text(errorMessage);
+                                    inputElement.addClass('error-border');
+                            });
+                           
+                        }
+                        },
+                        complete: function() {
+                            // Re-enable the submit button regardless of success or error
+                            buttonSubmit.removeAttribute('disabled');
+                        }
+                });
+             
+            });
+
             // Fetch Karyawan and Shift options based on Divisi selection
             $('#divisi').change(function() {
                 var divisiId = $(this).val();
