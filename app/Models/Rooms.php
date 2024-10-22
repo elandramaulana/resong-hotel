@@ -28,6 +28,10 @@ class Rooms extends Model
     return $data;
    }
 
+   public function roomtype(){
+    return $this->belongsTo(RoomCategory::class, 'room_type', 'name_category');
+   }
+
    public function reservations()
    {
        return $this->hasMany(Reservation::class, 'room_id', 'id');

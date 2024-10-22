@@ -14,4 +14,8 @@ class RoomCategory extends Model
     protected $fillable = [
         'name_category',
     ];
+
+    public function rooms() {
+        return $this->hasMany(Rooms::class, 'room_type', 'nama_room');
+    }
 }

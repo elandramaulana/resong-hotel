@@ -144,7 +144,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
                     aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-bed"></i>
                     <span>Rooms</span>
                 </a>
                 <div id="collapseRooms" class="collapse" aria-labelledby="headingUtilities"
