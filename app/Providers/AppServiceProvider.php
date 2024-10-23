@@ -19,12 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ((bool) env('HTTPS', true)) {
-            $this->app['url']->forceScheme('https');
-        } else {
-            $this->app['url']->forceScheme('http');
-        }
+        // if ((bool) env('HTTPS', true)) {
+        //     $this->app['url']->forceScheme('https');
+        // } else {
+        //     $this->app['url']->forceScheme('http');
+        // }
 
-        $this->app['request']->server->set('HTTPS', env('HTTPS'));
+        // $this->app['request']->server->set('HTTPS', env('HTTPS'));
     }
 }
