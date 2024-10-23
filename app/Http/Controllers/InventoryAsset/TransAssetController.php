@@ -27,9 +27,9 @@ class TransAssetController extends Controller
         $Data = [
             'Title' => "Data Transaksi Asset"
         ];
-
-        $trans = TransAsset::with('rAssets', 'rSupplierAsset')->latest()->get();
-        // dd($trans);
+        $trans = TransAsset::with('rAssets', 'rSupplierAsset')
+        ->orderBy('created_at', 'desc') 
+        ->get();
         return view('inventoryAssets.transaksiAsset.index', compact('Data', 'trans'));
     }
 

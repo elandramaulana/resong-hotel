@@ -30,6 +30,8 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomtypeController;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\TestController;
@@ -160,6 +162,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/bill-detail', [BillReportController::class, 'detail'])->name('bill.detail');
 
 
+    // Rooms
+    Route::get('/daftar-room', [RoomController::class, 'index'])->name('daftar.room');
+    Route::get('/tambah-room', [RoomController::class, 'add'])->name('tambah.room');
+    Route::post('/store-room', [RoomController::class, 'store'])->name('store.room');
+    Route::get('/room/{id}/edit', [RoomController::class, 'edit'])->name('edit.room');
+    Route::put('/room/{id}', [RoomController::class, 'update'])->name('update.room');
+    Route::delete('/room/destroy/{id}', [RoomController::class, 'destroy'])->name('destroy.room');
+
+    // roomCat
+    Route::get('/daftar-room-cat', [RoomtypeController::class, 'index'])->name('daftar.roomcat');
+    Route::get('/tambah-room-cat', [RoomtypeController::class, 'add'])->name('tambah.roomcat');
+    Route::post('/store-room-cat', [RoomtypeController::class, 'store'])->name('store.roomcat');
+    Route::get('/room-cat/{id}/edit', [RoomtypeController::class, 'edit'])->name('edit.roomcat');
+    Route::put('/room-cat/{id}', [RoomtypeController::class, 'update'])->name('update.roomcat');
+    Route::delete('/room-cat/destroy/{id}', [RoomtypeController::class, 'destroy'])->name('destroy.roomcat');
 
     // Supplier
     Route::get('/supplier', [SupplierController::class, 'index'])->name('list.supplier');

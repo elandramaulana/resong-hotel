@@ -42,7 +42,6 @@
                                             @foreach($allMenus as $menu)
                                                 <tr>
                                                     <td>{{ $menu->menu_name }}</td>
-                                                    <td>{{ $menu->menu_name }}</td>
                                                     <td>{{ $menu->nama_kategori }}</td>
                                                     <td>
                                                         <input type="checkbox" name="menu_ids[]" value="{{ $menu->menu_id }}">
