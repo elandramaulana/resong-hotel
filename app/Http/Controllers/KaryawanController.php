@@ -81,6 +81,7 @@ class KaryawanController extends Controller
             'K_alamat' => $request->get('K_alamat'),
             'k_nik' => $request->get('k_nik'),
             'k_pin' => $newPin,
+            'k_norek' => $request->get('k_norek'),
             'k_divisi' => $request->get('k_divisi'),
             'k_biometric_status' => false,
         ];
@@ -113,6 +114,7 @@ class KaryawanController extends Controller
         return redirect()->route('daftar.karyawan');
     }
 
+
     public function edit($id)
     {
         $divisis = $divisis = Divisi::all();
@@ -134,7 +136,9 @@ class KaryawanController extends Controller
                 'khd.khr_tglOut as tanggal_keluar',
                 'd.d_nama as nama_divisi',
                 's.s_nama as shift_karyawan',
-                'k.k_pin as pin_karyawan'
+                'k.k_pin as pin_karyawan',
+                'k.k_norek as norek_karyawan'
+
             )
             ->where('k.id', $id)
             ->first();
@@ -146,13 +150,12 @@ class KaryawanController extends Controller
         return view('pegawai.edit_karyawan', compact('karyawan', 'divisis'));
     }
 
-    
-
     public function update(Request $request, $id)
     {
         $request->validate([
             'k_nama' => 'required|string|max:255',
             'k_nik' => 'required',
+            'k_norek' => 'required',
             'k_contact' => 'required|string|max:15',
             'k_email' => 'required|email|max:255',
             'k_alamat' => 'required|string|max:255',
@@ -174,6 +177,7 @@ class KaryawanController extends Controller
         $karyawan->k_alamat = $request->k_alamat;
         $karyawan->k_gender = $request->k_gender;
         $karyawan->k_pin = $request->k_pin;
+        $karyawan->k_norek = $request->k_norek;
 
         $karyawan->save();
 

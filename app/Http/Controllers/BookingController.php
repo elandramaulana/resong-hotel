@@ -43,6 +43,7 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','new')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
 
         $Data = [
@@ -58,6 +59,7 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','canceled')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
 
         $Data = [
@@ -71,7 +73,9 @@ class BookingController extends Controller
         $Reservation = Reservation::join('rooms', 'rooms.id', '=', 'reservations.room_id')
                                   ->select('reservations.*', 'rooms.*', 'reservations.id as reservation_id')
                                   ->where('reservation_status','no_show')
+                                  ->orderBy('reservations.created_at', 'desc') 
                                   ->get();
+
 
         $Data = [
           'Title'=>'Input Detail Reservasi',

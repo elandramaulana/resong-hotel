@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostAddonsRequest;
 use App\Models\Checkin;
 use App\Models\CheckinDetail;
+use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Svg\Tag\Rect;
@@ -191,10 +192,12 @@ class InhouseController extends Controller
         $ModelCheckin = new Checkin();
         $DataCheckin = $ModelCheckin->detCheckin($id);
         $invoice = CheckinDetail::where('checkin_id', $id)->get();
+        $isCheckedOut = $this->isCheckedOut($id);
         $Data = [
             'Title'=>"Detail Checkin",
             'CheckinData'=>$DataCheckin,
-            'dataInvoice'=>$invoice
+            'dataInvoice'=>$invoice,
+            'isCheckedOut'=>$isCheckedOut
         ];
 
         return view('frontoffice.guest.detail_inhouse_guest', $Data);
@@ -311,5 +314,13 @@ class InhouseController extends Controller
          );
      
          return response()->json($response); 
+    }
+    public function isCheckedOut($checkin_id){
+        $checkout = Checkout::where('checkin_id', $checkin_id)->first();
+        if($checkout){ 
+            return true;
+        }else{
+            return false;
+        }
     }
 }

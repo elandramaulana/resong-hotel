@@ -13,7 +13,8 @@ use function Laravel\Prompts\select;
 
 class LaundryController extends Controller
 {
-    public function list_laundry(Request $request){
+    public function list_laundry(Request $request)
+    {
         $filters = $request->input('filters', []);
 
         // Query data based on filters
@@ -33,45 +34,49 @@ class LaundryController extends Controller
         foreach ($data as $key) {
             $price = $this->getSumPrice($key->laundry_id);
             $return[] = [
-                'checkin_id'=>$key->checkin_id,
-                'room_id'=>$key->room_id,
-                'room_no'=>$key->room_no,
-                'guest_id'=>$key->guest_id,
-                'name_guest'=>$key->name_guest,
-                'laundry_id'=>$key->laundry_id,
-                'laundry_type'=>$key->laundry_type,
-                'total_price'=>formatCurrency($price)
+                'checkin_id' => $key->checkin_id,
+                'room_id' => $key->room_id,
+                'room_no' => $key->room_no,
+                'guest_id' => $key->guest_id,
+                'name_guest' => $key->name_guest,
+                'laundry_id' => $key->laundry_id,
+                'laundry_type' => $key->laundry_type,
+                'total_price' => formatCurrency($price)
             ];
         }
         return response()->json($return);
     }
-    public function getSumPrice($laundry_id){
+    public function getSumPrice($laundry_id)
+    {
         $query = DetLaundry::select(DB::raw('SUM(det_laundry_price * det_laundry_qty) as jumlah'))
-                    ->where('laundry_id', $laundry_id)
-                    ->get()->first();
+            ->where('laundry_id', $laundry_id)
+            ->get()->first();
         return $query->jumlah;
     }
-    public function index(){
+    public function index()
+    {
         $ListLaundry = Laundry::all();
         $Data = [
-            'Title'=>'List Laundry',
-            'listlaundry'=>$ListLaundry
+            'Title' => 'List Laundry',
+            'listlaundry' => $ListLaundry
         ];
         return view('laundry.laundry', $Data);
     }
-    public function form(){
+    public function form()
+    {
         $Data = [
-            'Title'=>'Form Laundry',
+            'Title' => 'Form Laundry',
         ];
         return view('laundry.laundry_form', $Data);
     }
-    public function Post(PostLaundryRequest $request) {
+    public function Post(PostLaundryRequest $request)
+    {
         //craete data laundry first
         $checkin_id = $request->checkin_id ?? null;
         $Laundry = [
-            'laundry_type'=>$request->laundry_type,
-            'checkin_id'=>$request->checkin_id,
-            'laundry_status'=>'NEW'
+            'laundry_type' => $request->laundry_type,
+            'checkin_id' => $request->checkin_id,
+            'laundry_status' => 'NEW'
         ];
         $CreateLaundry = Laundry::create($Laundry);
         $LaundryID = $CreateLaundry->id;
@@ -81,7 +86,7 @@ class LaundryController extends Controller
         $cat_qty = $request->send_cat_qty;
         $cat_desc = $request->send_cat_desc;
         $cat_name = $request->send_cat_name;
-        for ($i=0; $i < count($cat_id); $i++) { 
+        for ($i = 0; $i < count($cat_id); $i++) {
             $laundry_id         = $LaundryID;
             $id_category        = $cat_id[$i];
             $det_laundry_price  = $cat_price[$i];
@@ -90,25 +95,25 @@ class LaundryController extends Controller
             $item_name   = $cat_name[$i];
             //build array for table det_laundry
             $det_laundry[] = [
-                'laundry_id'=>$laundry_id,
-                'id_category'=>$id_category,
-                'det_laundry_price'=>$det_laundry_price,
-                'det_laundry_qty'=>$det_laundry_qty,
-                'det_laundry_desc'=>$det_laundry_desc,
+                'laundry_id' => $laundry_id,
+                'id_category' => $id_category,
+                'det_laundry_price' => $det_laundry_price,
+                'det_laundry_qty' => $det_laundry_qty,
+                'det_laundry_desc' => $det_laundry_desc,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-            if($checkin_id!=null){
+            if ($checkin_id != null) {
                 $det_checkin[] = [
-                    'checkin_id'=>$checkin_id,
-                    'item_category'=>'Laundry',
-                    'item_name'=>"[Laundry] ".$item_name,
-                    'item_price'=>$det_laundry_price,
-                    'item_qty'=>$det_laundry_qty,
+                    'checkin_id' => $checkin_id,
+                    'item_category' => 'Laundry',
+                    'item_name' => "[Laundry] " . $item_name,
+                    'item_price' => $det_laundry_price,
+                    'item_qty' => $det_laundry_qty,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-            }else{
+            } else {
                 $det_checkin = false;
             }
         }
@@ -116,11 +121,10 @@ class LaundryController extends Controller
         $createDetLaundry = DetLaundry::insert($det_laundry);
 
         //insert into chekin_detail if checkin_id != null
-        if($det_checkin){
+        if ($det_checkin) {
             $detCheckin = CheckinDetail::insert($det_checkin);
         }
-        $response = ['status'=>'success','message'=>'Sukses, Transaksi Laundry Berhasil di simpan'];
+        $response = ['status' => 'success', 'message' => 'Sukses, Transaksi Laundry Berhasil di simpan'];
         return response()->json($response);
     }
-    
 }

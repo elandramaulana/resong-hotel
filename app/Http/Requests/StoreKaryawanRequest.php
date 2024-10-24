@@ -27,6 +27,7 @@ class StoreKaryawanRequest extends FormRequest
             'k_email'=>['required'],
             'K_alamat'=>['required'],
             'k_nik'=>['required'],
+            'k_norek'=>['required'],
             'k_divisi'=>['required'],
         ];
     }

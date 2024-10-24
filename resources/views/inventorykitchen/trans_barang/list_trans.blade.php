@@ -46,12 +46,12 @@
                                             @foreach ($transMasuk as $index => $trans)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $trans->tgl_masuk }}</td>
+                                                    <td>  {{ \Carbon\Carbon::parse($trans->tgl_masuk ?? '')->locale('id')->translatedFormat('d F Y') }}</td>
                                                     <td>{{ $trans->barang_nama }}</td>
                                                     <td>{{ $trans->trans_suplier }}</td>
                                                     <td>{{ $trans->trans_jenis }}</td>
                                                     <td>{{ $trans->trans_jml }}</td>
-                                                    <td>{{ $trans->trans_harga }}</td>
+                                                    <td>Rp. {{ number_format($trans->trans_harga, 0, ',', '.') }}</td>
                                                     <td>
                                                         <div>
                                                             <button style="margin-right: 10px" type="submit"

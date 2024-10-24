@@ -49,10 +49,10 @@
                                         <td>
                                             {{ $menu->nama_kategori ? $menu->nama_kategori : 'Kategori Tidak Tersedia' }} <!-- Cek apakah nama_kategori null -->
                                         </td>
-                                        <td>{{$menu->menu_price}}</td>
+                                        <td>Rp. {{ number_format($menu->menu_price, 0, ',', '.') }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                <img width="200" src="{{ asset('storage/' . $menu->menu_photo) }}" alt="">
+                                                <img class="img-thumbnail" width="200" src="{{ asset('storage/' . $menu->menu_photo) }}" alt="">
                                             </div>
                                          
                                         </td>

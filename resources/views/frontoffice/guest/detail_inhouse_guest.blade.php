@@ -24,12 +24,13 @@
                 <div class="col-sm-4 text-warning text-center">
                     <h6 class="shape rounded p-2">{{ $CheckinData->room_type }} (@RP{{ $CheckinData->room_price }})</h6>
                 </div>
-
-                <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
-                    <button class="btn btn-extend"  data-bs-toggle="modal" data-bs-target="#extendGuestData">
-                        <i class="fas fa-plus"></i> Extend
-                    </button>
-                </div>
+                    @if(!$isCheckedOut)
+                        <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
+                            <button class="btn btn-extend"  data-bs-toggle="modal" data-bs-target="#extendGuestData">
+                                <i class="fas fa-plus"></i> Extend
+                            </button>
+                        </div>
+                    @endif
             </div>
             <input type="text" name="room_id" value="" hidden>
             <input type="text" name="checkin_id" value="{{ $CheckinData->checkin_id }}" hidden>
@@ -133,15 +134,15 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <div class="d-flex justify-content-end">
-                            <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
-                                <i class="fas fa-plus"></i> AddOn Service
-                            </a>
-                        </div>
+                        @if(!$isCheckedOut)
+                            <div class="d-flex justify-content-end">
+                                <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
+                                    <i class="fas fa-plus"></i> AddOn Service
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                                          
-                    
                 </div>
             </div>
 
@@ -187,7 +188,9 @@
                                     <td>@php
                                         if ($invoice->item_category !="Rooms") {
                                         @endphp
+                                        @if(!$isCheckedOut)
                                         <a href="#" data-id="{{ $invoice->id }}" class="btn btn-sm btn-primary del-addons" title="Hapus AddOns"><i class="fa fa-trash"></i></a>    
+                                        @endif
                                         @php
                                         }
                                     @endphp</td>

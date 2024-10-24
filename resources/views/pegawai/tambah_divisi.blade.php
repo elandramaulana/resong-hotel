@@ -55,8 +55,8 @@
                         <label for="d_OT_approver" class="form-label">Over Time</label>
                         <select name="d_OT_approver" class="form-control" id="d_OT_approver">
                             <option value="" disabled selected>Pilih</option>
-                            <option value="Approve">Approve</option>
-                            <option value="Reject">Reject</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
                         </select>
                         <x-input-error :messages="$errors->get('d_OT_approver')" class="mt-2" />
                     </div>

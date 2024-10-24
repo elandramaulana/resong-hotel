@@ -26,9 +26,8 @@
                                                 <th style="width: 10px">NO</th>
                                                 <th>Id Karyawan</th>
                                                 <th>Nama</th>
-                                                <th>Divisi</th>
-                                                <th>Status Karyawan</th>
-                                                <th>Komponen Gaji</th>
+                                                <th>Jenis Kelamin</th>
+                                                <th>Devisi</th>
                                                 <th>Besar Gaji (Rp)</th>
                                                 <th>Nomor Rekening</th>
                                                 <th>Aksi</th>
@@ -45,8 +44,7 @@
                                                 <td>{{$pyr->karyawan_nama}}</td>
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
-                                                <td>{{$pyr->status_karyawan ? 'Aktif' : 'Tidak Aktif'}}</td>
-                                                <td>{{ number_format($pyr->gaji_karyawan, 0, ',', '.') }}</td>
+                                                <td></td>
                                                 <td>{{$pyr->rek_karyawan}}</td>
                                                 <td>
                                                     <div>

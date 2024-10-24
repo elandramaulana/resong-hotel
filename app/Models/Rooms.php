@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Rooms extends Model
 {
     use HasFactory;
-    
+    protected $table = 'rooms';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'room_no',
         'room_name',
@@ -25,6 +26,10 @@ class Rooms extends Model
    public function detailRoomsByType($room_type) : Collection{
     $data = $this->where('room_type', $room_type)->get();
     return $data;
+   }
+
+   public function roomtype(){
+    return $this->belongsTo(RoomCategory::class, 'room_type', 'name_category');
    }
 
    public function reservations()
