@@ -126,11 +126,12 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
 
 
-    Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
+    // Route::view('/reservation-list', 'frontoffice/reservation/reservation_list')->name('reservation_list');
     Route::get('/reservation-list', [BookingController::class, 'reservation_list'])->name('reservation.list');
     Route::get('/booking-canceled/', [BookingController::class, 'booking_canceled'])->name('booking.canceled');
     Route::get('/booking-no-showed/', [BookingController::class, 'no_showed'])->name('booking.no_showed');
-    Route::view('/edit-reservation', 'frontoffice/reservation/edit_reservation')->name('edit_reservation');
+    Route::get('/edit-reservation/{id}', [BookingController::class, 'edit_reservation'])->name('edit_reservation');
+    Route::post('/update-reservation/{id}', [BookingController::class, 'update_reservation'])->name('update_reservation');
 
 
     Route::view('/noshow-reservation-list', 'frontoffice/reservation/noshow_reservation_list')->name('noshow_reservation_list');
@@ -150,7 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
-    // House Keeping 
+    // House Keeping
     Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
     Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
     Route::get('/housekeeping-table', [HouseKeepingController::class, 'call_table'])->name('cleaningroom.table');
@@ -257,7 +258,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     //datatable route
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    //ajax request   
+    //ajax request
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
 
 
@@ -268,8 +269,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
     Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
     Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
-    
-    
+
+
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
     Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
@@ -341,5 +342,4 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
 
     Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
- 
 });
