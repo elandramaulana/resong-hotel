@@ -9,6 +9,10 @@
 <body>
 
    <div class="row">
+    {{-- <div class="col-sm-6">
+        <img src="{{ asset('img/logo.png') }}" alt="Logo" style="width:150px; height:auto;" />
+    </div> --}}
+    
     <div class="col-sm-6">
         <h2>Invoice Id: {{ $data['checkin_info']['no_invoice'] }} </h2>
     </div>

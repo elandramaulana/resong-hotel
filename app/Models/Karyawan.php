@@ -18,6 +18,7 @@ class Karyawan extends Model
         'k_email',
         'K_alamat',
         'k_nik',
+        'k_norek',
         'k_pin',
         'k_divisi',
         'k_biometric_status'

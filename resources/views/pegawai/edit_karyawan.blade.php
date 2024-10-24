@@ -53,6 +53,12 @@
                     </div>
 
                      <div class="mb-3">
+                        <label for="k_norek" class="form-label">Norek</label>
+                        <input value="{{$karyawan->norek_karyawan}}" name="k_norek" type="text" class="form-control" id="k_norek">
+                        <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
+                    </div>
+
+                     <div class="mb-3">
                         <label for="k_contact" class="form-label">No Telp</label>
                         <input value="{{$karyawan->kontak_karyawan}}" name="k_contact" type="text" class="form-control" id="k_contact">
                         <x-input-error :messages="$errors->get('k_contact')" class="mt-2" />
