@@ -60,7 +60,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img width="70" src="{{ asset('assets/img/web-icon.png') }}" alt="">
+                    <img width="75" src="{{ asset('assets/img/logo.png') }}" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">
                     <img width="100" src="{{ asset('assets/img/resong-text.png') }}" alt="">
