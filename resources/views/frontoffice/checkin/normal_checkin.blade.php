@@ -1,7 +1,11 @@
 @extends('layouts.dashboard_layout')
 
 @section('content')
-
+<style>
+    #showWaitme{
+        min-height: 150px;
+    }
+</style>
 <section id="normal-checkin">
     <!-- Begin Page Content -->
 <div class="container">
@@ -10,196 +14,39 @@
         <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
     </div>
 
-
-    <!-- Standard single bed -->
-    <div class="card shadow mt-4">
-    <div class="card-body">
-        <div class="standard-single">
-            <div class="container d-flex justify-content-center">
-                <div style="background-color:#D9D9D9; border:solid; border-radius:10px;" class="col-sm-12 d-flex justify-content-center">
-                    <h4 class="text-dark">STANDARD SINGLE (@RP.245.000)</h4>
+    <!-- Legend Color -->
+    <div class="col-sm-12">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6>Terisi</h6>
+                    <button class="btn-primary btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Ready</h6>
+                    <button class="btn-success btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Booked</h6>
+                    <button class="btn-warning btn"></button>
+                </div>
+                <div class="col-sm-3">
+                    <h6>Kotor</h6>
+                    <button class="btn-danger btn"></button>
                 </div>
             </div>
-
-            <div class="container justify-content-between">
-                <div class="row mt-4">
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="{{route('checkin_normal_form')}}">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="{{route('checkin_normal_form')}}">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-       
-                </div>
-            </div>
-         </div>
-    </div>
-</div>
-
-
-<!-- Twin bed -->
-<div class="card shadow mt-4">
-    <div class="card-body">
-        <div class="standard-single">
-            <div class="container d-flex justify-content-center">
-                <div style="background-color:#D9D9D9; border:solid; border-radius:10px;" class="col-sm-12 d-flex justify-content-center">
-                    <h4 class="text-dark">STANDARD TWIN (@RP.245.000)</h4>
-                </div>
-            </div>
-
-            <div class="container justify-content-between">
-                <div class="row mt-4">
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                <div class="col-sm-2">
-                        <button class="btn btn-success mb-4">
-                            <a href="">1</a>
-                        </button>
-                    </div>
-                </div>
-            </div>
-         </div>
-    </div>
-</div>
-
-
-
-<div class="card shadow mt-4">
-    <div class="card-body">
-        <div class="standard-single">
-            <div class="container d-flex justify-content-center">
-                <div style="background-color:#D9D9D9; border:solid; border-radius:10px;" class="col-sm-12 d-flex justify-content-center">
-                    <h4 class="text-dark">PREMIUM (@RP.567.000)</h4>
-                </div>
-            </div>
-
-            <div class="container justify-content-between">
-            <div class="row mt-4">
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-success mb-4">
-                    <a href="">1</a>
-                </button>
-            </div>
-       </div>
-    </div>
         </div>
     </div>
-</div>
 
+    <div class="row" id="showWaitme">
+        <div id="ajax_select_rooms" class="col-lg-12" >
+        </div>
+    </div>
 
 </div>
 </section>
 
+@endsection
+@section('jsSection')
+  @include('frontoffice.checkin.normal_checking_js')
 @endsection
