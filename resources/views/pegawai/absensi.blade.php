@@ -184,7 +184,7 @@
                 buttonSubmit.setAttribute('disabled', true);
                 let formAction = $(this).attr("action");
                 $('.showerror').text(''); 
-                 $('input, select, textarea').removeClass('error-border'); // Remove error styling
+                $('input, select, textarea').removeClass('error-border'); // Remove error styling
 
                 $.ajax({
                         type: 'POST',

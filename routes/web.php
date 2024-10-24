@@ -323,7 +323,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/detai-proses-gaji/{id}', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses');
     Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
-
+    Route::post('/add_komponen', [PayrollController::class, 'addkomponen'])->name('gaji.addkomponen');
+    Route::post('/delete_komponen', [PayrollController::class, 'deletekomponen'])->name('gaji.deletekomponen');
 
     
 });
