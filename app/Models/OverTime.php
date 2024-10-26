@@ -12,6 +12,7 @@ class OverTime extends Model
     protected $fillable = [
         'id',
         'khd_id',
+        'ot_date',
         'ot_start',
         'ot_end',
         'ot_approval',

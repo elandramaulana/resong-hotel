@@ -43,4 +43,17 @@ class Karyawan extends Model
     {
         return $this->belongsTo(KaryawanHasDivision::class, 'karyawan_id', 'id');
     }
+
+        // Relasi ke tabel karyawan_has_divisions untuk OT
+    public function karyawanDivisions()
+    {
+        return $this->hasOne(KaryawanHasDivision::class, 'karyawan_id');
+    }
+
+    // Relasi ke tabel karyawan_shifts
+    public function karyawanShifts()
+    {
+        return $this->hasOne(KaryawanShift::class, 'karyawan_id');
+    }
+
 }

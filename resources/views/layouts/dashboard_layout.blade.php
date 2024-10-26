@@ -365,6 +365,7 @@
                         <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
                         <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
                         <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>
             </li>
@@ -556,6 +557,7 @@
         $('#dataProsesTable').DataTable();
         $('#dataBillTable').DataTable();
         $('#dataRoomTable').DataTable();
+        $('#overtimeTable').DataTable();
     });
 </script>
 

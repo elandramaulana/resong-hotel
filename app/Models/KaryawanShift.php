@@ -21,4 +21,10 @@ class KaryawanShift extends Model
         return $this->belongsTo(Karyawan::class, 'karyawan_id');
     }
 
+    public function shift()
+{
+    return $this->belongsTo(Shift::class, 'shift_id');
+}
+
+
 }

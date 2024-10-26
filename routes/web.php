@@ -28,6 +28,7 @@ use App\Http\Controllers\RestoMenuController;
 
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\RoomController;
@@ -339,6 +340,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/detai-proses-gaji/{id}', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses');
     Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
+
+    // Ovetime
+    Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
+    Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
+    Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
+    Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
+    Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
+    Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
 
     Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
  
