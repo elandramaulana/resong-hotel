@@ -63,7 +63,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img width="70" src="{{ asset('assets/img/web-icon.png') }}" alt="">
+                    <img width="75" src="{{ asset('assets/img/logo.png') }}" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">
                     <img width="100" src="{{ asset('assets/img/resong-text.png') }}" alt="">
@@ -368,6 +368,7 @@
                         <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
                         <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
                         <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>
             </li>
@@ -560,6 +561,7 @@
         $('#dataProsesTable').DataTable();
         $('#dataBillTable').DataTable();
         $('#dataRoomTable').DataTable();
+        $('#overtimeTable').DataTable();
     });
 </script>
 

@@ -9,10 +9,8 @@
 <body>
 
    <div class="row">
-    {{-- <div class="col-sm-6">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo" style="width:150px; height:auto;" />
-    </div> --}}
-    
+    {{-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo.png'))) }}" alt="Logo" style="width: 100px; height: auto;"> --}}
+
     <div class="col-sm-6">
         <h2>Invoice Id: {{ $data['checkin_info']['no_invoice'] }} </h2>
     </div>

@@ -28,6 +28,7 @@ use App\Http\Controllers\RestoMenuController;
 
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\RoomController;
@@ -344,6 +345,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/delete_komponen', [PayrollController::class, 'deletekomponen'])->name('gaji.deletekomponen');
 
     
+
+    // Ovetime
+    Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
+    Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
+    Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
+    Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
+    Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
+    Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
 
     Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
  
