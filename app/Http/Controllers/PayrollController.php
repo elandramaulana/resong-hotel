@@ -18,6 +18,7 @@ class PayrollController extends Controller
             'karyawan.id as id_karyawan',
             'karyawan.k_nama as karyawan_nama',
             'karyawan.k_gender as gender_karyawan',
+            'karyawan.k_norek as k_norek',
             'divisis.d_nama as divisi_karyawan',
             'karyawan_has_divisions.khr_isActive as status_karyawan',
         )
@@ -30,12 +31,14 @@ class PayrollController extends Controller
         return view('payroll.data_gaji', compact('payrollData'));
    
     }
+    
     public function deletekomponen(Request $request) {
         $komponen_id = $request->komponen_id;
         $KomponenData = KomponenGaji::find($komponen_id);
         $KomponenData->delete();
         return response()->json(['status'=>'success', 'message'=> 'Komponen berhasil dihapus']);
     }
+
     public function addkomponen(AddKomponenRequest $request) {
         //retrieve data from form submition
         $dataKomponen = [

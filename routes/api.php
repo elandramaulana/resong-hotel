@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Route::post('/scanlogs', [APIController::class, 'scanlogStore']);
+// Route::middleware('auth:sanctum')->post('/scanlogs', [APIController::class, 'scanlogStore']);
 
+Route::middleware('auth:sanctum')->post('/scanlogs', [APIController::class, 'scanlog_endpoint']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/scanlogs', [APIController::class, 'scanlogStore']);
 
 Route::prefix('room')->group(function () {
     Route::get('/index', [RoomController::class, 'index']);

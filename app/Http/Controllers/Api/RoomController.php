@@ -26,8 +26,6 @@ class RoomController extends Controller
                 )
                 ->whereDate('reservations.reservation_checkin', $today)
                 ->get();
-
-
             $todayCheckout = DB::table('checkins')
                 ->leftJoin('checkouts', 'checkins.id', '=', 'checkouts.checkin_id')
                 ->join('rooms', 'checkins.room_id', '=', 'rooms.id')

@@ -45,7 +45,7 @@
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
                                                 <td></td>
-                                                <td>{{$pyr->rek_karyawan}}</td>
+                                                <td>{{$pyr->k_norek}}</td>
                                                 <td>
                                                     <div>
                                                         <button style="margin-right: 10px" type="submit"
