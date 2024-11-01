@@ -63,4 +63,46 @@ class ReportController extends Controller
             ]
         );
     }
+
+    public function cashflowAll(){ 
+        $dateNow = Carbon::now()->timezone('Asia/Jakarta');
+        Carbon::setLocale('id');
+        $formatDate = $dateNow->translatedFormat('l, d F Y');
+
+        // Hitung detail check-in per kategori
+        $vacantTotal = $this->detailCheckIn($dateNow, 'Rooms');
+        $serviceTotal = $this->detailCheckIn($dateNow, 'Services');
+        $restoTotal = $this->detailCheckIn($dateNow, 'Resto');
+        $laundryTotal = $this->detailCheckIn($dateNow, 'Laundry');
+        $barangTotal = $this->detailBarang($dateNow);
+        $assetTotal = $this->detailAsset($dateNow);
+
+        // Subtotal dari semua kategori
+        $subTotalKredit = $vacantTotal + $serviceTotal + $restoTotal + $laundryTotal;
+        $subTotalDebit = $barangTotal + $assetTotal;
+
+        // Data yang akan dikirim ke view
+        $data = [ 
+            'Tanggal' => $formatDate,
+            'Vacant' => $vacantTotal,
+            'Service' => $serviceTotal,
+            'Resto' => $restoTotal,
+            'Laundry' => $laundryTotal,
+            'Barang' => $barangTotal,
+            'Asset' => $assetTotal,   
+            'SubTotalDebit' => $subTotalDebit,
+            'SubTotalKredit' => $subTotalKredit,
+            'Total' => $subTotalKredit - $subTotalDebit
+        ];
+
+        // dd($data);
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data Berhasil',
+                'data' => $data
+            ]
+        );
+    }
 }

@@ -13,47 +13,114 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BillReportController extends Controller
 {
-    private function detailCheckIn($dateNow, $category)
+    private function detailCheckIn($dateNow, $category, $filterType = 'daily')
     {
-        $detailCheckin = CheckinDetail::whereDate('created_at', $dateNow)
-            ->where('item_category', $category)
-            ->sum('item_price');
-        return $detailCheckin;
+        $query = CheckinDetail::where('item_category', $category);
+
+        switch ($filterType) {
+            case 'weekly':
+                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
+                break;
+            case 'monthly':
+                $query->whereMonth('created_at', $dateNow->month);
+                break;
+            default:
+                $query->whereDate('created_at', $dateNow);
+        }
+
+        return $query->sum('item_price');
     }
 
-    private function detailBarang($dateNow) {
-        $detailBarang = TransBarang::whereDate('created_at', $dateNow)
-            ->sum('trans_harga');
-        return $detailBarang;
-    }
-
-    private function detailAsset($dateNow) {
-        $detailAsset = TransAsset::whereDate('created_at', $dateNow)
-            ->sum('trans_harga');
-        return $detailAsset;
-    }
-
-    public function index()
+    private function detailBarang($dateNow, $filterType = 'daily')
     {
+        $query = TransBarang::query();
+
+        switch ($filterType) {
+            case 'weekly':
+                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
+                break;
+            case 'monthly':
+                $query->whereMonth('created_at', $dateNow->month);
+                break;
+            default:
+                $query->whereDate('created_at', $dateNow);
+        }
+
+        return $query->sum('trans_harga');
+    }
+
+    private function detailAsset($dateNow, $filterType = 'daily')
+    {
+        $query = TransAsset::query();
+
+        switch ($filterType) {
+            case 'weekly':
+                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
+                break;
+            case 'monthly':
+                $query->whereMonth('created_at', $dateNow->month);
+                break;
+            default:
+                $query->whereDate('created_at', $dateNow);
+        }
+
+        return $query->sum('trans_harga');
+    }
+
+    public function index(Request $request)
+    {
+        $filter = $request->input('filter', 'daily'); // Default ke harian jika tidak ada filter
         $dateNow = Carbon::now()->timezone('Asia/Jakarta');
         Carbon::setLocale('id');
-        $formatDate = $dateNow->translatedFormat('l, d F Y');
-        // Hitung detail check-in per kategori
-        $vacantTotal = $this->detailCheckIn($dateNow, 'Rooms');
-        $serviceTotal = $this->detailCheckIn($dateNow, 'Services');
-        $restoTotal = $this->detailCheckIn($dateNow, 'Resto');
-        $laundryTotal = $this->detailCheckIn($dateNow, 'Laundry');
-        $barangTotal = $this->detailBarang($dateNow);
-        $assetTotal = $this->detailAsset($dateNow);
+        $startDate = $dateNow;
+        $endDate = $dateNow;
+        $formatDate = '';
 
-        // Subtotal dari semua kategori
+        // Tentukan rentang tanggal berdasarkan filter
+        switch ($filter) {
+            case 'weekly':
+                $startDate = $dateNow->startOfWeek();
+                $endDate = $dateNow->endOfWeek();
+                $formatDate = $startDate->translatedFormat('d F Y') . ' - ' . $endDate->translatedFormat('d F Y');
+                $filterType = 'Mingguan';
+                break;
+
+            case 'monthly':
+                $startDate = $dateNow->startOfMonth();
+                $endDate = $dateNow->endOfMonth();
+                $formatDate = $startDate->translatedFormat('F Y');
+                $filterType = 'Bulanan';
+                break;
+
+            default:
+                $formatDate = $dateNow->translatedFormat('l, d F Y');
+                $filterType = 'Harian';
+                break;
+        }
+
+        // Ambil data berdasarkan rentang tanggal yang ditentukan
+        $vacantTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
+            ->where('item_category', 'Rooms')
+            ->sum('item_price');
+        $serviceTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
+            ->where('item_category', 'Services')
+            ->sum('item_price');
+        $restoTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
+            ->where('item_category', 'Resto')
+            ->sum('item_price');
+        $laundryTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
+            ->where('item_category', 'Laundry')
+            ->sum('item_price');
+        $barangTotal = TransBarang::whereBetween('created_at', [$startDate, $endDate])->sum('trans_harga');
+        $assetTotal = TransAsset::whereBetween('created_at', [$startDate, $endDate])->sum('trans_harga');
+
         $subTotalKredit = $vacantTotal + $serviceTotal + $restoTotal + $laundryTotal;
         $subTotalDebit = $barangTotal + $assetTotal;
 
-        // Data yang akan dikirim ke view
         $data = [
             'Title' => "Bill Reports",
             'Tanggal' => $formatDate,
+            'FilterType' => $filterType,
             'Vacant' => $vacantTotal,
             'Service' => $serviceTotal,
             'Resto' => $restoTotal,
@@ -62,21 +129,8 @@ class BillReportController extends Controller
             'Asset' => $assetTotal,
             'SubTotalDebit' => $subTotalDebit,
             'SubTotalKredit' => $subTotalKredit,
-            'Total' => $subTotalKredit - $subTotalDebit
+            'Total' => $subTotalKredit - $subTotalDebit,
         ];
-
-        // dd($data);
 
         return view('frontoffice.report.bill_report', $data);
     }
-
-
-    public function detail()
-    {
-        $Data = [
-            'Title' => "Bill Detail"
-        ];
-
-        return view('frontoffice.report.bill_detail', $Data);
-    }
-}
