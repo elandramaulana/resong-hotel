@@ -51,7 +51,13 @@
                                                     <td>{{$r->room_type}}</td>
                                                     <td>Rp. {{ number_format($r->room_price, 0, ',', '.') }}</td>
                                                     <td>{{$r->room_capacity}}</td>
-                                                    <td>{{$r->room_extrabed}}</td>
+                                                    <td>
+                                                        @if($r->room_extrabed == 1)
+                                                            <i class="fas fa-check-circle" style="color: green;"></i>
+                                                        @else
+                                                            <i class="fas fa-times-circle" style="color: red;"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>{{$r->room_status}}</td>
                                                     <td>{{$r->bed_type}}</td>
                                                     <td>

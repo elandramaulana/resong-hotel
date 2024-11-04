@@ -60,7 +60,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img width="70" src="{{ asset('assets/img/web-icon.png') }}" alt="">
+                    <img width="75" src="{{ asset('assets/img/logo.png') }}" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">
                     <img width="100" src="{{ asset('assets/img/resong-text.png') }}" alt="">
@@ -144,7 +144,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
                     aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-bed"></i>
                     <span>Rooms</span>
                 </a>
                 <div id="collapseRooms" class="collapse" aria-labelledby="headingUtilities"
@@ -365,6 +365,7 @@
                         <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
                         <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
                         <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>
             </li>
@@ -439,7 +440,20 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{route('absen.info')}}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    History Absensi
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    History Slip Gaji
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#logoutModal">
@@ -556,6 +570,7 @@
         $('#dataProsesTable').DataTable();
         $('#dataBillTable').DataTable();
         $('#dataRoomTable').DataTable();
+        $('#overtimeTable').DataTable();
     });
 </script>
 

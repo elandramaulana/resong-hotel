@@ -114,81 +114,64 @@ class CheckoutController extends Controller
     }
     public function generatePDF($checkin_id)
     {
+        // Mengambil informasi checkin
         $checkin_info = Checkin::join('guests', 'guests.id', '=', 'checkins.guest_id')
                                 ->where('checkins.id', $checkin_id)
                                 ->get()->first();
         $guestInfo = [
-            'no_invoice'=>$checkin_info->no_invoice,
-            'name_guest'=>$checkin_info->name_guest,
-            'guest_contact'=>$checkin_info->guest_contact,
-            'guest_email'=>$checkin_info->guest_email,
-            'deposit'=>$checkin_info->payment
+            'no_invoice' => $checkin_info->no_invoice,
+            'name_guest' => $checkin_info->name_guest,
+            'guest_contact' => $checkin_info->guest_contact,
+            'guest_email' => $checkin_info->guest_email,
+            'deposit' => $checkin_info->payment
         ];
         
+        // Mengambil informasi checkout
         $detCheckout = Checkout::where('checkin_id', $checkin_id)
                                 ->get()->first();
         $checkoutInfo = [
-            'checkout_payment'=>$detCheckout->checkout_payment,
-            'discount'=>$detCheckout->discount
+            'checkout_payment' => $detCheckout->checkout_payment,
+            'discount' => $detCheckout->discount
         ];                     
+        
+        // Data yang akan dikirimkan ke view
         $data = [
-            'checkin_info'=>$guestInfo,
-            'detail_vacant'=>$this->detCheckin($checkin_id, 'Rooms'),
-            'detail_resto'=>$this->detCheckin($checkin_id, 'Resto'),
-            'detail_laundry'=>$this->detCheckin($checkin_id, 'Laundry'),
-            'detail_extrabed'=>$this->detCheckin($checkin_id, 'Services'),
-            'detail_checkout'=>$checkoutInfo,
+            'checkin_info' => $guestInfo,
+            'detail_vacant' => $this->detCheckin($checkin_id, 'Rooms'),
+            'detail_resto' => $this->detCheckin($checkin_id, 'Resto'),
+            'detail_laundry' => $this->detCheckin($checkin_id, 'Laundry'),
+            'detail_extrabed' => $this->detCheckin($checkin_id, 'Services'),
+            'detail_checkout' => $checkoutInfo,
         ];
-
-        // dd($data);
+    
         // Mulai buffering output
         ob_start();
-
-        // Mulai HTML
-        ?>
-       <html>
-        <head>
-            <title>Invoice Details</title>
-            <style>
-                /* Tambahkan CSS Anda di sini */
-            </style>
-        </head>
-        <body>
-            <section id="form-detail">
-                <div class="container-fluid mt-4 mb-5">
-                    <div class="card">
-                        <div class="card-body text-dark">
-                            <?php echo View::make('invoice_pdf', ['data' => $data])->render(); ?>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </body>
-        </html>
-        <?php
-
+    
+        // Muat view HTML
+        echo View::make('invoice_pdf', ['data' => $data])->render();
+    
         // Simpan output ke variabel
         $html = ob_get_clean();
-
+    
         // Konfigurasi Dompdf
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
-
+        $options->set('isRemoteEnabled', true); // Aktifkan agar bisa render gambar lokal
+    
         // Inisialisasi Dompdf
         $dompdf = new Dompdf($options);
-
+    
         // Muat HTML ke Dompdf
         $dompdf->loadHtml($html);
-
+    
         // Atur ukuran dan orientasi kertas
         $dompdf->setPaper('A4', 'portrait');
-
+    
         // Render PDF (generate)
         $dompdf->render();
-
+    
         // Keluarkan (output) file PDF ke browser
         return $dompdf->stream('invoice.pdf');
     }
-
+    
 }

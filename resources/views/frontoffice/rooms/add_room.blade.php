@@ -73,14 +73,14 @@
                             
 
                             <div class="mb-3">
-                                <label for="room_type" class="form-label">Type</label>
+                                <label for="room_type" class="form-label">Type (PREMIUM, VIP, STANDARD, etc)</label>
                                 <input name="room_type" type="text" class="form-control" value="">
                                 <x-input-error :messages="$errors->get('room_type')" class="mt-2"/>
                             </div>
 
                           
                             <div class="mb-3">
-                                <label for="bed_type" class="form-label">Bed Type</label>
+                                <label for="bed_type" class="form-label">Bed Type(SINGLE, TWIN, etc) </label>
                                 <input value=""  type="text" class="form-control" name="bed_type" id="no_rek">
                                 <x-input-error :messages="$errors->get('bed_type')" class="mt-2"/>
                             </div>

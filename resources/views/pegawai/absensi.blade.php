@@ -163,7 +163,7 @@
                                     '<td>' + absensi.schedule_out + '</td>' +
                                     '<td>' + absensi.punch_out + '</td>' +
                                     '<td>' + absensi.working_hour + '</td>' +
-                                    '<td>' + absensi.status + '</td>' +
+                                    '<td><span class="btn ' + absensi.status_class + '">' + absensi.status_absensi + '</span></td>' +
                                     '</tr>';
                                 $('#dataAbsensiTable tbody').append(row);
                             });

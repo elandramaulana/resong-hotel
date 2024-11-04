@@ -53,6 +53,13 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="k_norek" class="form-label">No Rekening</label>
+                                        <input value="" name="k_norek" type="text" class="form-control"
+                                            id="k_norek">
+                                        <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="k_contact" class="form-label">No Telepon</label>
                                         <input value="" name="k_contact" type="text" class="form-control"
                                             id="k_contact">
