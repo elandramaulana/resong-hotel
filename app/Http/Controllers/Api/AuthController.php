@@ -49,11 +49,22 @@ class AuthController extends Controller
 
     public function logoutApi(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Logout failed',
+                'data' => []
+            ]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Logout successful',
             'data' => []
         ]);
+        
     }
 }

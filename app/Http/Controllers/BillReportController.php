@@ -134,3 +134,4 @@ class BillReportController extends Controller
 
         return view('frontoffice.report.bill_report', $data);
     }
+}
