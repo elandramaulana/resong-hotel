@@ -15,6 +15,7 @@ class KaryawanHasDivision extends Model
         'id',
         'karyawan_id',
         'divisi_id',
+        'user_id',
         'khr_tgljoin',
         'khr_isActive',
         'khr_tglOut'
@@ -29,5 +30,10 @@ class KaryawanHasDivision extends Model
     public function divisi()
     {
         return $this->belongsTo(Divisi::class, 'divisi_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
