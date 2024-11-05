@@ -53,9 +53,9 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-      
+
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -140,7 +140,7 @@
                     </div>
                 </div>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -163,7 +163,7 @@
                     <span>House Keeping</span></a>
             </li>
 
-           
+
 
 
             <li class="nav-item">
@@ -327,9 +327,9 @@
                     <span>Dashboard Karyawan</span></a>
             </li> --}}
 
-              <!-- Nav Item - Check-out -->
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('daftar.hadir')}}">
+            <!-- Nav Item - Check-out -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('daftar.hadir') }}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
@@ -352,7 +352,7 @@
 
             <li class="nav-item">
 
-              
+
 
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -362,10 +362,10 @@
                 <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
-                        <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
-                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
-                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
+                        <a class="collapse-item" href="{{ route('data.gaji') }}">Gaji</a>
+                        <a class="collapse-item" href="{{ route('proses.gaji') }}">Proses</a>
+                        <a class="collapse-item" href="{{ route('bill.gaji') }}">Bill</a>
+                        <a class="collapse-item" href="{{ route('overtime') }}">Over Time</a>
                     </div>
                 </div>
             </li>
@@ -440,17 +440,17 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('profile.info') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('absen.info')}}">
+                                <a class="dropdown-item" href="{{ route('absen.info') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     History Absensi
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('slip_gaji.info')}}">
+                                <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     History Slip Gaji
                                 </a>
@@ -510,7 +510,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <form id="frmLogout" action="{{route('logout')}}" method="POST">@csrf</form>
+                    <form id="frmLogout" action="{{ route('logout') }}" method="POST">@csrf</form>
                     <a class="btn btn-primary" id="btnLogout">Logout</a>
                 </div>
             </div>
@@ -530,13 +530,51 @@
 
     <!-- Script for table -->
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#btnLogout', function(e){
-            $("#frmLogout").submit();
-        });
-        $('#checkInTable'). DataTable();
-        $('#speedyCheckInTable'). DataTable();
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#btnLogout', function(e) {
+                $("#frmLogout").submit();
+            });
+            $('#checkInTable').DataTable();
+            $('#speedyCheckInTable').DataTable();
+            $('#checkOutTable').DataTable();
+            $('#countryTable').DataTable();
+            $('#ProvinceTable').DataTable();
+            $('#cityTable').DataTable();
+            // $('#reservationListTable').DataTable();
+            $('#cancelReservationListTable').DataTable();
+            $('#inhouseGuest').DataTable();
+            $('#guestDatabase').DataTable();
+            $('#listServiceGuestFood').DataTable();
+            $('#listServiceGuestDrinks').DataTable();
+            $('#listServiceGuestLaundry').DataTable();
+            $('#listServiceGuestOther').DataTable();
+            $('#listServiceOrder').DataTable();
+            $('#GuestDatabaseTable').DataTable();
+            $('#historyGuestTable').DataTable();
+            $('#houseKeepingTable').DataTable();
+            $('#cleaningHistoryTable').DataTable();
+            $('#billReporTable').DataTable();
+            $('#supplierTable').DataTable();
+            $('#barangTable').DataTable();
+            $('#barangMasukTable').DataTable();
+            $('#manageMenuTable').DataTable();
+            $('#daftarMenuTable').DataTable();
+            $('#layananRestoTable').DataTable();
+            $('#detailLayananRestoTable').DataTable();
+            $('#dataKaryawanTable').DataTable();
+            $('#dataDivisiTable').DataTable();
+            $('#dataShiftTable').DataTable();
+            $('#dataAbsensiTable').DataTable();
+            $('#dataGajiTable').DataTable();
+            $('#dataProsesTable').DataTable();
+            $('#dataBillTable').DataTable();
+            $('#dataRoomTable').DataTable();
+            $('#overtimeTable').DataTable();
+        }); <<
+        << << < Updated upstream
+        $('#checkInTable').DataTable();
+        $('#speedyCheckInTable').DataTable();
         $('#checkOutTable').DataTable();
         $('#countryTable').DataTable();
         $('#ProvinceTable').DataTable();
@@ -572,8 +610,12 @@
         $('#dataRoomTable').DataTable();
         $('#overtimeTable').DataTable();
         $('#dataSlipTable').DataTable();
-    });
-</script>
+        $('#dataSlipTable').DataTable();
+        });
+    </script>
+    =======
+    </script>
+    >>>>>>> Stashed changes
 
 
     {{-- show menu image --}}
