@@ -14,7 +14,7 @@
                             <div class="card-header py-3">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3 class="font-weight-bold text-dark">Bill Payroll</h3>
+                                        <h3 class="font-weight-bold text-dark">Riwayat Absensi Karyawan</h3>
                                     </div>
                                 </div>
                             </div>
@@ -62,12 +62,11 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 10px">NO</th>
-                                                <th>Id Karyawan</th>
-                                                <th>Nama</th>
-                                                <th>Divisi</th>
+                                                <th>Tanggal</th>
+                                                <th>Shift</th>
+                                                <th>Jam Masuk</th>
+                                                <th>Jam Keluar</th>
                                                 <th>Status</th>
-                                                <th>Besar Gaji</th>
-                                                <th style="width: 10px">Status Payroll</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -78,11 +77,6 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="text-center">
-                                                    <div>
-                                                        <input type="checkbox" disabled>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -13,6 +13,6 @@ class UserInfoController extends Controller
         return view('profile.absent_info');
     }
     public function history_slip_gaji(){
-
+        return view('profile.slipgaji_info');
     }
 }
