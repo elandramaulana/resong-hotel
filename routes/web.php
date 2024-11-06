@@ -29,7 +29,6 @@ use App\Http\Controllers\RestoMenuController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\OvertimeController;
-use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\RoomController;
@@ -43,28 +42,13 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
 require __DIR__ . '/auth.php';
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {});
 
-
-
 // =====================User Information
 Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/user-info', [UserInfoController::class, 'profile'])->name('profile.info');
     Route::get('/history-absensi', [UserInfoController::class, 'history_absensi'])->name('absen.info');
     Route::get('/history-slip-gaji', [UserInfoController::class, 'history_slip_gaji'])->name('slip_gaji.info');
@@ -85,7 +69,7 @@ Route::middleware('auth')->group(function () {
 
 //======================================= Frontoffice Divisi
 
-Route::middleware('auth', 'checkdivisi:1')->group(function () {
+Route::middleware('auth', 'checkDivisi:1')->group(function () {
     // checkin
     Route::get('/checkin-normal', [CheckinController::class, 'index'])->name('checkin.normal');
     Route::post('/checkin-normal', [CheckinController::class, 'store'])->name('checkin.normal.store');
@@ -127,33 +111,33 @@ Route::middleware('auth', 'checkdivisi:1')->group(function () {
     Route::post('/update-reservation/{id}', [BookingController::class, 'update_reservation'])->name('update_reservation');
 
     // Guest
-     Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
-     Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
-     Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
-     Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
-     Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
-     Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
-     Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
-     Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
-     Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
-     Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
-     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
-     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
-     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
+    Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+    Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
+    Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+    Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
+    Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
+    Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
+    Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
+    Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
+    Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+    Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
+    Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+    Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
+    Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
     // Guest
-     Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
-     Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
-     Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
-     Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
-     Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
-     Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
-     Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
-     Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
-     Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
-     Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
-     Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
-     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
-     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
+    Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+    Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
+    Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+    Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
+    Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
+    Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
+    Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
+    Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
+    Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+    Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
+    Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+    Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
+    Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
     // Rooms
     Route::get('/daftar-room', [RoomController::class, 'index'])->name('daftar.room');
@@ -182,13 +166,11 @@ Route::middleware('auth', 'checkdivisi:1')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
-
-
 });
 
 
 // =================================Housekeeping Divisi
-Route::middleware('auth', 'checkdivisi:2')->group(function () {
+Route::middleware('auth', 'checkDivisi:2')->group(function () {
     //  House Keeping
     Route::get('/house-keeping', [HouseKeepingController::class, 'index'])->name('cleaningroom.list');
     Route::post('/house-keeping-makehistory', [HouseKeepingController::class, 'storeHistory'])->name('cleaningroom.history');
@@ -199,7 +181,7 @@ Route::middleware('auth', 'checkdivisi:2')->group(function () {
 
 //================================= Kitchen Divisi
 
-Route::middleware('auth', 'checkdivisi:3')->group(function(){
+Route::middleware('auth', 'checkDivisi:3')->group(function () {
 
     // Supplier
     Route::get('/supplier', [SupplierController::class, 'index'])->name('list.supplier');
@@ -234,13 +216,12 @@ Route::middleware('auth', 'checkdivisi:3')->group(function(){
 });
 
 
+
+
+
 //=========================== Resto Divisi
-});
 
-
-//=========================== Resto Divisi
-
-Route::middleware('auth', 'checkdivisi:4')->group(function () {
+Route::middleware('auth', 'checkDivisi:4')->group(function () {
     // Manage Menu
     Route::get('/menu-list', [MenuController::class, 'index'])->name('list.menu');
     Route::get('/tambah-menu', [MenuController::class, 'create'])->name('tambah.menu');
@@ -257,16 +238,16 @@ Route::middleware('auth', 'checkdivisi:4')->group(function () {
     Route::post('/update-daily-menu/{id}', [DaftarMenuController::class, 'update'])->name('update.daily');
     Route::get('/store-daily-menu', [DaftarMenuController::class, 'storeMenuDaily'])->name('store.daily.menu');
 
-     // Kategori Menu
-     Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
-     Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
-     Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
-     Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu'); 
-     // Kategori Menu
-     Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
-     Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
-     Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
-     Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu'); 
+    // Kategori Menu
+    Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
+    Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
+    Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
+    Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
+    // Kategori Menu
+    Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
+    Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
+    Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
+    Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
 
     // Daftar Menu
     Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
@@ -276,7 +257,7 @@ Route::middleware('auth', 'checkdivisi:4')->group(function () {
 
 
 //========================= Manajemen Asset Divisi
-Route::middleware('auth', 'checkdivisi:5')->group(function () {
+Route::middleware('auth', 'checkDivisi:5')->group(function () {
     Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
@@ -319,7 +300,7 @@ Route::middleware('auth', 'checkdivisi:5')->group(function () {
 
 
 //===================== HRD Divisi
-Route::middleware('auth', 'checkdivisi:6')->group(function () {
+Route::middleware('auth', 'checkDivisi:6')->group(function () {
     //Kepegawaian
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
@@ -349,12 +330,11 @@ Route::middleware('auth', 'checkdivisi:6')->group(function () {
     Route::get('/get-karyawan-by-divisi/{divisiId}', [KehadiranController::class, 'getKaryawanByDivisi'])->name('get.karyawan.by.divisi');
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
-
 });
 
 
 // =======================Finance Divisi
-Route::middleware('auth', 'checkdivisi:7')->group(function () {
+Route::middleware('auth', 'checkDivisi:7')->group(function () {
     // Report
     Route::get('/bill-report', [BillReportController::class, 'index'])->name('bill.report');
     Route::get('/bill-detail', [BillReportController::class, 'detail'])->name('bill.detail');
@@ -362,7 +342,7 @@ Route::middleware('auth', 'checkdivisi:7')->group(function () {
 
 
 // =======================Human Capital
-Route::middleware('auth', 'checkdivisi:8')->group(function () {
+Route::middleware('auth', 'checkDivisi:8')->group(function () {
     // payroll
     Route::get('/data-gaji', [PayrollController::class, 'dataGaji'])->name('data.gaji');
     Route::get('/gaji/{id}/edit', [PayrollController::class, 'editGaji'])->name('edit.gaji');
@@ -378,28 +358,8 @@ Route::middleware('auth', 'checkdivisi:8')->group(function () {
     Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
     Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
     Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
-
-  
 });
 
 
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
 Route::get('/test', [TestController::class, 'index'])->name('test');
-
-
-    // Ovetime
-    Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
-    Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
-    Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
-    Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
-    Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
-    Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
-
-  
-});
-
-
-Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
-Route::get('/test', [TestController::class, 'index'])->name('test');
-
-

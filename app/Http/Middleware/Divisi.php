@@ -18,10 +18,18 @@ class Divisi
     {
         $user = Auth::user();
 
-        if ($user && $user->karyawanHasDivision()->where('divisi.id', $divisiId)->exists()) {
+        if ($user->level_user == 'SUPERADMIN') {
             return $next($request);
         }
 
-        return response()->json(['message' => 'Forbidden'], 403);
+        if (!$user->karyawanHasDivision()->exists()) {
+            return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
+        }
+
+        if ($user && $user->karyawanHasDivision()->where('user_id', $user->id)->where('divisi_id', $divisiId)->exists()) {
+            return $next($request);
+        }
+
+        return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
     }
 }
