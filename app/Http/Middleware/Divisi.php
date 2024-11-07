@@ -34,3 +34,4 @@ class Divisi
         return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
     }
 }
+}
