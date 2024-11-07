@@ -46,6 +46,17 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="divisi" class="form-label">Username</label>
+                                        <select name="user_id" class="form-control" id="user_id">
+                                            <option value="" disabled selected>Pilih Username</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="k_nik" class="form-label">NIK</label>
                                         <input value="" name="k_nik" type="text" class="form-control"
                                             id="k_nik">

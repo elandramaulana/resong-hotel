@@ -367,6 +367,7 @@ Route::middleware('auth', 'checkdivisi:8')->group(function () {
 });
 
 
+
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
 Route::get('/test', [TestController::class, 'index'])->name('test');
 

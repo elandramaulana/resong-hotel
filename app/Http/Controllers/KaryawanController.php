@@ -8,6 +8,7 @@ use App\Models\Karyawan;
 use App\Models\KaryawanHasDivision;
 use App\Models\KaryawanShift;
 use App\Models\Shift;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -54,8 +55,9 @@ class KaryawanController extends Controller
         $divisis = Divisi::all();
         $karyawan = Karyawan::all();
         $shift = Shift::all();
+        $users = User::all();
 
-        return view('pegawai.tambah_karyawan', compact('karyawan', 'divisis', 'shift'), $Data);
+        return view('pegawai.tambah_karyawan', compact('karyawan', 'divisis', 'shift', 'users'), $Data);
     }
 
 
@@ -96,6 +98,7 @@ class KaryawanController extends Controller
         $data_has_division = [
             'karyawan_id' => $karyawan->id,
             'divisi_id' => $request->get('k_divisi'),
+            'user_id' => $request->get('user_id'),
             'khr_tgljoin' => $request->get('khr_tgljoin') ?? Carbon::now(),
             'khr_isActive' => true,
             'khr_tglOut' => $request->get('khr_tglOut') ?? null,
