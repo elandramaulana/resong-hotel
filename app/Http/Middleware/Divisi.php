@@ -18,9 +18,14 @@ class Divisi
     {
         $user = Auth::user();
 
-        if ($user && $user->karyawanHasDivision()->where('divisi.id', $divisiId)->exists()) {
+        if ($user->level_user === "SUPERADMIN") {
             return $next($request);
         }
+    
+        // Allow access if the user belongs to the specified division
+        // if ($user->karyawanHasDivision()->where('divisis.id', $divisiId)->exists()) {
+        //     return $next($request);
+        // }
 
         return response()->json(['message' => 'Forbidden'], 403);
     }

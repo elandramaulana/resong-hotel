@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DailyMenuSeeder::class,
             RoomsSeeder::class,
-            SuperuserSeed::class,
+            // SuperuserSeed::class,
             DivisiSeeder::class
         ]);
     }
