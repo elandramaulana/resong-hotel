@@ -48,6 +48,85 @@
         .showerror{
             color: red;
         }
+        
+        .onoff {
+            /* margin-left: -27px; */
+            display: -moz-inline-stack;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align: auto;
+            zoom: 1;
+            *display: inline;
+            position: relative;
+            cursor: pointer;
+            width: 55px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .onoff label {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background: #cd3c3c;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #FFF;
+            -webkit-transition: background 0.3s, text-indent 0.3s;
+            -moz-transition: background 0.3s, text-indent 0.3s;
+            -o-transition: background 0.3s, text-indent 0.3s;
+            transition: background 0.3s, text-indent 0.3s;
+            text-indent: 27px;
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+        }
+        .onoff label:after {
+            content: 'NO';
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            font-size: 12px;
+            color: #591717;
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.35);
+            z-index: 1;
+        }
+        .onoff label:before {
+            content: '';
+            width: 15px;
+            height: 24px;
+            border-radius: 3px;
+            background: #FFF;
+            position: absolute;
+            z-index: 2;
+            top: 3px;
+            left: 3px;
+            display: block;
+            -webkit-transition: left 0.3s;
+            -moz-transition: left 0.3s;
+            -o-transition: left 0.3s;
+            transition: left 0.3s;
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+        }
+        .onoff input:checked + label {
+            background: #378b2c;
+            text-indent: 8px;
+        }
+        .onoff input:checked + label:after {
+            content: 'YES';
+            color: #091707;
+        }
+        .onoff input:checked + label:before {
+            left: 37px;
+        }
     </style>
 </head>
 
@@ -56,9 +135,9 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-      
+
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -81,12 +160,12 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+         
             <!-- Heading -->
             <div class="sidebar-heading">
                 FRONT OFFICE
             </div>
-
+          
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -143,7 +222,7 @@
                     </div>
                 </div>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -166,7 +245,7 @@
                     <span>House Keeping</span></a>
             </li>
 
-           
+
 
 
             <li class="nav-item">
@@ -330,9 +409,9 @@
                     <span>Dashboard Karyawan</span></a>
             </li> --}}
 
-              <!-- Nav Item - Check-out -->
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('daftar.hadir')}}">
+            <!-- Nav Item - Check-out -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('daftar.hadir') }}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
@@ -355,7 +434,7 @@
 
             <li class="nav-item">
 
-              
+
 
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -365,10 +444,10 @@
                 <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
-                        <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
-                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
-                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
+                        <a class="collapse-item" href="{{ route('data.gaji') }}">Gaji</a>
+                        <a class="collapse-item" href="{{ route('proses.gaji') }}">Proses</a>
+                        <a class="collapse-item" href="{{ route('bill.gaji') }}">Bill</a>
+                        <a class="collapse-item" href="{{ route('overtime') }}">Over Time</a>
                     </div>
                 </div>
             </li>
@@ -443,7 +522,20 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-
+                                <a class="dropdown-item" href="{{ route('profile.info') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('absen.info') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    History Absensi
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    History Slip Gaji
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#logoutModal">
@@ -500,7 +592,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <form id="frmLogout" action="{{route('logout')}}" method="POST">@csrf</form>
+                    <form id="frmLogout" action="{{ route('logout') }}" method="POST">@csrf</form>
                     <a class="btn btn-primary" id="btnLogout">Logout</a>
                 </div>
             </div>
@@ -521,49 +613,89 @@
     <!-- Script for table -->
  
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#btnLogout', function(e){
-            $("#frmLogout").submit();
-        });
-        $('#checkInTable'). DataTable();
-        $('#speedyCheckInTable'). DataTable();
-        $('#checkOutTable').DataTable();
-        $('#countryTable').DataTable();
-        $('#ProvinceTable').DataTable();
-        $('#cityTable').DataTable();
-        // $('#reservationListTable').DataTable();
-        $('#cancelReservationListTable').DataTable();
-        $('#inhouseGuest').DataTable();
-        $('#guestDatabase').DataTable();
-        $('#listServiceGuestFood').DataTable();
-        $('#listServiceGuestDrinks').DataTable();
-        $('#listServiceGuestLaundry').DataTable();
-        $('#listServiceGuestOther').DataTable();
-        $('#listServiceOrder').DataTable();
-        $('#GuestDatabaseTable').DataTable();
-        $('#historyGuestTable').DataTable();
-        $('#houseKeepingTable').DataTable();
-        $('#cleaningHistoryTable').DataTable();
-        $('#billReporTable').DataTable();
-        $('#supplierTable').DataTable();
-        $('#barangTable').DataTable();
-        $('#barangMasukTable').DataTable();
-        $('#manageMenuTable').DataTable();
-        $('#daftarMenuTable').DataTable();
-        $('#layananRestoTable').DataTable();
-        $('#detailLayananRestoTable').DataTable();
-        $('#dataKaryawanTable').DataTable();
-        $('#dataDivisiTable').DataTable();
-        $('#dataShiftTable').DataTable();
-        $('#dataAbsensiTable').DataTable();
-        $('#dataGajiTable').DataTable();
-        $('#dataProsesTable').DataTable();
-        $('#dataBillTable').DataTable();
-        $('#dataRoomTable').DataTable();
-        $('#overtimeTable').DataTable();
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#btnLogout', function(e) {
+                $("#frmLogout").submit();
+            });
+            $('#checkInTable').DataTable();
+            $('#speedyCheckInTable').DataTable();
+            $('#checkOutTable').DataTable();
+            $('#countryTable').DataTable();
+            $('#ProvinceTable').DataTable();
+            $('#cityTable').DataTable();
+            // $('#reservationListTable').DataTable();
+            $('#cancelReservationListTable').DataTable();
+            $('#inhouseGuest').DataTable();
+            $('#guestDatabase').DataTable();
+            $('#listServiceGuestFood').DataTable();
+            $('#listServiceGuestDrinks').DataTable();
+            $('#listServiceGuestLaundry').DataTable();
+            $('#listServiceGuestOther').DataTable();
+            $('#listServiceOrder').DataTable();
+            $('#GuestDatabaseTable').DataTable();
+            $('#historyGuestTable').DataTable();
+            $('#houseKeepingTable').DataTable();
+            $('#cleaningHistoryTable').DataTable();
+            $('#billReporTable').DataTable();
+            $('#supplierTable').DataTable();
+            $('#barangTable').DataTable();
+            $('#barangMasukTable').DataTable();
+            $('#manageMenuTable').DataTable();
+            $('#daftarMenuTable').DataTable();
+            $('#layananRestoTable').DataTable();
+            $('#detailLayananRestoTable').DataTable();
+            $('#dataKaryawanTable').DataTable();
+            $('#dataDivisiTable').DataTable();
+            $('#dataShiftTable').DataTable();
+            $('#dataAbsensiTable').DataTable();
+            $('#dataGajiTable').DataTable();
+            $('#dataProsesTable').DataTable();
+            $('#dataBillTable').DataTable();
+            $('#dataRoomTable').DataTable();
+            $('#overtimeTable').DataTable();
+        }); 
+        // $('#checkInTable').DataTable();
+        // $('#speedyCheckInTable').DataTable();
+        // $('#checkOutTable').DataTable();
+        // $('#countryTable').DataTable();
+        // $('#ProvinceTable').DataTable();
+        // $('#cityTable').DataTable();
+        // // $('#reservationListTable').DataTable();
+        // $('#cancelReservationListTable').DataTable();
+        // $('#inhouseGuest').DataTable();
+        // $('#guestDatabase').DataTable();
+        // $('#listServiceGuestFood').DataTable();
+        // $('#listServiceGuestDrinks').DataTable();
+        // $('#listServiceGuestLaundry').DataTable();
+        // $('#listServiceGuestOther').DataTable();
+        // $('#listServiceOrder').DataTable();
+        // $('#GuestDatabaseTable').DataTable();
+        // $('#historyGuestTable').DataTable();
+        // $('#houseKeepingTable').DataTable();
+        // $('#cleaningHistoryTable').DataTable();
+        // $('#billReporTable').DataTable();
+        // $('#supplierTable').DataTable();
+        // $('#barangTable').DataTable();
+        // $('#barangMasukTable').DataTable();
+        // $('#manageMenuTable').DataTable();
+        // $('#daftarMenuTable').DataTable();
+        // $('#layananRestoTable').DataTable();
+        // $('#detailLayananRestoTable').DataTable();
+        // $('#dataKaryawanTable').DataTable();
+        // $('#dataDivisiTable').DataTable();
+        // $('#dataShiftTable').DataTable();
+        // $('#dataAbsensiTable').DataTable();
+        // $('#dataGajiTable').DataTable();
+        // $('#dataProsesTable').DataTable();
+        // $('#dataBillTable').DataTable();
+        // $('#dataRoomTable').DataTable();
+        // $('#overtimeTable').DataTable();
+        // $('#dataSlipTable').DataTable();
+        // $('#dataSlipTable').DataTable();
+        // });
+    </script>
+   
 
 
     {{-- show menu image --}}

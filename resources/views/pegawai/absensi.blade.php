@@ -112,12 +112,12 @@
                 <h6 class="font-weight-bold text-dark">Checkpoint I</h6>
                 <div class="form-group col-lg-6">
                     <label for="">Keterlambatan (Menit)</label>
-                    <input type="number" value="{{ $latePointSetting['first_late'] }}" name="first_late" id="first_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <input type="number" value="{{ $latePointSetting['first_late'] ?? ""}}" name="first_late" id="first_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="">Point Keterlambatan</label>
-                    <input type="number" value="{{ $latePointSetting['first_latepoint'] }}" name="first_latepoint" id="first_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <input type="number" value="{{ $latePointSetting['first_latepoint'] ?? "" }}" name="first_latepoint" id="first_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
             </div>
@@ -125,12 +125,12 @@
                 <h6 class="font-weight-bold text-dark">Checkpoint II</h6>
                 <div class="form-group col-lg-6">
                     <label for="">Keterlambatan (Menit)</label>
-                    <input type="number" name="second_late" value="{{ $latePointSetting['second_late'] }}" id="second_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <input type="number" name="second_late" value="{{ $latePointSetting['second_late'] ?? "" }}" id="second_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
                     <i class="showerror"></i>                    
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="">Point Keterlambatan</label>
-                    <input type="number" name="second_latepoint" value="{{ $latePointSetting['second_latepoint'] }}" id="second_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <input type="number" name="second_latepoint" value="{{ $latePointSetting['second_latepoint'] ?? "" }}" id="second_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
             </div>
@@ -138,12 +138,12 @@
                 <h6 class="font-weight-bold text-dark">Checkpoint III</h6>
                 <div class="form-group col-lg-6">
                     <label for="">Keterlambatan (Menit)</label>
-                    <input type="number" name="third_late" value="{{ $latePointSetting['third_late'] }}" id="third_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
+                    <input type="number" name="third_late" value="{{ $latePointSetting['third_late'] ?? "" }}" id="third_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="">Point Keterlambatan</label>
-                    <input type="number" name="third_latepoint" value="{{ $latePointSetting['third_latepoint'] }}" id="third_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
+                    <input type="number" name="third_latepoint" value="{{ $latePointSetting['third_latepoint'] ?? "" }}" id="third_latepoint" class="form-control" placeholder="Masukan jumlah keterlambatan" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
             </div>
@@ -151,12 +151,12 @@
                 <h6 class="font-weight-bold text-dark">Potongan Gaji Keterlambatan</h6>
                 <div class="form-group col-lg-6">
                     <label for="">Besar Potongan (Rp)</label>
-                    <input value="{{ $latePointSetting['besar_potongan'] }}" type="number" name="besar_potongan" id="besar_potongan" class="form-control" placeholder="Masukan besar potongan keterlambatan" aria-describedby="helpId">
+                    <input value="{{ $latePointSetting['besar_potongan'] ?? "" }}" type="number" name="besar_potongan" id="besar_potongan" class="form-control" placeholder="Masukan besar potongan keterlambatan" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="">Per Point Keterlambatan</label>
-                    <input value="{{ $latePointSetting['besar_point'] }}" type="number" name="besar_point" id="besar_point" class="form-control" placeholder="Masukan jumlah point perpotongan" aria-describedby="helpId">
+                    <input value="{{ $latePointSetting['besar_point'] ?? "" }}" type="number" name="besar_point" id="besar_point" class="form-control" placeholder="Masukan jumlah point perpotongan" aria-describedby="helpId">
                     <i class="showerror"></i>
                 </div>
             </div>

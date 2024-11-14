@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("karyawan_id");
             $table->unsignedBigInteger("divisi_id");
+            $table->unsignedBigInteger("user_id");
             $table->date('khr_tgljoin');
             $table->string('khr_isActive');
             $table->date('khr_tglOut');

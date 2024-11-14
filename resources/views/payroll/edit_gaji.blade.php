@@ -125,8 +125,8 @@
                                 @php
                                     $thp = $totalPemasukan - $totalPotongan;
                                 @endphp
-                                <tr style="background-color: lightblue;">
-                                    <td colspan="2" class="text-center"><b>THP</b></td>
+                                <tr>
+                                    <td colspan="2" class="text-center"><b>Take Home Pay</b></td>
                                     <td class="text-right" colspan="2" ><b>{{ number_format($thp, 0, ',', '.') }}</b></td>
                                 </tr>
                             </tbody>
@@ -168,7 +168,7 @@
             <div class="form-group col-lg-6">
                 <label for="">Jenis</label>
                 <select name="tipe_komponen" id="tipe_komponen" class="form-control">
-                    <option value="penambahan">Pemasukan</option>
+                    <option value="pendapatan">Pendapatan</option>
                     <option value="potongan">Potongan</option>
                 </select>
                 <i class="showerror"></i>

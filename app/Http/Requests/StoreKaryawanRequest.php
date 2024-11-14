@@ -24,7 +24,7 @@ class StoreKaryawanRequest extends FormRequest
         return [
             'k_nama'=>['required'],
             'k_contact'=>['required'],
-            'k_email'=>['required'],
+            'k_email'=>['required', 'unique:users,email'],
             'K_alamat'=>['required'],
             'k_nik'=>['required'],
             'k_norek'=>['required'],

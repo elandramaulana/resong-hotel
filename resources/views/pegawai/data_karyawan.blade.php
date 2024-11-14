@@ -42,6 +42,7 @@
                                                 <th>Divisi</th>
                                                 <th>Shift</th>
                                                 <th>Pin Absensi</th>
+                                                <th>Overtime Approval</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -81,6 +82,8 @@
                                                     </td>
 
                                                     <td>{{ $kr->pin_karyawan }}</td>
+                                                    <td><p class="onoff"><input class="setApproval" data-id="{{ $kr->khd_id }}" {{ $kr->is_approval ? "checked" : "" }} type="checkbox" id="{{ $kr->nama_karyawan }}" na><label for="{{ $kr->nama_karyawan }}"></label></p>
+                                                    </td>
 
                                                     <td>
                                                         <div>
@@ -136,9 +139,34 @@
                 </div>
             </div>
         </section>
-
-
-
     </div>
     <!-- /.container-fluid -->
+@endsection
+@section("jsSection")
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).on('click', '.setApproval', function (e) { 
+                var khd_id = $(this).data('id');
+                var is_approval = $(this).is(':checked');
+
+                $.ajax({
+                    url: "{{ route('karyawan.setApproval') }}",
+                    type: "POST",
+                    data: {
+                        khd_id: khd_id,
+                        is_approval: is_approval,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

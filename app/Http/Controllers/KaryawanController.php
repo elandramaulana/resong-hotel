@@ -8,14 +8,24 @@ use App\Models\Karyawan;
 use App\Models\KaryawanHasDivision;
 use App\Models\KaryawanShift;
 use App\Models\Shift;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Svg\Tag\Rect;
 
 class KaryawanController extends Controller
 {
+    public function setapproval(Request $request){
+        $khd = KaryawanHasDivision::find($request->khd_id);
+        $khd->khd_ot_approval = ($request->is_approval=='true') ? 1 : 0;
+        $khd->save();
+        $return = ['status'=>'success', 'code'=>200, 'message'=>'Operation Success', 'data'=>($request->is_approval=='true') ? 1 : 0];
+        return response()->json($return);
+    }
     public function index()
 {
     $Data = [
@@ -33,9 +43,11 @@ class KaryawanController extends Controller
             'k.k_contact as kontak_karyawan',
             'k.k_alamat as alamat_karyawan',
             'k.k_gender as gender_karyawan',
+            'khd.id as khd_id',
             'khd.khr_tgljoin as tanggal_bergabung',
             'khd.khr_isActive as status_karyawan',
             'khd.khr_tglOut as tanggal_keluar',
+            'khd.khd_ot_approval as is_approval',
             DB::raw("COALESCE(d.d_nama, 'Divisi tidak tersedia') as nama_divisi"), // Tambahkan kondisi ini
             'd.d_deskripsi as deskripsi_divisi',
             's.s_nama as shift_karyawan',
@@ -69,11 +81,20 @@ class KaryawanController extends Controller
 
     public function store(StoreKaryawanRequest $request)
     {
-
+        //insert or create users data first
+       
+        $user = new User();
+        $user->username = explode('@', $request->get('k_email'))[0];
+        $user->name = $request->get('k_nama');
+        $user->email = $request->get('k_email');
+        $DefaultPassword = $user->username.'#'.Carbon::parse($request->get('khr_tgljoin'))->year;
+        $user->password = Hash::make($DefaultPassword);
+        $user->save();
         $lastPin = Karyawan::max('k_pin');
         $newPin = $lastPin ? $lastPin + 1 : 1;
 
         $data_karyawan = [
+         
             'k_nama' => $request->get('k_nama'),
             'k_contact' => $request->get('k_contact'),
             'k_gender' => $request->get('k_gender'),
@@ -91,9 +112,8 @@ class KaryawanController extends Controller
         // Simpan data karyawan dan ambil instance yang baru dibuat
         $karyawan = Karyawan::create($data_karyawan);
 
-
-
         $data_has_division = [
+            'user_id' => $user->id,
             'karyawan_id' => $karyawan->id,
             'divisi_id' => $request->get('k_divisi'),
             'khr_tgljoin' => $request->get('khr_tgljoin') ?? Carbon::now(),
@@ -137,7 +157,9 @@ class KaryawanController extends Controller
                 'd.d_nama as nama_divisi',
                 's.s_nama as shift_karyawan',
                 'k.k_pin as pin_karyawan',
-                'k.k_norek as norek_karyawan'
+                'k.k_norek as norek_karyawan',
+                'khd.khr_isActive',
+                'k.k_gender',
 
             )
             ->where('k.id', $id)
@@ -161,10 +183,10 @@ class KaryawanController extends Controller
             'k_alamat' => 'required|string|max:255',
             'k_gender' => 'required',
             'khr_tgljoin' => 'required|date',
-            'khr_tglOut' => 'nullable|date',
+            'khr_tglOut' => 'nullable',
             'khr_isActive' => 'required|boolean',
             'd_nama' => 'required|exists:divisis,id',
-            'shift_id' => 'nullable|exists:shifts,id',
+            'shift_id' => 'required|exists:shifts,id',
             'k_pin' => 'required|string|max:6',
         ]);
 
@@ -185,7 +207,8 @@ class KaryawanController extends Controller
         if ($karyawanHasDivision) {
             $karyawanHasDivision->divisi_id = $request->d_nama; 
             $karyawanHasDivision->khr_tgljoin = $request->khr_tgljoin;
-            $karyawanHasDivision->khr_tglOut = $request->khr_tglOut;
+            $karyawanHasDivision->khr_tglOut = ($request->khr_tglOut === 'Atur' || $request->khr_tglOut === 'NaN-NaN-NaN') ? null : $request->khr_tglOut;
+
             $karyawanHasDivision->khr_isActive = $request->khr_isActive;
             
             $karyawanHasDivision->save();
@@ -198,7 +221,7 @@ class KaryawanController extends Controller
             $karyawanShift->save();
         }
 
-        Alert::success('Success', 'Barang Berhasil Dihapus');
+        Alert::success('Success', 'Data '. $request->k_nama.' berhasil di update');
         return redirect()->route('daftar.karyawan');
     }
 

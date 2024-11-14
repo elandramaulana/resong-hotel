@@ -25,16 +25,30 @@ class KehadiranController extends Controller
 
     public function postUpdateLatePoint(UpdateLatePointRequest $request){
         $getSettings = LatePointSetting::first();
-        $getSettings->first_late = $request->first_late;
-        $getSettings->first_latepoint = $request->first_latepoint;
-        $getSettings->second_late = $request->second_late;
-        $getSettings->second_latepoint = $request->second_latepoint;
-        $getSettings->third_late = $request->third_late;
-        $getSettings->third_latepoint = $request->third_latepoint;
-        $getSettings->besar_potongan = $request->besar_potongan;
-        $getSettings->besar_point = $request->besar_point;
-        $getSettings->save();
-
+        if($getSettings){
+            $getSettings->first_late = $request->first_late;
+            $getSettings->first_latepoint = $request->first_latepoint;
+            $getSettings->second_late = $request->second_late;
+            $getSettings->second_latepoint = $request->second_latepoint;
+            $getSettings->third_late = $request->third_late;
+            $getSettings->third_latepoint = $request->third_latepoint;
+            $getSettings->besar_potongan = $request->besar_potongan;
+            $getSettings->besar_point = $request->besar_point;
+            $SaveSetting = $getSettings->save();
+        }else{
+            $dataSettings  = [
+                'first_late'=>$request->first_late,
+                'first_latepoint'=>$request->first_latepoint,
+                'second_late'=>$request->second_late,
+                'second_latepoint'=>$request->second_latepoint,
+                'third_late'=>$request->third_late,
+                'third_latepoint'=>$request->third_latepoint,
+                'besar_potongan'=>$request->besar_potongan,
+                'besar_point'=>$request->besar_point,
+            ];
+            $SaveSetting = LatePointSetting::create($dataSettings);
+        }
+        
         return response()->json(['status' => 'success', 'message' => 'Setting berhasil diperbarui']);
     }
     public function getKaryawanByDivisi($divisiId)

@@ -38,86 +38,102 @@
                         <x-input-error :messages="$errors->get('id_karyawan')" class="mt-2" />
                     </div> --}}
 
-                                    <div class="mb-3">
-                                        <label for="k_nama" class="form-label">Nama Lengkap</label>
-                                        <input value="" name="k_nama" type="text" class="form-control"
-                                            id="k_nama">
-                                        <x-input-error :messages="$errors->get('k_nama')" class="mt-2" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_nama" class="form-label">Nama Lengkap</label>
+                                            <input value="" name="k_nama" type="text" class="form-control" placeholder="Inputkan Nama Lengkap"
+                                                id="k_nama">
+                                            <x-input-error :messages="$errors->get('k_nama')" class="mt-2" />
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_nik" class="form-label">NIK</label>
+                                            <input value="" name="k_nik" type="text" class="form-control" placeholder="Inputkan NIK Karyawan"
+                                                id="k_nik">
+                                            <x-input-error :messages="$errors->get('k_nik')" class="mt-2" />
+                                        </div>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="k_nik" class="form-label">NIK</label>
-                                        <input value="" name="k_nik" type="text" class="form-control"
-                                            id="k_nik">
-                                        <x-input-error :messages="$errors->get('k_nik')" class="mt-2" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_norek" class="form-label">Nama Bank</label>
+                                            <input value="" name="k_bank_name" type="text" class="form-control"
+                                                id="k_bank_name" placeholder="Inputkan Nama Bank Payroll Karyawan">
+                                            <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_norek" class="form-label">No Rekening</label>
+                                            <input value="" name="k_norek" type="text" class="form-control"
+                                                id="k_norek" placeholder="Inputkan No Rekening Payroll">
+                                            <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
+                                        </div>    
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="k_norek" class="form-label">No Rekening</label>
-                                        <input value="" name="k_norek" type="text" class="form-control"
-                                            id="k_norek">
-                                        <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_contact" class="form-label">No Telepon</label>
+                                            <input value="" name="k_contact" type="text" class="form-control"
+                                                id="k_contact" placeholder="Inputkan No Telephone">
+                                            <x-input-error :messages="$errors->get('k_contact')" class="mt-2" />
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_email" class="form-label">Email</label>
+                                            <input value="" name="k_email" type="text" class="form-control"
+                                                id="k_email" placeholder="Inputkan Email Karyawan">
+                                            <x-input-error :messages="$errors->get('k_email')" class="mt-2" />
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="k_gender" class="form-label">Jenis Kelamin</label>
+                                            <select name="k_gender" class="form-control" id="k_gender">
+                                                <option value="" disabled selected>Pilih</option>
+                                                <option value="Laki-laki">Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>
+                                            <x-input-error :messages="$errors->get('k_gender')" class="mt-2" />
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="k_contact" class="form-label">No Telepon</label>
-                                        <input value="" name="k_contact" type="text" class="form-control"
-                                            id="k_contact">
-                                        <x-input-error :messages="$errors->get('k_contact')" class="mt-2" />
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="checkinTime" class="form-label">Tanggal Join</label>
+                                            <input value="" name="khr_tgljoin" type="text" class="form-control"
+                                                id="khr_tgljoin" onfocus="(this.type='date');this.focus()"
+                                                onblur="(this.type='text');this.value=formatDate(this.value)">
+                                            <x-input-error :messages="$errors->get('khr_tgljoin')" class="mt-2" />
+                                        </div>                                        
+                                    
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="k_gender" class="form-label">Jenis Kelamin</label>
-                                        <select name="k_gender" class="form-control" id="k_gender">
-                                            <option value="" disabled selected>Pilih</option>
-                                            <option value="Laki-laki">Laki-laki</option>
-                                            <option value="Perempuan">Perempuan</option>
-                                        </select>
-                                        <x-input-error :messages="$errors->get('k_gender')" class="mt-2" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="k_alamat" class="form-label">Alamat</label>
+                                            <input value="" name="K_alamat" type="text" class="form-control"
+                                                id="alamat_karyawan" placeholder="Inputkan Alamat Lengkap">
+                                            <x-input-error :messages="$errors->get('K_alamat')" class="mt-2" />
+                                        </div>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="divisi" class="form-label">Divisi</label>
-                                        <select name="k_divisi" class="form-control" id="divisi">
-                                            <option value="" disabled selected>Pilih Divisi</option>
-                                            @foreach ($divisis as $divisi)
-                                                <option value="{{ $divisi->id }}">{{ $divisi->d_nama }}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-input-error :messages="$errors->get('k_divisi')" class="mt-2" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="divisi" class="form-label">Divisi</label>
+                                            <select name="k_divisi" class="form-control" id="divisi">
+                                                <option value="" disabled selected>Pilih Divisi</option>
+                                                @foreach ($divisis as $divisi)
+                                                    <option value="{{ $divisi->id }}">{{ $divisi->d_nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            <x-input-error :messages="$errors->get('k_divisi')" class="mt-2" />
+                                        </div>
+    
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="shift" class="form-label">Shift</label>
+                                            <select name="shift_id" class="form-control" id="shift">
+                                                <option value="" disabled selected>Pilih Shift</option>
+                                                <!-- Option shift akan diisi dengan AJAX berdasarkan divisi yang dipilih -->
+                                            </select>
+                                            <x-input-error :messages="$errors->get('shift_id')" class="mt-2" />
+                                        </div>    
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="shift" class="form-label">Shift</label>
-                                        <select name="shift_id" class="form-control" id="shift">
-                                            <option value="" disabled selected>Pilih Shift</option>
-                                            <!-- Option shift akan diisi dengan AJAX berdasarkan divisi yang dipilih -->
-                                        </select>
-                                        <x-input-error :messages="$errors->get('shift_id')" class="mt-2" />
-                                    </div>
+                                    
 
 
-                                    <div class="mb-3">
-                                        <label for="checkinTime" class="form-label">Tanggal Join</label>
-                                        <input value="" name="khr_tgljoin" type="text" class="form-control"
-                                            id="khr_tgljoin" onfocus="(this.type='date');this.focus()"
-                                            onblur="(this.type='text');this.value=formatDate(this.value)">
-                                        <x-input-error :messages="$errors->get('khr_tgljoin')" class="mt-2" />
-                                    </div>
+                                    
 
-                                    <div class="mb-3">
-                                        <label for="k_email" class="form-label">Email</label>
-                                        <input value="" name="k_email" type="text" class="form-control"
-                                            id="k_email">
-                                        <x-input-error :messages="$errors->get('k_email')" class="mt-2" />
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="k_alamat" class="form-label">Alamat</label>
-                                        <input value="" name="K_alamat" type="text" class="form-control"
-                                            id="alamat_karyawan">
-                                        <x-input-error :messages="$errors->get('K_alamat')" class="mt-2" />
-                                    </div>
 
                                     {{-- <div class="mb-3">
                         <label for="k_pin" class="form-label">PIN</label>
@@ -131,14 +147,25 @@
                         <x-input-error :messages="$errors->get('k_biometric_status')" class="mt-2" />
                     </div> --}}
 
-                                    <div class="mt-4 mb-3 d-flex justify-content-start ">
+                                    <div class="mt-4 mb-3 col-lg-12 d-flex justify-content-start ">
                                         <div class="">
                                             <button type="submit" class="btn submit-btn mr-5">
                                                 Tambah
                                             </button>
                                         </div>
                                     </div>
-
+                                    <div class="mt-4 mb-3 d-flex col-lg-12 justify-content-start ">
+                                        {{-- <p>User Karyawan otomatis dibuat dengan detail sebagai berikut</p> --}}
+                                       <br>
+                                        <p>
+                                        <ul>
+                                            <li>Username : email tanpa <b><i>@example.com</i></b></li>
+                                            <li>Password : email tanpa <b><i>@example.com</i>+Tahun Bergabung</b></li>
+                                        </ul>
+                                       </p>
+                                       {{-- <p>Harap melakukan penggantian password saat login ke system</p> --}}
+                                    </div>
+                                 
                                 </div>
                             </form>
                         </div>

@@ -44,7 +44,7 @@
                                                 <td>{{$pyr->karyawan_nama}}</td>
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
-                                                <td></td>
+                                                <td align="right">{{ number_format($pyr->thp, 2) }}</td>
                                                 <td>{{$pyr->k_norek}}</td>
                                                 <td>
                                                     <div>

@@ -27,7 +27,9 @@ class PayrollController extends Controller
         ->leftJoin('karyawan_shifts', 'karyawan.id', '=', 'karyawan_shifts.karyawan_id')
         ->orderBy('karyawan.id')
         ->get();
-        
+        for ($i=0; $i < count($payrollData); $i++) { 
+            $payrollData[$i]->thp = $this->getTHP($payrollData[$i]->id_karyawan);
+        }
         return view('payroll.data_gaji', compact('payrollData'));
    
     }
@@ -46,7 +48,7 @@ class PayrollController extends Controller
             'nama_komponen' => $request->nama_komponen,
             'besaran'=>$request->besaran,
             'tipe_komponen'=>$request->tipe_komponen,
-            'deskripsi_komponen'=>$request->tipe_komponen,
+            'deskripsi_komponen'=>$request->deskripsi_komponen,
         ];
         //insert into table komponen_gaji
         if(KomponenGaji::create($dataKomponen)){
@@ -153,7 +155,7 @@ class PayrollController extends Controller
     }
     public function getKomponenGaji($karyawan_id){
         $dataKaryawan = Karyawan::find($karyawan_id);
-        $penambahan = $this->komponenGajiByTipe($karyawan_id, 'penambahan');
+        $penambahan = $this->komponenGajiByTipe($karyawan_id, 'pendapatan');
         $potongan = $this->komponenGajiByTipe($karyawan_id, 'potongan');
         $KomponenGaji = [
             'karyawan_id'=>$dataKaryawan->id,
@@ -169,6 +171,15 @@ class PayrollController extends Controller
                                     ->get();
         return $komponenGaji;
     }
-    
+    public function getTHP($karyawan_id){
+        $takeHomePays = KomponenGaji::select('karyawan_id', DB::raw("
+                                        SUM(CASE WHEN tipe_komponen = 'pendapatan' THEN besaran ELSE 0 END) -
+                                        SUM(CASE WHEN tipe_komponen = 'potongan' THEN besaran ELSE 0 END) AS take_home_pay
+                                    "))
+                                    ->where('karyawan_id', $karyawan_id)
+                                    ->groupBy('karyawan_id')
+                                    ->get();
+        return $takeHomePays['0']['take_home_pay'] ?? 0;
+    }
     
 }

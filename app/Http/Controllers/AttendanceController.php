@@ -89,6 +89,9 @@ class AttendanceController extends Controller
                 'late_point'=>$latePoint
             ];
             LatePoint::create($dataLate);
+            return true;
+        }else{
+            return false;
         }
        
         Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
