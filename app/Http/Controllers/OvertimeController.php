@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\OverTime;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -33,9 +35,28 @@ class OvertimeController extends Controller
     }
     public function add(){
 
-        $karyawanList = Karyawan::all();
+        $userId = Auth::id();
 
-        return view('payroll.add_overtime',compact('karyawanList'));
+        // Ambil informasi user
+        $userInfo = User::where('id', $userId)->first();
+    
+        $karyawanData = Karyawan::join('karyawan_has_divisions', 'karyawan.id', '=', 'karyawan_has_divisions.karyawan_id')
+        ->join('divisis', 'karyawan_has_divisions.divisi_id', '=', 'divisis.id')
+        ->join('karyawan_shifts', 'karyawan.id', '=', 'karyawan_shifts.karyawan_id')
+        ->join('shifts', 'karyawan_shifts.shift_id', '=', 'shifts.id')
+        ->where('karyawan_has_divisions.user_id', $userId)
+        ->select(
+            'karyawan.*',
+            'karyawan_has_divisions.khr_tgljoin',
+            'karyawan_has_divisions.khr_tglOut',
+            'karyawan_has_divisions.id as khd_id',
+            'divisis.d_nama as divisi_nama',
+            'shifts.s_nama as shift_nama'
+        )
+        ->get();
+    
+
+        return view('payroll.add_overtime',compact('karyawanData'));
     }
     public function store(Request $request){
 
@@ -57,7 +78,7 @@ class OvertimeController extends Controller
 
         OverTime::create($data);
         Alert::success('Success', 'Overtime Berhasil Diajukan');
-        return redirect()->route('overtime');
+        return redirect()->route('dashboard');
     }
     public function edit(){
 
@@ -66,24 +87,5 @@ class OvertimeController extends Controller
 
     }
 
-    public function getKaryawanData(Request $request)
-    {
-        $karyawanId = $request->karyawan_id;
-
-        // Ambil data karyawan berdasarkan id
-        $karyawan = Karyawan::with(['karyawanHasDivisions.divisi', 'karyawanShifts.shift'])
-            ->where('id', $karyawanId)
-            ->first();
-
-        if ($karyawan) {
-            return response()->json([
-                'divisi' => $karyawan->karyawanDivisions->divisi->d_nama,
-                'shift' => $karyawan->karyawanShifts->shift->s_nama,
-                'khd_id' => $karyawan->karyawanDivisions->id
-            ]);
-        }
-
-        return response()->json(['error' => 'Data tidak ditemukan'], 404);
-    }
-
+    
 }

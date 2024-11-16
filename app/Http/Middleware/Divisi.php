@@ -27,11 +27,9 @@ class Divisi
         }
 
         if ($user && $user->karyawanHasDivision()->where('user_id', $user->id)->where('divisi_id', $divisiId)->exists()) {
-        if ($user->level_user === "SUPERADMIN") {
             return $next($request);
         }
 
         return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
     }
-}
 }

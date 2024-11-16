@@ -8,6 +8,7 @@
         <section class="mt-5">
             <div class="container-fluid">
                 <div class="row">
+                    
                     <!-- Check-in Table -->
                     <div class="col-sm-12">
                         <div class="card shadow mb-4">
@@ -19,7 +20,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <!-- Dropdown Bulan -->
                                     <div class="col-md-4">
                                         <label for="bulan" class="form-label">Pilih Bulan</label>
@@ -39,7 +40,7 @@
                                             <option value="12">Desember</option>
                                         </select>
                                     </div>
-                                
+
                                     <!-- Dropdown Tahun -->
                                     <div class="col-md-4">
                                         <label for="tahun" class="form-label">Pilih Tahun</label>
@@ -50,15 +51,15 @@
                                             <option value="2024">2024</option>
                                         </select>
                                     </div>
-                                
+
                                     <!-- Tombol Filter -->
                                     <div class="col-md-4 align-self-end">
                                         <button class="btn btn-primary" id="filterBtn">Filter</button>
                                     </div>
-                                </div>
-                                
+                                </div> --}}
+
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataProsesTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="dataAbsenHistoryTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th style="width: 10px">NO</th>
@@ -70,26 +71,113 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($absensiData as $index => $absen)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($absen->kh_clock_in)->format('d-m-Y') }}</td>
+                                                <td>{{ $absen->shift->sh_name ?? 'Tidak Ditemukan' }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($absen->kh_clock_in)->format('H:i:s') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($absen->kh_clock_out)->format('H:i:s') }}</td>
+                                                <td>{{ $absen->status }}</td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
-
+        
                 </div>
             </div>
         </section>
+        
+   
     </div>
+        
+        {{-- <script>
+            $(document).ready(function() {
+                // Mengambil data absensi dengan filter saat tombol filter diklik
+                $('#filterBtn').click(function() {
+                    let bulan = $('#bulan').val();
+                    let tahun = $('#tahun').val();
+        
+                    $.ajax({
+                        url: "{{ route('profile.get_absensi') }}", // Pastikan URL ini sesuai dengan rute controller
+                        method: "GET",
+                        data: {
+                            bulan: bulan,
+                            tahun: tahun
+                        },
+                        success: function(response) {
+                            let tableBody = $('#absensiTableBody');
+                            tableBody.empty(); // Kosongkan tabel sebelum diisi ulang
+        
+                            // Looping data absensi
+                            response.forEach(function(absensi, index) {
+                                let row = `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${new Date(absensi.kh_clock_in).toLocaleDateString()}</td>
+                                        <td>${absensi.shift}</td>
+                                        <td>${new Date(absensi.kh_clock_in).toLocaleTimeString()}</td>
+                                        <td>${new Date(absensi.kh_clock_out).toLocaleTimeString()}</td>
+                                        <td>${absensi.status}</td>
+                                    </tr>
+                                `;
+                                tableBody.append(row);
+                            });
+                        },
+                        error: function() {
+                            alert("Terjadi kesalahan saat mengambil data!");
+                        }
+                    });
+                });
+            });
+        </script>
+         --}}
+        {{-- <script>
+            $(document).ready(function() {
+                // Mengambil data absensi dengan filter saat tombol filter diklik
+                $('#filterBtn').click(function() {
+                    let bulan = $('#bulan').val();
+                    let tahun = $('#tahun').val();
+        
+                    $.ajax({
+                        url: "{{ route('profile.get_absensi') }}", // Pastikan URL ini sesuai dengan rute controller
+                        method: "GET",
+                        data: {
+                            bulan: bulan,
+                            tahun: tahun
+                        },
+                        success: function(response) {
+                            let tableBody = $('#absensiTableBody');
+                            tableBody.empty(); // Kosongkan tabel sebelum diisi ulang
+        
+                            // Looping data absensi
+                            response.forEach(function(absensi, index) {
+                                let row = `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${new Date(absensi.kh_clock_in).toLocaleDateString()}</td>
+                                        <td>${absensi.shift}</td>
+                                        <td>${new Date(absensi.kh_clock_in).toLocaleTimeString()}</td>
+                                        <td>${new Date(absensi.kh_clock_out).toLocaleTimeString()}</td>
+                                        <td>${absensi.status}</td>
+                                    </tr>
+                                `;
+                                tableBody.append(row);
+                            });
+                        },
+                        error: function() {
+                            alert("Terjadi kesalahan saat mengambil data!");
+                        }
+                    });
+                });
+            });
+        </script>
+         --}}
+ 
     <!-- /.container-fluid -->
 
 @endsection

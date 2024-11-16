@@ -110,6 +110,7 @@ class KaryawanController extends Controller
             'karyawan_id' => $karyawan->id,
             'shift_id' => $request->get('shift_id')
         ];
+        
 
         KaryawanShift::create($data_has_shift);
 

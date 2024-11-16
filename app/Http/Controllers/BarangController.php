@@ -53,8 +53,6 @@ class BarangController extends Controller
             'barang_kategori'=>$request->get('barang_kategori'),
             'barang_satuan'=>$request->get('barang_satuan'),
         ];
-
-
          Barang::create($data);
 
          Alert::success('Success', 'Barang Berhasil Ditambahkan');

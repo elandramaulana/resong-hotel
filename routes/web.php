@@ -30,6 +30,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\RegisterKaryawanController;
 use App\Http\Controllers\RoomAjaxRequest;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomtypeController;
@@ -51,7 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/user-info', [UserInfoController::class, 'profile'])->name('profile.info');
     Route::get('/history-absensi', [UserInfoController::class, 'history_absensi'])->name('absen.info');
+    Route::get('/profile/get-available-years', [ProfileController::class, 'get_available_years'])->name('profile.get_available_years');
+
     Route::get('/history-slip-gaji', [UserInfoController::class, 'history_slip_gaji'])->name('slip_gaji.info');
+
+    // overtime
+    Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
+    Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
+    Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
+    Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
+    Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
 });
 
 // Superadmin
@@ -330,6 +340,10 @@ Route::middleware('auth', 'checkDivisi:6')->group(function () {
     Route::get('/get-karyawan-by-divisi/{divisiId}', [KehadiranController::class, 'getKaryawanByDivisi'])->name('get.karyawan.by.divisi');
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
+
+    // Register Akun Karyawan
+    Route::get('/register-karyawan', [RegisterKaryawanController::class, 'index'])->name('register.karyawan');
+    Route::post('/store-user', [RegisterKaryawanController::class, 'storeUserAcc'])->name('store.user');
 });
 
 
@@ -353,11 +367,6 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
 
     // Ovetime
     Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
-    Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
-    Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
-    Route::get('/edit-overtime', [OvertimeController::class, 'edit'])->name('edit.overtime');
-    Route::post('/update-overtime', [OvertimeController::class, 'update'])->name('update.overtime');
-    Route::get('/get-karyawan-data', [OvertimeController::class, 'getKaryawanData'])->name('get.karyawan.data');
 });
 
 

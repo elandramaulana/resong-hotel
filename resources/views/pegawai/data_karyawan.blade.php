@@ -17,9 +17,13 @@
                                         <h3 class="font-weight-bold text-dark">Data Karyawan</h3>
                                     </div>
                                     <div class="col-sm-6 d-flex justify-content-end">
-                                        <button class="btn btn-extend">
+                                        <button class="btn btn-extend me-3">
                                             <a style="text-decoration: none; color:white"
                                                 href="{{ route('tambah.karyawan') }}">Tambah</a>
+                                        </button>
+                                        <button class="btn btn-extend">
+                                            <a style="text-decoration: none; color:white"
+                                                href="{{ route('register.karyawan') }}">Daftarkan Akun</a>
                                         </button>
                                     </div>
                                 </div>
