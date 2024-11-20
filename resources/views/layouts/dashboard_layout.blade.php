@@ -38,6 +38,7 @@
     <link href="{{asset('assets/template/vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet"> --}}
+    <link href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {{-- <link href="{{asset('assets/css/main.css')}}" rel="stylesheet"> --}}
@@ -507,9 +508,19 @@
                                 </form>
                             </div>
                         </li>
-
+                        @php
+                            $Divisions = Auth::user()->isUserApproval();
+                        @endphp
+                        @if($Divisions)
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link " href="{{ route('team.presentions') }}" 
+                                 aria-haspopup="true" aria-expanded="false">
+                                    <span
+                                        class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
+                                </a>
+                            </li>                            
+                        @endif
                         <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -609,6 +620,10 @@
     <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!-- Script for table -->
  

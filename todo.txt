@@ -14,3 +14,9 @@
 14. jika semua pegawai sudah di prosess admin dapat melakukan crosscheck terhadap payrolls perpegawai,
 15. jika ada admin dapat menambahkan potongan atau pendapatan bulan berjalan
 16. Proses otomatis Selesai
+
+Create Team Management Page (Diakses HRD & User Approval OT)
+1. Show Presensi Team ()
+2. Ganti Shift on Stage
+3. Re Calculate jika ada penggantian Shift
+4. Hanya dapat dilakukan edit sebelum periode penggajian dilakukan / Hari yang sama

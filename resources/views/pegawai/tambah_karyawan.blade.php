@@ -33,10 +33,10 @@
                                 <div class="row">
 
                                     {{-- <div class="mb-3">
-                        <label for="id_karyawan" class="form-label">Id Karyawan</label>
-                        <input value="random generate" name="id_karyawan" type="text" class="form-control" id="id_karyawan" disabled>
-                        <x-input-error :messages="$errors->get('id_karyawan')" class="mt-2" />
-                    </div> --}}
+                                        <label for="id_karyawan" class="form-label">Id Karyawan</label>
+                                        <input value="random generate" name="id_karyawan" type="text" class="form-control" id="id_karyawan" disabled>
+                                        <x-input-error :messages="$errors->get('id_karyawan')" class="mt-2" />
+                                    </div> --}}
 
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
@@ -119,7 +119,7 @@
                                             </select>
                                             <x-input-error :messages="$errors->get('k_divisi')" class="mt-2" />
                                         </div>
-    
+
                                         <div class="mb-3 col-lg-6">
                                             <label for="shift" class="form-label">Shift</label>
                                             <select name="shift_id" class="form-control" id="shift">
@@ -129,11 +129,6 @@
                                             <x-input-error :messages="$errors->get('shift_id')" class="mt-2" />
                                         </div>    
                                     </div>
-                                    
-
-
-                                    
-
 
                                     {{-- <div class="mb-3">
                         <label for="k_pin" class="form-label">PIN</label>
@@ -160,7 +155,10 @@
                                         <p>
                                         <ul>
                                             <li>Username : email tanpa <b><i>@example.com</i></b></li>
-                                            <li>Password : email tanpa <b><i>@example.com</i>+Tahun Bergabung</b></li>
+                                            <i><b>Contoh :</b> john.doe@gmail.com = john.doe</i>
+                                            <li>Password : email tanpa <b><i>@example.com</i>"#"+Tahun Bergabung</b></li>
+                                            <li><b>Contoh : </b> john.doe#2024</li>
+
                                         </ul>
                                        </p>
                                        {{-- <p>Harap melakukan penggantian password saat login ke system</p> --}}

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -58,5 +59,20 @@ class User extends Authenticatable
 
         return $emailPart . $day . $randomNumber; // Example: john02-456
     }
-
+    public function getActiveDivision() {
+        $query =  KaryawanHasDivision::join('divisis', 'divisis.id', '=', 'karyawan_has_divisions.divisi_id')
+                                    ->where('karyawan_has_divisions.khr_isActive', 1)
+                                    ->where('karyawan_has_divisions.user_id', $this->id)
+                                    ->select('divisis.*', 'karyawan_has_divisions.khd_ot_approval as is_approval')
+                                    ->first();
+        return $query;
+    }
+    public function isUserApproval():bool {
+        $checkStatus = $this->getActiveDivision();
+        if($checkStatus && $checkStatus->is_approval==1){
+            return true;
+        }else{
+            return false;
+        }        
+    }
 }

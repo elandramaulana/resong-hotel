@@ -94,7 +94,7 @@ class KaryawanController extends Controller
         $newPin = $lastPin ? $lastPin + 1 : 1;
 
         $data_karyawan = [
-         
+            'user_id'=> $user->id,
             'k_nama' => $request->get('k_nama'),
             'k_contact' => $request->get('k_contact'),
             'k_gender' => $request->get('k_gender'),
@@ -111,7 +111,9 @@ class KaryawanController extends Controller
 
         // Simpan data karyawan dan ambil instance yang baru dibuat
         $karyawan = Karyawan::create($data_karyawan);
-
+        if(!$karyawan){
+            $user->delete();
+        }
         $data_has_division = [
             'user_id' => $user->id,
             'karyawan_id' => $karyawan->id,
@@ -121,8 +123,10 @@ class KaryawanController extends Controller
             'khr_tglOut' => $request->get('khr_tglOut') ?? null,
         ];
 
-        KaryawanHasDivision::create($data_has_division);
-
+        $khd = KaryawanHasDivision::create($data_has_division);
+        if(!$khd){
+            $karyawan->delete();
+        }
         $data_has_shift = [
             'karyawan_id' => $karyawan->id,
             'shift_id' => $request->get('shift_id')

@@ -13,6 +13,7 @@ class Karyawan extends Model
     protected $fillable = [
         'id',
         'k_nama',
+        'user_id',
         'k_contact',
         'k_gender',
         'k_email',

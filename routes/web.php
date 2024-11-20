@@ -35,6 +35,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomtypeController;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-info', [UserInfoController::class, 'profile'])->name('profile.info');
     Route::get('/history-absensi', [UserInfoController::class, 'history_absensi'])->name('absen.info');
     Route::get('/history-slip-gaji', [UserInfoController::class, 'history_slip_gaji'])->name('slip_gaji.info');
+    Route::get('/team_presentions', [TeamController::class, 'team_presentions'])->name('team.presentions');
 });
 
 // Superadmin
@@ -166,6 +168,7 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
     Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
+    Route::get('/select2_shift/{divisi_id}', [Select2Controller::class, 'list_shift'])->name('select2.shift');
 });
 
 
@@ -214,10 +217,6 @@ Route::middleware('auth', 'checkDivisi:3')->group(function () {
     Route::get('/edit-trans-barang/{id}', [TransBarangController::class, 'edit'])->name('edit.trans.barang');
     Route::delete('/trans-barang/destroy/{id}', [TransBarangController::class, 'destroy'])->name('destroy.trans.barang');
 });
-
-
-
-
 
 //=========================== Resto Divisi
 

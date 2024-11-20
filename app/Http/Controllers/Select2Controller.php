@@ -7,6 +7,7 @@ use App\Models\DailyMenu;
 use App\Models\KategoriMenu;
 use App\Models\LaundryCat;
 use App\Models\Menu;
+use App\Models\Shift;
 use Illuminate\Http\Request;
 
 class Select2Controller extends Controller
@@ -75,6 +76,18 @@ class Select2Controller extends Controller
             ];
             $no++;
         }
+        echo json_encode($show);
+    }
+    public function list_shift($id_divisi) {
+        $shift = Shift::where('id_divisi', $id_divisi)->get();
+        foreach($shift as $data){
+            $show[] = [
+                'id'=>$data['id'],
+                'text'=>$data['s_nama']
+            ];
+        }        
+        $placeHolder = ['id'=>"", "text"=>"Semua Shift"];
+        array_unshift($show, $placeHolder);
         echo json_encode($show);
     }
     
