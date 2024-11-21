@@ -79,9 +79,9 @@
                     <div class="mb-3">
                         <label for="k_gender" class="form-label">Jenis Kelamin</label>
                         <select name="k_gender" class="form-control" id="k_gender">
-                            <option value="{{ $karyawan->gender_karyawan_text }}" selected>{{ $karyawan->gender_karyawan_text }}</option>
-                            <option value="Laki-laki" {{ $karyawan->gender_karyawan_text == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ $karyawan->gender_karyawan_text == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="" selected>Pilih Gender</option>
+                            <option value="Laki-laki" {{ $karyawan->k_gender == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ $karyawan->k_gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                         </select>
                         <x-input-error :messages="$errors->get('k_gender')" class="mt-2" />
                     </div>
@@ -106,9 +106,9 @@
                     <div class="mb-3">
                         <label for="khr_isActive" class="form-label">Status Karyawan</label>
                         <select name="khr_isActive" class="form-control" id="khr_isActive">
-                            <option value="{{ $karyawan->status_karyawan_text }}" selected>{{ $karyawan->status_karyawan_text }}</option>
-                            <option value="1" {{ $karyawan->status_karyawan_text == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ $karyawan->status_karyawan_text == 0 ? 'selected' : '' }}>Non-Active</option>
+                            <option value="">Pilih Status Karyawan</option>
+                            <option value="1" {{ $karyawan->khr_isActive == 1 ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ $karyawan->khr_isActive == 0 ? 'selected' : '' }}>Non-Active</option>
                         </select>
                         <x-input-error :messages="$errors->get('khr_isActive')" class="mt-2" />
                     </div>
@@ -140,8 +140,7 @@
                     <div class="mb-3">
                         <label for="k_pin" class="form-label">Pin Absensi</label>
                         <input value="{{$karyawan->pin_karyawan}}" name="k_pin" type="text" class="form-control"
-                            id="k_pin" onfocus="(this.type='date');this.focus()"
-                            onblur="(this.type='text');this.value=formatDate(this.value)">
+                            id="k_pin">
                         <x-input-error :messages="$errors->get('k_pin')" class="mt-2" />
                     </div>   
 

@@ -9,39 +9,7 @@ Whats New ?
     - username : super.user
     - password : 123qweasd
 
-- Checkin Normal
-- checkout
-- Detail InHouse Guest
-- list Inhouse Guest
-- Extend Date
-- Add Extrabed
-- add Addons Service
-- auto complete guest
-
-# 21 Maret 2024
-Todo :
-- Dashboard
-- Fungsi Reservasi (baru sampai form awal)
-    - Todo next Select Room (Done)
-    - Booking Engine (Done) 
-    - list reservasi (Done)
-    - canceled reservasi (Done)
-    - no show reservasi (Done)
-    - speedy checkin
-- Kirim Invoice to email
-    - Butuh Template HTML Email & pdf 
-- Fungsi House Keeping (Cleaning Room)
-- Fungsi Laundry
-    - insert transaction
-    - direct payment / include rooms
-- Fungsi Resto 
-    - monitoring bahan baku
-    - available menu
-    - direct payment / include rooms
-- master data
-    - Rooms
-    - Karyawan
-
-# Note : butuh perbaikan tampilan 
-    - Detail inhouse guest
-    - 
+##Next Progress Payroll Karyawan
+- Edit Komponen gaji
+- Process Payroll per Karyawan
+- Disbursment Proccess

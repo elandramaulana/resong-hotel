@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->date('ot_date')->after('khd_id');
+        Schema::table('kehadirans', function (Blueprint $table) {
+            $table->dateTime('kh_clock_out')->nullable()->change();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->dropColumn('ot_date');
+        Schema::table('kehadirans', function (Blueprint $table) {
+            $table->dropColumn('created_at');
+            $table->dropColumn('updated_at');
         });
     }
 };

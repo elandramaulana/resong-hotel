@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->date('ot_date')->after('khd_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('level_user')->nullable()->change();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->dropColumn('ot_date');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('level_user')->nullable(false)->change();
         });
     }
 };

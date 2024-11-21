@@ -23,13 +23,40 @@ use App\Http\Controllers\Api\ReportController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Route::post('/scanlogs', [APIController::class, 'scanlogStore']);
+// Route::middleware('auth:sanctum')->post('/scanlogs', [APIController::class, 'scanlogStore']);
 // Route::post('/login-api', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'loginApi']);
 
+Route::middleware('auth:sanctum')->post('/scanlogs', [APIController::class, 'scanlog_endpoint']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::prefix('room')->group(function () {
+    Route::get('/index', [RoomController::class, 'index']);
+});
+
+Route::prefix('karyawan')->group(function () {
+    Route::get('/index', [KaryawanController::class, 'index']);
+});
+
+Route::prefix('supplier')->group(function () {
+    Route::get('/index', [SupplierController::class, 'index']);
+});
+
+Route::prefix('supplier-asset')->group(function () {
+    Route::get('/index', [SupplierAssetController::class, 'index']);
+});
+
+Route::prefix('laundry')->group(function () {
+    Route::get('/index', [LaundryController::class, 'index']);
+});
+
+Route::prefix('resto')->group(function () {
+    Route::get('/index', [RestoController::class, 'index']);
+});
 Route::middleware(('auth:sanctum'))->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutApi']);
 

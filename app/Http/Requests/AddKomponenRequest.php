@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreKaryawanRequest extends FormRequest
+class AddKomponenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,19 @@ class StoreKaryawanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'k_nama'=>['required'],
-            'k_contact'=>['required'],
-            'k_email'=>['required', 'unique:users,email'],
-            'K_alamat'=>['required'],
-            'k_nik'=>['required'],
-            'k_norek'=>['required'],
-            'k_divisi'=>['required'],
-            'user_id'=>['required'],
+            'nama_komponen'=>['required'],
+            'besaran'=>['required'],
+            'tipe_komponen'=>['required'],
+            'deskripsi_komponen'=>['nullable'],
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+            'nama_komponen.required'=>'Nama Komponen harus diisi',
+            'besaran.required'=>'Besaran harus diisi',
+            'tipe_komponen.required'=>'Tipe Komponen harus diisi',
         ];
     }
 }

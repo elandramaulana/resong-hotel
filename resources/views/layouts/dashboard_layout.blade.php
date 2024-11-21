@@ -45,6 +45,88 @@
         .mt-2 {
             color: red;
         }
+        .showerror{
+            color: red;
+        }
+        
+        .onoff {
+            /* margin-left: -27px; */
+            display: -moz-inline-stack;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align: auto;
+            zoom: 1;
+            *display: inline;
+            position: relative;
+            cursor: pointer;
+            width: 55px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .onoff label {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background: #cd3c3c;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #FFF;
+            -webkit-transition: background 0.3s, text-indent 0.3s;
+            -moz-transition: background 0.3s, text-indent 0.3s;
+            -o-transition: background 0.3s, text-indent 0.3s;
+            transition: background 0.3s, text-indent 0.3s;
+            text-indent: 27px;
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+        }
+        .onoff label:after {
+            content: 'NO';
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            font-size: 12px;
+            color: #591717;
+            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.35);
+            z-index: 1;
+        }
+        .onoff label:before {
+            content: '';
+            width: 15px;
+            height: 24px;
+            border-radius: 3px;
+            background: #FFF;
+            position: absolute;
+            z-index: 2;
+            top: 3px;
+            left: 3px;
+            display: block;
+            -webkit-transition: left 0.3s;
+            -moz-transition: left 0.3s;
+            -o-transition: left 0.3s;
+            transition: left 0.3s;
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+        }
+        .onoff input:checked + label {
+            background: #378b2c;
+            text-indent: 8px;
+        }
+        .onoff input:checked + label:after {
+            content: 'YES';
+            color: #091707;
+        }
+        .onoff input:checked + label:before {
+            left: 37px;
+        }
     </style>
 </head>
 
@@ -78,12 +160,12 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+         
             <!-- Heading -->
             <div class="sidebar-heading">
                 FRONT OFFICE
             </div>
-
+          
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -534,6 +616,7 @@
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
     <!-- Script for table -->
+ 
 
     <script>
         $(document).ready(function() {

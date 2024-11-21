@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->date('ot_date')->after('khd_id');
+        Schema::table('komponen_gaji', function (Blueprint $table) {
+            $table->enum('tipe_komponen', ['potongan', 'pendapatan'])->default('pendapatan')->change();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('over_times', function (Blueprint $table) {
-            $table->dropColumn('ot_date');
+        Schema::table('komponen_gaji', function (Blueprint $table) {
+            $table->enum('tipe_komponen', ['potongan', 'penambahan'])->change();
         });
     }
 };

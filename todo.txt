@@ -1,0 +1,16 @@
+1. check sekarang apakah sesuai dengan tanggal periode penggajian (dari variable database)
+2. jika true maka hitung hari kerja dari tgl di bulan sebelumnya sampai tgl hari ini. {cm:2024-11-10}
+3. create data payrolls dengan status "CALCULATING" {cm:2024-11-10}
+4. jumlah hari dikurangi jumlah minggu adalah minimum hari kerja pegawai, jika kehadiran kurang dari hari minimum, potongan d berlakukan kelipatan hari. {cm:2024-11-10}
+5. panggil seluruh data karyawan aktif, {cm:2024-11-11}
+6. masukan komponen tetap gaji ke detail payrolls  {cm:2024-11-11}
+7. check keterlambatan pegawai dalam satu periode {cm:2024-11-12}
+8. kurangi pendapatan pegawai jika memiliki point keterlambatan {cm:2024-11-12}
+9. Hitung ketidakhadiran karyawan
+10. tambahkan potongan kehadiran jika melebihi batas izin
+11. check lembur yg di setujui, 
+12. tambahkan ke pendapatan jika pegawai memiliki lembur
+13. Proses otomatis selesai, update status payrolls "CHECKING"
+14. jika semua pegawai sudah di prosess admin dapat melakukan crosscheck terhadap payrolls perpegawai,
+15. jika ada admin dapat menambahkan potongan atau pendapatan bulan berjalan
+16. Proses otomatis Selesai

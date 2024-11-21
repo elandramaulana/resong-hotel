@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(KaryawanHasDivision::class, 'user_id', 'id');
     }
+    public static function generateDefaultPassword($user)
+    {
+        // Example logic: email + day + random number
+        $emailPart = explode('@', $user->email)[0]; // Get part before '@' in email
+        $day = date('d'); // Get current day (e.g., 01, 02, ... 31)
+        $randomNumber = rand(100, 999); // Random 3-digit number
+
+        return $emailPart . $day . $randomNumber; // Example: john02-456
+    }
+
 }

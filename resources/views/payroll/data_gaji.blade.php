@@ -27,8 +27,7 @@
                                                 <th>Id Karyawan</th>
                                                 <th>Nama</th>
                                                 <th>Jenis Kelamin</th>
-                                                <th>Divisi</th>
-                                                <th>Status Karyawan</th>
+                                                <th>Devisi</th>
                                                 <th>Besar Gaji (Rp)</th>
                                                 <th>Nomor Rekening</th>
                                                 <th>Aksi</th>
@@ -45,9 +44,8 @@
                                                 <td>{{$pyr->karyawan_nama}}</td>
                                                 <td>{{$pyr->gender_karyawan}}</td>
                                                 <td>{{$pyr->divisi_karyawan}}</td>
-                                                <td>{{$pyr->status_karyawan ? 'Aktif' : 'Tidak Aktif'}}</td>
-                                                <td>{{ number_format($pyr->gaji_karyawan, 0, ',', '.') }}</td>
-                                                <td>{{$pyr->rek_karyawan}}</td>
+                                                <td align="right">{{ number_format($pyr->thp, 2) }}</td>
+                                                <td>{{$pyr->k_norek}}</td>
                                                 <td>
                                                     <div>
                                                         <button style="margin-right: 10px" type="submit"
@@ -73,9 +71,9 @@
                 </div>
             </div>
         </section>
-
-
-
     </div>
     <!-- /.container-fluid -->
+@endsection
+@section('jsSection')
+  @include('payroll.data_gaji_js')
 @endsection

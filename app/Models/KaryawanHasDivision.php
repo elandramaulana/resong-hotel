@@ -18,7 +18,8 @@ class KaryawanHasDivision extends Model
         'user_id',
         'khr_tgljoin',
         'khr_isActive',
-        'khr_tglOut'
+        'khr_tglOut',
+        'khd_ot_approval'
     ];
 
     public function karyawan()

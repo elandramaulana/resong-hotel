@@ -266,6 +266,39 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
 });
 
 
+    //Kepegawaian
+    Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
+    Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
+    Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
+    Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+    Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
+    Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+    
+    
+    //Divisi
+    Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
+    Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
+    Route::post('/store-divisi', [DivisiController::class, 'store'])->name('store.divisi');
+    Route::get('/divisi/{id}/edit', [DivisiController::class, 'edit'])->name('edit.divisi');
+    Route::put('/divisi/{id}', [DivisiController::class, 'update'])->name('update.divisi');
+    Route::delete('/divisi/destroy/{id}', [DivisiController::class, 'destroy'])->name('destroy.divisi');
+
+    //Shift
+    Route::get('/daftar-shift', [ShiftController::class, 'index'])->name('daftar.shift');
+    Route::get('/tambah-shift', [ShiftController::class, 'add'])->name('tambah.shift');
+    Route::post('/store-shift', [ShiftController::class, 'store'])->name('store.shift');
+    Route::get('/shift/{id}/edit', [ShiftController::class, 'edit'])->name('edit.shift');
+    Route::put('/shift/{id}', [ShiftController::class, 'update'])->name('update.shift');
+
+    Route::delete('/shift/destroy/{id}', [ShiftController::class, 'destroy'])->name('destroy.shift');
+
+    //Kehadiran
+    Route::get('/daftar-hadir', [KehadiranController::class, 'index'])->name('daftar.hadir');
+    Route::post('/post_latepoint_setting', [KehadiranController::class, 'postUpdateLatePoint'])->name('latepoint.update');
+    Route::get('/get-karyawan-by-divisi/{divisiId}', [KehadiranController::class, 'getKaryawanByDivisi'])->name('get.karyawan.by.divisi');
+    Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
+    Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
+
 //========================= Manajemen Asset Divisi
 Route::middleware('auth', 'checkDivisi:5')->group(function () {
     Route::prefix('inventory-assets/supplier')->group(function () {
@@ -318,6 +351,7 @@ Route::middleware('auth', 'checkDivisi:6')->group(function () {
     Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
     Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
     Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+    Route::post('/setapproval', [KaryawanController::class, 'setapproval'])->name('karyawan.setApproval');
 
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
@@ -364,6 +398,10 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
     Route::get('/detai-proses-gaji/{id}', [PayrollController::class, 'detailProsesGaji'])->name('detail.proses');
     Route::get('/bill-gaji', [PayrollController::class, 'billGaji'])->name('bill.gaji');
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
+    Route::post('/add_komponen', [PayrollController::class, 'addkomponen'])->name('gaji.addkomponen');
+    Route::post('/delete_komponen', [PayrollController::class, 'deletekomponen'])->name('gaji.deletekomponen');
+
+    
 
     // Ovetime
     Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
