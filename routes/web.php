@@ -72,11 +72,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-//======================================= Frontoffice Divisi
-
-
-
 //======================================= Frontoffice Divisi
 
 Route::middleware('auth', 'checkDivisi:1')->group(function () {
