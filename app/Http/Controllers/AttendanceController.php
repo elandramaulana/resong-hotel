@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use App\Models\LatePoint;
 use App\Models\LatePointSetting;
 use App\Models\ScanLog;
+use App\Models\Shift;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +36,6 @@ class AttendanceController extends Controller
         return $scan_date;
         }else{
             return '-';
-            
         }
     }
     public function getPunchInnOut($karyawan_id, $punch_date) {
@@ -96,5 +96,60 @@ class AttendanceController extends Controller
        
         Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
     }
+    public function recalculateLatePoint($karyawan_id,$shift_id, $date) {
+        Log::info('Proccess Latepoint Executed');
+        $dateObj = new DateTime($date);
+        $month = $dateObj->format('m');
+        //get shift check in from detail karyawan
+        $shiftData = Shift::find($shift_id);
+        $shift_clockin = $shiftData->s_clock_in;
+        $shift_clockout = $shiftData->s_clock_out;
+
+        $punch_in = $date;
+        $punchinTime = (new DateTime($punch_in))->format('H:i');
+        $shift_in = (new DateTime($shift_clockin))->format('H:i');
+        $shift_clockin_time = DateTime::createFromFormat('H:i', $shift_in);
+        $punch_in_time_obj = DateTime::createFromFormat('H:i', $punchinTime);
+        //setData for LatePoint
+        
+        $interval = $shift_clockin_time->diff($punch_in_time_obj);
+        $hours = $interval->h;
+        $minutes = $interval->i;
+        if ($interval->invert) {
+            $totalMinutes = -($hours * 60 + $minutes); // Datang Awal
+        } else {
+            $totalMinutes = ($hours * 60) + $minutes; // terlambat
+        }
+        $getLateSetting = LatePointSetting::first();
+        $latePoint = 0;  
+        if ($totalMinutes > 0) {
+            if ($totalMinutes <= $getLateSetting->first_late) { 
+                $latePoint = $getLateSetting->first_latepoint;
+            } elseif ($totalMinutes <= $getLateSetting->second_late) {
+                $latePoint = $getLateSetting->second_latepoint;
+            } elseif ($totalMinutes <= $getLateSetting->third_late) {
+                $latePoint = $getLateSetting->third_latepoint;
+            } else {
+                $latePoint = $getLateSetting->third_latepoint; 
+            }
+            $dataLate = [
+                'karyawan_id'=>$karyawan_id,
+                'date'=>$date,
+                'month'=>$month,
+                'late_point'=>$latePoint
+            ];
+            LatePoint::create($dataLate);
+            return true;
+        }else{
+            return false;
+        }
+       
+        Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
     
+    }
+    public function countLatePoint($karyawan_id, $date, $month) {
+        //get setting latepoint
+        $getLateSetting = LatePointSetting::first();
+        
+    }
 }

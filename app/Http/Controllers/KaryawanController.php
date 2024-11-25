@@ -131,6 +131,7 @@ class KaryawanController extends Controller
             'karyawan_id' => $karyawan->id,
             'shift_id' => $request->get('shift_id')
         ];
+        
 
         KaryawanShift::create($data_has_shift);
 
@@ -276,6 +277,8 @@ class KaryawanController extends Controller
                                 DB::raw('CASE WHEN khd.khr_isActive = 1 THEN "Active" ELSE "Non-Active" END as status_karyawan_text'),
                                 'khd.khr_tglOut as tanggal_keluar',
                                 'd.d_nama as nama_divisi',
+                                'd.id as divisi_id',
+                                'ks.shift_id',
                                 's.s_nama as shift_karyawan',
                                 'karyawan.k_pin as pin_karyawan',
                                 's.s_clock_in',

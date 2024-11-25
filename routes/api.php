@@ -89,4 +89,4 @@ Route::middleware(('auth:sanctum'))->group(function () {
 });
 
 
-Route::post('/scanlogs', [APIController::class, 'scanlogStore']);
+// Route::post('/scanlogs', [APIController::class, 'scanlogStore']);

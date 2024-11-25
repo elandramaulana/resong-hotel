@@ -17,6 +17,8 @@ class SuperuserSeed extends Seeder
     {
         DB::table('users')->insert([
             [
+                // Cuma super user aja yang ada pengaruhnya pada level user = superadmin bisa semua
+                // selain superadmin dan admin belum di batasi dan dikasi powernya
                 'username' => 'super.user',
                 'name' => 'SuperUser',
                 'email' => 'superuser@metrosoft.com',

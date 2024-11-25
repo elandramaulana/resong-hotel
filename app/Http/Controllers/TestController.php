@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function index(){
-        $user  = User::find(1);
-        $Token = $user->createToken('authToken')->plainTextToken;
-        echo $Token;
+        $KaryawanData = new KaryawanController();
+        $Data = $KaryawanData->DetailKaryawanByPIN(1);
+        echo json_encode($Data);
+        
     }
 }
 

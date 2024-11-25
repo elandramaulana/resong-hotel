@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 class APIController extends Controller
 {
     public function scanlog_endpoint(Request $request) {
-        Log::info('Content :' . $request->getContent());    
+        // Log::info('Content :' . $request->getContent());    
         try {
             $validatedData = $request->validate([
                 '*.id' => 'required|integer',
@@ -53,7 +53,7 @@ class APIController extends Controller
                 $scandate = $scandatetime->format('Y-m-d');
                 $karyawan = $KaryawanController->DetailKaryawanByPIN($entry['pin']);
                 $karyawan_id = $karyawan->karyawan_id ?? null;
-    
+                // Log::info('KaryawanData :'.$karyawan);
                 if ($karyawan_id) {
                     // Check if a Kehadiran record already exists for this employee and date
                     $existingKehadiran = Kehadiran::whereDate('kh_clock_in', $scandate)
@@ -74,15 +74,19 @@ class APIController extends Controller
                         $scanlogCount = ScanLog::where('pin', $entry['pin'])
                             ->whereDate('scan_date', $scandate)
                             ->count();
-    
                         if ($scanlogCount == 1) {
                             $isLate = $AttendanceController->ProsessLatePoint($karyawan_id, $scandate);
                             $khd = KaryawanHasDivision::where('karyawan_id', $karyawan_id)->where('khr_isActive', 1)->first();
                             $kehadiranData = [
                                 'khd_id' => $khd->id,
+                                'shift_id'=>$karyawan->shift_id, 
+                                's_nama'=>$karyawan->shift_karyawan, 
+                                's_clock_in'=>$karyawan->s_clock_in, 
+                                's_clock_out'=>$karyawan->s_clock_out, 
                                 'kh_clock_in' => $scandatetime,
                                 'status' => $isLate ? 'LATE' : 'ONTIME'
                             ];
+                            Log::info('Kehadiran Data :'.$karyawan->shift_id);
                             Kehadiran::create($kehadiranData);
                         }
                     }
@@ -156,7 +160,6 @@ class APIController extends Controller
                         // Log the skipped message
                         Log::info('Latepoint processing skipped for subsequent scans on '.$scandate);
                         //here we can update data that created before to insert that punch out 
-                        
                     }
                 }
             }
@@ -173,6 +176,6 @@ class APIController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
-    
     }
+    
 }

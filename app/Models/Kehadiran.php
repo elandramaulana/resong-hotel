@@ -12,6 +12,10 @@ class Kehadiran extends Model
     protected $fillable = [
         'id',
         'khd_id',
+        'shift_id',
+        's_nama',
+        's_clock_in',
+        's_clock_out',
         'kh_clock_in',
         'kh_clock_out',
         'status',

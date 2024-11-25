@@ -513,12 +513,27 @@
                         @endphp
                         @if($Divisions)
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link " href="{{ route('team.presentions') }}" 
-                                 aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    
                                     <span
                                         class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
+                                    
                                 </a>
-                            </li>                            
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Presensi
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        OT Approval
+                                    </a>
+                                </div>
+                            </li>
                         @endif
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
@@ -546,6 +561,11 @@
                                 <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     History Slip Gaji
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('add.overtime') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Request Overtime
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
@@ -603,7 +623,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <form id="frmLogout" action="{{ route('logout') }}" method="POST">@csrf</form>
+                    <form id="frmLogout" action="{{route('logout')}}" method="POST">@csrf</form>
                     <a class="btn btn-primary" id="btnLogout">Logout</a>
                 </div>
             </div>
@@ -669,48 +689,11 @@
             $('#dataBillTable').DataTable();
             $('#dataRoomTable').DataTable();
             $('#overtimeTable').DataTable();
-        }); 
-        // $('#checkInTable').DataTable();
-        // $('#speedyCheckInTable').DataTable();
-        // $('#checkOutTable').DataTable();
-        // $('#countryTable').DataTable();
-        // $('#ProvinceTable').DataTable();
-        // $('#cityTable').DataTable();
-        // // $('#reservationListTable').DataTable();
-        // $('#cancelReservationListTable').DataTable();
-        // $('#inhouseGuest').DataTable();
-        // $('#guestDatabase').DataTable();
-        // $('#listServiceGuestFood').DataTable();
-        // $('#listServiceGuestDrinks').DataTable();
-        // $('#listServiceGuestLaundry').DataTable();
-        // $('#listServiceGuestOther').DataTable();
-        // $('#listServiceOrder').DataTable();
-        // $('#GuestDatabaseTable').DataTable();
-        // $('#historyGuestTable').DataTable();
-        // $('#houseKeepingTable').DataTable();
-        // $('#cleaningHistoryTable').DataTable();
-        // $('#billReporTable').DataTable();
-        // $('#supplierTable').DataTable();
-        // $('#barangTable').DataTable();
-        // $('#barangMasukTable').DataTable();
-        // $('#manageMenuTable').DataTable();
-        // $('#daftarMenuTable').DataTable();
-        // $('#layananRestoTable').DataTable();
-        // $('#detailLayananRestoTable').DataTable();
-        // $('#dataKaryawanTable').DataTable();
-        // $('#dataDivisiTable').DataTable();
-        // $('#dataShiftTable').DataTable();
-        // $('#dataAbsensiTable').DataTable();
-        // $('#dataGajiTable').DataTable();
-        // $('#dataProsesTable').DataTable();
-        // $('#dataBillTable').DataTable();
-        // $('#dataRoomTable').DataTable();
-        // $('#overtimeTable').DataTable();
-        // $('#dataSlipTable').DataTable();
-        // $('#dataSlipTable').DataTable();
-        // });
+            $('#dataSlipTable').DataTable();
+            $('#dataSlipTable').DataTable();
+            $('#dataAbsenHistoryTable').DataTable();
+        });
     </script>
-   
 
 
     {{-- show menu image --}}

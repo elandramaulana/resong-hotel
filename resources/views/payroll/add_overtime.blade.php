@@ -38,35 +38,46 @@
                         <div class="col-md-6">
 
                             <div class="mb-3">
-                                <div class="mb-3">
-                                    <label for="divisi" class="form-label">Nama Karyawan</label>
-                                    <select name="nama_karyawan" class="form-control" id="karyawan">
-                                        <option value="">Pilih Karyawan</option>
-                                        @foreach ($karyawanList as $karyawan)
-                                            <option value="{{ $karyawan->id }}">{{ $karyawan->k_nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <label for="k_nama" class="form-label">Nama Karyawan</label>
+                                <input 
+                                    value="{{ $karyawanData->first()->k_nama ?? 'Tidak ditemukan' }}" 
+                                    name="k_nama" 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="k_nama" 
+                                    readonly>
                             </div>
+                
+                            <!-- Divisi -->
+                            <div class="mb-3">
+                                <label for="divisi_nama" class="form-label">Divisi</label>
+                                <input 
+                                    value="{{ $karyawanData->first()->divisi_nama ?? 'Tidak ditemukan' }}" 
+                                    name="divisi_nama" 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="divisi_nama" 
+                                    readonly>
+                            </div>
+
+                             <!-- Shift -->
+                            <div class="mb-3">
+                                <label for="shift_nama" class="form-label">Shift</label>
+                                <input 
+                                    value="{{ $karyawanData->first()->shift_nama ?? 'Tidak ditemukan' }}" 
+                                    name="shift_nama" 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="shift_nama" 
+                                    readonly>
+                            </div>
+
+                            <!-- Hidden Inputs -->
+                        <input hidden name="karyawan_id" value="{{ $karyawanData->first()->id ?? '' }}">
+                        <input hidden name="khd_id" value="{{ $karyawanData->first()->khd_id ?? '' }}">
+
+
                            
-
-                            <div class="mb-3" hidden>
-                                <label for="khd_id" class="form-label">khd_id</label>
-                                <input value="" name="khd_id" type="text" class="form-control" id="khd_id" readonly>
-                                <x-input-error :messages="$errors->get('khd_id')" class="mt-2"/>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="divisi" class="form-label">Divisi</label>
-                                <input value="" name="divisi" type="text" class="form-control" id="divisi" readonly>
-                                <x-input-error :messages="$errors->get('divisi')" class="mt-2"/>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="shift_karyawan" class="form-label">Shift</label>
-                                <input value="" name="shift_karyawan" type="text" class="form-control" id="shift_karyawan" readonly>
-                                <x-input-error :messages="$errors->get('shift_karyawan')" class="mt-2"/>
-                            </div>
                         </div>
                     
                         <div class="col-md-6">
@@ -121,28 +132,26 @@
 </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-   $(document).ready(function() {
+  $(document).ready(function() {
     $('#karyawan').change(function() {
         var karyawanId = $(this).val();
-        
-        if(karyawanId) {
+
+        if (karyawanId) {
             $.ajax({
                 url: "{{ route('get.karyawan.data') }}",
                 type: "GET",
-                data: {karyawan_id: karyawanId},
+                data: { karyawan_id: karyawanId },
                 success: function(response) {
-                    console.log(response); // Periksa response di console
-
-                    if(response) {
-                        $('#khd_id').val(response.khd_id);
-                        $('#shift_karyawan').val(response.shift);
-                        $('#divisi').val(response.divisi);
+                    if (response) {
+                        $('#khd_id').val(response.khd_id || '');
+                        $('#divisi').val(response.divisi || '');
+                        $('#shift_karyawan').val(response.shift || '');
                     }
                 },
-                error: function(xhr) {
+                error: function() {
                     alert("Data tidak ditemukan");
                 }
             });
@@ -150,7 +159,7 @@
     });
 });
 
-</script>
+</script> --}}
 
 
 @endsection
