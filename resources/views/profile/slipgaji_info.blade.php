@@ -23,22 +23,18 @@
                                     <tr>
                                         <td>Nama</td>
                                         <td class="px-2">:</td>
-                                        <td>Budiono Siregar</td>
+                                        <td>{{ Auth::user()->karyawan->k_nama }}</td> <!-- Menampilkan nama karyawan -->
                                     </tr>
-                                    <tr>
-                                        <td>Jabatan</td>
-                                        <td class="px-2">:</td>
-                                        <td>Resepsionis</td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td>Divisi</td>
                                         <td class="px-2">:</td>
-                                        <td>Front Desk</td>
+                                        <td>{{ Auth::user()->karyawan->divisi->d_nama }}</td> <!-- Menampilkan divisi karyawan -->
                                     </tr>
                                     <tr>
                                         <td>Nomor Rekening</td>
                                         <td class="px-2">:</td>
-                                        <td>0102 019 8927 89</td>
+                                        <td>{{ Auth::user()->karyawan->k_norek }}</td> <!-- Menampilkan nomor rekening karyawan -->
                                     </tr>
                                 </table>
                                 <div class="table-responsive">
@@ -59,30 +55,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Januari 2024</td>
-                                                <td>Rp. 3.000.000</td>
-                                                <td>Rp. 500.000</td>
-                                                <td>Rp. 200.000</td>
-                                                <td>Rp. 0</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 3.600.000</td>
-                                                <td>31 Januari 2024</td>
-                                                <td>Sudah Dibayar</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Februari 2024</td>
-                                                <td>Rp. 3.000.000</td>
-                                                <td>Rp. 500.000</td>
-                                                <td>Rp. 150.000</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 50.000</td>
-                                                <td>Rp. 3.700.000</td>
-                                                <td>-</td>
-                                                <td>Belum Dibayar</td>
-                                            </tr>
+                                            @foreach($payrolls as $index => $payroll)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $payroll->periode_payroll }}</td>
+                                                    <td>Rp. {{ number_format($payroll->gaji_pokok, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($payroll->tunjangan ?? 0, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($payroll->lembur ?? 0, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($payroll->bonus ?? 0, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($payroll->potongan, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($payroll->total_gaji, 0, ',', '.') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($payroll->tanggal_pembayaran)->format('d F Y') }}</td>
+                                                    <td>{{ $payroll->payroll_status }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

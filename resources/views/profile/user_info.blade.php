@@ -21,19 +21,6 @@
                             <div class="card-body">
                                 <form action="#" method="post">
                                     @csrf
-
-                                   
-{{--                                         
-                                        
-                                        
-                                       
-                                        
-                                        
-                                       
-                                        
-                                       
-                                        <hr>
-                                    --}}
                                     @foreach ($karyawanData as $karyawan)
                                     <div class="row mb-3">
                                         <div class="col-6 col-md-6">
