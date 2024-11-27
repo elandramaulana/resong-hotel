@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Divisi;
 use App\Models\Karyawan;
 use App\Models\Kehadiran;
+use App\Models\Payrolls;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,8 @@ class UserInfoController extends Controller
             'divisis.d_nama as divisi_nama'
         )
         ->get();
+
+        // dd($karyawanData);
     
         return view('profile.user_info', compact('userInfo', 'karyawanData'));
     }
@@ -77,6 +80,44 @@ class UserInfoController extends Controller
 
     public function history_slip_gaji()
     {
-        return view('profile.slipgaji_info');
+        $userId = Auth::id();
+        // Ambil data payroll berdasarkan user yang login
+        $payrolls = Payrolls::join('detail_payrolls', 'detail_payrolls.payroll_id', '=', 'payrolls.id')
+    ->join('karyawan', 'detail_payrolls.karyawan_id', '=', 'karyawan.id')
+    ->leftJoin('komponen_detail_payrolls', 'komponen_detail_payrolls.id_detail_payroll', '=', 'detail_payrolls.id') // Menghubungkan dengan komponen_detail_payrolls untuk tunjangan, lembur, dan bonus
+    ->where('karyawan.user_id', $userId) // Menggunakan auth() untuk mendapatkan user_id yang sedang login
+    ->select(
+        'karyawan.k_nama', 
+        'karyawan.k_divisi', 
+        'karyawan.k_norek',
+        'payrolls.periode_payroll',
+        'detail_payrolls.total_pendapatan AS gaji_pokok',
+        DB::raw('SUM(CASE WHEN komponen_detail_payrolls.type_komponen_payroll = "pendapatan" THEN komponen_detail_payrolls.besaran_komponen_payroll ELSE 0 END) AS tunjangan'),
+        DB::raw('SUM(CASE WHEN komponen_detail_payrolls.type_komponen_payroll = "pendapatan" AND komponen_detail_payrolls.nama_komponen_payroll = "lembur" THEN komponen_detail_payrolls.besaran_komponen_payroll ELSE 0 END) AS lembur'),
+        DB::raw('SUM(CASE WHEN komponen_detail_payrolls.type_komponen_payroll = "pendapatan" AND komponen_detail_payrolls.nama_komponen_payroll = "bonus" THEN komponen_detail_payrolls.besaran_komponen_payroll ELSE 0 END) AS bonus'),
+        'detail_payrolls.total_potongan AS potongan',
+        'detail_payrolls.thp AS total_gaji',
+        'payrolls.payroll_status',
+        'payrolls.created_at AS tanggal_pembayaran'
+    )
+    ->groupBy(
+        'payrolls.periode_payroll',
+        'detail_payrolls.total_pendapatan',
+        'detail_payrolls.total_potongan',
+        'detail_payrolls.thp',
+        'payrolls.payroll_status',
+        'payrolls.created_at',
+        'karyawan.k_nama',
+        'karyawan.k_divisi',
+        'karyawan.k_norek'
+    )
+    ->orderByDesc('payrolls.periode_payroll')
+    ->get();
+
+    
+
+
+            // dd($payrolls);
+        return view('profile.slipgaji_info', compact('payrolls'));
     }
 }
