@@ -2,6 +2,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\CallPayrollService;
+use App\Models\DetailPayrolls;
 use App\Models\Karyawan;
 use App\Models\Payrolls;
 use App\Services\PayrollService;
@@ -9,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class StartPayrolls extends Command
@@ -53,14 +56,31 @@ class StartPayrolls extends Command
 
             // call all karyawan
             $allKaryawan = Karyawan::all();
-
             
             foreach ($allKaryawan as $Karyawan) {
+                //call and create detail komponen gaji
                 $komponenGaji = $this->payrollsService->KomponenGaji($Karyawan->id, $Payrolls->id);
+                //count late point and insert to detail payrolls base on $komponenGaji
                 $callLate = $this->payrollsService->insertLatePoint($Karyawan->id, $komponenGaji['detail_payroll_id'], $workdayCall['startDate'], $workdayCall['endDate']);
-              //  $this->info('Payroll created successfully'.$callLate);
+                //count lembur each karyawan
+                $CallLembur = $this->payrollsService->countLembur($Karyawan->id, $komponenGaji['detail_payroll_id'], $workdayCall['startDate'], $workdayCall['endDate']);
+                Log::info("Data Komponen Gaji :",$callLate);
+                // Log::info("Data Lembur :",$CallLembur);
+                // $this->info('Payroll created successfully'.$callLate);                
             }
+           //get payroll update jumlah_karyawan & total_penggajian
+            $total_karyawan = count($allKaryawan);
+            // summarize detail_payroll thp by payroll_id
+            $detPayroll = DetailPayrolls::select(DB::raw('sum(thp) as total_pembayaran'))
+                                        ->where('payroll_id', $Payrolls->id)
+                                        ->first();
+            $TotalGaji = $detPayroll->total_pembayaran;
+            Log::info('Total Karyawan :'.$total_karyawan);
+            Log::info('Total Gaji :'.$TotalGaji);
+            $Payrolls->total_penggajian = $TotalGaji;
+            $Payrolls->jumlah_karyawan = $total_karyawan;
+            $Payrolls->payroll_status = "Evaluating";
+            $Payrolls->save();
         }
     }
-
 }

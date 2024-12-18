@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Models\OverTime;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -72,7 +73,14 @@ class OvertimeController extends Controller
             'ot_approval' => 'NO',
             'ot_approvedBy' => 'null',
         ];
+       // Use Carbon to calculate the duration
+        $start = Carbon::createFromFormat('H:i', $request->get('ot_start')); 
+        $end = Carbon::createFromFormat('H:i', $request->get('ot_end'));
 
+        // Calculate difference and format as hh:mm:ss
+        $durationInSeconds = $start->diffInSeconds($end);
+        $data['ot_duration'] = gmdate('H:i', $durationInSeconds);
+        
         OverTime::create($data);
         Alert::success('Success', 'Overtime Berhasil Diajukan');
         return redirect()->route('dashboard');

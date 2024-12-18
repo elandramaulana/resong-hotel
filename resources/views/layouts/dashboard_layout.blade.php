@@ -166,8 +166,11 @@
             <div class="sidebar-heading">
                 FRONT OFFICE
             </div>
-          
+          @php
+              $hasDivision = Auth::user()->karyawanHasDivision()->where('divisi_id', '1')->first();
+          @endphp
             <!-- Nav Item - Pages Collapse Menu -->
+            @if($hasDivision)
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -180,8 +183,8 @@
                         <a class="collapse-item" href="{{ route('checkin.speedy') }}">Speedy</a>
                     </div>
                 </div>
-            </li>
-
+            </li>    
+            @endif
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('checkout.list') }}">
@@ -404,6 +407,11 @@
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('system.settings') }}">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Pengaturan Sistem</span></a>
+            </li>
             {{-- <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-fw fa-calendar"></i>
@@ -416,6 +424,8 @@
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
+
+            
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
@@ -528,7 +538,7 @@
                                         Presensi
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                    <a class="dropdown-item" href="{{ route('team.ot_request') }}">
                                         <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
                                         OT Approval
                                     </a>

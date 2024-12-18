@@ -36,6 +36,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomtypeController;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\SystemController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
@@ -46,7 +47,10 @@ use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 require __DIR__ . '/auth.php';
 
 
-Route::middleware(['auth', 'verified'])->group(function () {});
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/system_settings', [SystemController::class, 'index'])->name('system.settings');
+
+});
 
 // =====================User Information
 Route::middleware('auth')->group(function () {
@@ -58,7 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/history-slip-gaji', [UserInfoController::class, 'history_slip_gaji'])->name('slip_gaji.info');
     Route::get('/team_presentions', [TeamController::class, 'team_presentions'])->name('team.presentions');
     Route::post('/team_edit_shift', [TeamController::class, 'team_edit_shift'])->name('team.edit.shift');
-
+    Route::get('/team_ot_request', [TeamController::class, 'ot_request'])->name('team.ot_request');
+    Route::post('/team_ot_action', [TeamController::class, 'ot_action'])->name('team.ot_action');
     // overtime
     Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
     Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
@@ -260,15 +265,15 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
 });
 
 
-    //Kepegawaian
-    Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
-    Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
-    Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
-    Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
-    Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
-    Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
-    
-    
+    // //Kepegawaian
+    // Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
+    // Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
+    // Route::post('/store-karyawan', [KaryawanController::class, 'store'])->name('store.karyawan');
+    // Route::get('/karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('edit.karyawan');
+    // Route::get('/get-shifts/{divisi_id}', [KaryawanController::class, 'getShiftsByDivision'])->name('get.shifts');
+    // Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+
+
     //Divisi
     Route::get('/daftar-divisi', [DivisiController::class, 'index'])->name('daftar.divisi');
     Route::get('/tambah-divisi', [DivisiController::class, 'add'])->name('tambah.divisi');
@@ -394,11 +399,13 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
     Route::put('/update-gaji/{id}', [PayrollController::class, 'updateGaji'])->name('update.gaji');
     Route::post('/add_komponen', [PayrollController::class, 'addkomponen'])->name('gaji.addkomponen');
     Route::post('/delete_komponen', [PayrollController::class, 'deletekomponen'])->name('gaji.deletekomponen');
-
-    
-
     // Ovetime
     Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
+    Route::get('/payroll_detail/{id}', [PayrollController::class, 'payroll_show'])->name('payroll.show');
+    Route::post('/payroll_detail_detail', [PayrollController::class, 'det_det_payroll'])->name('payroll.det_detail_payroll');
+    Route::post('/payroll_accept', [PayrollController::class, 'acc_payroll'])->name('payroll.acc_payroll');
+    Route::post('/payroll_add_item_hot', [PayrollController::class, 'add_item_hot'])->name('payroll.add_item_hot');
+
 });
 
 

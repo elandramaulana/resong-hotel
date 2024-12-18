@@ -19,7 +19,6 @@ class KehadiranController extends Controller
         $divisis = Divisi::all();
         $shifts = Shift::all();
         $latePointSetting = LatePointSetting::first();
-        
         return view('pegawai.absensi', compact('divisis', 'shifts', 'latePointSetting'));
     }
 
@@ -34,6 +33,8 @@ class KehadiranController extends Controller
             $getSettings->third_latepoint = $request->third_latepoint;
             $getSettings->besar_potongan = $request->besar_potongan;
             $getSettings->besar_point = $request->besar_point;
+            $getSettings->payroll_period = $request->payroll_period;
+            $getSettings->ot_price = $request->ot_price;
             $SaveSetting = $getSettings->save();
         }else{
             $dataSettings  = [
@@ -45,10 +46,12 @@ class KehadiranController extends Controller
                 'third_latepoint'=>$request->third_latepoint,
                 'besar_potongan'=>$request->besar_potongan,
                 'besar_point'=>$request->besar_point,
+                'payroll_period'=>$request->payroll_period,
+                'op_price'=>$request->ot_price,
             ];
             $SaveSetting = LatePointSetting::create($dataSettings);
         }
-        
+
         return response()->json(['status' => 'success', 'message' => 'Setting berhasil diperbarui']);
     }
     public function getKaryawanByDivisi($divisiId)
@@ -58,13 +61,11 @@ class KehadiranController extends Controller
         })->get(['id', 'k_nama']);
         return response()->json($karyawan);
     }
-
     public function getShiftsByDivisi($divisiId)
     {
         $shifts = Shift::where('id_divisi', $divisiId)->get(['id', 's_nama']);
         return response()->json($shifts);
     }
-
 
 public function filterAbsensi(Request $request)
 {
@@ -72,8 +73,6 @@ public function filterAbsensi(Request $request)
         ->join('divisis', 'divisis.id', '=', 'karyawan_has_divisions.divisi_id')
         ->leftJoin('karyawan_shifts', 'karyawan_shifts.karyawan_id', '=', 'karyawan.id')
         ->leftJoin('shifts', 'shifts.id', '=', 'karyawan_shifts.shift_id');
-
-    
     if ($request->filled('id_divisi')) {
         $query->where('divisis.id', $request->id_divisi);
     }
@@ -88,27 +87,27 @@ public function filterAbsensi(Request $request)
     });
 
     $tgl = $request->get('tanggal_absen');
-    
-    
+
+
     $absensi = $query->get();
 
-    
+
     $transformedAbsensi = $absensi->map(function ($item) use ($tgl) {
-        $AttController = New AttendanceController();    
+        $AttController = New AttendanceController();
         $checkin = $AttController->getPunchInnOut($item->karyawan_id, $tgl);
         $durasi = Durasi($checkin['punch_in'], $checkin['punch_out']);
-        
+
         $status = '';
         $status_class = '';
         if (is_null($checkin['punch_in'])) {
             $status = 'Undefined';
-            $status_class = 'btn-secondary'; 
+            $status_class = 'btn-secondary';
         } elseif ($checkin['punch_in'] <= $item->s_clock_in) {
             $status = 'Ontime';
             $status_class = 'btn-success';
         } else {
             $status = 'Late';
-            $status_class = 'btn-danger'; 
+            $status_class = 'btn-danger';
         }
 
         $punch_in_time = is_null($checkin['punch_in']) ? '-' : Carbon::parse($checkin['punch_in'])->format('H:i');
@@ -128,10 +127,10 @@ public function filterAbsensi(Request $request)
             'status_class' => $status_class // untuk styling button status
         ];
     });
-    
+
     return response()->json(['absensi' => $transformedAbsensi]);
 }
 
-    
-  
+
+
 }

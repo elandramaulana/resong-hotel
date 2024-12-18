@@ -8,12 +8,15 @@ use App\Models\KomponenDetailPayrolls;
 use App\Models\KomponenGaji;
 use App\Models\LatePoint;
 use App\Models\LatePointSetting;
+use App\Models\OverTime;
 use App\Models\Payrolls;
 use App\Models\ScanLog;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PayrollService
 {
+
     public function CountWorkdays() : array {
         $lastPayroll = Payrolls::latest('created_at')->first();
         if($lastPayroll){
@@ -77,13 +80,13 @@ class PayrollService
 
     public function insertLatePoint($karyawan_id, $id_detail_payroll, $startDate, $endDate) {
         //call point and sumarize that in payroll period
-        
+
         $callLate = LatePoint::whereBetween('date', [$startDate, $endDate])
                             ->where('karyawan_id', $karyawan_id)
                             ->selectRaw('karyawan_id, SUM(late_point) as total_late_points, count(id) kali_late')
                             ->groupBy('karyawan_id')
                             ->first();
-       
+
         // call besar potongan dari latepoint settings
         $lateSettings = LatePointSetting::first();
         if($callLate->kali_late> 0 ){
@@ -101,12 +104,60 @@ class PayrollService
                 //update detail payroll
                 $detailPayroll = DetailPayrolls::find($id_detail_payroll);
                 $detailPayroll->total_potongan += $besarPotongan;
-                $detailPayroll->thp = $detailPayroll->total_pendapatan-$detailPayroll->total_potongan;
+                $detailPayroll->thp = $detailPayroll->thp - $besarPotongan;
                 $detailPayroll->save();
-                
+
                 return ['status'=>'success', 'data'=>$KomponenDetailPayroll];
             }
         }
 
+    }
+    public function countLembur($karyawan_id, $id_detail_payroll, $startDate, $endDate){
+        //call all data lembur base on parameters
+        $totalDurationInHours = OverTime::join('karyawan_has_divisions', 'karyawan_has_divisions.id', '=', 'over_times.khd_id')
+                                ->join('karyawan', 'karyawan.id', '=', 'karyawan_has_divisions.karyawan_id')
+                                ->whereBetween('ot_date', [$startDate, $endDate])
+                                ->where('karyawan.id', $karyawan_id)
+                                ->where('ot_approval', 'approved')
+                                ->select(
+                                    DB::raw("SEC_TO_TIME(SUM(TIME_TO_SEC(ot_duration))) as total_duration"),
+                                    DB::raw("COUNT(over_times.id) as total_rows"),
+                                    DB::raw("SUM(TIME_TO_SEC(ot_duration)) / 3600 as total_hours")
+                                )
+                                ->first();
+        //get hours, minutes overtimes and calculate all by ot hours
+        $RateLemburs = $this->getOtPaymentAttribute($totalDurationInHours->total_duration);
+        if($RateLemburs>0){
+            $KomponenDetailPayroll = [
+                'id_detail_payroll'=>$id_detail_payroll,
+                'nama_komponen_payroll'=>"Pembayaran Lembur (".$totalDurationInHours->total_rows." Kali / Lama Lembur ".$totalDurationInHours->total_duration.")",
+                'besaran_komponen_payroll'=>$RateLemburs,
+                'type_komponen_payroll'=>"pendapatan",
+                'keterangan_komponen_payroll'=>"Penambahan Otomatis Lembur Karyawan",
+            ];
+            if(KomponenDetailPayrolls::create($KomponenDetailPayroll)){
+                //update detail payroll
+                $detailPayroll = DetailPayrolls::find($id_detail_payroll);
+                $detailPayroll->total_pendapatan += $RateLemburs;
+                $detailPayroll->thp = $detailPayroll->thp + $RateLemburs;
+                $detailPayroll->save();
+
+                return ['status'=>'success', 'data'=>$KomponenDetailPayroll];
+            }
+        }
+        // return $RateLemburs;
+    }
+    public function getOtPaymentAttribute($ot_duration)
+    {
+        //get setting for ot_price
+        $dataSetting = LatePointSetting::first();
+        if ($ot_duration) {
+            list($hours, $minutes) = explode(':', $ot_duration);
+            $decimalHours = $hours + ($minutes / 60);
+            $ratePerHour = $dataSetting->ot_price ?? 0; // set defaul ot price to 35000
+
+            return $decimalHours * $ratePerHour;
+        }
+        return 0;
     }
 }

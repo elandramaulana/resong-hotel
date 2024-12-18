@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use App\Models\Kehadiran;
 use App\Models\LatePoint;
+use App\Models\OverTime;
 use App\Models\Payrolls;
 use App\Models\Shift;
 use Carbon\Carbon;
@@ -16,13 +17,47 @@ use Illuminate\Support\Facades\Log;
 
 class TeamController extends Controller
 {
+    public function ot_action(Request $request){
+        //call username active to get approved by
+        $user = Auth::user();
+        $ot_id = $request->input('ot_id');
+        $status = $request->input('status');
+        $reason = $request->input('reason') ?? null;
+        $ot_data = OverTime::find($ot_id);        
+        $ot_data->ot_approval = $status;
+        $ot_data->ot_approvedBy = $user->username;
+        $ot_data->ot_reason_reject = $reason;
+        if($ot_data->save()){
+            //response 200 and message success
+            return response()->json(['status'=>"success", 'message'=>"OT Request berhasil proses"]);
+        }else{
+            //response dengan error code
+            return response()->json(['status'=>"error", 'message'=>"OT Request gagal diproses"]);
+        }
+    }
+    public function ot_request(Request $request) {
+        $Divisions = Auth::user()->getActiveDivision();
+        $divisionName = $Divisions->d_nama ?? false;
+        $divisionID = $Divisions->id ?? false;
+        $isApproval = Auth::user()->isUserApproval();
+        $shift = $request->get('shift'); // Default to null
+        $date = $request->get('date') ?? date('Y-m-d');
+        if(!$isApproval){
+            throw new AuthorizationException('You do not have permission to perform this action.');
+        }
+        //call data over_times 
+        $OvertimeModel = new OverTime();
+
+        $OTQuery = $OvertimeModel->callOvertimes($divisionID);
+        return view('team_management.ot_request.ot_request', compact('Divisions', 'OTQuery'));
+    }
     public function team_edit_shift(Request $request) {
         //validate terlebih dahulu tgl terakhir payroll.
         //jika lebih tinggi dari $request->input('date') return error
         $lastPayroll = Payrolls::latest('created_at')->first();
         $tgl_edit = $request->input('date');
-        Log::info("LastPayroll: ".$lastPayroll->created_at."Tgl:".$tgl_edit);
-        if ($lastPayroll && Carbon::parse($lastPayroll->created_at)->lessThan(Carbon::parse($tgl_edit))) {
+        // Log::info("LastPayroll: ".$lastPayroll->created_at."Tgl:".$tgl_edit);
+        if (!$lastPayroll || Carbon::parse($lastPayroll->created_at)->lessThan(Carbon::parse($tgl_edit))) {
             //get data kehadiran firts
             $Kehadirans = Kehadiran::join('karyawan_has_divisions', 'karyawan_has_divisions.id', '=', 'kehadirans.khd_id')
                                     ->where('karyawan_has_divisions.karyawan_id', $request->input('karyawan_id'))
@@ -61,7 +96,7 @@ class TeamController extends Controller
         } else {
             // Logic when $lastPayroll->created_at is greater than or equal to $tgl_edit
             return response()->json(['status'=>'error', 'message' => 'Presensi tidak dapat di rubah, Tanggal Presensi sudah masuk kedalam proses Payroll']);
-        }        
+        }
     }
     public function team_presentions(Request $request) {
         $Divisions = Auth::user()->getActiveDivision();
@@ -101,6 +136,6 @@ class TeamController extends Controller
         $KaryawanData = $Query->get();
         $dataShift = Shift::where('id_divisi', $divisionID)->get();
         // echo json_encode($KaryawanData);
-        return view('team_management.team_presensi', compact('divisionID', 'Divisions', 'KaryawanData', 'dataShift', 'date'));
+        return view('team_management.presensi.team_presensi', compact('divisionID', 'Divisions', 'KaryawanData', 'dataShift', 'date'));
     }
 }
