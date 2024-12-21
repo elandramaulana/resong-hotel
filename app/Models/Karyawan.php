@@ -56,5 +56,5 @@ class Karyawan extends Model
     {
         return $this->hasOne(KaryawanShift::class, 'karyawan_id');
     }
-    
+
 }

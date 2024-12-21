@@ -23,22 +23,12 @@
                                     <tr>
                                         <td>Nama</td>
                                         <td class="px-2">:</td>
-                                        <td>Budiono Siregar</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jabatan</td>
-                                        <td class="px-2">:</td>
-                                        <td>Resepsionis</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Divisi</td>
-                                        <td class="px-2">:</td>
-                                        <td>Front Desk</td>
+                                        <td>{{$dataKaryawan->k_nama}}</td>
                                     </tr>
                                     <tr>
                                         <td>Nomor Rekening</td>
                                         <td class="px-2">:</td>
-                                        <td>0102 019 8927 89</td>
+                                        <td>{{$dataKaryawan->k_norek}}</td>
                                     </tr>
                                 </table>
                                 <div class="table-responsive">
@@ -48,42 +38,47 @@
                                             <tr>
                                                 <th style="width: 10px">NO</th>
                                                 <th>Periode Gaji</th>
-                                                <th>Gaji Pokok</th>
-                                                <th>Tunjangan</th>
-                                                <th>Lembur</th>
-                                                <th>Bonus</th>
-                                                <th>Potongan</th>
-                                                <th>Total Gaji</th>
-                                                <th>Tanggal Pembayaran</th>
-                                                <th>Status Pembayaran</th>
+                                                <th>Total Pendapatan</th>
+                                                <th>Total Potongan</th>
+                                                <th>Take Home Pay</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Januari 2024</td>
-                                                <td>Rp. 3.000.000</td>
-                                                <td>Rp. 500.000</td>
-                                                <td>Rp. 200.000</td>
-                                                <td>Rp. 0</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 3.600.000</td>
-                                                <td>31 Januari 2024</td>
-                                                <td>Sudah Dibayar</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Februari 2024</td>
-                                                <td>Rp. 3.000.000</td>
-                                                <td>Rp. 500.000</td>
-                                                <td>Rp. 150.000</td>
-                                                <td>Rp. 100.000</td>
-                                                <td>Rp. 50.000</td>
-                                                <td>Rp. 3.700.000</td>
-                                                <td>-</td>
-                                                <td>Belum Dibayar</td>
-                                            </tr>
-                                        </tbody>
+                                            @foreach ($dataSlipGaji as $slipGaji)
+
+                                            @php
+                                                $periodePayroll = \Carbon\Carbon::createFromFormat('m-Y', $slipGaji->periode_payroll);
+                                                $numericFormat = $periodePayroll->format('m-Y'); // 12-2024
+                                                $textFormat = $periodePayroll->translatedFormat('F Y'); // Desember 2024
+                                            @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $textFormat }}</td>
+                                                    <td>Rp. {{ number_format($slipGaji->total_pendapatan, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($slipGaji->total_potongan, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($slipGaji->thp, 0, ',', '.') }}</td>
+                                                    <td>
+                                                        @if ($slipGaji->payroll_status == 'Evaluating')
+                                                            <span class="badge badge-danger">{{ $slipGaji->payroll_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-success">{{ $slipGaji->payroll_status }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($slipGaji->payroll_status =='Evaluating')
+                                                        @else
+                                                            <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
+                                                                class="btn btn-success btn-sm"> <i class="fa fa-download" aria-hidden="true"></i> </a>
+                                                        @endif
+                                                        <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
+                                                            class="btn btn-primary btn-sm"><i class="fa fa-list" aria-hidden="true"></i> </a>
+                                                            <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
+                                                                class="btn btn-warning btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                     </table>
                                 </div>
                             </div>

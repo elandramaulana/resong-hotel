@@ -49,7 +49,7 @@
         .showerror{
             color: red;
         }
-        
+
         .onoff {
             /* margin-left: -27px; */
             display: -moz-inline-stack;
@@ -161,7 +161,7 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-         
+
             <!-- Heading -->
             <div class="sidebar-heading">
                 FRONT OFFICE
@@ -183,7 +183,7 @@
                         <a class="collapse-item" href="{{ route('checkin.speedy') }}">Speedy</a>
                     </div>
                 </div>
-            </li>    
+            </li>
             @endif
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
@@ -409,7 +409,7 @@
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('system.settings') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
+                    <i class="fas fa-fw fa-gear"></i>
                     <span>Pengaturan Sistem</span></a>
             </li>
             {{-- <li class="nav-item">
@@ -425,7 +425,7 @@
                     <span>Absensi Kehadiran</span></a>
             </li>
 
-            
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
@@ -525,10 +525,10 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    
+
                                     <span
                                         class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
-                                    
+
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -567,11 +567,17 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     History Absensi
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    History Slip Gaji
-                                </a>
+                                @php
+                                    if(Auth::user()->isKaryawan()){
+                                        @endphp
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Slip Gaji
+                                        </a>
+                                @php
+                                    }
+                                @endphp
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('add.overtime') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -650,13 +656,13 @@
     <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!-- Script for table -->
- 
+
 
     <script>
         $(document).ready(function() {

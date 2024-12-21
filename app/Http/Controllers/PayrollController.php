@@ -39,7 +39,7 @@ class PayrollController extends Controller
         }
         $detPayroll->save();
         $Payroll = Payrolls::find($detPayroll->payroll_id);
-        //get detail payroll for update it detail 
+        //get detail payroll for update it detail
         if($request->type_komponen_payroll=='pendapatan'){
             $Payroll->total_penggajian = $Payroll->total_penggajian +  $request->besaran_komponen_payroll;
         }
@@ -47,7 +47,7 @@ class PayrollController extends Controller
             $Payroll->total_penggajian = $Payroll->total_penggajian -  $request->besaran_komponen_payroll;
         }
         $Payroll->save();
-        redirect()->back();
+      return redirect()->back();
     }
     public function acc_payroll(Request $request)  {
         $Payroll = Payrolls::find($request->payroll_id);
@@ -55,7 +55,7 @@ class PayrollController extends Controller
         if($Payroll->save()){
             return response()->json(['status'=>'success', 'message'=>'Payroll has been accepted']);
         }else{
-            return response()->json(['status'=>'error', 'message'=>'Error during accepting payrolls']);    
+            return response()->json(['status'=>'error', 'message'=>'Error during accepting payrolls']);
         }
     }
 
@@ -72,7 +72,7 @@ class PayrollController extends Controller
                                         ->select('karyawan.k_nama', 'detail_payrolls.*')
                                         ->join('karyawan', 'karyawan.id', '=', 'detail_payrolls.karyawan_id')
                                         ->get();
-        return view('payroll.payroll_show.content', compact('Payroll', 'PayrollDetail'));   
+        return view('payroll.payroll_show.content', compact('Payroll', 'PayrollDetail'));
     }
     public function dataGaji() {
         $payrollData = Karyawan::select(
@@ -88,13 +88,13 @@ class PayrollController extends Controller
         ->leftJoin('karyawan_shifts', 'karyawan.id', '=', 'karyawan_shifts.karyawan_id')
         ->orderBy('karyawan.id')
         ->get();
-        for ($i=0; $i < count($payrollData); $i++) { 
+        for ($i=0; $i < count($payrollData); $i++) {
             $payrollData[$i]->thp = $this->getTHP($payrollData[$i]->id_karyawan);
         }
         return view('payroll.data_gaji', compact('payrollData'));
-   
+
     }
-    
+
     public function deletekomponen(Request $request) {
         $komponen_id = $request->komponen_id;
         $KomponenData = KomponenGaji::find($komponen_id);
@@ -132,7 +132,7 @@ class PayrollController extends Controller
         ->where('karyawan.id', $id)
         ->first();
         $komponenGaji = $this->getKomponenGaji($id);
-    
+
         if (!$detailGaji) {
             abort(404, 'Karyawan tidak ditemukan');
         }
@@ -147,7 +147,7 @@ class PayrollController extends Controller
             'no_rek' => 'required|string',
         ]);
         $gaji = Gaji::where('karyawan_id', $request->karyawan_id)->first();
-    
+
         if (!$gaji) {
             $gaji = new Gaji;
             $gaji->karyawan_id = $request->karyawan_id;
@@ -165,7 +165,7 @@ class PayrollController extends Controller
         // dd($processData);
         return view('payroll.proses_gaji', compact('processData'));
     }
-    
+
     public function detailProsesGaji($id){
         $detailGaji = Karyawan::select(
             'karyawan.id as id_karyawan',
@@ -184,7 +184,7 @@ class PayrollController extends Controller
         }
         // dd($detailData);
         return view('payroll.detail_proses', compact('detailGaji', 'komponenGaji'));
-        
+
     }
 
     public function billGaji(){
@@ -192,7 +192,7 @@ class PayrollController extends Controller
         $karyawan = Karyawan::all();
 
         return view('payroll.data_bill', compact('karyawan'));
-        
+
     }
     public function getKomponenGaji($karyawan_id){
         $dataKaryawan = Karyawan::find($karyawan_id);
@@ -222,6 +222,6 @@ class PayrollController extends Controller
                                     ->get();
         return $takeHomePays['0']['take_home_pay'] ?? 0;
     }
-    
-    
+
+
 }
