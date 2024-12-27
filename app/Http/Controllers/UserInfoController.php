@@ -80,6 +80,7 @@ class UserInfoController extends Controller
     {
         $dataKaryawan = Karyawan::where('user_id', Auth::id())->first();
         $dataSlipGaji = DetailPayrolls::join('payrolls', 'detail_payrolls.payroll_id', '=', 'payrolls.id')
+                                        ->select('detail_payrolls.*', 'payrolls.*','detail_payrolls.id as detail_payroll_id')
                                         ->where('karyawan_id', $dataKaryawan->id)->get();
         return view('profile.slipgaji_info', compact('dataKaryawan', 'dataSlipGaji'));
     }

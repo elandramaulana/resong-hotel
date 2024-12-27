@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPayrolls;
 use App\Models\Karyawan;
 use App\Models\Kehadiran;
 use App\Models\LatePoint;
@@ -17,13 +18,14 @@ use Illuminate\Support\Facades\Log;
 
 class TeamController extends Controller
 {
+
     public function ot_action(Request $request){
         //call username active to get approved by
         $user = Auth::user();
         $ot_id = $request->input('ot_id');
         $status = $request->input('status');
         $reason = $request->input('reason') ?? null;
-        $ot_data = OverTime::find($ot_id);        
+        $ot_data = OverTime::find($ot_id);
         $ot_data->ot_approval = $status;
         $ot_data->ot_approvedBy = $user->username;
         $ot_data->ot_reason_reject = $reason;
@@ -45,7 +47,7 @@ class TeamController extends Controller
         if(!$isApproval){
             throw new AuthorizationException('You do not have permission to perform this action.');
         }
-        //call data over_times 
+        //call data over_times
         $OvertimeModel = new OverTime();
 
         $OTQuery = $OvertimeModel->callOvertimes($divisionID);

@@ -1,5 +1,4 @@
 @extends('layouts.dashboard_layout')
-
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -69,13 +68,11 @@
                                                     <td>
                                                         @if($slipGaji->payroll_status =='Evaluating')
                                                         @else
-                                                            <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
-                                                                class="btn btn-success btn-sm"> <i class="fa fa-download" aria-hidden="true"></i> </a>
+                                                            <a href="#" data-id="{{ $slipGaji->detail_payroll_id }}" data-toggle="modal"
+                                                                class="btn btn-success btn-sm btn-download-slip"> <i class="fa fa-download" aria-hidden="true"></i> </a>
                                                         @endif
-                                                        <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
-                                                            class="btn btn-primary btn-sm"><i class="fa fa-list" aria-hidden="true"></i> </a>
-                                                            <a href="#" data-id="{{ $slipGaji->id }}" data-toggle="modal"
-                                                                class="btn btn-warning btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> </a>
+                                                        <a href="#" data-id="{{ $slipGaji->detail_payroll_id }}" data-toggle="modal"
+                                                            class="btn btn-primary btn-sm btn-slip-detail"><i class="fa fa-list" aria-hidden="true"></i> </a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -90,4 +87,49 @@
         </section>
     </div>
     <!-- /.container-fluid -->
+    <div class="modal fade" id="modalSlip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Detail Gaji</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-lg-6">
+                    <table>
+                        {{-- <tr>
+                            <th colspan="3">Detail Karyawan</th>
+                        </tr> --}}
+                        <tr>
+                            <td>Nama</td>
+                            <td>:</td>
+                            <td><b id="showNameSlip"></b></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <table>
+                        <tr>
+                            <th colspan="3">Periode</th>
+                            <th>:</th>
+                            <th>Desember 2024</th>
+                        </tr>
+                    </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12" id="showTable">
+
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+@endsection
+@section('jsSection')
+@include('profile.slipgaji_js');
 @endsection

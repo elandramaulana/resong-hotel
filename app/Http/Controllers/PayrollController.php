@@ -13,9 +13,24 @@ use App\Models\Payrolls;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PayrollController extends Controller
 {
+    public function payroll_download_slip($id_detail_payroll){
+        $detailPayroll = DetailPayrolls::join('payrolls', 'payrolls.id', '=', 'detail_payrolls.payroll_id')->where('detail_payrolls.id', $id_detail_payroll)->first();
+        $karyawan = Karyawan::find($detailPayroll->karyawan_id);
+        $payrollComponents = KomponenDetailPayrolls::where('id_detail_payroll', $id_detail_payroll)->get();
+
+        $data = [
+            'detailPayroll' => $detailPayroll,
+            'karyawan' => $karyawan,
+            'payrollComponents' => $payrollComponents,
+        ];
+
+        $pdf = Pdf::loadView('payroll.slip_gaji', $data);
+        return $pdf->download('slip_gaji_' . $karyawan->k_nama . '.pdf');
+    }
     public function add_item_hot(Request $request) {
         $id_detail_payroll = $request->id_detail_payrol;
         //setup array for new detail payroll
