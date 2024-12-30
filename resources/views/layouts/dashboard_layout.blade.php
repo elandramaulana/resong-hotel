@@ -53,7 +53,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-      
+
         <!-- Sidebar -->
         <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
 
@@ -148,7 +148,7 @@
                     </div>
                 </div>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -171,9 +171,9 @@
                     <i class="fas fa-fw fa-broom"></i>
                     <span>House Keeping</span></a>
             </li>
-            @endif 
+            @endif
 
-           
+
 
 
             <li class="nav-item">
@@ -191,7 +191,7 @@
                     </div>
                 </div>
             </li>
-            @endif
+            {{-- @endif --}}
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -368,7 +368,7 @@
 
             <li class="nav-item">
 
-              
+
 
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -441,7 +441,33 @@
                                 </form>
                             </div>
                         </li>
+                        @php
+                        $Divisions = Auth::user()->isUserApproval();
+                    @endphp
+                    @if($Divisions)
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
+
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Presensi
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('team.ot_request') }}">
+                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    OT Approval
+                                </a>
+                            </div>
+                        </li>
+                    @endif
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -456,20 +482,33 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('profile.info') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('absen.info')}}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    History Absensi
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    History Slip Gaji
-                                </a>
+
+                                @php
+                                    if(Auth::user()->isKaryawan()){
+                                        @endphp
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('absen.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Absensi
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Slip Gaji
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('add.overtime') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Request Overtime
+                                        </a>
+                                @php
+                                    }
+                                @endphp
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#logoutModal">
