@@ -10,7 +10,7 @@
 <section class="mt-5">
     <div class="container-fluid">
         <div class="row">
-            
+
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -35,11 +35,11 @@
                                 <div class="mb-3">
                                     <label for="shift" class="form-label">Shift</label>
                                     <select name="shift_select2" class="form-control" id="shift_select2" >
-                                        
+
                                     </select>
                                 </div>
                             </div>
-                    
+
                             <!-- Filter Tanggal -->
                             {{-- <div class="col-md-4">
                                 <div class="mb-3">
@@ -51,7 +51,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="tanggal" class="form-label">Pilih Tanggal</label>
-                                    <input type="text" class="form-control" name="daterange" value="{{ request('date', date('Y-m-d')) }}" id="daterange">
+                                    <input type="date" class="form-control" name="daterange" value="{{ request('date', date('Y-m-d')) }}" id="daterange">
                                     <x-input-error :messages="$errors->get('tanggal_absen')" class="mt-2" />
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                             <td>
                                                 <select name="shift_id[]" class="shift_id" data-date="{{ $date }}" data-id="{{ $Karyawan['karyawan_id'] }}">
                                                     @foreach ($dataShift as $shift)
-                                                        <option value="{{ $shift['id'] }}" 
+                                                        <option value="{{ $shift['id'] }}"
                                                             {{ $selectedShift == $shift['id'] ? 'selected' : '' }}>
                                                             {{ $shift['s_nama'] }}
                                                         </option>
@@ -95,7 +95,7 @@
                                             <td>{{ date('H:i:s', strtotime($Karyawan['kh_clock_in'])) }}</td>
                                             <td>{{ $Karyawan['s_clock_out'] }}</td>
                                             <td>{{ date('H:i:s', strtotime($Karyawan['kh_clock_out'])) }}</td>
-                                        
+
                                             <td>
                                                 @if($Karyawan['kh_status']=='LATE')
                                                     <i class="badge badge-danger">{{ $Karyawan['kh_status'] }}</i>
@@ -148,7 +148,7 @@
                 <div class="form-group col-lg-6">
                     <label for="">Keterlambatan (Menit)</label>
                     <input type="number" name="second_late" value="{{ $latePointSetting['second_late'] ?? "" }}" id="second_late" class="form-control" placeholder="Masukan lama keterlambatan dalam menit" aria-describedby="helpId">
-                    <i class="showerror"></i>                    
+                    <i class="showerror"></i>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="">Point Keterlambatan</label>

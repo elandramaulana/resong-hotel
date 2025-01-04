@@ -18,9 +18,9 @@
                             <div class="col-sm-6">
                                 <h3 class="font-weight-bold text-dark">Daftar Absensi</h3>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <a href="" class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#modalSettings">Pengaturan Kehadiran</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body">
