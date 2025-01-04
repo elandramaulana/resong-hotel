@@ -75,6 +75,14 @@ class User extends Authenticatable
             return true;
         }else{
             return false;
-        }        
+        }
+    }
+    public function isKaryawan(){
+        $karyawan_has_division = KaryawanHasDivision::where('user_id', $this->id)->count();
+        if($karyawan_has_division>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

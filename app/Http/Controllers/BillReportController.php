@@ -131,7 +131,6 @@ class BillReportController extends Controller
             'SubTotalKredit' => $subTotalKredit,
             'Total' => $subTotalKredit - $subTotalDebit,
         ];
-
         return view('frontoffice.report.bill_report', $data);
     }
 }

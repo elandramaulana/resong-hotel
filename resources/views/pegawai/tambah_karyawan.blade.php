@@ -22,7 +22,15 @@
                     <h1 class="h3 mb-0 text-gray-800">Tambah Karyawan</h1>
                 </div>
             </div>
-
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="form-speedy">
                 <div class="container-fluid mt-4">
                     <div class="card">
@@ -64,7 +72,7 @@
                                             <input value="" name="k_norek" type="text" class="form-control"
                                                 id="k_norek" placeholder="Inputkan No Rekening Payroll">
                                             <x-input-error :messages="$errors->get('k_norek')" class="mt-2" />
-                                        </div>    
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
@@ -97,8 +105,8 @@
                                                 id="khr_tgljoin" onfocus="(this.type='date');this.focus()"
                                                 onblur="(this.type='text');this.value=formatDate(this.value)">
                                             <x-input-error :messages="$errors->get('khr_tgljoin')" class="mt-2" />
-                                        </div>                                        
-                                    
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
@@ -127,7 +135,7 @@
                                                 <!-- Option shift akan diisi dengan AJAX berdasarkan divisi yang dipilih -->
                                             </select>
                                             <x-input-error :messages="$errors->get('shift_id')" class="mt-2" />
-                                        </div>    
+                                        </div>
                                     </div>
 
                                     {{-- <div class="mb-3">
@@ -163,7 +171,7 @@
                                        </p>
                                        {{-- <p>Harap melakukan penggantian password saat login ke system</p> --}}
                                     </div>
-                                 
+
                                 </div>
                             </form>
                         </div>

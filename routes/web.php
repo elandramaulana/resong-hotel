@@ -42,6 +42,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
 require __DIR__ . '/auth.php';
@@ -54,16 +55,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // =====================User Information
 Route::middleware('auth')->group(function () {
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/user-info', [UserInfoController::class, 'profile'])->name('profile.info');
     Route::get('/history-absensi', [UserInfoController::class, 'history_absensi'])->name('absen.info');
     Route::get('/profile/get-available-years', [ProfileController::class, 'get_available_years'])->name('profile.get_available_years');
-
+    Route::post('/payroll_detail_detail', [PayrollController::class, 'det_det_payroll'])->name('payroll.det_detail_payroll');
     Route::get('/history-slip-gaji', [UserInfoController::class, 'history_slip_gaji'])->name('slip_gaji.info');
     Route::get('/team_presentions', [TeamController::class, 'team_presentions'])->name('team.presentions');
     Route::post('/team_edit_shift', [TeamController::class, 'team_edit_shift'])->name('team.edit.shift');
     Route::get('/team_ot_request', [TeamController::class, 'ot_request'])->name('team.ot_request');
     Route::post('/team_ot_action', [TeamController::class, 'ot_action'])->name('team.ot_action');
+    Route::get('/payroll_download/{id}', [PayrollController::class, 'payroll_download_slip'])->name('payroll.download_slip');
+
     // overtime
     Route::get('/add-overtime', [OvertimeController::class, 'add'])->name('add.overtime');
     Route::post('/store-overtime', [OvertimeController::class, 'store'])->name('store.overtime');
@@ -77,6 +81,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile_slipgaji_detail', [TeamController::class, 'profile_slipgaji_detail'])->name('profile.slipgaji.detail');
+
 });
 
 
@@ -402,7 +408,7 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
     // Ovetime
     Route::get('/overtime', [OvertimeController::class, 'index'])->name('overtime');
     Route::get('/payroll_detail/{id}', [PayrollController::class, 'payroll_show'])->name('payroll.show');
-    Route::post('/payroll_detail_detail', [PayrollController::class, 'det_det_payroll'])->name('payroll.det_detail_payroll');
+
     Route::post('/payroll_accept', [PayrollController::class, 'acc_payroll'])->name('payroll.acc_payroll');
     Route::post('/payroll_add_item_hot', [PayrollController::class, 'add_item_hot'])->name('payroll.add_item_hot');
 

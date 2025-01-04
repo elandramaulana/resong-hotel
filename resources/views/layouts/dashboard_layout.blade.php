@@ -38,95 +38,12 @@
     <link href="{{asset('assets/template/vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet"> --}}
-    <link href="{{ asset('plugins') }}/daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {{-- <link href="{{asset('assets/css/main.css')}}" rel="stylesheet"> --}}
     <style>
         .mt-2 {
             color: red;
-        }
-        .showerror{
-            color: red;
-        }
-        
-        .onoff {
-            /* margin-left: -27px; */
-            display: -moz-inline-stack;
-            display: inline-block;
-            vertical-align: middle;
-            *vertical-align: auto;
-            zoom: 1;
-            *display: inline;
-            position: relative;
-            cursor: pointer;
-            width: 55px;
-            height: 30px;
-            line-height: 30px;
-            font-size: 14px;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-        .onoff label {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            background: #cd3c3c;
-            border-radius: 5px;
-            font-weight: bold;
-            color: #FFF;
-            -webkit-transition: background 0.3s, text-indent 0.3s;
-            -moz-transition: background 0.3s, text-indent 0.3s;
-            -o-transition: background 0.3s, text-indent 0.3s;
-            transition: background 0.3s, text-indent 0.3s;
-            text-indent: 27px;
-            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
-            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
-        }
-        .onoff label:after {
-            content: 'NO';
-            display: block;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            font-size: 12px;
-            color: #591717;
-            text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.35);
-            z-index: 1;
-        }
-        .onoff label:before {
-            content: '';
-            width: 15px;
-            height: 24px;
-            border-radius: 3px;
-            background: #FFF;
-            position: absolute;
-            z-index: 2;
-            top: 3px;
-            left: 3px;
-            display: block;
-            -webkit-transition: left 0.3s;
-            -moz-transition: left 0.3s;
-            -o-transition: left 0.3s;
-            transition: left 0.3s;
-            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-            -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-        }
-        .onoff input:checked + label {
-            background: #378b2c;
-            text-indent: 8px;
-        }
-        .onoff input:checked + label:after {
-            content: 'YES';
-            color: #091707;
-        }
-        .onoff input:checked + label:before {
-            left: 37px;
         }
     </style>
 </head>
@@ -138,7 +55,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -161,16 +78,22 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-         
+            @php
+                $frontOffice = Auth::user()->karyawanHasDivision()->where('divisi_id', '1')->first();
+                $houseKeeping = Auth::user()->karyawanHasDivision()->where('divisi_id', '2')->first();
+                $kitchen = Auth::user()->karyawanHasDivision()->where('divisi_id', '3')->first();
+                $resto = Auth::user()->karyawanHasDivision()->where('divisi_id', '4')->first();
+                $manajemenAsset = Auth::user()->karyawanHasDivision()->where('divisi_id', '5')->first();
+                $hrd = Auth::user()->karyawanHasDivision()->where('divisi_id', '6')->first();
+                $finance = Auth::user()->karyawanHasDivision()->where('divisi_id', '7')->first();
+                $humanCapital = Auth::user()->karyawanHasDivision()->where('divisi_id', '8')->first();
+            @endphp
             <!-- Heading -->
+            @if($frontOffice || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading">
                 FRONT OFFICE
             </div>
-          @php
-              $hasDivision = Auth::user()->karyawanHasDivision()->where('divisi_id', '1')->first();
-          @endphp
             <!-- Nav Item - Pages Collapse Menu -->
-            @if($hasDivision)
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -183,8 +106,7 @@
                         <a class="collapse-item" href="{{ route('checkin.speedy') }}">Speedy</a>
                     </div>
                 </div>
-            </li>    
-            @endif
+            </li>
             <!-- Nav Item - Check-out -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('checkout.list') }}">
@@ -241,13 +163,15 @@
                     </div>
                 </div>
             </li>
-
+            @endif
             <!-- Nav Item - Check-out -->
+            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('cleaningroom.list') }}">
                     <i class="fas fa-fw fa-broom"></i>
                     <span>House Keeping</span></a>
             </li>
+            @endif
 
 
 
@@ -267,11 +191,12 @@
                     </div>
                 </div>
             </li>
-
+            {{-- @endif --}}
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
+            @if($kitchen || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading">
                 INVENTORY KITCHEN
             </div>
@@ -310,9 +235,10 @@
                     <i class="fas fa-fw fa-exchange-alt"></i>
                     <span>Transaksi Barang</span></a>
             </li>
-
+            @endif
             {{-- Inventaris barang --}}
             <!-- Heading -->
+            @if($manajemenAsset || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading mt-3">
                 INVENTORY ASSETS
             </div>
@@ -349,6 +275,7 @@
                     <i class="fas fa-fw fa-tshirt"></i>
                     <span>Laundry</span></a>
             </li>
+            @endif
             <hr class="sidebar-divider">
 
 
@@ -367,6 +294,7 @@
             </li> --}}
 
             <!-- Heading -->
+            @if($resto || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading">
                 Resto
             </div>
@@ -400,32 +328,27 @@
                     <i class="fas fa-fw fa-utensils"></i>
                     <span>Resto</span></a>
             </li>
+            @endif
             <br>
 
 
             <!-- Heading -->
+            @if($humanCapital || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('system.settings') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Pengaturan Sistem</span></a>
-            </li>
             {{-- <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Dashboard Karyawan</span></a>
             </li> --}}
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('daftar.hadir') }}">
+              <!-- Nav Item - Check-out -->
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('daftar.hadir')}}">
                     <i class="fas fa-fw fa-calendar"></i>
                     <span>Absensi Kehadiran</span></a>
             </li>
-
-            
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
@@ -455,14 +378,14 @@
                 <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('data.gaji') }}">Gaji</a>
-                        <a class="collapse-item" href="{{ route('proses.gaji') }}">Proses</a>
-                        <a class="collapse-item" href="{{ route('bill.gaji') }}">Bill</a>
-                        <a class="collapse-item" href="{{ route('overtime') }}">Over Time</a>
+                        <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
+                        <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
+                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>
             </li>
-
+            @endif
 
 
             <!-- Divider -->
@@ -519,33 +442,34 @@
                             </div>
                         </li>
                         @php
-                            $Divisions = Auth::user()->isUserApproval();
-                        @endphp
-                        @if($Divisions)
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    
-                                    <span
-                                        class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
-                                    
+                        $Divisions = Auth::user()->isUserApproval();
+                    @endphp
+                    @if($Divisions)
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
+
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Presensi
                                 </a>
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                    aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="{{ route('team.presentions') }}">
-                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Presensi
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('team.ot_request') }}">
-                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        OT Approval
-                                    </a>
-                                </div>
-                            </li>
-                        @endif
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('team.ot_request') }}">
+                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    OT Approval
+                                </a>
+                            </div>
+                        </li>
+                    @endif
                         <div class="topbar-divider d-none d-sm-block"></div>
+
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -562,21 +486,29 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('absen.info') }}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    History Absensi
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    History Slip Gaji
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('add.overtime') }}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Request Overtime
-                                </a>
+
+                                @php
+                                    if(Auth::user()->isKaryawan()){
+                                        @endphp
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('absen.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Absensi
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Slip Gaji
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('add.overtime') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Request Overtime
+                                        </a>
+                                @php
+                                    }
+                                @endphp
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#logoutModal">
@@ -650,60 +582,52 @@
     <script src="{{ asset('plugins') }}/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('plugins') }}/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!-- Script for table -->
- 
 
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#btnLogout', function(e) {
-                $("#frmLogout").submit();
-            });
-            $('#checkInTable').DataTable();
-            $('#speedyCheckInTable').DataTable();
-            $('#checkOutTable').DataTable();
-            $('#countryTable').DataTable();
-            $('#ProvinceTable').DataTable();
-            $('#cityTable').DataTable();
-            // $('#reservationListTable').DataTable();
-            $('#cancelReservationListTable').DataTable();
-            $('#inhouseGuest').DataTable();
-            $('#guestDatabase').DataTable();
-            $('#listServiceGuestFood').DataTable();
-            $('#listServiceGuestDrinks').DataTable();
-            $('#listServiceGuestLaundry').DataTable();
-            $('#listServiceGuestOther').DataTable();
-            $('#listServiceOrder').DataTable();
-            $('#GuestDatabaseTable').DataTable();
-            $('#historyGuestTable').DataTable();
-            $('#houseKeepingTable').DataTable();
-            $('#cleaningHistoryTable').DataTable();
-            $('#billReporTable').DataTable();
-            $('#supplierTable').DataTable();
-            $('#barangTable').DataTable();
-            $('#barangMasukTable').DataTable();
-            $('#manageMenuTable').DataTable();
-            $('#daftarMenuTable').DataTable();
-            $('#layananRestoTable').DataTable();
-            $('#detailLayananRestoTable').DataTable();
-            $('#dataKaryawanTable').DataTable();
-            $('#dataDivisiTable').DataTable();
-            $('#dataShiftTable').DataTable();
-            $('#dataAbsensiTable').DataTable();
-            $('#dataGajiTable').DataTable();
-            $('#dataProsesTable').DataTable();
-            $('#dataBillTable').DataTable();
-            $('#dataRoomTable').DataTable();
-            $('#overtimeTable').DataTable();
-            $('#dataSlipTable').DataTable();
-            $('#dataSlipTable').DataTable();
-            $('#dataAbsenHistoryTable').DataTable();
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '#btnLogout', function(e){
+            $("#frmLogout").submit();
         });
-    </script>
+        $('#checkInTable'). DataTable();
+        $('#speedyCheckInTable'). DataTable();
+        $('#checkOutTable').DataTable();
+        $('#countryTable').DataTable();
+        $('#ProvinceTable').DataTable();
+        $('#cityTable').DataTable();
+        // $('#reservationListTable').DataTable();
+        $('#cancelReservationListTable').DataTable();
+        $('#inhouseGuest').DataTable();
+        $('#guestDatabase').DataTable();
+        $('#listServiceGuestFood').DataTable();
+        $('#listServiceGuestDrinks').DataTable();
+        $('#listServiceGuestLaundry').DataTable();
+        $('#listServiceGuestOther').DataTable();
+        $('#listServiceOrder').DataTable();
+        $('#GuestDatabaseTable').DataTable();
+        $('#historyGuestTable').DataTable();
+        $('#houseKeepingTable').DataTable();
+        $('#cleaningHistoryTable').DataTable();
+        $('#billReporTable').DataTable();
+        $('#supplierTable').DataTable();
+        $('#barangTable').DataTable();
+        $('#barangMasukTable').DataTable();
+        $('#manageMenuTable').DataTable();
+        $('#daftarMenuTable').DataTable();
+        $('#layananRestoTable').DataTable();
+        $('#detailLayananRestoTable').DataTable();
+        $('#dataKaryawanTable').DataTable();
+        $('#dataDivisiTable').DataTable();
+        $('#dataShiftTable').DataTable();
+        $('#dataAbsensiTable').DataTable();
+        $('#dataGajiTable').DataTable();
+        $('#dataProsesTable').DataTable();
+        $('#dataBillTable').DataTable();
+        $('#dataRoomTable').DataTable();
+        $('#overtimeTable').DataTable();
+    });
+</script>
 
 
     {{-- show menu image --}}

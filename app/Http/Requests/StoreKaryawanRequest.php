@@ -29,7 +29,7 @@ class StoreKaryawanRequest extends FormRequest
             'k_nik'=>['required'],
             'k_norek'=>['required'],
             'k_divisi'=>['required'],
-            'user_id'=>['required'],
+            'user_id'=>['nullable'],
         ];
     }
 }
