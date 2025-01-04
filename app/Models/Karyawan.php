@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Karyawan extends Model
+{
+    use HasFactory;
+    protected $table = 'karyawan';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'id',
+        'k_nama',
+        'user_id',
+        'k_contact',
+        'k_gender',
+        'k_email',
+        'K_alamat',
+        'k_nik',
+        'k_norek',
+        'k_pin',
+        'k_divisi',
+        'k_biometric_status'
+    ];
+
+    public static function getAllDivision()
+    {
+        return self::all();
+    }
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'k_divisi', 'id');
+    }
+
+    public function shifts()
+    {
+        return $this->hasMany(KaryawanShift::class, 'karyawan_id');
+    }
+
+    public function karyawanHasDivisions()
+    {
+        return $this->belongsTo(KaryawanHasDivision::class, 'karyawan_id', 'id');
+    }
+
+        // Relasi ke tabel karyawan_has_divisions untuk OT
+    public function karyawanDivisions()
+    {
+        return $this->hasOne(KaryawanHasDivision::class, 'karyawan_id');
+    }
+
+    // Relasi ke tabel karyawan_shifts
+    public function karyawanShifts()
+    {
+        return $this->hasOne(KaryawanShift::class, 'karyawan_id');
+    }
+    
+}
