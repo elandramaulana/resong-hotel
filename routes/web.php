@@ -224,6 +224,7 @@ Route::middleware('auth', 'checkDivisi:3')->group(function () {
     Route::post('/store-kategori', [KategoriBarangController::class, 'storeCategori'])->name('store.kategori');
     Route::get('/edit-kategori-detail/{id}', [KategoriBarangController::class, 'edit'])->name('edit.kategori');
     Route::delete('/kategori/destroy/{id}', [KategoriBarangController::class, 'destroy'])->name('destroy.kategori');
+    Route::put('/kategori/{id}', [KategoriBarangController::class, 'update'])->name('kategori.update');
 
     // Barang
     Route::get('/list-trans-barang', [TransBarangController::class, 'index'])->name('list.trans');
@@ -245,7 +246,6 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::delete('/menu/destroy/{id}', [MenuController::class, 'destroy'])->name('destroy.menu');
     Route::put('/update-menu/{id}', [MenuController::class, 'update'])->name('update.menu');
 
-    // daily Menu
     // daily Menu
     Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
     Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');

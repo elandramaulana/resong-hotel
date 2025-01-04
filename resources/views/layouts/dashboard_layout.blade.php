@@ -480,50 +480,42 @@
                                     src="{{ asset('template/img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <!-- Profile -->
-                            <a class="dropdown-item" href="{{ route('profile.info') }}">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.info') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
 
                                 @php
                                     if(Auth::user()->isKaryawan()){
                                         @endphp
-                                    <div class="dropdown-divider"></div>
-
-                            <!-- History Absensi -->
-                                    <a class="dropdown-item" href="{{ route('absen.info') }}">
-                                        <i class="fas fa-calendar-check fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        History Absensi
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-
-                            <!-- History Slip Gaji -->
-                                    <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
-                                        <i class="fas fa-file-invoice-dollar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        History Slip Gaji
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-
-                            <!-- Request Overtime -->
-                                    <a class="dropdown-item" href="{{ route('add.overtime') }}">
-                                        <i class="fas fa-clock fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Request Overtime
-                                    </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('absen.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Absensi
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            History Slip Gaji
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('add.overtime') }}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Request Overtime
+                                        </a>
                                 @php
                                     }
                                 @endphp
 
-                            <div class="dropdown-divider"></div>
-
-                            <!-- Logout -->
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
                         </li>
 
                     </ul>

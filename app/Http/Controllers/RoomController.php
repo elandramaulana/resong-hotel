@@ -17,8 +17,10 @@ class RoomController extends Controller
         return view('frontoffice.rooms.add_room');
     }
 
-    public function store(Request $request){
-        $validate = [
+    public function store(Request $request)
+    {
+        // Validasi input dari form
+        $request->validate([
             'room_no' => 'required',
             'room_name' => 'required',
             'room_type' => 'required',
@@ -27,24 +29,27 @@ class RoomController extends Controller
             'room_price' => 'required',
             'room_status' => 'required',
             'bed_type' => 'required',
-        ];
+        ]);
 
-        $data =[
+        // Menyimpan data jika validasi berhasil
+        $data = [
             'room_no' => $request->get('room_no'),
-            'room_name' => $request->get('room_name') ,
-            'room_type' =>$request->get('room_type') ,
-            'room_capacity' =>$request->get('room_capacity') ,
-            'room_extrabed' =>$request->get('room_extrabed') ,
-            'room_price' =>$request->get('room_price') ,
+            'room_name' => $request->get('room_name'),
+            'room_type' => $request->get('room_type'),
+            'room_capacity' => $request->get('room_capacity'),
+            'room_extrabed' => $request->get('room_extrabed'),
+            'room_price' => $request->get('room_price'),
             'room_status' => 'VACANT READY',
-            'bed_type' =>$request->get('bed_type') ,
+            'bed_type' => $request->get('bed_type'),
         ];
 
         Rooms::create($data);
 
-        Alert::success('success', 'Room berhasil ditambahkan');
+        // Menampilkan alert sukses
+        Alert::success('Success', 'Room berhasil ditambahkan');
         return redirect()->route('daftar.room');
     }
+
     
     public function edit($id) {
         $rooms = Rooms::findOrFail($id);
@@ -59,7 +64,7 @@ class RoomController extends Controller
             'room_capacity' => 'required',
             'room_extrabed' => 'required',
             'room_price' => 'required',
-            'room_status' => 'required',
+   
             'bed_type' => 'required',
         ]);
         
@@ -71,7 +76,6 @@ class RoomController extends Controller
         $rooms->room_capacity = $request->room_capacity;
         $rooms->room_extrabed = $request->room_extrabed;
         $rooms->room_price = $request->room_price;
-        $rooms->room_status = $request->room_status;
         $rooms->bed_type = $request->bed_type;
 
         $rooms->save();

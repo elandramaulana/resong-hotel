@@ -46,8 +46,10 @@
                                         <td>
                                             <div>
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
-                                                   <a style="color: black" href="">  <i class="fas fa-edit"></i></a>
-                                                </button>
+                                                    <a style="color: black" href="{{ route('edit.kategori', $cat->id) }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </button>                                                
                                                 <form action="{{ route('destroy.kategori', $cat->id) }}" method="POST" style="display: inline;" id="deleteForm{{$cat->id}}">
                                                     @csrf
                                                     @method('DELETE')

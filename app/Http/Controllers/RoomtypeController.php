@@ -17,18 +17,26 @@ class RoomtypeController extends Controller
         return view('frontoffice.rooms.add_roomcat');
     }
 
-    public function store(Request $request){
-        $data  = [
-            'name_category'=>$request->get('name_category'),
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'name_category' => 'required',
+        ], [
+            'name_category.required' => 'Nama kategori room wajib diisi!', 
+        ]);
+    
+        $data = [
+            'name_category' => $request->get('name_category'),
         ];
-
+    
         RoomCategory::create($data);
-
-
+    
+        // Menampilkan alert sukses
         Alert::success('Success', 'Kategori Room Berhasil Ditambahkan');
         return redirect()->route('daftar.roomcat');
-        
     }
+    
     
     public function edit($id) {
         $roomcat = RoomCategory::findOrFail($id);

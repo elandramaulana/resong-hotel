@@ -139,7 +139,7 @@
                                                 <div class="col mr-2">
                                                     <div class="h1 font-weight-bold text-white text-uppercase mb-1">
 
-                                                        {{ $vacantRoomCount }}
+                                                        {{ $kehadiranCount }}
                                                     </div>
                                                     <div class="h5 font-weight-bold text-white">Absen Hari ini </div>
                                                 </div>
