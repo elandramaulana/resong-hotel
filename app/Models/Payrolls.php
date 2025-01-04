@@ -15,4 +15,9 @@ class Payrolls extends Model
         'jumlah_karyawan',
         'payroll_status'
     ];
+
+    public function detailPayrolls()
+    {
+        return $this->hasMany(DetailPayrolls::class);
+    }
 }

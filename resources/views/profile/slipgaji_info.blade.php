@@ -22,11 +22,19 @@
                                     <tr>
                                         <td>Nama</td>
                                         <td class="px-2">:</td>
+                                        <td>{{ Auth::user()->karyawan->k_nama }}</td> <!-- Menampilkan nama karyawan -->
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Divisi</td>
+                                        <td class="px-2">:</td>
+                                        <td>{{ Auth::user()->karyawan->divisi->d_nama }}</td> <!-- Menampilkan divisi karyawan -->
                                         <td>{{$dataKaryawan->k_nama}}</td>
                                     </tr>
                                     <tr>
                                         <td>Nomor Rekening</td>
                                         <td class="px-2">:</td>
+                                        <td>{{ Auth::user()->karyawan->k_norek }}</td> <!-- Menampilkan nomor rekening karyawan -->
                                         <td>{{$dataKaryawan->k_norek}}</td>
                                     </tr>
                                 </table>

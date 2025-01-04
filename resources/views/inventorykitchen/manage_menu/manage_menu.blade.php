@@ -61,7 +61,7 @@
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
                                                    <a style="color: black" href="{{route('edit.menu', $menu->menu_id)}}">  <i class="fas fa-edit"></i></a>
                                                 </button>
-                                                <form action="{{ route('destroy.kategori', $menu->menu_id) }}" method="POST" style="display: inline;" id="deleteForm{{$menu->menu_id}}">
+                                                <form action="{{ route('destroy.menu', $menu->menu_id) }}" method="POST" style="display: inline;" id="deleteForm{{$menu->menu_id}}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal{{$menu->menu_id}}">

@@ -35,7 +35,8 @@ class MenuController extends Controller
 
     public function storeMenu(StoreMenuRequest $request)
     {
-        $imagePath = $request->file('menu_photo')->store('menus');
+      $imagePath = $request->file('menu_photo')->store('menus', 'public');
+
         $data = [
             'menu_name'=> $request->get('menu_name'),
             'menu_category'=> $request->get('menu_category'),
@@ -76,6 +77,18 @@ class MenuController extends Controller
 
         Alert::success('success', 'Menu berhasil di Update');
       return redirect()->route('list.menu');
+    }
+
+    public function destroy($id)
+    {
+        $menu = Menu::findOrFail($id);
+       
+    
+        // Hapus data post
+        $menu->delete();
+    
+        Alert::success('Success', 'Menu Berhasil Dihapus');
+         return redirect()->route('list.menu');
     }
 
 

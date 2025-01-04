@@ -79,33 +79,47 @@ class DaftarMenuController extends Controller
         return $show;
     }
     
-    public function update(Request $request, $id) {
-        // Debugging: Menampilkan semua data request
-        // dd($request->all());
+    public function update(Request $request, $id)
+    {
+        // Validasi input untuk memastikan 'menu_ids' ada dan tidak kosong
+        $request->validate([
+            'menu_ids' => 'nullable|array',
+            'menu_ids.*' => 'exists:menus,menu_id', // Ganti 'id' dengan 'menu_id'
+        ], [
+            'menu_ids.*.exists' => 'Menu yang dipilih tidak valid.',
+        ]);
+        
     
         // Find the DailyMenu record by its ID
         $day = DailyMenu::find($id);
     
         // Ensure the daily menu exists
         if (!$day) {
-            return redirect()->route('daily.menu')->with('error', 'Daily menu not found');
+            Alert::error('Error', 'Daily menu not found');
+            return redirect()->route('daily.menu');
         }
     
         // Hapus semua menu yang sudah ada
         DetailDaily::where('daily_id', $id)->delete();
     
-    
-        // Insert new records for each selected menu
-        foreach ($request->input('menu_ids') as $menuId) {
-            DetailDaily::create([
-                'daily_id' => $id,
-                'menu_id' => $menuId,
-            ]);
+        // Check if 'menu_ids' is provided
+        if ($request->has('menu_ids') && is_array($request->input('menu_ids'))) {
+            // Insert new records for each selected menu
+            foreach ($request->input('menu_ids') as $menuId) {
+                DetailDaily::create([
+                    'daily_id' => $id,
+                    'menu_id' => $menuId,
+                ]);
+            }
+        } else {
+            Alert::warning('Warning', 'No menus selected.');
+            return redirect()->route('daily.menu');
         }
-        
     
-        return redirect()->route('daily.menu')->with('success', 'Menu updated successfully');
+        Alert::success('Success', 'Menu updated successfully');
+        return redirect()->route('daily.menu');
     }
+    
     
 
     public function storeMenuDaily (Request $request)
