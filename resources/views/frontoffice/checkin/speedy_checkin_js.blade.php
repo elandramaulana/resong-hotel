@@ -30,7 +30,8 @@
                             $("#checkoutTime").val(data.reservation_checkout);
                             $("#reservation_contact").val(data.reservation_contact);
                             $("#name_guest").val(data.reservation_name);
-                            
+                            $("#adults").val(data.qty_guest);
+
                         }
                     });
             }
@@ -98,9 +99,9 @@
                     });
             }
             });
-            $(document).on('keyup', '#id_number', function (param) { 
+            $(document).on('keyup', '#id_number', function (param) {
                 var elements = document.getElementsByClassName("clearable");
-    
+
                 // Iterate over the selected elements and clear their values
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].value = "";
