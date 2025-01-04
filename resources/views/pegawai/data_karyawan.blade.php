@@ -21,10 +21,7 @@
                                             <a style="text-decoration: none; color:white"
                                                 href="{{ route('tambah.karyawan') }}">Tambah</a>
                                         </button>
-                                        <button class="btn btn-extend">
-                                            <a style="text-decoration: none; color:white"
-                                                href="{{ route('register.karyawan') }}">Daftarkan Akun</a>
-                                        </button>
+                                     
                                     </div>
                                 </div>
                             </div>
