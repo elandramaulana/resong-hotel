@@ -337,11 +337,11 @@
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Dashboard Karyawan</span></a>
-            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('system.settings')}}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>System Settings</span></a>
+            </li>
 
               <!-- Nav Item - Check-out -->
               <li class="nav-item">
@@ -368,8 +368,6 @@
 
             <li class="nav-item">
 
-
-
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-dollar-sign"></i>
@@ -380,7 +378,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
                         <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
-                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        {{-- <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a> --}}
                         <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>

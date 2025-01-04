@@ -16,7 +16,7 @@ class SupplierAssetController extends Controller
             $totalSupplierAsset = $supplierAssets->count();
             return new SupplierAssetResource(true, 'Data Supplier Asset', compact('supplierAssets', 'totalSupplierAsset'));
         } catch (\Exception $e) {
-            return new SupplierAssetResource(false, 'Gagal mendapatkan data supplier asset', null);
+            return new SupplierAssetResource(false, 'Gagal mendapatkan data supplier asset', []);
         }
     }
 }
