@@ -82,7 +82,7 @@ class KaryawanController extends Controller
     public function store(StoreKaryawanRequest $request)
     {
         //insert or create users data first
-       
+
         $user = new User();
         $user->username = explode('@', $request->get('k_email'))[0];
         $user->name = $request->get('k_nama');
@@ -106,9 +106,7 @@ class KaryawanController extends Controller
             'k_divisi' => $request->get('k_divisi'),
             'k_biometric_status' => false,
         ];
-
         //  dd($data_karyawan);
-
         // Simpan data karyawan dan ambil instance yang baru dibuat
         $karyawan = Karyawan::create($data_karyawan);
         if(!$karyawan){
@@ -131,7 +129,7 @@ class KaryawanController extends Controller
             'karyawan_id' => $karyawan->id,
             'shift_id' => $request->get('shift_id')
         ];
-        
+
 
         KaryawanShift::create($data_has_shift);
 
@@ -210,19 +208,19 @@ class KaryawanController extends Controller
 
         $karyawanHasDivision = KaryawanHasDivision::where('karyawan_id', $id)->first();
         if ($karyawanHasDivision) {
-            $karyawanHasDivision->divisi_id = $request->d_nama; 
+            $karyawanHasDivision->divisi_id = $request->d_nama;
             $karyawanHasDivision->khr_tgljoin = $request->khr_tgljoin;
             $karyawanHasDivision->khr_tglOut = ($request->khr_tglOut === 'Atur' || $request->khr_tglOut === 'NaN-NaN-NaN') ? null : $request->khr_tglOut;
 
             $karyawanHasDivision->khr_isActive = $request->khr_isActive;
-            
+
             $karyawanHasDivision->save();
         }
 
         $karyawanShift = KaryawanShift::where('karyawan_id', $id)->first();
         if ($karyawanShift) {
             $karyawanShift->shift_id = $request->shift_id; // Atur ID shift
-            
+
             $karyawanShift->save();
         }
 
@@ -288,5 +286,5 @@ class KaryawanController extends Controller
         $dataKaryawan = $Karyawan??null;
         return $dataKaryawan;
     }
-    
+
 }

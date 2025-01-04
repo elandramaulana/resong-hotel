@@ -16,7 +16,7 @@
                     <div class="card-header py-3">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3 class="font-weight-bold text-dark">Daftar Presensi Divisi :</h3>
+                                <h3 class="font-weight-bold text-dark">Daftar Permintaan Lembur : {{ $Divisions['d_nama'] }}</h3>
                             </div>
                         </div>
                     </div>
@@ -47,14 +47,6 @@
                                     <input name="tanggal_absen" type="date" class="form-control" id="tanggal">
                                 </div>
                             </div> --}}
-
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="tanggal" class="form-label">Pilih Tanggal</label>
-                                    <input type="text" class="form-control" name="daterange" value="{{ request('date', date('Y-m-d')) }}" id="daterange">
-                                    <x-input-error :messages="$errors->get('tanggal_absen')" class="mt-2" />
-                                </div>
-                            </div>
                         </div>
                         <div class="table-responsive">
                             <table id="dataAbsensiTable" class="table">
@@ -63,51 +55,52 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Shift</th>
-                                        <th>Schedule In</th>
-                                        <th>Punch In</th>
-                                        <th>Schedule Out</th>
-                                        <th>Punch Out</th>
-                                        <th>Working Hour</th>
+                                        <th>Jam Pulang</th>
+                                        <th>Tanggal Lembur</th>
+                                        <th>Jam Lembur</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
                                         $no=1;
                                     @endphp
-                                    @foreach ($KaryawanData as $Karyawan)
-                                    @php
-                                        $selectedShift = $Karyawan['shift_id'] ?? $Karyawan['real_shift_id'];
-                                    @endphp
+                                    @foreach ($OTQuery as $otRequest)
                                         <tr>
                                             <td>{{ $no }}</td>
-                                            <td>{{ $Karyawan['k_nama'] }}</td>
+                                            <td>{{ $otRequest['k_nama'] }}</td>
+                                            <td>{{ $otRequest['s_nama'] }}</td>
+                                            <td>{{ $otRequest['s_clock_out'] }}</td>
+                                            <td>{{ $otRequest['ot_date'] }}</td>
+                                            <td>{{ $otRequest['ot_start'] }} to {{ $otRequest['ot_end'] }}</td>
                                             <td>
-                                                <select name="shift_id[]" class="shift_id" data-date="{{ $date }}" data-id="{{ $Karyawan['karyawan_id'] }}">
-                                                    @foreach ($dataShift as $shift)
-                                                        <option value="{{ $shift['id'] }}" 
-                                                            {{ $selectedShift == $shift['id'] ? 'selected' : '' }}>
-                                                            {{ $shift['s_nama'] }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>{{ $Karyawan['s_clock_in'] }}</td>
-                                            <td>{{ date('H:i:s', strtotime($Karyawan['kh_clock_in'])) }}</td>
-                                            <td>{{ $Karyawan['s_clock_out'] }}</td>
-                                            <td>{{ date('H:i:s', strtotime($Karyawan['kh_clock_out'])) }}</td>
-                                            <td></td>
-                                            <td>
-                                                @if($Karyawan['kh_status']=='LATE')
-                                                    <i class="badge badge-danger">{{ $Karyawan['kh_status'] }}</i>
+                                                @if($otRequest['ot_approval']=='NO')
+                                                    <button class="btn btn-sm btn-default">
+                                                        NO
+                                                    </button>        
+                                                @elseif($otRequest['ot_approval']=='approved')
+                                                <button class="btn btn-sm btn-success">
+                                                    Approved
+                                                </button>
                                                 @else
-                                                    <i class="badge badge-success">{{ $Karyawan['kh_status'] }}</i>
+                                                <button class="btn btn-sm btn-danger">
+                                                    Rejected
+                                                </button>
                                                 @endif
                                             </td>
+                                            <td>
+                                                @if($otRequest['ot_approval']=='NO')
+                                                <a data-id="{{ $otRequest['ot_id'] }}" data-set="Approved" class="btn btn-success btn-sm btn-ot-actions"> <i class="fa fa-check" aria-hidden="true"></i> Aproove</a>
+                                                </br>
+                                                <a data-id="{{ $otRequest['ot_id'] }}" data-set="Rejected" class="btn btn-danger btn-sm btn-ot-actions"> <i class="fas fa-times"></i> Reject</a>    
+                                                @endif
+                                                
+                                            </td>
                                         </tr>
-                                        @php
-                                            $no++;
-                                        @endphp
+                                    @php
+                                        $no++;
+                                    @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -197,5 +190,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection
 @section('jsSection')
-    @include('team_management.team_presensi_js')
+    @include('team_management.ot_request.ot_request_js')
 @endsection

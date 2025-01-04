@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Services\PayrollService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class TestCommand extends Command
 {
@@ -25,6 +27,8 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        $this->info('test test');
+        $PayrollService = New PayrollService();
+        $countLembur = $PayrollService->countLembur(5, 88, 1,2);
+        Log::info("countlembur:". $countLembur);
     }
 }

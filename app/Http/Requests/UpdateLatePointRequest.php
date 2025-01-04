@@ -30,6 +30,8 @@ class UpdateLatePointRequest extends FormRequest
             'third_latepoint'   => ['required_with:third_late'],
             'besar_point'       => ['required'],
             'besar_potongan'    => ['required'],
+            'payroll_period'    => ['required'],
+            'ot_price'          => ['required'],
         ];
     }
 
@@ -44,6 +46,8 @@ class UpdateLatePointRequest extends FormRequest
             'third_latepoint.required_with' => 'Poin ketiga harus diisi jika ada Nilai Keterlambatan ketiga',
             'besar_point.required' => 'Poin besar harus diisi',
             'besar_potongan.required' => 'Potongan besar harus diisi',
+            'payroll_period.required' => 'Periode Payroll harus diisi',
+            'ot_price.required' => 'Pembayaran lembur harus diisi',
         ];
     }
 }

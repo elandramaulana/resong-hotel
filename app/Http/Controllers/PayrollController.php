@@ -3,16 +3,92 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddKomponenRequest;
+use App\Models\DetailPayrolls;
 use App\Models\Divisi;
 use App\Models\Gaji;
 use App\Models\Karyawan;
+use App\Models\KomponenDetailPayrolls;
 use App\Models\KomponenGaji;
+use App\Models\Payrolls;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PayrollController extends Controller
 {
+    public function payroll_download_slip($id_detail_payroll){
+        $detailPayroll = DetailPayrolls::join('payrolls', 'payrolls.id', '=', 'detail_payrolls.payroll_id')->where('detail_payrolls.id', $id_detail_payroll)->first();
+        $karyawan = Karyawan::find($detailPayroll->karyawan_id);
+        $payrollComponents = KomponenDetailPayrolls::where('id_detail_payroll', $id_detail_payroll)->get();
+
+        $data = [
+            'detailPayroll' => $detailPayroll,
+            'karyawan' => $karyawan,
+            'payrollComponents' => $payrollComponents,
+        ];
+
+        $pdf = Pdf::loadView('payroll.slip_gaji', $data);
+        return $pdf->download('slip_gaji_' . $karyawan->k_nama . '.pdf');
+    }
+    public function add_item_hot(Request $request) {
+        $id_detail_payroll = $request->id_detail_payrol;
+        //setup array for new detail payroll
+        $det_peyroll = [
+            'id_detail_payroll'=>$id_detail_payroll,
+            'nama_komponen_payroll'=>$request->nama_komponen_payroll,
+            'besaran_komponen_payroll'=>$request->besaran_komponen_payroll,
+            'type_komponen_payroll'=>$request->type_komponen_payroll,
+            'keterangan_komponen_payroll'=>$request->keterangan_komponen_payroll
+        ];
+        $modelKomponenDetail = KomponenDetailPayrolls::create($det_peyroll);
+        //get detail payroll for update detail in here
+        $detPayroll = DetailPayrolls::find($id_detail_payroll);
+        if($request->type_komponen_payroll=='pendapatan'){
+            $detPayroll->total_pendapatan = $detPayroll->total_pendapatan +  $request->besaran_komponen_payroll;
+            $detPayroll->thp =  $detPayroll->thp + $request->besaran_komponen_payroll;
+        }
+        if($request->type_komponen_payroll=='potongan'){
+            $detPayroll->total_potongan = $detPayroll->total_potongan +  $request->besaran_komponen_payroll;
+            $detPayroll->thp =  $detPayroll->thp - $request->besaran_komponen_payroll;
+        }
+        $detPayroll->save();
+        $Payroll = Payrolls::find($detPayroll->payroll_id);
+        //get detail payroll for update it detail
+        if($request->type_komponen_payroll=='pendapatan'){
+            $Payroll->total_penggajian = $Payroll->total_penggajian +  $request->besaran_komponen_payroll;
+        }
+        if($request->type_komponen_payroll=='potongan'){
+            $Payroll->total_penggajian = $Payroll->total_penggajian -  $request->besaran_komponen_payroll;
+        }
+        $Payroll->save();
+      return redirect()->back();
+    }
+    public function acc_payroll(Request $request)  {
+        $Payroll = Payrolls::find($request->payroll_id);
+        $Payroll->payroll_status = "Accepted";
+        if($Payroll->save()){
+            return response()->json(['status'=>'success', 'message'=>'Payroll has been accepted']);
+        }else{
+            return response()->json(['status'=>'error', 'message'=>'Error during accepting payrolls']);
+        }
+    }
+
+    public function det_det_payroll(Request $request) {
+        $detailData = KomponenDetailPayrolls::join('detail_payrolls', 'detail_payrolls.id', '=', 'komponen_detail_payrolls.id_detail_payroll')
+                                            ->join('karyawan', 'karyawan.id', '=', 'detail_payrolls.karyawan_id')
+                                            ->where('id_detail_payroll', $request->id_detail_payrolls)
+                                            ->get();
+        return response()->json($detailData);
+    }
+    public function payroll_show($payroll_id) {
+        $Payroll = Payrolls::find($payroll_id);
+        $PayrollDetail = DetailPayrolls::where('payroll_id', $payroll_id)
+                                        ->select('karyawan.k_nama', 'detail_payrolls.*')
+                                        ->join('karyawan', 'karyawan.id', '=', 'detail_payrolls.karyawan_id')
+                                        ->get();
+        return view('payroll.payroll_show.content', compact('Payroll', 'PayrollDetail'));
+    }
     public function dataGaji() {
         $payrollData = Karyawan::select(
             'karyawan.id as id_karyawan',
@@ -27,13 +103,13 @@ class PayrollController extends Controller
         ->leftJoin('karyawan_shifts', 'karyawan.id', '=', 'karyawan_shifts.karyawan_id')
         ->orderBy('karyawan.id')
         ->get();
-        for ($i=0; $i < count($payrollData); $i++) { 
+        for ($i=0; $i < count($payrollData); $i++) {
             $payrollData[$i]->thp = $this->getTHP($payrollData[$i]->id_karyawan);
         }
         return view('payroll.data_gaji', compact('payrollData'));
-   
+
     }
-    
+
     public function deletekomponen(Request $request) {
         $komponen_id = $request->komponen_id;
         $KomponenData = KomponenGaji::find($komponen_id);
@@ -71,7 +147,7 @@ class PayrollController extends Controller
         ->where('karyawan.id', $id)
         ->first();
         $komponenGaji = $this->getKomponenGaji($id);
-    
+
         if (!$detailGaji) {
             abort(404, 'Karyawan tidak ditemukan');
         }
@@ -85,45 +161,25 @@ class PayrollController extends Controller
             'gaji_pokok' => 'required|numeric',
             'no_rek' => 'required|string',
         ]);
-    
         $gaji = Gaji::where('karyawan_id', $request->karyawan_id)->first();
-    
+
         if (!$gaji) {
             $gaji = new Gaji;
             $gaji->karyawan_id = $request->karyawan_id;
         }
-    
         $gaji->gaji_pokok = $request->gaji_pokok;
         $gaji->no_rek = $request->no_rek;
-    
         $gaji->save();
-    
         Alert::success('success', 'Gaji berhasil di Update');
         return redirect()->route('data.gaji');
     }
 
-//Proses Gaji
+    //Proses Gaji
     public function prosesGaji() {
-        $processData = Karyawan::select(
-            'karyawan.id as id_karyawan',
-            'karyawan.k_nama as karyawan_nama',
-            'divisis.d_nama as divisi_karyawan',
-            'karyawan_has_divisions.khr_isActive as status_karyawan',
-            'gaji.gaji_pokok as gaji_karyawan',
-            'gaji.no_rek as rek_karyawan'
-        )
-        ->join('karyawan_has_divisions', 'karyawan.id', '=', 'karyawan_has_divisions.karyawan_id')
-        ->join('divisis', 'karyawan_has_divisions.divisi_id', '=', 'divisis.id')
-        ->leftJoin('gaji', 'karyawan.id', '=', 'gaji.karyawan_id')
-        ->orderBy('karyawan.id')
-        ->get();
-
+        $processData = Payrolls::orderBy('updated_at', 'desc')->get();
         // dd($processData);
-
         return view('payroll.proses_gaji', compact('processData'));
     }
-    
-
 
     public function detailProsesGaji($id){
         $detailGaji = Karyawan::select(
@@ -143,7 +199,7 @@ class PayrollController extends Controller
         }
         // dd($detailData);
         return view('payroll.detail_proses', compact('detailGaji', 'komponenGaji'));
-        
+
     }
 
     public function billGaji(){
@@ -151,7 +207,7 @@ class PayrollController extends Controller
         $karyawan = Karyawan::all();
 
         return view('payroll.data_bill', compact('karyawan'));
-        
+
     }
     public function getKomponenGaji($karyawan_id){
         $dataKaryawan = Karyawan::find($karyawan_id);
@@ -181,5 +237,6 @@ class PayrollController extends Controller
                                     ->get();
         return $takeHomePays['0']['take_home_pay'] ?? 0;
     }
-    
+
+
 }

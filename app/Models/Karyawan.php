@@ -61,5 +61,5 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class); // Relasi balik, jika diperlukan
     }
-    
+
 }

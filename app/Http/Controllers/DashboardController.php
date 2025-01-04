@@ -14,7 +14,7 @@ class DashboardController extends Controller
         ];
 
         $today = Carbon::today()->toDateString();
-        $yesterday = Carbon::yesterday()->toDateString(); 
+        $yesterday = Carbon::yesterday()->toDateString();
 
         $todayCheckin = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             ->whereDate('reservations.reservation_checkin', $today)
             ->get();
 
-            
+
         $todayCheckout = DB::table('checkins')
                 ->leftJoin('checkouts', 'checkins.id', '=', 'checkouts.checkin_id')
                 ->join('rooms', 'checkins.room_id', '=', 'rooms.id')
@@ -51,7 +51,7 @@ class DashboardController extends Controller
                 $coutSupplier = DB::table('suppliers')->count();
 
                 $coutKaryawan = DB::table('karyawan_has_divisions')->where('khr_isActive', '1')->count();
-               
+
 
                 $vacantRoomCount = DB::table('rooms')
                     ->where('room_status', 'VACANT READY')
@@ -68,7 +68,7 @@ class DashboardController extends Controller
                 $vacantDirtyRoomCount = DB::table('rooms')
                     ->where('room_status', 'VACANT DIRTY')
                     ->count();
-              
+
                     // dd($vacantRoomCount);
 
             return view('dashboard', compact('coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));

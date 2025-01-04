@@ -16,6 +16,8 @@ class LatePointSetting extends Model
         'third_late',
         'third_latepoint',
         'besar_potongan',
-        'besar_point'
+        'besar_point',
+        'payroll_period',
+        'ot_price'
     ];
 }
