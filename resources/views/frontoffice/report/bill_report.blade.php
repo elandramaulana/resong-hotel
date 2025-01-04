@@ -24,14 +24,14 @@
                                                 value="{{ request('to') ?? now()->format('Y-m-d') }}">
                                         </div>
                                         <div class="col-auto">
-                                            <button type="submit" class="btn btn-primary mt-3">Filter</button>
+                                            <button type="submit" class="btn btn-primary mt-3  ">Filter</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <p class="font-weight-bold fs-5">Laporan {{ $FilterType ?? 'Harian' }}</p>
+                                    <p class="font-weight-bold fs-5">Laporan Bill</p>
                                     <p class="font-weight-bold">{{ $Tanggal }}</p>
                                 </div>
                                 <div class="table-responsive">
