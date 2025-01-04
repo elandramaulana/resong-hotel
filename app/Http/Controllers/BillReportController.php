@@ -13,55 +13,41 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BillReportController extends Controller
 {
-    private function detailCheckIn($dateNow, $category, $filterType = 'daily')
+    private function detailCheckIn($dateFrom, $dateTo, $category)
     {
         $query = CheckinDetail::where('item_category', $category);
 
-        switch ($filterType) {
-            case 'weekly':
-                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
-                break;
-            case 'monthly':
-                $query->whereMonth('created_at', $dateNow->month);
-                break;
-            default:
-                $query->whereDate('created_at', $dateNow);
+        // Apply date range if provided, otherwise default to today
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('created_at', [$dateFrom, $dateTo]);
+        } else {
+            $query->whereDate('created_at', Carbon::today());
         }
 
         return $query->sum('item_price');
     }
 
-    private function detailBarang($dateNow, $filterType = 'daily')
+    private function detailBarang($dateFrom, $dateTo)
     {
         $query = TransBarang::query();
 
-        switch ($filterType) {
-            case 'weekly':
-                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
-                break;
-            case 'monthly':
-                $query->whereMonth('created_at', $dateNow->month);
-                break;
-            default:
-                $query->whereDate('created_at', $dateNow);
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('created_at', [$dateFrom, $dateTo]);
+        } else {
+            $query->whereDate('created_at', Carbon::today());
         }
 
         return $query->sum('trans_harga');
     }
 
-    private function detailAsset($dateNow, $filterType = 'daily')
+    private function detailAsset($dateFrom, $dateTo)
     {
         $query = TransAsset::query();
 
-        switch ($filterType) {
-            case 'weekly':
-                $query->whereBetween('created_at', [$dateNow->startOfWeek(), $dateNow->endOfWeek()]);
-                break;
-            case 'monthly':
-                $query->whereMonth('created_at', $dateNow->month);
-                break;
-            default:
-                $query->whereDate('created_at', $dateNow);
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('created_at', [$dateFrom, $dateTo]);
+        } else {
+            $query->whereDate('created_at', Carbon::today());
         }
 
         return $query->sum('trans_harga');
@@ -69,58 +55,28 @@ class BillReportController extends Controller
 
     public function index(Request $request)
     {
-        $filter = $request->input('filter', 'daily'); // Default ke harian jika tidak ada filter
-        $dateNow = Carbon::now()->timezone('Asia/Jakarta');
+    // Get the date range from the request or default to today
+        $dateFrom = $request->input('from') ? Carbon::parse($request->input('from'))->startOfDay() : Carbon::today();
+        $dateTo = $request->input('to') ? Carbon::parse($request->input('to'))->endOfDay() : Carbon::today();
+
         Carbon::setLocale('id');
-        $startDate = $dateNow;
-        $endDate = $dateNow;
-        $formatDate = '';
+        $formatDate = $dateFrom->format('d/m/y') . ' - ' . $dateTo->format('d/m/y');
 
-        // Tentukan rentang tanggal berdasarkan filter
-        switch ($filter) {
-            case 'weekly':
-                $startDate = $dateNow->startOfWeek();
-                $endDate = $dateNow->endOfWeek();
-                $formatDate = $startDate->translatedFormat('d F Y') . ' - ' . $endDate->translatedFormat('d F Y');
-                $filterType = 'Mingguan';
-                break;
+        // Calculate details by category within the date range
+        $vacantTotal = $this->detailCheckIn($dateFrom, $dateTo, 'Rooms');
+        $serviceTotal = $this->detailCheckIn($dateFrom, $dateTo, 'Services');
+        $restoTotal = $this->detailCheckIn($dateFrom, $dateTo, 'Resto');
+        $laundryTotal = $this->detailCheckIn($dateFrom, $dateTo, 'Laundry');
+        $barangTotal = $this->detailBarang($dateFrom, $dateTo);
+        $assetTotal = $this->detailAsset($dateFrom, $dateTo);
 
-            case 'monthly':
-                $startDate = $dateNow->startOfMonth();
-                $endDate = $dateNow->endOfMonth();
-                $formatDate = $startDate->translatedFormat('F Y');
-                $filterType = 'Bulanan';
-                break;
-
-            default:
-                $formatDate = $dateNow->translatedFormat('l, d F Y');
-                $filterType = 'Harian';
-                break;
-        }
-
-        // Ambil data berdasarkan rentang tanggal yang ditentukan
-        $vacantTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
-            ->where('item_category', 'Rooms')
-            ->sum('item_price');
-        $serviceTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
-            ->where('item_category', 'Services')
-            ->sum('item_price');
-        $restoTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
-            ->where('item_category', 'Resto')
-            ->sum('item_price');
-        $laundryTotal = CheckinDetail::whereBetween('created_at', [$startDate, $endDate])
-            ->where('item_category', 'Laundry')
-            ->sum('item_price');
-        $barangTotal = TransBarang::whereBetween('created_at', [$startDate, $endDate])->sum('trans_harga');
-        $assetTotal = TransAsset::whereBetween('created_at', [$startDate, $endDate])->sum('trans_harga');
-
+        // Calculate subtotals
         $subTotalKredit = $vacantTotal + $serviceTotal + $restoTotal + $laundryTotal;
         $subTotalDebit = $barangTotal + $assetTotal;
 
+        // Prepare data for response
         $data = [
-            'Title' => "Bill Reports",
             'Tanggal' => $formatDate,
-            'FilterType' => $filterType,
             'Vacant' => $vacantTotal,
             'Service' => $serviceTotal,
             'Resto' => $restoTotal,
@@ -129,8 +85,16 @@ class BillReportController extends Controller
             'Asset' => $assetTotal,
             'SubTotalDebit' => $subTotalDebit,
             'SubTotalKredit' => $subTotalKredit,
-            'Total' => $subTotalKredit - $subTotalDebit,
+            'Total' => $subTotalKredit - $subTotalDebit
         ];
+
+        // Convert all numeric 0 values and totals to string "0"
+        $data = array_map(function ($value) {
+            if ($value === 0 || $value === '0') {
+                return "0";
+            }
+            return is_numeric($value) ? (string)$value : $value;
+        }, $data);
         return view('frontoffice.report.bill_report', $data);
     }
 }
