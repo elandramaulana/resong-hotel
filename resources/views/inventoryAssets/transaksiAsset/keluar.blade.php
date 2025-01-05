@@ -19,8 +19,6 @@
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-
-
                                 <div class="mb-3">
                                     <label for="trans_jenis" class="form-label">Jenis Transaksi</label>
                                     <select name="trans_jenis" class="form-control" id="trans_jenis">

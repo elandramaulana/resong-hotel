@@ -24,7 +24,9 @@ class AttendanceController extends Controller
     }
     public function getPunchOut($karyawan_id, $punchin_date) {
         //check count data dengan tanggal yg sama > 1 = ada checkout =/ <1 = tidak ada checkout
-        $cq = ScanLog::where('pin', $karyawan_id)->count();
+        $cq = ScanLog::where('pin', Karyawan::find($karyawan_id)->k_pin)
+                     ->whereDate('scan_date', $punchin_date)
+                     ->count();
         if ($cq > 1) {
 
         $Query = Karyawan::leftJoin('scan_logs', 'scan_logs.pin', '=', 'karyawan.k_pin')
@@ -61,7 +63,7 @@ class AttendanceController extends Controller
         $shift_clockin_time = DateTime::createFromFormat('H:i', $shift_in);
         $punch_in_time_obj = DateTime::createFromFormat('H:i', $punchinTime);
         //setData for LatePoint
-        
+
         $interval = $shift_clockin_time->diff($punch_in_time_obj);
         $hours = $interval->h;
         $minutes = $interval->i;
@@ -71,16 +73,16 @@ class AttendanceController extends Controller
             $totalMinutes = ($hours * 60) + $minutes; // terlambat
         }
         $getLateSetting = LatePointSetting::first();
-        $latePoint = 0;  
+        $latePoint = 0;
         if ($totalMinutes > 0) {
-            if ($totalMinutes <= $getLateSetting->first_late) { 
+            if ($totalMinutes <= $getLateSetting->first_late) {
                 $latePoint = $getLateSetting->first_latepoint;
             } elseif ($totalMinutes <= $getLateSetting->second_late) {
                 $latePoint = $getLateSetting->second_latepoint;
             } elseif ($totalMinutes <= $getLateSetting->third_late) {
                 $latePoint = $getLateSetting->third_latepoint;
             } else {
-                $latePoint = $getLateSetting->third_latepoint; 
+                $latePoint = $getLateSetting->third_latepoint;
             }
             $dataLate = [
                 'karyawan_id'=>$karyawan_id,
@@ -93,7 +95,7 @@ class AttendanceController extends Controller
         }else{
             return false;
         }
-       
+
         Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
     }
     public function recalculateLatePoint($karyawan_id,$shift_id, $date) {
@@ -111,7 +113,7 @@ class AttendanceController extends Controller
         $shift_clockin_time = DateTime::createFromFormat('H:i', $shift_in);
         $punch_in_time_obj = DateTime::createFromFormat('H:i', $punchinTime);
         //setData for LatePoint
-        
+
         $interval = $shift_clockin_time->diff($punch_in_time_obj);
         $hours = $interval->h;
         $minutes = $interval->i;
@@ -121,16 +123,16 @@ class AttendanceController extends Controller
             $totalMinutes = ($hours * 60) + $minutes; // terlambat
         }
         $getLateSetting = LatePointSetting::first();
-        $latePoint = 0;  
+        $latePoint = 0;
         if ($totalMinutes > 0) {
-            if ($totalMinutes <= $getLateSetting->first_late) { 
+            if ($totalMinutes <= $getLateSetting->first_late) {
                 $latePoint = $getLateSetting->first_latepoint;
             } elseif ($totalMinutes <= $getLateSetting->second_late) {
                 $latePoint = $getLateSetting->second_latepoint;
             } elseif ($totalMinutes <= $getLateSetting->third_late) {
                 $latePoint = $getLateSetting->third_latepoint;
             } else {
-                $latePoint = $getLateSetting->third_latepoint; 
+                $latePoint = $getLateSetting->third_latepoint;
             }
             $dataLate = [
                 'karyawan_id'=>$karyawan_id,
@@ -143,13 +145,13 @@ class AttendanceController extends Controller
         }else{
             return false;
         }
-       
+
         Log::info("Karyawan ID".$karyawan_id.' | shift :'.$shift_clockin.'| ckin:'.$punch_in.'| interval:'.$totalMinutes);
-    
+
     }
     public function countLatePoint($karyawan_id, $date, $month) {
         //get setting latepoint
         $getLateSetting = LatePointSetting::first();
-        
+
     }
 }

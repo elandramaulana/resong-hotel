@@ -54,7 +54,6 @@
                                             <div class="d-flex justify-content-center">
                                                 <img class="img-thumbnail" width="200" src="{{ asset('storage/' . $menu->menu_photo) }}" alt="">
                                             </div>
-                                         
                                         </td>
                                         <td>
                                             <div>
@@ -86,7 +85,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                               
+
                                             </div>
                                         </td>
                                     </tr>
@@ -94,7 +93,7 @@
                                     $counter_menu++;
                                 @endphp
                                     @endforeach
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -102,7 +101,7 @@
                 </div>
             </div>
 
-           
+
         </div>
     </div>
 </section>

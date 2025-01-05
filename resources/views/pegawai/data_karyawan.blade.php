@@ -21,7 +21,7 @@
                                             <a style="text-decoration: none; color:white"
                                                 href="{{ route('tambah.karyawan') }}">Tambah</a>
                                         </button>
-                                     
+
                                     </div>
                                 </div>
                             </div>
@@ -32,9 +32,9 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
-                                                <th>Id</th>
                                                 <th>Nama</th>
                                                 <th>Kontak</th>
+                                                <th>Email</th>
                                                 <th>Jenis Kelamin</th>
                                                 <th>Tanggal Bergabung</th>
                                                 <th>Status Aktif</th>
@@ -54,28 +54,24 @@
                                             @foreach ($karyawanData as $kr)
                                                 <tr>
                                                     <td>{{ $counter_karyawan }}</td>
-                                                    <td>{{ $kr->karyawan_id  }}</td>
                                                     <td>{{ $kr->nama_karyawan }}</td>
                                                     <td>{{ $kr->kontak_karyawan  }}</td>
+                                                    <td>{{ $kr->k_email  }}</td>
                                                     <td>{{ $kr->gender_karyawan}}</td>
-
                                                     <!-- Tanggal Bergabung -->
                                                     <td>
                                                         {{ $kr->tanggal_bergabung  ?? 'Belum Ada' }}
                                                     </td>
-
                                                     <!-- Status Aktif -->
                                                     <td>
                                                         {{ $kr->status_karyawan  ? 'Aktif' : 'Tidak Aktif' }}
                                                     </td>
-
                                                     <!-- Tanggal Keluar -->
                                                     <td>
                                                         {{ $kr->tanggal_keluar  ?? 'Masih Bekerja' }}
                                                     </td>
-
                                                     <td>{{ $kr->alamat_karyawan  }}</td>
-                                                    
+
                                                     <td>{{ $kr->nama_divisi }}</td>
 
                                                     <td>
@@ -146,7 +142,7 @@
 @section("jsSection")
     <script type="text/javascript">
         $(document).ready(function() {
-            $(document).on('click', '.setApproval', function (e) { 
+            $(document).on('click', '.setApproval', function (e) {
                 var khd_id = $(this).data('id');
                 var is_approval = $(this).is(':checked');
 
