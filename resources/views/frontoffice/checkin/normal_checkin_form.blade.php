@@ -134,11 +134,7 @@
                         <input value="{{ old('name_guest') }}" type="text" name="name_guest" class="form-control clearable" id="name_guest">
                         <x-input-error :messages="$errors->get('name_guest')" class="mt-2" />
                         </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#customerData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
+                        
                     </div>
 
                 <!-- TTL -->
@@ -236,11 +232,7 @@
                                 <input name="country" type="text" value="{{ old('country') }}" class="form-control clearable" id="country">
                                 <x-input-error :messages="$errors->get('country')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#countyData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
+                        
                     </div>
 
                 <!-- Provinsi -->
@@ -250,11 +242,7 @@
                                 <input name="province" type="text" class="form-control clearable" value="{{ old('province') }}" id="provinsi">
                                 <x-input-error :messages="$errors->get('province')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#provinceData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
+                        
                     </div>
 
 
@@ -265,11 +253,7 @@
                                 <input name="city" type="text" class="form-control clearable" id="city" value="{{ old('city') }}">
                                 <x-input-error :messages="$errors->get('city')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cityData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
+                       
                     </div>
 
 
