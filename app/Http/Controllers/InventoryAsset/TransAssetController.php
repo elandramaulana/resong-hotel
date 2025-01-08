@@ -28,7 +28,7 @@ class TransAssetController extends Controller
             'Title' => "Data Transaksi Asset"
         ];
         $trans = TransAsset::with('rAssets', 'rSupplierAsset')
-        ->orderBy('created_at', 'desc') 
+        ->orderBy('created_at', 'desc')
         ->get();
         return view('inventoryAssets.transaksiAsset.index', compact('Data', 'trans'));
     }
@@ -68,6 +68,7 @@ class TransAssetController extends Controller
 
     public function storeKeluar(Request $request)
     {
+
         $this->validasiTrans($request, 'sometimes');
         $data = [
             'asset_id' => $request->get('asset_id'),
