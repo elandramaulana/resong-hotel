@@ -46,21 +46,21 @@
                         <x-input-error :messages="$errors->get('d_deskripsi')" class="mt-2" />
                     </div>
 
-                     <div class="mb-3">
+                    <div class="mb-3">
                         <label for="d_jobdesc" class="form-label">Jobdesk</label>
-                        <textarea rows="3" value="{{ $divisi->d_jobdesc }}" name="d_jobdesc" type="text" class="form-control" id="d_jobdesc"></textarea>
+                        <textarea rows="3" name="d_jobdesc" class="form-control" id="d_jobdesc">{{ $divisi->d_jobdesc }}</textarea>
                         <x-input-error :messages="$errors->get('d_jobdesc')" class="mt-2" />
-                    </div>
+                    </div>                    
 
                     <div class="mb-3">
                         <label for="d_OT_approver" class="form-label">Over Time</label>
                         <select name="d_OT_approver" class="form-control" id="d_OT_approver">
-                            <option value="{{ $divisi->d_OT_approver }}" disabled selected>{{ $divisi->d_OT_approver }}</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="1" {{ $divisi->d_OT_approver == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ $divisi->d_OT_approver == 0 ? 'selected' : '' }}>No</option>
                         </select>
                         <x-input-error :messages="$errors->get('d_OT_approver')" class="mt-2" />
                     </div>
+                    
 
                      
                         <div class="mt-4 mb-3 d-flex justify-content-start ">

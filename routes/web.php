@@ -258,11 +258,9 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
     Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
     Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
-    // Kategori Menu
-    Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
-    Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
-    Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
-    Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
+    Route::get('/kategori-menu/edit/{id}', [KategoriMenuController::class, 'edit'])->name('edit.kategori.menu');
+    Route::post('/kategori-menu/update/{id}', [KategoriMenuController::class, 'updateKategori'])->name('update.kategori.menu');
+
 
     // Daftar Menu
     Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
