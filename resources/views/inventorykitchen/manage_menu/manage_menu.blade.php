@@ -54,14 +54,13 @@
                                             <div class="d-flex justify-content-center">
                                                 <img class="img-thumbnail" width="200" src="{{ asset('storage/' . $menu->menu_photo) }}" alt="">
                                             </div>
-                                         
                                         </td>
                                         <td>
                                             <div>
                                                 <button style="margin-right: 10px" type="submit" class="btn btn-warning btn-sm mt-2">
                                                    <a style="color: black" href="{{route('edit.menu', $menu->menu_id)}}">  <i class="fas fa-edit"></i></a>
                                                 </button>
-                                                <form action="{{ route('destroy.kategori', $menu->menu_id) }}" method="POST" style="display: inline;" id="deleteForm{{$menu->menu_id}}">
+                                                <form action="{{ route('destroy.menu', $menu->menu_id) }}" method="POST" style="display: inline;" id="deleteForm{{$menu->menu_id}}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal{{$menu->menu_id}}">
@@ -86,7 +85,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                               
+
                                             </div>
                                         </td>
                                     </tr>
@@ -94,7 +93,7 @@
                                     $counter_menu++;
                                 @endphp
                                     @endforeach
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -102,7 +101,7 @@
                 </div>
             </div>
 
-           
+
         </div>
     </div>
 </section>

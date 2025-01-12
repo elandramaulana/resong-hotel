@@ -16,7 +16,7 @@ class SupplierController extends Controller
             $totalSupplier = $suppliers->count();
             return new SupplierResource(true, 'Data Supplier', compact('suppliers', 'totalSupplier'));
         } catch (\Exception $e) {
-            return new SupplierResource(false, 'Gagal mendapatkan data supplier', null);
+            return new SupplierResource(false, 'Gagal mendapatkan data supplier', []);
         }
     }
 }

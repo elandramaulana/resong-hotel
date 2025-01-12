@@ -224,6 +224,7 @@ Route::middleware('auth', 'checkDivisi:3')->group(function () {
     Route::post('/store-kategori', [KategoriBarangController::class, 'storeCategori'])->name('store.kategori');
     Route::get('/edit-kategori-detail/{id}', [KategoriBarangController::class, 'edit'])->name('edit.kategori');
     Route::delete('/kategori/destroy/{id}', [KategoriBarangController::class, 'destroy'])->name('destroy.kategori');
+    Route::put('/kategori/{id}', [KategoriBarangController::class, 'update'])->name('kategori.update');
 
     // Barang
     Route::get('/list-trans-barang', [TransBarangController::class, 'index'])->name('list.trans');
@@ -246,7 +247,6 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::put('/update-menu/{id}', [MenuController::class, 'update'])->name('update.menu');
 
     // daily Menu
-    // daily Menu
     Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
     Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
     Route::get('/manage-daily-menu/{id}', [DaftarMenuController::class, 'manage'])->name('manage.daily');
@@ -258,11 +258,9 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
     Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
     Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
-    // Kategori Menu
-    Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
-    Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
-    Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
-    Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
+    Route::get('/kategori-menu/edit/{id}', [KategoriMenuController::class, 'edit'])->name('edit.kategori.menu');
+    Route::post('/kategori-menu/update/{id}', [KategoriMenuController::class, 'updateKategori'])->name('update.kategori.menu');
+
 
     // Daftar Menu
     Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day

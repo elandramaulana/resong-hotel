@@ -69,9 +69,11 @@ class DashboardController extends Controller
                     ->where('room_status', 'VACANT DIRTY')
                     ->count();
 
+                $kehadiranCount = DB::table('kehadirans')->count();
+
                     // dd($vacantRoomCount);
 
-            return view('dashboard', compact('coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
+            return view('dashboard', compact('kehadiranCount','coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
 
     }
 }

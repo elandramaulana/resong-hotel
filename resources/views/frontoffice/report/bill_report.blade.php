@@ -11,20 +11,27 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                 <h6 class="font-weight-bold text-warning">Bill Report</h6>
-                                <form method="GET" action="{{ route('bill.report') }}">
-                                    <div class="form-group mb-0 d-flex align-items-center">
-                                        <label for="filter" class="mr-2">Filter:</label>
-                                        <select name="filter" id="filter" class="form-control" onchange="this.form.submit()">
-                                            <option value="daily" {{ request('filter') == 'daily' ? 'selected' : '' }}>Harian</option>
-                                            <option value="weekly" {{ request('filter') == 'weekly' ? 'selected' : '' }}>Mingguan</option>
-                                            <option value="monthly" {{ request('filter') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
-                                        </select>
+                                <form method="GET" action="{{ route('bill.report') }}" id="filter-form">
+                                    <div class="form-row align-items-center">
+                                        <div class="col-auto">
+                                            <label for="from" class="mr-2">From:</label>
+                                            <input type="date" name="from" id="from" class="form-control"
+                                                value="{{ request('from') ?? now()->format('Y-m-d') }}">
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="to" class="mr-2">To:</label>
+                                            <input type="date" name="to" id="to" class="form-control"
+                                                value="{{ request('to') ?? now()->format('Y-m-d') }}">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="submit" class="btn btn-primary mt-3  ">Filter</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <p class="font-weight-bold fs-5">Laporan {{ $FilterType }}</p>
+                                    <p class="font-weight-bold fs-5">Laporan Bill</p>
                                     <p class="font-weight-bold">{{ $Tanggal }}</p>
                                 </div>
                                 <div class="table-responsive">
@@ -95,9 +102,4 @@
             </div>
         </section>
     </div>
-    <script>
-        document.getElementById('filter-select').addEventListener('change', function() {
-            document.getElementById('filter-form').submit();
-        });
-    </script>
 @endsection
