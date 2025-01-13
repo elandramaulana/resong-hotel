@@ -9,7 +9,7 @@
     <div class="d-sm-flex align-items-center justify-content-start">
         <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
     </div>
-    
+
     <div style="background: rgba(219, 176, 79, 0.3); padding-top:12px" class="row rounded text-dark text-center">
         <div class="col-sm-3">
             <p>Jam Check-In : 14:00</p>
@@ -27,7 +27,7 @@
 
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
-        @csrf;
+        @csrf
     <section  id="form-booking">
     <div class="container-fluid mt-4">
         <div class="card">
@@ -49,14 +49,21 @@
                                 <label for="invoice" class="form-label">#Invoice</label>
                                 <input value="{{ $no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" readonly>
                                 <x-input-error :messages="$errors->get('invoice')" class="mt-2" />
-            
+
                             </div>
 
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input readonly value="{{ $checkin_time }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input readonly value="{{ $checkin_time }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input name="checkin_hour" type="time" class="form-control" id="checkinHour">
+                                    <x-input-error :messages="$errors->get('checkin_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Adults -->
@@ -82,10 +89,17 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Date</label>
+                                    <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                    <input name="checkout_hour" type="time" class="form-control" id="checkoutHour">
+                                    <x-input-error :messages="$errors->get('checkout_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Children -->
@@ -221,7 +235,7 @@
                                 </label>
                                 </div>
                             </div>
-                          
+
                 </div>
 
                 <!-- Negara -->
@@ -266,7 +280,7 @@
                 <!-- Email -->
                 <div class="mt-3 row">
                         <label for="" class="col-sm-2 col-form-label">Email</label>
-                            
+
                             <div class="col-sm-8">
                                 <input name="email_address"  type="text" class="form-control clearable" id="frm_email" value="{{ old('email_address') }}">
                                 <x-input-error :messages="$errors->get('email_address')" class="mt-2" />
@@ -329,10 +343,10 @@
                         </button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        
+
     </div>
 </section>
 
@@ -391,7 +405,7 @@
                     </div>
                 </div>
       </div>
-   
+
     </div>
   </div>
 </div>
@@ -439,7 +453,7 @@
                     </div>
                 </div>
       </div>
-   
+
     </div>
   </div>
 </div>
@@ -486,7 +500,7 @@
                     </div>
                 </div>
       </div>
-   
+
     </div>
   </div>
 </div>
@@ -533,7 +547,7 @@
                     </div>
                 </div>
         </div>
-    
+
         </div>
     </div>
 </div>
