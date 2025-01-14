@@ -238,7 +238,7 @@
             @endif
             {{-- Inventaris barang --}}
             <!-- Heading -->
-            @if($manajemenAsset || Auth::user()->level_user == 'SUPERADMIN')
+            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading mt-3">
                 INVENTORY ASSETS
             </div>
