@@ -99,7 +99,9 @@ class BookingController extends Controller
             'is_extrabed' => 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->get('reservation_checkin'),
+            'reservation_time_checkin' => $request->get('res_in_hour'),
             'reservation_checkout' => $request->get('reservation_checkout'),
+            'reservation_time_checkout' => $request->get('res_out_hour'),
             'reservation_name' => $request->get('reservation_name'),
             'reservation_contact' => $request->get('reservation_contact'),
             'reservation_email' => $request->get('reservation_email'),
@@ -110,6 +112,8 @@ class BookingController extends Controller
             'reservation_desc' => $request->get('reservation_desc'),
             'reservation_status' => "New"
         ];
+        // dd($data);
+        // die;
         //store to database
         if (Reservation::create($data)) {
             $return = ['status' => 'success', 'message' => 'Reservasi untuk ' . $request->get('reservation_name') . ' Berhasil'];
@@ -123,6 +127,8 @@ class BookingController extends Controller
         $request->session()->put('form_data', $formData);
         $data = session('form_data');
         $reservation_checkin = $data['reservation_checkin'];
+        $res_in_hour = $data['res_in_hour'];
+        $res_out_hour = $data['res_out_hour'];
         // dd($reservation_checkin);
         $reservation_checkout = $data['reservation_checkout'];
         $qty_guest = $data['qty_guest'] ?? 1;
@@ -133,7 +139,9 @@ class BookingController extends Controller
             'Title' => 'Pilih Kamar',
             'availableRoom' => $availableRooms,
             'reservation_checkin' => $reservation_checkin,
+            'res_in_hour' => $res_in_hour,
             'reservation_checkout' => $reservation_checkout,
+            'res_out_hour' => $res_out_hour,
             'qty_guest' => $qty_guest,
         ];
         return view('frontoffice.reservation.booking_room_number', $Data);
@@ -161,7 +169,9 @@ class BookingController extends Controller
         $room_detail = Rooms::find($id);
         $dataSession = session('form_data');
         $reservation_checkin = $dataSession['reservation_checkin'];
+        $reservation_time_checkin = $dataSession['res_in_hour'];
         $reservation_checkout = $dataSession['reservation_checkout'];
+        $reservation_time_checkout = $dataSession['res_out_hour'];
         $detail_tamu = [
             'reservation_name' => $dataSession['reservation_name'],
             'reservation_contact' => $dataSession['reservation_contact'],
@@ -169,6 +179,8 @@ class BookingController extends Controller
             'reservation_chanel' => $dataSession['reservation_chanel'],
             'qty_guest' => $dataSession['qty_guest'],
             'reservation_checkin' => $reservation_checkin,
+            'reservation_time_checkin' => $reservation_time_checkin,
+            'reservation_time_checkout' => $reservation_time_checkout,
             'reservation_checkout' => $reservation_checkout,
             'reservation_desc' => $dataSession['reservation_desc'] ?? "",
             'qty_hari' => daysInterval($reservation_checkin, $reservation_checkout)
@@ -336,7 +348,9 @@ class BookingController extends Controller
             'qty_guest' => 'nullable|integer',
             'reservation_chanel' => 'required|string',
             'reservation_checkin' => 'required|date',
+            'reservation_time_checkin' => 'required|time',
             'reservation_checkout' => 'required|date',
+            'reservation_time_checkout' => 'required|time',
             'reservation_desc' => 'nullable|string',
             'room_id' => 'required|integer|exists:rooms,id',
             'reservation_payment_status' => 'required|string',
@@ -357,7 +371,9 @@ class BookingController extends Controller
             'is_extrabed' => 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->reservation_checkin,
+            'reservation_time_checkin' => $request->reservation_checkin_hour,
             'reservation_checkout' => $request->reservation_checkout,
+            'reservation_time_checkout' => $request->reservation_checkout_hour,
             'reservation_name' => $request->reservation_name,
             'reservation_contact' => $request->reservation_contact,
             'reservation_email' => $request->reservation_email,

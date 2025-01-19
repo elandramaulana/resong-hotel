@@ -27,7 +27,7 @@
 
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
-        @csrf;
+        @csrf
     <section  id="form-booking">
     <div class="container-fluid mt-4">
         <div class="card text-left">
@@ -78,10 +78,17 @@
                             </div>
 
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input readonly value="{{ $checkin_time }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input readonly value="{{ $checkin_time }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input name="checkin_hour" type="time" class="form-control" id="checkinHour">
+                                    <x-input-error :messages="$errors->get('checkin_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Adults -->
@@ -107,10 +114,17 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Date</label>
+                                    <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                    <input name="checkout_hour" type="time" class="form-control" id="checkoutHour">
+                                    <x-input-error :messages="$errors->get('checkout_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Children -->
@@ -158,11 +172,6 @@
                         <div class="col-sm-8">
                         <input value="{{ old('name_guest') }}" type="text" name="name_guest" class="form-control clearable" id="name_guest">
                         <x-input-error :messages="$errors->get('name_guest')" class="mt-2" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#customerData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
                         </div>
                     </div>
 
@@ -260,11 +269,6 @@
                                 <input name="country" type="text" value="{{ old('country') }}" class="form-control clearable" id="country">
                                 <x-input-error :messages="$errors->get('country')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#countyData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
                     </div>
 
                 <!-- Provinsi -->
@@ -274,11 +278,6 @@
                                 <input name="province" type="text" class="form-control clearable" value="{{ old('province') }}" id="provinsi">
                                 <x-input-error :messages="$errors->get('province')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#provinceData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
                     </div>
 
 
@@ -289,11 +288,6 @@
                                 <input name="city" type="text" class="form-control clearable" id="city" value="{{ old('city') }}">
                                 <x-input-error :messages="$errors->get('city')" class="mt-2" />
                             </div>
-                        <div class="col-sm-2">
-                            <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cityData">
-                                <i style="color: black;" class="fas fa-database"></i>
-                            </button>
-                        </div>
                     </div>
 
 

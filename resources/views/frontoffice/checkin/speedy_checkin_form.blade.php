@@ -22,13 +22,19 @@
                                     <div class="col-sm-12">
                                         <label for="bookingNumber" class="form-label">Nama Reservasi</label>
                                         <input value="" name="reservation_name" type="text" class="form-control" id="reservation_name">
-                                    </div>    
+                                    </div>
                             </div>
 
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input name="speedy_checkin_time" value="" type="text" readonly class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input name="speedy_checkin_time" value="" type="text" readonly class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input name="speedy_checkin_hour" type="time" class="form-control" id="checkinHour" readonly>
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -46,11 +52,17 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input readonly name="speedy_checkout_time" value="" type="text" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                            </div>   
-                            
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Date</label>
+                                    <input readonly name="speedy_checkout_time" value="" type="text" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                    <input name="speedycheckout_hour" type="time" class="form-control" id="checkoutHour" readonly>
+                                </div>
+                            </div>
+
                             <div class="mb-3">
                                 <label for="children" class="form-label">Jumlah Anak-anak</label>
                                 <input value="{{ old('number_of_children') }}" name="number_of_children" type="number" class="form-control" id="children" >
@@ -58,7 +70,7 @@
                             </div>
                         </div>
                         <h4>Lengkapi Data Tamu</h4>
-             
+
 
                         <section  id="form-detail">
                             <div class="container-fluid mt-4 mb-5 ">
@@ -76,13 +88,13 @@
                                                         <x-input-error :messages="$errors->get('id_type')" class="mt-2" />
                                                     </div>
                                                 </div>
-                        
+
                                                 <div class="col-sm-4">
                                                     <input name="id_number" value="{{ old('id_number') }}" type="text" class="form-control" id="id_number">
                                                     <x-input-error :messages="$errors->get('id_number')" class="mt-2" />
                                                 </div>
                                         </div>
-                        
+
                                         <!-- Nama -->
                                             <div class="mb-3 row">
                                                 <label for="name" class="col-sm-2 col-form-label ">Name*</label>
@@ -90,13 +102,9 @@
                                                 <input value="{{ old('name_guest') }}" type="text" name="name_guest" class="form-control " id="name_guest">
                                                 <x-input-error :messages="$errors->get('name_guest')" class="mt-2" />
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#customerData">
-                                                        <i style="color: black;" class="fas fa-database"></i>
-                                                    </button>
-                                                </div>
+
                                             </div>
-                        
+
                                         <!-- TTL -->
                                             <div class="row ">
                                                 <label for="ttl" class="col-sm-2 col-form-label">Tempat, Tanggal Lahir</label>
@@ -104,13 +112,13 @@
                                                         <input name="place_of_birth" value="{{ old('place_of_birth') }}" type="text" class="form-control clearable" id="place_of_birth">
                                                         <x-input-error :messages="$errors->get('place_of_birth')" class="mt-2" />
                                                     </div>
-                        
+
                                                     <div class="col-sm-4">
                                                         <input value="{{ old('date_of_birth') }}" name="date_of_birth" type="text" class="form-control clearable" id="date_of_birth" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                                         <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
                                                     </div>
                                             </div>
-                        
+
                                         <!-- Gender -->
                                             <div class="mt-3 row">
                                                 <label for="gender" class="col-sm-2 col-form-label">Jenis Kelamin*</label>
@@ -122,7 +130,7 @@
                                                         </label>
                                                         </div>
                                                     </div>
-                        
+
                                                     <div class="col-sm-3">
                                                         <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="gender" value="Perempuan" id="genderFemale">
@@ -133,8 +141,8 @@
                                                     </div>
                                                     <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                                             </div>
-                        
-                        
+
+
                                         <!-- Agama -->
                                             <div class="row">
                                                     <label for="" class="col-sm-2 col-form-label">Agama</label>
@@ -153,7 +161,7 @@
                                                         </div>
                                                         <x-input-error :messages="$errors->get('religion')" class="mt-2" />
                                             </div>
-                        
+
                                         <!-- Title -->
                                         <div class="row">
                                                 <label for="name" class="col-sm-2 col-form-label">Title</label>
@@ -165,7 +173,7 @@
                                                         </label>
                                                         </div>
                                                     </div>
-                        
+
                                                     <div class="col-sm-3 ">
                                                         <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="title" value="Mrs" id="titleMrs">
@@ -182,9 +190,9 @@
                                                         </label>
                                                         </div>
                                                     </div>
-                                                  
+
                                         </div>
-                        
+
                                         <!-- Negara -->
                                         <div class="row">
                                                 <label for="country" class="col-sm-2 col-form-label">Negara</label>
@@ -192,13 +200,9 @@
                                                         <input name="country" type="text" value="{{ old('country') }}" class="form-control clearable" id="country">
                                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                                     </div>
-                                                <div class="col-sm-2">
-                                                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#countyData">
-                                                        <i style="color: black;" class="fas fa-database"></i>
-                                                    </button>
-                                                </div>
+
                                             </div>
-                        
+
                                         <!-- Provinsi -->
                                         <div class="mt-3 row">
                                                 <label for="province" class="col-sm-2 col-form-label">Provinsi</label>
@@ -206,14 +210,9 @@
                                                         <input name="province" type="text" class="form-control clearable" value="{{ old('province') }}" id="provinsi">
                                                         <x-input-error :messages="$errors->get('province')" class="mt-2" />
                                                     </div>
-                                                <div class="col-sm-2">
-                                                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#provinceData">
-                                                        <i style="color: black;" class="fas fa-database"></i>
-                                                    </button>
-                                                </div>
                                             </div>
-                        
-                        
+
+
                                         <!-- Kota -->
                                         <div class="mt-3 row">
                                                 <label for="name" class="col-sm-2 col-form-label">Kota</label>
@@ -221,14 +220,9 @@
                                                         <input name="city" type="text" class="form-control clearable" id="city" value="{{ old('city') }}">
                                                         <x-input-error :messages="$errors->get('city')" class="mt-2" />
                                                     </div>
-                                                <div class="col-sm-2">
-                                                    <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cityData">
-                                                        <i style="color: black;" class="fas fa-database"></i>
-                                                    </button>
-                                                </div>
                                             </div>
-                        
-                        
+
+
                                         <!-- Kode Pos -->
                                         <div class="row mt-3">
                                                 <label for="" class="col-sm-2 col-form-label">Kode Pos</label>
@@ -237,19 +231,19 @@
                                                         <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
                                                     </div>
                                             </div>
-                        
-                        
+
+
                                         <!-- Email -->
                                         <div class="mt-3 row">
                                                 <label for="" class="col-sm-2 col-form-label">Email</label>
-                                                    
+
                                                     <div class="col-sm-8">
                                                         <input name="email_address"  type="text" class="form-control clearable" id="frm_email" value="{{ old('email_address') }}">
                                                         <x-input-error :messages="$errors->get('email_address')" class="mt-2" />
                                                     </div>
                                             </div>
-                        
-                        
+
+
                                         <!-- No Telp -->
                                         <div class=" mt-3 row">
                                                 <label for="" class="col-sm-2 col-form-label">No Telp</label>
@@ -258,8 +252,8 @@
                                                         <x-input-error :messages="$errors->get('telp_number')" class="mt-2" />
                                                     </div>
                                             </div>
-                        
-                        
+
+
                                         <!-- Upload Dokumen -->
                                          {{-- <div class=" mt-3 row">
                                                 <label for="name" class="col-sm-2 col-form-label">Upload Foto Dokumen</label>
@@ -270,12 +264,12 @@
                                                     </div>
                                                 </div>
                                             </div> --}}
-                        
-                                       
-                         
+
+
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </section>
                         <div class="mt-4 mb-3 d-flex justify-content-start ">

@@ -37,6 +37,28 @@ class KategoriMenuController extends Controller
         return redirect()->route('kategori.menu');
     }
 
+    public function edit($id)
+    {
+        $kategori = KategoriMenu::findOrFail($id);
+        return view('inventorykitchen.daftar_menu.edit_kategori_menu', compact('kategori'));
+    }
+
+    public function updateKategori(Request $request, $id)
+    {
+        $request->validate([
+            'nama_kategori' => 'required|string|max:255',
+        ]);
+
+        $kategori = KategoriMenu::findOrFail($id);
+        $kategori->update([
+            'nama_kategori' => $request->get('nama_kategori'),
+        ]);
+
+        Alert::success('Success', 'Kategori Berhasil Diupdate');
+        return redirect()->route('kategori.menu');
+    }
+
+
     public function destroy($id)
     {
         $kategori = KategoriMenu::findOrFail($id);

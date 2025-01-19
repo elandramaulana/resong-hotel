@@ -47,7 +47,7 @@
                                                     <td>{{$d->d_nama}}</td>
                                                     <td>{{$d->d_deskripsi}}</td>
                                                     <td>{{$d->d_jobdesc}}</td>
-                                                    <td>{{$d->d_OT_approver}}</td>
+                                                      <td>{{ $d->d_OT_approver == 1 ? 'Yes' : 'No' }}</td>
                                                     <td>
                                                         <div>
                                                             <button style="margin-right: 10px" type="submit"
@@ -55,43 +55,33 @@
                                                                 <a style="color: black" href="{{ route('edit.divisi', ['id' => $d->id ]) }}"> <i
                                                                         class="fas fa-edit"></i></a>
                                                             </button>
-                                                            <form action="{{route('destroy.divisi',['id' => $d->id ])}}" method="POST" style="display: inline;"
-                                                                id="deleteForm">
+                                                            <form action="{{ route('destroy.divisi', ['id' => $d->id]) }}" method="POST" style="display: inline;" id="deleteForm-{{ $d->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button" class="btn btn-warning btn-sm mt-2"
-                                                                    data-toggle="modal"
-                                                                    data-target="#deleteConfirmationModal">
+                                                                <button type="button" class="btn btn-warning btn-sm mt-2" data-toggle="modal" data-target="#deleteConfirmationModal-{{ $d->id }}">
                                                                     <i style="color: black" class="fas fa-trash-alt"></i>
                                                                 </button>
                                                             </form>
-                                                            <!-- Delete Confirmation Modal for each post -->
-                                                            <div class="modal fade" id="deleteConfirmationModal"
-                                                                tabindex="-1"
-                                                                aria-labelledby="deleteConfirmationModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-sm">
+                                                            
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="deleteConfirmationModal-{{ $d->id }}" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
                                                                     <div class="modal-content">
-                                                                        <div
-                                                                            class="modal-body d-flex justify-content-center">
-                                                                            <img class=""
-                                                                                src="{{ asset('assets/img/alert.png') }}"
-                                                                                alt="">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Hapus</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
-                                                                        <div
-                                                                            class="col-sm-12 d-flex justify-content-center">
-                                                                            <p>Yakin hapus data?</p>
+                                                                        <div class="modal-body">
+                                                                            Apakah Anda yakin ingin menghapus data ini?
                                                                         </div>
-                                                                        <div
-                                                                            class="modal-footer d-flex justify-content-center">
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">Batal</button>
-                                                                            <button type="submit" class="btn btn-danger"
-                                                                                onclick="document.getElementById('deleteForm').submit()">Hapus</button>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                                            <button type="submit" form="deleteForm-{{ $d->id }}" class="btn btn-danger">Hapus</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -24,7 +24,9 @@
                                                 <th>NO</th>
                                                 <th>Guest Name</th>
                                                 <th>Room</th>
+                                                <th>Check-in Date</th>
                                                 <th>Check-in Time</th>
+                                                <th>Check-out Date</th>
                                                 <th>Check-out Time</th>
                                                 <th>Channel</th>
                                                 <th>Down Payment</th>
@@ -46,7 +48,9 @@
                                                     <td>{{ $dt->reservation_name }}</td>
                                                     <td>{{ $dt->room_no }}</td>
                                                     <td>{{ $showCheckinDate }}</td>
+                                                    <td>17:00</td>
                                                     <td>{{ $showCheckoutDate }}</td>
+                                                    <td>20:00</td>
                                                     <td>{{ $dt->reservation_chanel }}</td>
                                                     <td>{{ $showDP }}</td>
                                                     <td>

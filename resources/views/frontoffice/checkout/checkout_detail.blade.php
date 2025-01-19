@@ -25,7 +25,7 @@
         </div>
     @endif
     <!-- Checkout Detail -->
-    
+
     <section  id="form-booking">
     <div class="container-fluid mt-4">
         <div class="card">
@@ -59,11 +59,17 @@
                                 <label for="nama" class="form-label">Nama</label>
                                 <input value="{{ $detailCheckin->name_guest }}" name="nama" type="text" class="form-control" id="invoice" disabled>
                             </div>
- 
+
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input value="{{ $detailCheckin->date_checkin }}" name="checkin_time" type="date" class="form-control" id="checkinTime" disabled>
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input value="{{ $detailCheckin->date_checkin }}" name="checkin_time" type="date" class="form-control" id="checkinTime" disabled>
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input name="checkin_hour" type="time" class="form-control" id="checkinHour" readonly value="{{ $detailCheckin->time_checkin }}">
+                                </div>
                             </div>
 
                             <!-- Number of Adults -->
@@ -73,7 +79,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <!-- Right Column -->
                         <div class="col-md-6">
@@ -83,18 +89,25 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                @php
-                                    if ($detailCheckin->date_checkout > date("Y-m-d") ){
-                                        $disabled = ""; 
-                                    }else{
-                                        $disabled = "disabled";
-                                    }
-                                @endphp
-                                
-                                <input value="{{ $detailCheckin->date_checkout }}"  type="date" class="form-control" name="checkoutTime" id="checkoutTime" {{ $disabled }}>
-                                <x-input-error :messages="$errors->get('checkoutTime')" class="mt-2"/>
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Time</label>
+                                    @php
+                                        if ($detailCheckin->date_checkout > date("Y-m-d") ){
+                                            $disabled = "";
+                                        }else{
+                                            $disabled = "disabled";
+                                        }
+                                    @endphp
+
+                                    <input value="{{ $detailCheckin->date_checkout }}"  type="date" class="form-control" name="checkoutTime" id="checkoutTime" {{ $disabled }}>
+                                    <x-input-error :messages="$errors->get('checkoutTime')" class="mt-2"/>
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                    <input name="checkout_hour" type="time" class="form-control" id="checkoutHour" value="{{ $detailCheckin->time_checkout ?? '' }}">
+                                    <x-input-error :messages="$errors->get('checkout_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Children -->
@@ -125,12 +138,12 @@
                     {{-- <button class="btn btn-print" onclick="window.location='{{ route('generate.invoice', $detailCheckin->checkin_id) }}'">
                         Print PDF
                     </button> --}}
-                    
-                
+
+
                 </div>
 
             </div>
-           
+
             <div class="container-fluid">
                 <hr style="border-color: black; margin-left:-10px" class="col-12 mt-3 mb-2 border-bottom border-3">
             </div>
@@ -155,7 +168,7 @@
                             @php
                                 $showprice = formatCurrency($det->item_price);
                                 $ShowTotal = formatCurrency($det->item_price * $det->item_qty);
-                                $subTotal += $det->item_price * $det->item_qty; 
+                                $subTotal += $det->item_price * $det->item_qty;
                             @endphp
                             <tr>
                                 <td>{{ $det->item_name }}</td>
@@ -170,11 +183,11 @@
                     </tbody>
                 </table>
             </div>
-            
+
 
             <div class="container">
                     <form method="POST" action="{{ route("checkout.action") }}">
-                        @csrf   
+                        @csrf
                         <input type="text" hidden name="checkin_id" value="{{ $detailCheckin->checkin_id }}" >
                         <div class="row">
                                 <!-- Deposit -->
@@ -245,7 +258,7 @@
         var deposit = {{ $detailCheckin->payment }};
         var total = {{ $subTotal }};
         var grandTotal = {{ $subTotal }};
-        
+
         // Set initial grand total value
         $("#inputGrandTotal").val(formatCurrency(grandTotal));
 
@@ -293,7 +306,7 @@
                 $("#checkoutButton").attr('disabled', 'disabled');
             }
         }
-        
+
         // Format number for currency display
         function formatCurrency(value) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
@@ -363,7 +376,7 @@
              <div class="card-header py-3">
                 <h3 class="font-weight-bolder">Extend</h3>
             </div>
-                   
+
                     <div class="card-body">
                     <form action="{{ route('checkout.extend') }}" method="POST" id="extendForm">
                         <div class="row">
@@ -397,12 +410,12 @@
                                     Submit
                                 </button>
                             </div>
-                        
+
                 </form>
                     </div>
         </div>
       </div>
-   
+
     </div>
   </div>
 </div>
