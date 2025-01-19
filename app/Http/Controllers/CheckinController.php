@@ -15,10 +15,13 @@ use Illuminate\Http\Request;
 class CheckinController extends Controller
 {
     public function index() : View {
+        $RoomData = Rooms::all();
         $Data = [
             'Title'=>'Regular Checking',
+            'rooms'=>$RoomData
         ];
-        return view('frontoffice.checkin.normal_checkin', $Data);
+        // return view('frontoffice.checkin.normal_checkin', $Data);
+        return view('frontoffice.checkin.normal_checkin_table', $Data);
     }
     public function speedy_post(PostSpeedyCheckin $request) {
         $getDetailReservation = Reservation::where('reservation_name', $request->reservation_name)
@@ -110,12 +113,13 @@ class CheckinController extends Controller
             'no_invoice'=>$invoice,
             'checkin_time'=>date('Y-m-d')
         ];
-        return view('frontoffice.checkin.normal_checkin_form', $Data);
+        // return view('frontoffice.checkin.normal_checkin_form', $Data);
+        return view('frontoffice.checkin.normal_checkin_form_new', $Data);
     }
 
     public function store(NormalCheckinRequest $request) {
         //store or get guest information before create checkin event
-        //get guest info 
+        //get guest info
         $name_guest = $request->name_guest;
         $id_type = $request->id_type;
         $id_number = $request->id_number;
@@ -145,7 +149,7 @@ class CheckinController extends Controller
         }else{
             $guest_id = $Guest->id;
         }
-        
+
         //checkin info
         $checkin = $request->checkin_time;
         $checkout = $request->checkout_time;
@@ -164,7 +168,7 @@ class CheckinController extends Controller
             'date_checkout'=>$checkout,
             'guest_adult'=>$adults,
             'guest_kids'=>$children,
-            // 'is_extrabed'=>1, 
+            // 'is_extrabed'=>1,
             'payment_status' =>'DEPOSIT',
             'payment'=>$request->deposit,
             'payment_method'=>$request->payment_method,
