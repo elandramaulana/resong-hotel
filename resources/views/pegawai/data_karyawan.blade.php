@@ -32,6 +32,8 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
+                                                <th>No</th>
+                                                <th>Id</th>
                                                 <th>Nama</th>
                                                 <th>email</th>
                                                 <th>Kontak</th>
