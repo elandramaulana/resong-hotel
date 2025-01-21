@@ -24,6 +24,19 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
+                                    <h3>Extrabed Price Settings</h3>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="">Harga Extrabed</label>
+                                                <input type="number" value="{{ $latePointSetting['extrabed_price'] ?? ""}}" name="extrabed_price" id="extrabed_price" class="form-control" placeholder="Masukan harga extrabed" aria-describedby="helpId">
+                                                <i class="showerror"></i>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="">Pajak (%)</label>
+                                                <input type="number" value="{{ $latePointSetting['pajak_checkin'] ?? ""}}" name="pajak_checkin" id="pajak_checkin" class="form-control" placeholder="Masukan pajak" aria-describedby="helpId">
+                                                <i class="showerror"></i>
+                                            </div>
+                                        </div>
                                     <h3>Late Point Settings</h3>
                                         <div class="row">
                                             <h6 class="font-weight-bold text-dark">Checkpoint I</h6>

@@ -62,19 +62,32 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="reservation_checkin" class="form-label">Check-in Time</label>
-                                    <input value="" name="reservation_checkin" value="{{ old('reservation_checkin') }}" type="text" class="form-control" id="reservation_checkin" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                    <x-input-error :messages="$errors->get('reservation_checkin')" class="mt-2" />
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="reservation_checkin" class="form-label">Check-in Time</label>
+                                        <input value="" name="reservation_checkin" value="{{ old('reservation_checkin') }}" type="text" class="form-control" id="reservation_checkin" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                        <x-input-error :messages="$errors->get('reservation_checkin')" class="mt-2" />
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="checkinHour" class="form-label">Check-in Time</label>
+                                        <input name="res_in_hour" type="time" class="form-control" id="checkinHour">
+                                    </div>
                                 </div>
                             </div>
                             <!-- Right Column -->
                             <div class="col-md-6">
                                 <!-- Check-out Time -->
-                                <div class="mb-3">
-                                    <label for="reservation_checkout" class="form-label">Check-out Time</label>
-                                    <input name="reservation_checkout" type="date" value="{{ old('reservation_checkout') }}" class="form-control" id="reservation_checkout" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                    <x-input-error :messages="$errors->get('reservation_checkout')" class="mt-2" />
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="reservation_checkout" class="form-label">Check-out Time</label>
+                                        <input name="reservation_checkout" type="date" value="{{ old('reservation_checkout') }}" class="form-control" id="reservation_checkout" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                        <x-input-error :messages="$errors->get('reservation_checkout')" class="mt-2" />
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                        <input name="res_out_hour" type="time" class="form-control" id="checkoutHour">
+                                        <x-input-error :messages="$errors->get('res_out_hour')" class="mt-2" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
