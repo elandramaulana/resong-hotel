@@ -85,13 +85,8 @@ public function filterAbsensi(Request $request)
             ->from('scan_logs')
             ->whereRaw('scan_logs.pin = karyawan.k_pin');
     });
-
     $tgl = $request->get('tanggal_absen');
-
-
     $absensi = $query->get();
-
-
     $transformedAbsensi = $absensi->map(function ($item) use ($tgl) {
         $AttController = New AttendanceController();
         $checkin = $AttController->getPunchInnOut($item->karyawan_id, $tgl);
@@ -102,7 +97,7 @@ public function filterAbsensi(Request $request)
         if (is_null($checkin['punch_in'])) {
             $status = 'Undefined';
             $status_class = 'btn-secondary';
-        } elseif ($checkin['punch_in'] <= $item->s_clock_in) {
+        } elseif (Carbon::parse($checkin['punch_in'])->format('H:i') <= Carbon::parse($item->s_clock_in)->format('H:i')) {
             $status = 'Ontime';
             $status_class = 'btn-success';
         } else {
@@ -110,15 +105,23 @@ public function filterAbsensi(Request $request)
             $status_class = 'btn-danger';
         }
 
-        $punch_in_time = is_null($checkin['punch_in']) ? '-' : Carbon::parse($checkin['punch_in'])->format('H:i');
-        $punch_out_time = is_null($checkin['punch_out']) ? '-' : Carbon::parse($checkin['punch_out'])->format('H:i');
+        if (!empty($checkin['punch_out']) && strtotime($checkin['punch_out'])) {
+            $punch_out_time =  Carbon::parse($checkin['punch_out'])->format('H:i');
+        } else {
+            $punch_out_time = '-';
+        }
+        if (!empty($checkin['punch_in']) && strtotime($checkin['punch_in'])) {
+            $punch_in_time =  Carbon::parse($checkin['punch_in'])->format('H:i');
+        } else {
+            $punch_in_time = '-';
+        }
 
         return [
             'nama' => $item->k_nama,
             'divisi' => $item->d_nama,
             'tanggal' => $item->scan_date,
-            'punch_in' => $punch_in_time,
-            'punch_out' => $punch_out_time,
+            'punch_in' => $punch_in_time ?? '-',
+            'punch_out' => $punch_out_time ?? '-',
             'shift_nama' => $item->s_nama,
             'schedule_in' => $item->s_clock_in,
             'schedule_out' => $item->s_clock_out,

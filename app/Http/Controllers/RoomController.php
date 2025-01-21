@@ -27,7 +27,6 @@ class RoomController extends Controller
             'room_capacity' => 'required',
             'room_extrabed' => 'required',
             'room_price' => 'required',
-            'room_status' => 'required',
             'bed_type' => 'required',
         ]);
 

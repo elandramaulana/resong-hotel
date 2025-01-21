@@ -27,7 +27,7 @@ class KaryawanController extends Controller
         return response()->json($return);
     }
     public function index()
-{
+    {
     $Data = [
         'Title' => "Daftar Karyawan"
     ];
@@ -44,6 +44,7 @@ class KaryawanController extends Controller
             'k.k_contact as kontak_karyawan',
             'k.k_alamat as alamat_karyawan',
             'k.k_gender as gender_karyawan',
+            'k.k_email',
             'khd.id as khd_id',
             'khd.khr_tgljoin as tanggal_bergabung',
             'khd.khr_isActive as status_karyawan',

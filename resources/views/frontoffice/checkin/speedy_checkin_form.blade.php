@@ -90,7 +90,7 @@
                                                 <input value="{{ old('name_guest') }}" type="text" name="name_guest" class="form-control " id="name_guest">
                                                 <x-input-error :messages="$errors->get('name_guest')" class="mt-2" />
                                                 </div>
-                                               
+                                                
                                             </div>
                         
                                         <!-- TTL -->
@@ -188,7 +188,7 @@
                                                         <input name="country" type="text" value="{{ old('country') }}" class="form-control clearable" id="country">
                                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                                     </div>
-                                               
+                                                
                                             </div>
                         
                                         <!-- Provinsi -->
@@ -198,7 +198,6 @@
                                                         <input name="province" type="text" class="form-control clearable" value="{{ old('province') }}" id="provinsi">
                                                         <x-input-error :messages="$errors->get('province')" class="mt-2" />
                                                     </div>
-                                                
                                             </div>
                         
                         
