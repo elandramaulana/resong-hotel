@@ -41,6 +41,8 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
+use App\Http\Controllers\WeeklyReportController;
+use App\Http\Controllers\MonthlyReportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -389,6 +391,9 @@ Route::middleware('auth', 'checkDivisi:7')->group(function () {
     // Report
     Route::get('/bill-report', [BillReportController::class, 'index'])->name('bill.report');
     Route::get('/bill-detail', [BillReportController::class, 'detail'])->name('bill.detail');
+    Route::get('/monthly-report', [MonthlyReportController::class, 'index'])->name('monthly.report');
+    Route::get('/weekly-report', [WeeklyReportController::class, 'index'])->name('weekly.report');
+
 });
 
 
