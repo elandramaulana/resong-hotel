@@ -186,8 +186,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('bill.report') }}">Bill Report</a>
-                        <a class="collapse-item" href="{{ route('guest_database') }}">Channel Report</a>
-                        <a class="collapse-item" href="{{ route('guest_database') }}">Room Report</a>
+                        <a class="collapse-item" href="{{ route('monthly.report') }}">Monthly Report</a>
+                        <a class="collapse-item" href="{{ route('weekly.report') }}">Weekly Report</a>
                     </div>
                 </div>
             </li>

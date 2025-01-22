@@ -40,6 +40,7 @@ class KaryawanController extends Controller
         ->select(
             'k.id as karyawan_id',
             'k.k_nama as nama_karyawan',
+            'k.k_email as email_karyawan',
             'k.k_contact as kontak_karyawan',
             'k.k_alamat as alamat_karyawan',
             'k.k_gender as gender_karyawan',
