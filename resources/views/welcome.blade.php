@@ -8,8 +8,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="icon" type="image/png">
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="apple-touch-icon" sizes="16x16">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -28,7 +28,7 @@
                         <form action="{{ route('login') }}" method="POST" class="login-form">
                             @csrf
                             <div class="col-sm-12 d-flex justify-content-center">
-                                <img width="200" class="mb-3" src="{{ asset('assets/img/login-logo.png') }}"
+                                <img width="200" class="mb-3" src="{{ asset('assets/img/logo-login-back.png') }}"
                                     alt="">
                             </div>
                             <div class="form-group">

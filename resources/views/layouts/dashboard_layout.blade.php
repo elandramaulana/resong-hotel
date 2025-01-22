@@ -20,8 +20,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="icon" type="image/png">
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="apple-touch-icon" sizes="16x16">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -60,10 +60,10 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img width="75" src="{{ asset('assets/img/logo.png') }}" alt="">
+                    <img width="75" src="{{ asset('assets/img/web-icon.png') }}" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">
-                    <img width="100" src="{{ asset('assets/img/resong-text.png') }}" alt="">
+                    <img width="80" src="{{ asset('assets/img/resong-text.png') }}" alt="">
                 </div>
             </a>
 
@@ -238,7 +238,7 @@
             @endif
             {{-- Inventaris barang --}}
             <!-- Heading -->
-            @if($manajemenAsset || Auth::user()->level_user == 'SUPERADMIN')
+            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading mt-3">
                 INVENTORY ASSETS
             </div>
@@ -530,7 +530,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>&copy; 2024 Resong Hotel | Powered by PT Metro Indonesian Software
+                        </span>
                     </div>
                 </div>
             </footer>
