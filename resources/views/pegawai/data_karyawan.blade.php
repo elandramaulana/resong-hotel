@@ -32,7 +32,10 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
+                                                <th>No</th>
+                                                <th>Id</th>
                                                 <th>Nama</th>
+                                                <th>email</th>
                                                 <th>Kontak</th>
                                                 <th>Email</th>
                                                 <th>Jenis Kelamin</th>
@@ -55,6 +58,7 @@
                                                 <tr>
                                                     <td>{{ $counter_karyawan }}</td>
                                                     <td>{{ $kr->nama_karyawan }}</td>
+                                                    <td>{{ $kr->email_karyawan }}</td>
                                                     <td>{{ $kr->kontak_karyawan  }}</td>
                                                     <td>{{ $kr->k_email  }}</td>
                                                     <td>{{ $kr->gender_karyawan}}</td>
