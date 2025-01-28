@@ -32,6 +32,7 @@
                             <th>Besar Transaksi</th>
                             <th>Keterangan</th>
                             <th>Tanggal</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,15 @@
                             <td>Rp {{ number_format($item->besar_transaksi, 0, ',', '.') }}</td>
                             <td>{{ $item->keterangan_transaksi }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
+                            <td>
+                                <div>
+                                    <button style="margin-right: 10px" type="submit"
+                                        class="btn btn-warning btn-sm mt-2">
+                                        <a style="color: black" href="#"> <i
+                                                class="fas fa-eye"></i></a>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -51,7 +61,7 @@
                         <tr class="table-warning">
                             <td colspan="4" class="text-center"><strong>Total Transaksi</strong></td>
                             <td><strong>Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</strong></td>
-                            <td colspan="2"></td>
+                            <td colspan="3"></td>
                         </tr>
                     </tfoot>
                 </table>
