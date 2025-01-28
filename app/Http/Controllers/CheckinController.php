@@ -7,8 +7,10 @@ use App\Http\Requests\PostSpeedyCheckin;
 use App\Models\Checkin;
 use App\Models\CheckinDetail;
 use App\Models\Guest;
+use App\Models\LatePointSetting;
 use App\Models\Reservation;
 use App\Models\Rooms;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -110,10 +112,12 @@ class CheckinController extends Controller
     {
         $Room = Rooms::find($id);
         $invoice = "RR" . date('ymdhis');
+        $Settings = LatePointSetting::first();
         $Data = [
             'Room' => $Room,
             'no_invoice' => $invoice,
-            'checkin_time' => date('Y-m-d')
+            'checkin_time' => date('Y-m-d'),
+            'Settings'=>$Settings
         ];
         // return view('frontoffice.checkin.normal_checkin_form', $Data);
         return view('frontoffice.checkin.normal_checkin_form_new', $Data);
@@ -143,7 +147,7 @@ class CheckinController extends Controller
                 'guest_province' => $request->province,
                 'guest_city' => $request->city,
                 'guest_postalcode' => $request->postal_code,
-                'guest_email' => $request->email_address,
+                'guest_email' => $request->frm_email,
                 'guest_contact' => $request->telp_number,
                 // 'id_img'=>$request->document  @todo : not implemented yet
             ];
@@ -159,7 +163,7 @@ class CheckinController extends Controller
         $children = $request->number_of_children;
         $adults = $request->number_of_adult;
         $channel = $request->channel;
-        $checkinHour = $request->checkin_hour;
+        $checkinHour = $request->checkinHour;
         $checkoutHour = $request->checkout_hour;
 
         //create data checkin
@@ -175,12 +179,16 @@ class CheckinController extends Controller
             'time_checkout' => $checkoutHour,
             'guest_adult' => $adults,
             'guest_kids' => $children,
-            // 'is_extrabed'=>1,
+            'is_extrabed'=> $request->extrabed ?? 0,
             'payment_status' => 'DEPOSIT',
             'payment' => $request->deposit,
             'payment_method' => $request->payment_method,
         ];
+        print_r($CheckinDetail);
+        //here we gona create invoice pdf
+
         if ($Checkin = Checkin::create($CheckinDetail)) {
+            $this->generateInvoice($Checkin->id);
             //get room detil
             $Rooms = Rooms::find($request->room_id);
             $Rooms->room_status = 'OCCUPIED';
@@ -189,7 +197,6 @@ class CheckinController extends Controller
             //insert detail checkin
             $DetailCheckin = [
                 'checkin_id' => $Checkin->id,
-
                 'item_category' => 'Rooms',
                 'item_name' => $Rooms->room_name,
                 'item_price' => $Rooms->room_price,
@@ -198,7 +205,33 @@ class CheckinController extends Controller
             ];
             CheckinDetail::create($DetailCheckin);
             $return = ['status' => 'success', 'message' => 'Checkin untuk ' . $name_guest . ' Berhasil'];
+            //do download & print invoice
             return redirect()->route('dashboard')->with($return);
         }
+
+    }
+    public function generateInvoice($checking_id) {
+        $checkin_info = Checkin::find($checking_id);
+        $invoice = $checkin_info->no_invoice;
+        $room = Rooms::find($checkin_info->room_id);
+        $guest = Guest::find($checkin_info->guest_id);
+
+        $data = [
+            'invoice' => $checkin_info->no_invoice,
+            'room_name' => $room->room_name,
+            'room_price' => $room->room_price,
+            'guest_name' => $guest->name_guest,
+            'guest_contact' => $guest->guest_contact,
+            'guest_email' => $guest->guest_email,
+            'checkin_date' => $checkin_info->date_checkin_info,
+            'checkout_date' => $checkin_info->date_checkout,
+            'adults' => $checkin_info->guest_adult,
+            'children' => $checkin_info->guest_kids,
+            'total_payment' => $checkin_info->payment,
+        ];
+
+        // $pdf = Pdf::loadview('pdf.invoice', compact('checkin_info', 'data', 'room', 'guest'));
+        // return $pdf->download($invoice.'.pdf');
+        return view('pdf.invoice', compact('checkin_info', 'data', 'room', 'guest'));
     }
 }

@@ -414,4 +414,4 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
 
 
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
-Route::get('/test', [TestController::class, 'index'])->name('test');
+Route::get('/test/{id}', [CheckinController::class, 'generateInvoice'])->name('test');

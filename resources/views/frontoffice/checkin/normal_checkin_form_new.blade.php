@@ -26,10 +26,22 @@
 
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
+        <input type="text" name="room_id" value="{{ $Room->id }}" hidden>
         @csrf;
     <section  id="form-booking">
         <section  id="form-detail">
             <div class="container-fluid mt-4 mb-5 ">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <h5>Uppss Sepertinya ada kesalahan</h5>
+                        <p>Periksa pesan error pada form</p>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h4>Detail Customer</h4>
@@ -97,7 +109,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group">
-                                        <label for="religion">Religion</label>
+                                        <label for="agama">Religion</label>
                                         <select name="agama" id="agama" class="form-control">
                                             <option value="">Pilih Agama</option>
                                             <option value="Islam" {{ "Islam" === old('agama') ? 'selected' : '' }}>Islam</option>
@@ -119,17 +131,17 @@
                                     <div class="form-group col-lg-6">
                                         <label for="country">Provinsi</label>
                                         <input type="text" class="form-control" id="province" name="province" value="{{ old('province') }}" placeholder="Provinsi">
-                                        <x-input-error :messages="$errors->get('country')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('province')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-lg-3">
                                         <label for="country">Kode Pos</label>
-                                        <input type="text" class="form-control" id="postal_code" name="postal_code" value="{{ old('postal_code') }}" placeholder="Negara">
+                                        <input type="text" class="form-control" id="postal_code" name="postal_code" value="{{ old('postal_code') }}" placeholder="Kode Pos">
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
                                     <div class="form-group col-lg-9">
-                                        <label for="country">Kota</label>
+                                        <label for="city">Kota</label>
                                         <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" placeholder="Kota">
                                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                     </div>
@@ -139,157 +151,143 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <label for="no_invoice">No Invoice</label>
-                                        <input type="text" class="form-control" id="no_invoice" name="no_invoice" value="{{ $no_invoice }}" readonly>
+                                        <input type="text" class="form-control" id="invoice" name="invoice" value="{{ $no_invoice }}" readonly>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-lg-9">
+                                    <div class="form-group col-lg-7">
                                         <label for="room_name">Room Name</label>
                                         <input type="text" class="form-control" id="room_name" name="room_name" value="{{ $Room->room_name }}" readonly>
                                     </div>
-                                    <div class="form-group col-lg-3">
+                                    <div class="form-group col-lg-2">
                                         <label for="room_no">Room Number</label>
                                         <input type="text" class="form-control" id="room_no" name="room_no" value="{{ $Room->room_no }}" readonly>
+                                    </div>
+                                    <div class="form-group col-lg-3">
+                                        <label for="room_price">Room Price / Night</label>
+                                        <input type="text" class="form-control" id="room_price" name="room_price" value="{{ number_format($Room->room_price, 0, ',', '.') }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label for="checkin_time">Check-in Date</label>
+                                        <input type="date" name="checkin_time" class="form-control" value="{{ date('Y-m-d') }}" id="checkin_time">
+                                        <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                                    </div>
+                                    <div class="form-group col-lg-2">
+                                        <label for="checkinHour">Time</label>
+                                        <input type="time" class="form-control" id="checkinHour" name="checkinHour" id="checkinHour" value="{{ old('checkinHour') }}" >
+                                        <x-input-error :messages="$errors->get('checkinHour')" class="mt-2" />
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="checkout_time">Check-out Date</label>
+                                        <input type="date" class="form-control" id="checkout_time" name="checkout_time" id="checkout_time" value="{{ old('checkout_time') }}">
+                                        <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label for="number_of_adult">Jumlah Dewasa</label>
+                                        <input type="number" class="form-control" id="number_of_adult" name="number_of_adult" max="{{ $Room->room_capacity }}" value="{{ old('number_of_adult', 1) }}" >
+                                        <x-input-error :messages="$errors->get('number_of_adult')" class="mt-2" />
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="number_of_children">Jumlah Anak-anak</label>
+                                        <input type="number" class="form-control" id="number_of_children" name="number_of_children" value="{{ old('number_of_children') }}" >
+                                        <x-input-error :messages="$errors->get('number_of_children')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label for="channel">Channel</label>
+                                        <select name="channel" id="channel" class="form-control">
+                                            <option value="Walk-in" {{ "Walk-in" === old('channel') ? 'selected' : '' }}>Walk-in</option>
+                                            <option value="Traveloka" {{ "Traveloka" === old('channel') ? 'selected' : '' }}>Traveloka</option>
+                                            <option value="Phone-in" {{ "Phone-in" === old('channel') ? 'selected' : '' }}>Phone-in</option>
+                                            <option value="tiket.com" {{ "tiket.com" === old('channel') ? 'selected' : '' }}>Tiket.com</option>
+                                            <option value="syifa_travel" {{ "syifa_travel" === old('channel') ? 'selected' : '' }}>Syifa Travel</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-6 form-check">
+                                        &nbsp;<br>
+                                        <input type="checkbox" class="form-check-input" id="extrabed" name="extrabed" value="1" {{ old('extrabed', 0) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="extrabed">Dengan Extrabed</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="deposit">Deposit (Rp)</label>
+                                        <input type="text" class="form-control" id="deposit" name="deposit" value="{{ old('deposit') }}" placeholder="Masukan Besar Deposit">
+                                        <x-input-error :messages="$errors->get('deposit')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-8">
+                                        <label for="total_bayar">Total Harga Kanar (Rp)</label>
+                                        <input type="text" class="form-control" id="total_bayar" placeholder="Total Bayar " readonly name="total_bayar" value="{{ old('total_bayar') }}">
+                                        <x-input-error :messages="$errors->get('total_bayar')" class="mt-2" />
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label for="payment_method">Payment Method</label>
+                                        <select name="payment_method" id="payment_method" class="form-control">
+                                            <option value="Cash" {{ "Cash" === old('payment_method') ? 'selected' : '' }}>Cash</option>
+                                            <option value="Bank Transfer" {{ "Bank Transfer" === old('payment_method') ? 'selected' : '' }}>Bank Transfer</option>
+                                            <option value="Qris" {{ "Qris" === old('payment_method') ? 'selected' : '' }}>Qris</option>
+                                            <option value="Dana" {{ "Dana" === old('payment_method') ? 'selected' : '' }}>Dana</option>
+                                            <option value="Go-Pay" {{ "Go-Pay" === old('payment_method') ? 'selected' : '' }}>Go-Pay</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
-                         <!-- Deposit -->
-                         <div class="mt-3 row">
-                            <label for="deposit" class="col-sm-2 col-form-label">Total Deposit (Rp)</label>
-                                <div class="col-sm-6">
-                                <input name="deposit" value="{{ old('deposit') }}" type="text" class="form-control" id="inputDeposit">
-
-                                <x-input-error :messages="$errors->get('deposit')" class="mt-2" />
-                            </div>
-                            <div class="col-sm-2">
-                                <select name="payment_method" class="form-control">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                    <option value="Qris">Qris</option>
-                                    <option value="Dana">Dana</option>
-                                    <option value="Go-Pay">Go-Pay</option>
-                                </select>
-                                <x-input-error :messages="$errors->get('payment_method')" class="mt-2" />
-                            </div>
-                        </div>
-
-
                         <!-- Button -->
-                            <div class="mt-5 mb-3 d-flex justify-content-start ">
-                            <div class="">
-                                <button type="submit" class="btn submit-btn mr-5">
-                                    Check In
-                                </button>
-                            </div>
-                            <div class="">
-                                <button class="btn cancel-btn">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
 
                     </div>
-                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Checkin Summary</h4>
+                            </div>
+                            <div class="card-body text-dark">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p>Check-in Date: <span id="summary_checkin_date">{{ old('checkin_time', date('Y-m-d')) }}</span></p>
+                                        <p>Check-out Date: <span id="summary_checkout_date">{{ old('checkout_time') }}</span></p>
+                                        <p>Duration: <span id="summary_duration">0</span> nights</p>
+                                        <p>Extrabed: Rp <span id="extrabed_price">0</span></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p>Room Price / Night: Rp <span id="summary_room_price">{{ number_format($Room->room_price, 0, ',', '.') }}</span></p>
+                                        <p>Tax ({{$Settings->pajak_checkin}} %): <span id="showPajak"></span></p>
+                                        <p>Total Price: Rp <span id="summary_total_price">0</span></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mt-5 mb-3 d-flex justify-content-start ">
+                                        <div class="ml-auto">
+                                            <button type="submit" class="btn submit-btn mr-5">
+                                                Check In
+                                            </button>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn cancel-btn">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+
+                    </div>
+
+                </div>
+                </div>
             </div>
         </section>
-
-    <div class="container-fluid mt-4">
-        <div class="card text-left">
-          <div class="card-body">
-            <h4 class="card-title">Room Detail</h4>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="room_no">Room Number</label>
-                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="room_no">Room Name</label>
-                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="room_no">Room Price</label>
-                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-            <div class="card-body text-dark">
-            <div class="row">
-                <div class="col-sm-3">
-                    <h2>Room Number: {{ $Room['room_no'] }}</h2>
-                </div>
-                <div class="col-sm-3 text-warning text-center">
-                    <h6 class="shape rounded p-2">{{ $Room['room_name'] }} (@RP{{ $Room['room_price'] }})</h6>
-                </div>
-            </div>
-            <input type="text" name="room_id" value="{{ $Room['id'] }}" hidden>
-                    <div class="row">
-                        <!-- Left Column -->
-                        <div class="col-md-6">
-                            <!-- Invoice (Disabled) -->
-                            <div class="mb-3">
-                                <label for="invoice" class="form-label">#Invoice</label>
-                                <input value="{{ $no_invoice }}" name="invoice" type="text" class="form-control" id="invoice" readonly>
-                                <x-input-error :messages="$errors->get('invoice')" class="mt-2" />
-
-                            </div>
-
-                            <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input readonly value="{{ $checkin_time }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
-                            </div>
-
-                            <!-- Number of Adults -->
-                            <div class="mb-3">
-                                <label for="adults" class="form-label">Jumlah Dewasa</label>
-                                <input name="number_of_adult" value="{{ $Room['room_capacity'] }}{{ old('number_of_adult') }}" type="number" class="form-control" id="adults">
-                                <x-input-error :messages="$errors->get('number_of_adult')" class="mt-2" />
-                            </div>
-                        </div>
-
-                        <!-- Right Column -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Channel" class="form-label">Channel</label>
-                                <select name="channel" class="form-control" id="channel">
-                                    <option value="Walk-in" {{ "Walk-in" === old('channel') ? 'selected' : '' }} >Walk-in</option>
-                                    <option value="Traveloka" {{ "Traveloka" === old('channel') ? 'selected' : '' }}>Traveloka</option>
-                                    <option value="Phone-in" {{ "Phone-in" === old('channel') ? 'selected' : '' }}>Phone-in</option>
-                                    <option value="tiket.com" {{ "tiket.com" === old('channel') ? 'selected' : '' }}>Tiket.com</option>
-                                    <option value="syifa_travel" {{ "syifa_travel" === old('channel') ? 'selected' : '' }}>Syifa Travel</option>
-                                </select>
-                                <x-input-error :messages="$errors->get('channel')" class="mt-2" />
-                            </div>
-
-                            <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input value="{{ old('checkout_time') }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
-                                <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
-                            </div>
-
-                            <!-- Number of Children -->
-                            <div class="mb-3">
-                                <label for="children" class="form-label">Jumlah Anak-anak</label>
-                                <input value="{{ old('number_of_children') }}" name="number_of_children" type="number" class="form-control" id="children" >
-                                <x-input-error :messages="$errors->get('number_of_children')" class="mt-2" />
-                            </div>
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </div>
 </section>
 
 
@@ -306,200 +304,6 @@
     Failed To Submit
 </div>
 </form>
-
-<!-- Modal for name customer -->
-<div class="modal fade" id="customerData" tabindex="-1" aria-labelledby="customerData" aria-hidden="true">
-  <div class="modal-dialog  modal-xl modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-      <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="font-weight-bold text-primary">Customer Check-in</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="checkInTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Customer Name</th>
-                                        <th>No Telp</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>098878672343</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>09093892423</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-<!-- Modal Country customer -->
-<div class="modal fade" id="countyData" tabindex="-1" aria-labelledby="countyData" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-      <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="font-weight-bold text-primary">Select Country</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="countryTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Country Name</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Indonesia</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Japan</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Province customer -->
-<div class="modal fade" id="provinceData" tabindex="-1" aria-labelledby="customerData" aria-hidden="true">
-  <div class="modal-dialog  modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-      <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="font-weight-bold text-primary">Customer Check-in</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="ProvinceTable" width="100%" cellspacing="0">
-                            <thead>
-                                    <tr>
-                                        <th>Provinsi</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sumatera Utara</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kalimantan Barat</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal city customer -->
-<div class="modal fade" id="cityData" tabindex="-1" aria-labelledby="customerData" aria-hidden="true">
-  <div class="modal-dialog  modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-      <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="font-weight-bold text-primary">Customer Check-in</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="cityTable" width="100%" cellspacing="0">
-                            <thead>
-                                    <tr>
-                                        <th>Kota</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Padang</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jakarta</td>
-                                        <td>
-                                            <button class="btn btn-warning rounded">
-                                                select
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        </div>
-    </div>
-</div>
-
-
-
     </div>
 </section>
 

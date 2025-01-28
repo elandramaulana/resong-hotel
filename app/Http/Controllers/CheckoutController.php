@@ -62,7 +62,7 @@ class CheckoutController extends Controller
     }
     public function  detail(Request $request, $id)  {
         $getCheckinbyRoom = Checkin::where('checkins.id', $id)
-                                        ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id') 
+                                        ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id')
                                         ->where('room_status', 'OCCUPIED')
                                         ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
                                         ->join('guests', 'guests.id', '=', 'checkins.guest_id')
@@ -75,7 +75,7 @@ class CheckoutController extends Controller
             'dataDetailCheckin'=>$detailDataCheckin
         ];
 
-        
+
         return view('frontoffice.checkout.checkout_detail', $Data);
     }
     public function extend(ExtendRequest $request) {
@@ -107,7 +107,7 @@ class CheckoutController extends Controller
         $detCheckin = CheckinDetail::where('checkin_id', $checkin_id)
                                     ->where('item_category', $cat)
                                     ->get();
-        
+
         // dd($detCheckin);
 
         return $detCheckin;
@@ -125,15 +125,15 @@ class CheckoutController extends Controller
             'guest_email' => $checkin_info->guest_email,
             'deposit' => $checkin_info->payment
         ];
-        
+
         // Mengambil informasi checkout
         $detCheckout = Checkout::where('checkin_id', $checkin_id)
                                 ->get()->first();
         $checkoutInfo = [
             'checkout_payment' => $detCheckout->checkout_payment,
             'discount' => $detCheckout->discount
-        ];                     
-        
+        ];
+
         // Data yang akan dikirimkan ke view
         $data = [
             'checkin_info' => $guestInfo,
@@ -143,35 +143,37 @@ class CheckoutController extends Controller
             'detail_extrabed' => $this->detCheckin($checkin_id, 'Services'),
             'detail_checkout' => $checkoutInfo,
         ];
-    
+
         // Mulai buffering output
         ob_start();
-    
+
         // Muat view HTML
         echo View::make('invoice_pdf', ['data' => $data])->render();
-    
+
         // Simpan output ke variabel
         $html = ob_get_clean();
-    
+
         // Konfigurasi Dompdf
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true); // Aktifkan agar bisa render gambar lokal
-    
+
         // Inisialisasi Dompdf
         $dompdf = new Dompdf($options);
-    
+
         // Muat HTML ke Dompdf
         $dompdf->loadHtml($html);
-    
+
         // Atur ukuran dan orientasi kertas
         $dompdf->setPaper('A4', 'portrait');
-    
+
         // Render PDF (generate)
         $dompdf->render();
-    
+
         // Keluarkan (output) file PDF ke browser
         return $dompdf->stream('invoice.pdf');
     }
-    
+
+
+
 }
