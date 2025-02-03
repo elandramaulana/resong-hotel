@@ -43,6 +43,7 @@ use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\WeeklyReportController;
 use App\Http\Controllers\MonthlyReportController;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -419,4 +420,4 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
 
 
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
-Route::get('/test/{id}', [CheckinController::class, 'generateInvoice'])->name('test');
+Route::get('/test/{id}', [PdfController::class, 'getReceipt'])->name('test');
