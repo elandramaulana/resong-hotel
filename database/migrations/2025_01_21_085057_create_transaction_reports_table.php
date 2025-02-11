@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('id_referensi');
             $table->string('type_transaksi');
             $table->string('jenis_transaksi');
-            $table->date('besar_transaksi');
+            $table->double('besar_transaksi');
             $table->text('keterangan_transaksi');
             $table->timestamps();
         });
