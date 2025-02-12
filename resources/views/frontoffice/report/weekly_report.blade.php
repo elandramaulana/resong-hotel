@@ -78,6 +78,8 @@
                                             $sumTotalHari = 0;
                                             $sumRateCheckout = 0;
                                             $sumJumlah = 0;
+                                            $sumJumlahCash = 0;
+                                            $sumJumlahNonCash = 0;
                                         @endphp
                                         <tbody>
                                             @php $no1 = 1; @endphp
@@ -121,6 +123,13 @@
                                                             @php
                                                                 $jumlah = $totalHari * $item->room_price;
                                                                 $sumJumlah += $jumlah;
+
+                                                                 // Pisahkan total berdasarkan metode pembayaran
+                                                                if ($item->payment_method == 'Cash') {
+                                                                    $sumJumlahCash += $jumlah;
+                                                                } else {
+                                                                    $sumJumlahNonCash += $jumlah;
+                                                                }
                                                             @endphp
                                                             {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
                                                         </td>
@@ -128,8 +137,16 @@
                                                         <td>{{ $item->room_price ? 'Rp. ' . number_format($item->room_price, 0, ',', '.') : '-' }}</td>
                                                         <td>{{ $item->time_checkout ?? '-' }}</td>
                                                         <td>{{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}</td>
-                                                        <td>0</td>
-                                                        <td>0</td>
+                                                        <td>
+                                                            @if ($item->payment_method == 'Cash')
+                                                                {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($item->payment_method != 'Cash')
+                                                                {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
+                                                            @endif
+                                                        </td>
                                                         <td>0</td>
                                                         <td>{{ $item->keterangan_transaksi ?? '-' }}</td>
                                                     </tr>
@@ -190,8 +207,8 @@
                                                 <td>{{ $sumRateCheckout ? 'Rp. ' . number_format($sumRateCheckout, 0, ',', '.') : '-' }}</td>
                                                 <td></td>
                                                 <td>{{ $sumJumlah ? 'Rp. ' . number_format($sumJumlah, 0, ',', '.') : '-' }}</td>
-                                                <td>0</td>
-                                                <td>0</td>
+                                                <td>{{ $sumJumlahCash ? 'Rp. ' . number_format($sumJumlahCash, 0, ',', '.') : '-' }}</td>
+                                                <td>{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
                                                 <td>0</td>
                                                 <td></td>
                                             </tr>
@@ -213,12 +230,13 @@
                                                 <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle">Jumlah di Setor</td>
                                                 <td style="height: 10px;" class="align-middle">
                                                     @php
-                                                        $jumlahSetor = $sumJumlah - $totalHarga
+                                                        $jumlahSetor = $sumJumlah - $totalHarga;
+                                                        $jumlahSetor2 = $sumJumlahCash - $totalHarga;
                                                     @endphp
                                                     {{ $jumlahSetor ? 'Rp. ' . number_format($jumlahSetor, 0, ',', '.') : 'Rp. 0' }}
                                                 </td>
-                                                <td style="height: 10px;" class="align-middle">- Rp. 60.000</td>
-                                                <td style="height: 10px;" class="align-middle">0</td>
+                                                <td style="height: 10px;" class="align-middle">{{ $jumlahSetor2 ? 'Rp. ' . number_format($jumlahSetor2, 0, ',', '.') : '-' }}</td>
+                                                <td style="height: 10px;" class="align-middle">{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
                                                 <td style="height: 10px;" class="align-middle">0</td>
                                                 <td style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>

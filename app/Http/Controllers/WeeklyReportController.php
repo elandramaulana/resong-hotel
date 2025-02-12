@@ -30,6 +30,7 @@ class WeeklyReportController extends Controller
                 'c.time_checkout',
                 'c.guest_adult',
                 'c.guest_kids',
+                'c.payment_method',
                 'r.room_no',
                 'r.room_type',
                 'r.room_status',

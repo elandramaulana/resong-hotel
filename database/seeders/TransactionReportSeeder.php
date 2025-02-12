@@ -37,7 +37,7 @@ class TransactionReportSeeder extends Seeder
                 'jenis_transaksi' => 'cash',
                 'besar_transaksi' => '100000',
                 'keterangan_transaksi' => 'lainnya',
-            ]
+            ],
         ]);
     }
 }
