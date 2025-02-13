@@ -10,9 +10,11 @@ use App\Models\Guest;
 use App\Models\LatePointSetting;
 use App\Models\Reservation;
 use App\Models\Rooms;
+use App\Models\TransaksiReport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CheckinController extends Controller
 {
@@ -94,6 +96,7 @@ class CheckinController extends Controller
                 'item_description' => "Item Speedy Checkin"
             ];
             CheckinDetail::create($DetailCheckin);
+
             //set reservation checkedin
             $getDetailReservation->reservation_status = 'Checked-in';
             $getDetailReservation->save();
@@ -181,14 +184,15 @@ class CheckinController extends Controller
             'guest_kids' => $children,
             'is_extrabed'=> $request->extrabed ?? 0,
             'payment_status' => 'DEPOSIT',
-            'payment' => $request->deposit,
+            'payment' => $request->total_price,
             'payment_method' => $request->payment_method,
+            'tax_price' => $request->tax,
+            'extrabed_price' => $request->extrabed_price,
+            'deposit' => $request->deposit
         ];
-        print_r($CheckinDetail);
-        //here we gona create invoice pdf
 
         if ($Checkin = Checkin::create($CheckinDetail)) {
-            $this->generateInvoice($Checkin->id);
+
             //get room detil
             $Rooms = Rooms::find($request->room_id);
             $Rooms->room_status = 'OCCUPIED';
@@ -204,11 +208,38 @@ class CheckinController extends Controller
                 'item_description' => "Item Default Checkin"
             ];
             CheckinDetail::create($DetailCheckin);
+            if($request->extrabed){
+                $extrabed_price = $this->getExtrabedPrice();
+                $DetailCheckin = [
+                    'checkin_id' => $Checkin->id,
+                    'item_category' => 'Extra Bed',
+                    'item_name' => 'Extra Bed',
+                    'item_price' => $extrabed_price,
+                    'item_qty' =>1,
+                    'item_description' => "Item Extra Bed"
+                ];
+                CheckinDetail::create($DetailCheckin);
+            }
             $return = ['status' => 'success', 'message' => 'Checkin untuk ' . $name_guest . ' Berhasil'];
+            //save transaction report
+            $transactionData = [
+                'tabel_referensi' => 'checkins',
+                'id_referensi' => $Checkin->id,
+                'type_transaksi' => 'IN',
+                'jenis_transaksi' => 'rooms',
+                'besar_transaksi' => $request->total_price,
+                'keterangan_transaksi' => 'Checkin for ' . $name_guest
+            ];
+            TransaksiReport::create($transactionData);
             //do download & print invoice
+            //here we gona create invoice pdf
+            $pdfController = new PdfController();
+            $receipt = $pdfController->getReceipt($Checkin->id);
+            if ($receipt instanceof BinaryFileResponse) {
+                return redirect()->route('dashboard')->with('download_url', route('receipt.download', ['id' => $Checkin->id]));
+            }
             return redirect()->route('dashboard')->with($return);
         }
-
     }
     public function generateInvoice($checking_id) {
         $checkin_info = Checkin::find($checking_id);

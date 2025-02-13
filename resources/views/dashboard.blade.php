@@ -20,6 +20,13 @@
                 window.location = {{ route('generate.invoice', \Session::get('checkin_id')) }};
             </script>
         @endif
+        @if (session('download_url'))
+            <script>
+                window.onload = function () {
+                    window.location.href = "{{ session('download_url') }}";
+                };
+            </script>
+        @endif
         <section>
             <!-- Content Row -->
             <div class="row">

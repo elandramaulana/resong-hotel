@@ -9,18 +9,26 @@
         function calculateSummary() {
             const checkinDate = new Date(checkinDateInput.value);
             const checkoutDate = new Date(checkoutDateInput.value);
-            const duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24);
-            let totalPrice = duration * roomPrice;
+            var duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24);
 
+            if (duration == 0) {
+                duration = 1;
+            }
+            let totalPrice = duration * roomPrice;
             if (extrabed.checked) {
-            totalPrice += extrabedPrice;
-            document.getElementById('extrabed_price').textContent = extrabedPrice.toLocaleString('id-ID');
+                totalPrice += extrabedPrice;
+                $("#extrabed_price_input").val(extrabedPrice);
+                document.getElementById('extrabed_price').textContent = extrabedPrice.toLocaleString('id-ID');
             } else {
-            document.getElementById('extrabed_price').textContent = '0';
+                document.getElementById('extrabed_price').textContent = '0';
             }
             const taxRate = {{$Settings->pajak_checkin}};
             let taxAmount = totalPrice * (taxRate / 100);
             totalPrice = totalPrice + taxAmount;
+
+            $("#total_price").val(totalPrice);
+            $("#tax").val(taxAmount);
+
             document.getElementById('summary_checkin_date').textContent = checkinDateInput.value;
             document.getElementById('summary_checkout_date').textContent = checkoutDateInput.value;
             document.getElementById('summary_duration').textContent = duration;
@@ -51,10 +59,9 @@
                 return false;
             }
             var price = {{$Room->room_price}};
-            console.log(price);
-
 
             var total = price * duration;
+
             $("#total_bayar").val(total.toLocaleString());
             return duration;
             // You can use the duration variable here if needed

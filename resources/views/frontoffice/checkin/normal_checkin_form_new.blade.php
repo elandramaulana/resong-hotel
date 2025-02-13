@@ -224,7 +224,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-lg-8">
-                                        <label for="total_bayar">Total Harga Kanar (Rp)</label>
+                                        <label for="total_bayar">Total Harga Kamar (Rp)</label>
                                         <input type="text" class="form-control" id="total_bayar" placeholder="Total Bayar " readonly name="total_bayar" value="{{ old('total_bayar') }}">
                                         <x-input-error :messages="$errors->get('total_bayar')" class="mt-2" />
                                     </div>
@@ -240,9 +240,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         <!-- Button -->
-
                     </div>
                 <div class="row">
                     <div class="col-lg-12">
@@ -257,11 +255,14 @@
                                         <p>Check-out Date: <span id="summary_checkout_date">{{ old('checkout_time') }}</span></p>
                                         <p>Duration: <span id="summary_duration">0</span> nights</p>
                                         <p>Extrabed: Rp <span id="extrabed_price">0</span></p>
+                                        <input type="text" name="extrabed_price" id="extrabed_price_input" value="0" hidden>
                                     </div>
                                     <div class="col-lg-6">
                                         <p>Room Price / Night: Rp <span id="summary_room_price">{{ number_format($Room->room_price, 0, ',', '.') }}</span></p>
                                         <p>Tax ({{$Settings->pajak_checkin}} %): <span id="showPajak"></span></p>
+                                        <input type="text" name="tax" id="tax" value="{{$Settings->pajak_checkin}}" hidden>
                                         <p>Total Price: Rp <span id="summary_total_price">0</span></p>
+                                        <input type="text" name="total_price" id="total_price" value="0" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -280,10 +281,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
                 </div>
             </div>

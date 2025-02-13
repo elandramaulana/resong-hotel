@@ -43,8 +43,8 @@ class CheckoutController extends Controller
         //insert to checkout table
         $dataCheckout = [
             'checkin_id'=>$request->checkin_id,
-            'checkout_payment'=>$request->checkout_method,
-            'discount'=>$request->inputDiscount
+            'refund_deposit'=>$request->refund_deposit,
+            'checkout_descriptions'=>$request->checkout_descriptions
         ];
 
         // dd($dataCheckout);
@@ -57,6 +57,9 @@ class CheckoutController extends Controller
         $Room->room_status = 'VACANT DIRTY';
         $Room->save();
         $invoiceNeed = ['success'=>'Proses Checkout Selesai', 'checkin_id'=>$request->checkin_id];
+
+        //update time checkout
+        $Checkin->date_checkout = $request->checkout_hour;
         return redirect()->route('dashboard')->with($invoiceNeed);
 
     }

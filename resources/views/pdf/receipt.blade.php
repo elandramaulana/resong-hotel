@@ -21,18 +21,26 @@
             position: relative;
             background: rgba(255, 255, 255, 0.9);
             overflow: hidden;
+            clear: both; /* Clear any floats */
         }
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             font-weight: bold;
             font-size: 18px;
             padding-bottom: 10px;
+            width: 100%;
+            overflow: hidden; /* Clearfix */
+            height: 90px;
         }
-        .logo {
-            width: 100px; /* Adjust logo size */
+        .header .text {
+            float: left;  /* Float the text to the left */
+            width: 70%;  /* Adjust width as needed */
+        }
+        .header .logo {
+            float: right;  /* Float the logo to the right */
+            width: 120px;  /* Adjust the size of the logo */
             height: auto;
+            margin-top: -5px;
+            margin-right: 20px;
         }
         .info {
             margin-top: 20px;
@@ -41,12 +49,10 @@
             width: 95%;
             border-collapse: collapse;
             margin-top: 10px;
-            border: 1px solid black;
         }
         th, td {
             padding: 10px;
             text-align: left;
-            border: 1px solid black;
         }
         .footer {
             margin-top: 20px;
@@ -55,12 +61,12 @@
         .signature {
             margin-top: 40px;
             text-align: right;
-            margin-right: 40px; /* Added right margin */
+            margin-right: 35px;
         }
         .subtotal {
             text-align: right;
             margin-top: 10px;
-            margin-right: 40px; /* Added right margin */
+            margin-right: 35px;
         }
         .watermark {
             position: fixed;
@@ -74,44 +80,87 @@
     </style>
 </head>
 <body>
-    <img class="watermark" src="{{ public_path('img/logo.png') }}" alt="Watermark">
+    {{-- <img class="watermark" src="{{ $logoPath }}" alt="Watermark"> --}}
     <div class="container">
         <div class="header">
-            <div>PAID OUT RECEIPT</div>
+            <div class="text">
+                <p style="margin: 0px">PAID OUT RECEIPT</p>
+                <p style="margin: 0px">RESONG HOTEL</p>
+            </div>
             <img class="logo" src="{{ $logoPath }}" alt="Company Logo">
         </div>
         <div class="info">
-            <p><strong>Guest Name:</strong>{{ $logoPath }} _______________________</p>
-            <p><strong>Date:</strong> ___________ <strong>Time:</strong> ___________ <strong>Confirmation No.:</strong> ___________ <strong>Cashier:</strong> ___________</p>
+            <p><strong>Guest Name:</strong> {{ $guest['name_guest'] }}</p>
+            <p><strong>Date:</strong> {{ date('j F Y', strtotime(date("Y-m-d"))) }} <strong>Time:</strong> {{ date('H:i:s') }} <strong>Confirmation No.:</strong> ___________ <strong>Cashier:</strong> ___________</p>
         </div>
-        <table>
+        <table border="1">
             <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
+                <th style="width: 25%">Item</th>
+                <th style="width: 15%" align="right">Rate</th>
+                <th style="width: 15%" align="center">Qty</th>
+                <th style="width: 30%">Description</th>
+                <th style="width: 15%">Amount</th>
             </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
+            @php
+                $totalAmount = 0;
+                $taxConvert = $taxConfig / 100;
+            @endphp
+            @foreach ($detReceipt as $detail)
+                @php
+                    $amount = $detail['item_price'] * $detail['item_qty'];
+                    if($detail['item_category']=='Rooms'){
+                        $item = $detail['item_name'] .
+                                ' (' . date('d M Y', strtotime($receipt['date_checkin'])) .
+                                ' - ' . date('d M Y', strtotime($receipt['date_checkout'])) .
+                                ')';
+                    }else{
+                        $item = $detail['item_name'];
+                    }
+
+                @endphp
+                <tr>
+                    <td>{{ $item }}</td>
+                    <td style="text-align: right">{{ 'Rp. ' . number_format($detail['item_price'], 0, ',', '.') }}</td>
+                    <td style="text-align: center">{{ $detail['item_qty'] }}</td>
+                    <td>{{ $detail['item_description'] }}</td>
+                    <td style="text-align: right">{{ 'Rp.' . number_format($amount, 0, ',', '.') }}</td>
+                </tr>
+                @php
+                    $totalAmount += $amount;
+                @endphp
+            @endforeach
+                @php
+                    $tax = $totalAmount * $taxConvert;
+                    $totalPlusPajak = $totalAmount + $tax;
+                @endphp
+                <tr>
+                    <td colspan="4" style="text-align: left">
+                        <strong>Subtotal</strong>
+                    </td>
+                    <td style="text-align: right">{{'Rp.' . number_format($totalAmount)}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: left">
+                        <strong>Tax ({{$taxConfig}}%)</strong>
+                    </td>
+                    <td style="text-align: right">{{'Rp.' . number_format($tax)}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: left">
+                        <strong>T O T A L (Pajak + Subtotal)</strong>
+                    </td>
+                    <td style="text-align: right">{{'Rp.' . number_format($totalPlusPajak)}}</td>
+                </tr>
         </table>
-        <div class="subtotal">
-            <strong>Subtotal:</strong> _______________________
-        </div>
+
         <p class="footer">Send Payment To:</p>
         <p>Bank: Bank Rakyat Indonesia (BRI)</p>
         <p>Account Name: PT RESONG CIPTA MANDIRI</p>
         <p>Account No.: _______________________</p>
         <p><em>*All item prices are inclusive of tax.</em></p>
-        <div class="signature">
+        <div style="text-align:right;" class="signature">
             <p>________________________</p>
-            <p><strong>Signature</strong></p>
+            <p style="text-align: right; position: relative; top: -15px; left: -25px"><strong>Signature</strong></p>
         </div>
     </div>
 </body>

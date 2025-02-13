@@ -366,8 +366,6 @@
                         <x-input-error :messages="$errors->get('payment_method')" class="mt-2" />
                     </div>
                 </div>
-
-
                 <!-- Button -->
                     <div class="mt-5 mb-3 d-flex justify-content-start ">
                     <div class="">
@@ -585,13 +583,9 @@
                     </div>
                 </div>
         </div>
-
         </div>
     </div>
 </div>
-
-
-
     </div>
 </section>
 
