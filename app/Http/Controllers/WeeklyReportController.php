@@ -9,6 +9,7 @@ class WeeklyReportController extends Controller
 {
     public function index()
     {
+        $date = request('date') ?? now()->format('Y-m-d');
         // Query untuk Checkin + Checkout
         $checkinCheckoutTransactions = DB::table('transaction_reports as t')
             ->leftJoin('checkins as c', function ($join) {
@@ -40,6 +41,7 @@ class WeeklyReportController extends Controller
                 // 'co.checkout_date', // Data checkout terkait checkin
                 // 'co.total_payment'
             )
+            ->whereDate('t.created_at', $date)
             ->get();
 
         // Query untuk Other Transactions
@@ -54,6 +56,7 @@ class WeeklyReportController extends Controller
                 'ot.qty',
                 'ot.harga'
             )
+            ->whereDate('t.created_at', $date)
             ->get();
 
         // Gabungkan kedua koleksi menjadi satu
