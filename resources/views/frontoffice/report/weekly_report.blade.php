@@ -8,30 +8,18 @@
                 <div class="row">
                     <!-- Check-in Table -->
                     <div class="col-sm-12">
+                        <h6 class="font-weight-bold text-warning">Daily Report</h6>
                         <div class="card shadow mb-4">
                             <div class="card-header pt-4 d-flex justify-content-between align-items-center">
-                                <h6 class="font-weight-bold text-warning">Daily Report</h6>
-                                {{-- <form method="GET" action="{{ route('bill.report') }}" id="filter-form">
-                                    <div class="form-row align-items-center">
-                                        <div class="col-auto">
-                                            <label for="from" class="mr-2">From:</label>
-                                            <input type="date" name="from" id="from" class="form-control"
-                                                value="{{ request('from') ?? now()->format('Y-m-d') }}">
-                                        </div>
-                                        <div class="col-auto">
-                                            <label for="to" class="mr-2">To:</label>
-                                            <input type="date" name="to" id="to" class="form-control"
-                                                value="{{ request('to') ?? now()->format('Y-m-d') }}">
-                                        </div>
-                                        <div class="col-auto">
-                                            <button type="submit" class="btn btn-primary mt-3  ">Filter</button>
-                                        </div>
-                                    </div>
-                                </form> --}}
                                 <div class="d-flex gap-2 align-items-center">
-                                    <span class="font-weight-bold">Rabu,</span>
-                                    <span class="font-weight-bold">20 Januari 2025</span>
+                                    <span class="font-weight-bold">{{ \Carbon\Carbon::parse(request('date') ?? now())->isoFormat('dddd') }},</span>
+                                    <span class="font-weight-bold">{{ \Carbon\Carbon::parse(request('date') ?? now())->isoFormat('D MMMM Y') }}</span>
                                 </div>
+                                <form method="GET" action="{{ route('weekly.report') }}" class="d-flex align-items-center">
+                                    <input type="date" name="date" class="form-control mr-2"
+                                        value="{{ request('date') ?? now()->format('Y-m-d') }}">
+                                    <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                </form>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
