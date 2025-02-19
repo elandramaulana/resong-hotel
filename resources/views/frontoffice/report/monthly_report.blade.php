@@ -73,13 +73,19 @@
                                 </tr>
                             @endforelse
                         </tbody>
-                        {{-- <tfoot>
-                            <tr class="table-warning">
-                                <td colspan="4" class="text-center"><strong>Total Transaksi</strong></td>
-                                <td><strong>Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</strong></td>
-                                <td colspan="3"></td>
+                        <tfoot>
+                            <tr class="table-warning text-center">
+                                <td colspan="2"><strong>Total Transaksi</strong></td>
+                                <td><strong>{{ number_format($total['org'], 0, ',', '.') }}</strong></td>
+                                <td><strong>{{ number_format($total['hr'], 0, ',', '.') }}</strong></td>
+                                <td><strong>{{ number_format($total['km'], 0, ',', '.') }}</strong></td>
+                                <td><strong>Rp {{ number_format($total['rekapan_jumlah'], 0, ',', '.') }}</strong></td>
+                                <td><strong>Rp {{ number_format($total['pembayaran_card'], 0, ',', '.') }}</strong></td>
+                                <td><strong>Rp {{ number_format($total['pembayaran_cash'], 0, ',', '.') }}</strong></td>
+                                <td colspan="2"></td>
                             </tr>
-                        </tfoot> --}}
+                        </tfoot>
+
                     </table>
                 </div>
             </div>

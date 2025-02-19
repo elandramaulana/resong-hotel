@@ -177,7 +177,28 @@ class MonthlyReportController extends Controller
     // Ubah ke array numerik untuk iterasi di view
     $dataByDate = array_values($dataByDate);
 
-    return view('frontoffice.report.monthly_report', compact('bulan', 'tahun', 'dataByDate'));
+    $total = [
+        'org'                => 0,
+        'hr'                 => 0,
+        'km'                 => 0,
+        'rekapan_jumlah'     => 0,
+        'pembayaran_card'    => 0,
+        'pembayaran_cash'    => 0,
+    ];
+    
+    foreach ($dataByDate as $data) {
+        $total['org']             += $data['org'];
+        $total['hr']              += $data['hr'];
+        $total['km']              += $data['km'];
+        $total['rekapan_jumlah']  += $data['rekapan_jumlah'];
+        $total['pembayaran_card'] += $data['pembayaran_card'];
+        $total['pembayaran_cash'] += $data['pembayaran_cash'];
+    }
+    
+    // Ubah ke array numerik untuk iterasi di view
+    $dataByDate = array_values($dataByDate);
+    
+    return view('frontoffice.report.monthly_report', compact('bulan', 'tahun', 'dataByDate', 'total'));
 }
     
 }
