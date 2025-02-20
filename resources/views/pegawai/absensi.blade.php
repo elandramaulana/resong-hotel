@@ -1,16 +1,11 @@
 @extends('layouts.dashboard_layout')
-
 @section('content')
-
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
-
 <section class="mt-5">
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">

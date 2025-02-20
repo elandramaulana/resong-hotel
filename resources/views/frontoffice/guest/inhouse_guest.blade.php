@@ -30,31 +30,12 @@
                                         <th>Check-out Date</th>
                                         <th>Check-out Time</th>
                                         <th>Channel</th>
-                                        <th>Down Payment</th>
+                                        <th>Payment</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- <tr>
-                                        <td>1</td>
-                                        <td>Elandra Maulana</td>
-                                        <td>106</td>
-                                        <td>2024-02-04</td>
-                                        <td>2024-02-07</td>
-                                        <td>Traveloka</td>
-                                        <td>Rp567.000</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-warning rounded dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Select
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('detail_inhouse_guest')}}">Lihat Detail</a></li>
-                                                <li><a class="dropdown-item" href="#">Checkout</a></li>
-                                            </ul>
-                                            </div>
-                                        </td>
-                                    </tr> --}}
+
                                 </tbody>
                             </table>
                         </div>

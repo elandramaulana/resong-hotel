@@ -30,7 +30,7 @@
                                         <th>Check-out Date</th>
                                         <th>Check-out Time</th>
                                         <th>Channel</th>
-                                        <th>Down Payment</th>
+                                        <th>Payment</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

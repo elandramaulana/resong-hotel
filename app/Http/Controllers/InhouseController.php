@@ -108,7 +108,7 @@ class InhouseController extends Controller
             $user->row_number = $start + $index + 1;
         });
         foreach ($listData as $item_data) {
-            $link_checkout = route('generate.invoice', $item_data->checkin_id);
+            $link_checkout = route('receipt.download', $item_data->checkin_id);
             $link_detail = route('inhouse.details', $item_data->checkin_id);
             $btn_action = "<div class='dropdown'>
             <button class='btn btn-warning rounded dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -116,7 +116,7 @@ class InhouseController extends Controller
             </button>
             <ul class='dropdown-menu'>
                 <li><a class='dropdown-item' href='$link_detail'>Lihat Detail</a></li>
-                <li><a class='dropdown-item' href='$link_checkout'>Cetak Invoice</a></li>
+                <li><a class='dropdown-item' href='$link_checkout'>Cetak Receipt</a></li>
             </ul>
             </div>";
             $data_arr[] = array(

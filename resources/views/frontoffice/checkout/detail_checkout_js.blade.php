@@ -1,6 +1,9 @@
 
 <script type="text/javascript">
     $(function () {
+        $(document).on('change', "#checkout_hour", function(){
+            console.log($(this).val());
+        });
         // Initialize variables
         var deposit = {{ $detailCheckin->payment }};
         var total = {{ $subTotal }};

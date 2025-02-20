@@ -24,6 +24,9 @@ class Checkin extends Model
         'payment_status',
         'payment',
         'payment_method',
+        'tax_price',
+        'extrabed_price',
+        'deposit',
     ];
 
     public function detCheckin($checkin_id)

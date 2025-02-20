@@ -30,6 +30,31 @@
         @csrf
     <section  id="form-booking">
     <div class="container-fluid mt-4">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title">Room Detail</h4>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="room_no">Room Number</label>
+                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="room_no">Room Name</label>
+                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="room_no">Room Price</label>
+                        <input type="text" class="form-control" id="room_no" value="{{ $Room['room_no'] }}" readonly>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
         <div class="card">
             <div class="card-body text-dark">
             <div class="row">
@@ -237,7 +262,6 @@
                             </div>
 
                 </div>
-
                 <!-- Negara -->
                 <div class="row">
                         <label for="country" class="col-sm-2 col-form-label">Negara</label>
@@ -290,14 +314,27 @@
 
                 <!-- No Telp -->
                 <div class=" mt-3 row">
-                        <label for="" class="col-sm-2 col-form-label">No Telp</label>
-                            <div class="col-sm-8">
-                                <input value="{{ old('telp_number') }}" name="telp_number" type="text" class="form-control clearable" id="contact">
-                                <x-input-error :messages="$errors->get('telp_number')" class="mt-2" />
-                            </div>
+                    <label for="" class="col-sm-2 col-form-label">No Telp</label>
+                    <div class="col-sm-8">
+                        <input value="{{ old('telp_number') }}" name="telp_number" type="text" class="form-control clearable" id="contact">
+                        <x-input-error :messages="$errors->get('telp_number')" class="mt-2" />
                     </div>
+                </div>
 
-
+                <div class=" mt-3 row">
+                    <label for="" class="col-sm-2 col-form-label">Room Name</label>
+                    <div class="col-sm-8">
+                        <input value="{{ old('room_name') }}" name="room_name" type="text" class="form-control clearable" id="contact">
+                        <x-input-error :messages="$errors->get('room_name')" class="mt-2" />
+                    </div>
+                </div>
+                <div class=" mt-3 row">
+                    <label for="" class="col-sm-2 col-form-label">Room Price</label>
+                    <div class="col-sm-8">
+                        <input value="{{ old('room_price') }}" name="room_price" type="text" class="form-control clearable" id="contact">
+                        <x-input-error :messages="$errors->get('room_price')" class="mt-2" />
+                    </div>
+                </div>
                 <!-- Upload Dokumen -->
                  {{-- <div class=" mt-3 row">
                         <label for="name" class="col-sm-2 col-form-label">Upload Foto Dokumen</label>
@@ -308,6 +345,7 @@
                             </div>
                         </div>
                     </div> --}}
+
 
                  <!-- Deposit -->
                  <div class="mt-3 row">
@@ -328,8 +366,6 @@
                         <x-input-error :messages="$errors->get('payment_method')" class="mt-2" />
                     </div>
                 </div>
-
-
                 <!-- Button -->
                     <div class="mt-5 mb-3 d-flex justify-content-start ">
                     <div class="">
@@ -547,13 +583,9 @@
                     </div>
                 </div>
         </div>
-
         </div>
     </div>
 </div>
-
-
-
     </div>
 </section>
 

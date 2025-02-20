@@ -43,6 +43,7 @@ use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\WeeklyReportController;
 use App\Http\Controllers\MonthlyReportController;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -146,19 +147,19 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
     // Guest
-    Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
-    Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
-    Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
-    Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
-    Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
-    Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
-    Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
-    Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
-    Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
-    Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
-    Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
-    Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
-    Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
+    // Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+    // Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
+    // Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+    // Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
+    // Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
+    // Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
+    // Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
+    // Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
+    // Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+    // Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
+    // Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+    // Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
+    // Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
     // Rooms
     Route::get('/daftar-room', [RoomController::class, 'index'])->name('daftar.room');
@@ -419,4 +420,5 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
 
 
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
-Route::get('/test', [TestController::class, 'index'])->name('test');
+Route::get('/test/{id}', [PdfController::class, 'getReceipt'])->name('test');
+Route::get('/receipt/download/{id}', [PdfController::class, 'getReceipt'])->name('receipt.download');

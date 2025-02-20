@@ -1,5 +1,78 @@
 <script type="text/javascript">
        $(function () {
+        const checkinDateInput = document.getElementById('checkin_time');
+        const checkoutDateInput = document.getElementById('checkout_time');
+        const extrabed = document.getElementById('extrabed');
+        const roomPrice = {{ $Room->room_price }};
+        const extrabedPrice = {{ $Settings->extrabed_price }};
+
+        function calculateSummary() {
+            const checkinDate = new Date(checkinDateInput.value);
+            const checkoutDate = new Date(checkoutDateInput.value);
+            var duration = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24);
+
+            if (duration == 0) {
+                duration = 1;
+            }
+            let totalPrice = duration * roomPrice;
+            if (extrabed.checked) {
+                totalPrice += extrabedPrice;
+                $("#extrabed_price_input").val(extrabedPrice);
+                document.getElementById('extrabed_price').textContent = extrabedPrice.toLocaleString('id-ID');
+            } else {
+                document.getElementById('extrabed_price').textContent = '0';
+            }
+            const taxRate = {{$Settings->pajak_checkin}};
+            let taxAmount = totalPrice * (taxRate / 100);
+            totalPrice = totalPrice + taxAmount;
+
+            $("#total_price").val(totalPrice);
+            $("#tax").val(taxAmount);
+
+            document.getElementById('summary_checkin_date').textContent = checkinDateInput.value;
+            document.getElementById('summary_checkout_date').textContent = checkoutDateInput.value;
+            document.getElementById('summary_duration').textContent = duration;
+            document.getElementById('summary_total_price').textContent = totalPrice.toLocaleString('id-ID');
+            document.getElementById('showPajak').textContent = taxAmount.toLocaleString('id-ID');
+        }
+
+        checkinDateInput.addEventListener('change', calculateSummary);
+        checkoutDateInput.addEventListener('change', calculateSummary);
+        extrabed.addEventListener('change', calculateSummary);
+
+        calculateSummary();
+        function calculateDuration() {
+            var checkinTime = $('#checkin_time').val();
+            var checkoutTime = $('#checkout_time').val();
+
+            if (checkinTime && checkoutTime) {
+            var checkin = new Date(checkinTime);
+            var checkout = new Date(checkoutTime);
+
+            var duration = (checkout - checkin) / (1000 * 60 * 60 * 24); // duration in days
+            if (duration == 0) {
+                duration = 1;
+            }
+            if (duration < 0) {
+                alert('Tanggal Check Out tidak boleh kurang dari tanggal Check In');
+                $('#checkout_time').val('');
+                return false;
+            }
+            var price = {{$Room->room_price}};
+
+            var total = price * duration;
+
+            $("#total_bayar").val(total.toLocaleString());
+            return duration;
+            // You can use the duration variable here if needed
+            }
+        }
+
+        $(document).on('change', '#checkout_time, #checkin_time', function (e) {
+           var days = calculateDuration();
+           console.log(days);
+        });
+
             $( "#id_number" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -28,14 +101,15 @@
                             $("#name_guest").val(data.name_guest);
                             $("#place_of_birth").val(data.place_of_birth);
                             $("#date_of_birth").val(data.date_of_birth);
-                            if(data.guest_gender=='Laki-laki'){
-                                document.getElementById("genderMale").checked = true;
-                            }else{
-                                document.getElementById("genderFemale").checked = true;
-                            }
                             var selectElement = document.getElementById("agama");
                             var valueToSelect = data.guest_religion; // Value of the option to be selected
-
+                            $("#frm_email").val(data.guest_email);
+                            $("#telp_number").val(data.guest_contact);
+                            $("#country").val(data.guest_country);
+                            $("#province").val(data.guest_province);
+                            $("#city").val(data.guest_city);
+                            $("#postal_code").val(data.guest_postalcode);
+                            $("#inputDeposit").focus();
                             // Iterate over options to find the one with the matching value
                             for (var i = 0; i < selectElement.options.length; i++) {
                                 if (selectElement.options[i].value === valueToSelect) {
@@ -52,20 +126,14 @@
                             }else if(data.guest_title=='Ms'){
                                 document.getElementById("titleMs").checked = true;
                             }
-                            $("#country").val(data.guest_country);
-                            $("#provinsi").val(data.guest_province);
-                            $("#city").val(data.guest_city);
-                            $("#frm_kodepos").val(data.guest_postalcode);
-                            $("#frm_email").val(data.guest_email);
-                            $("#contact").val(data.guest_contact);
-                            $("#inputDeposit").focus();
+
                         }
                     });
             }
             });
-            $(document).on('keyup', '#id_number', function (param) { 
+            $(document).on('keyup', '#id_number', function (param) {
                 var elements = document.getElementsByClassName("clearable");
-    
+
                 // Iterate over the selected elements and clear their values
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].value = "";

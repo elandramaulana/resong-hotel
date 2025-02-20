@@ -10,8 +10,7 @@ class Checkout extends Model
     use HasFactory;
     public $fillable = [
         'checkin_id',
-        'checkout_payment',
-        'discount',
-        'description'
+        'refund_deposit',
+        'checkout_descriptions'
     ];
 }

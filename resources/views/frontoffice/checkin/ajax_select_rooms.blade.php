@@ -31,7 +31,7 @@
                         @endif mb-4">
                             <a data-toggle="tooltip" data-placement="top"  title="{{ $dr['room_status'] }}" class="@if($dr['room_status']!='VACANT READY'){{ 'disabled' }}@endif" href="{{route('checkin.normal.form', $dr['id'])}}">{{ $dr['room_no'] }}</a>
                         </button>
-                    </div>        
+                    </div>
                     @endforeach
                 </div>
             </div>
