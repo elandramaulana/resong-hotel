@@ -19,6 +19,12 @@ class WeeklyReportController extends Controller
             ->leftJoin('checkouts as co', 'c.id', '=', 'co.checkin_id') // Hubungkan checkin dengan checkout
             ->leftJoin('rooms as r', 'c.room_id', '=', 'r.id')
             ->leftJoin('guests as g', 'c.guest_id', '=', 'g.id')
+            // Subquery untuk mendapatkan total laundry per checkin
+            ->leftJoin(DB::raw('(
+                SELECT lg.room_id, SUM(lg.harga) as total_laundry
+                FROM laundry_guests lg
+                GROUP BY lg.room_id
+            ) as laundry'), 'r.id', '=', 'laundry.room_id')
             ->select(
                 't.*',
                 'c.no_invoice',
@@ -37,6 +43,7 @@ class WeeklyReportController extends Controller
                 'r.room_status',
                 'r.room_price',
                 'g.name_guest',
+                'laundry.total_laundry'
                 // 'g.guest_email',
                 // 'co.checkout_date', // Data checkout terkait checkin
                 // 'co.total_payment'

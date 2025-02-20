@@ -39,7 +39,7 @@
                                                 <th rowspan="2" class="text-white text-center align-middle bg-dark">KM</th>
                                                 <th rowspan="2" class="text-white text-center align-middle bg-dark">ORG</th>
                                                 <th colspan="3" class="text-white text-center align-middle bg-dark">Stay (Hari) (Chek In)</th>
-                                                <th colspan="4" class="text-white text-center align-middle bg-dark">Pendapatan (Chek Out) (Rp)</th>
+                                                <th colspan="5" class="text-white text-center align-middle bg-dark">Pendapatan (Chek Out) (Rp)</th>
                                                 <th colspan="3" class="text-white text-center align-middle bg-dark">Pembayaran</th>
                                                 <th rowspan="2" class="text-white text-center align-middle bg-dark">Keterangan</th>
                                             </tr>
@@ -52,9 +52,9 @@
                                                 {{-- <th class="text-white text-center align-middle bg-dark">KM</th> --}}
                                                 <th class="text-white text-center align-middle bg-dark">Rate</th>
                                                 <th class="text-white text-center align-middle bg-dark">Jam Keluar</th>
-                                                {{-- <th class="text-white text-center align-middle bg-dark">F&B</th>
+                                                {{-- <th class="text-white text-center align-middle bg-dark">F&B</th> --}}
                                                 <th class="text-white text-center align-middle bg-dark">Laundry</th>
-                                                <th class="text-white text-center align-middle bg-dark">Lain-lain</th> --}}
+                                                {{-- <th class="text-white text-center align-middle bg-dark">Lain-lain</th> --}}
                                                 <th class="text-white text-center align-middle bg-dark">Total</th>
                                                 <th class="text-white text-center align-middle bg-dark">Cash</th>
                                                 <th class="text-white text-center align-middle bg-dark">Card</th>
@@ -68,6 +68,7 @@
                                             $sumJumlah = 0;
                                             $sumJumlahCash = 0;
                                             $sumJumlahNonCash = 0;
+                                            $sumTotalLaundry = 0;
                                         @endphp
                                         <tbody>
                                             @php $no1 = 1; @endphp
@@ -109,10 +110,10 @@
                                                         </td>
                                                         <td>
                                                             @php
-                                                                $jumlah = $totalHari * $item->room_price;
+                                                                $hargaKamar = $totalHari * $item->room_price;
+                                                                $jumlah = $hargaKamar + $item->total_laundry;
                                                                 $sumJumlah += $jumlah;
 
-                                                                 // Pisahkan total berdasarkan metode pembayaran
                                                                 if ($item->payment_method == 'Cash') {
                                                                     $sumJumlahCash += $jumlah;
                                                                 } else {
@@ -124,6 +125,9 @@
                                                         <td>{{ $totalHari }}</td>
                                                         <td>{{ $item->room_price ? 'Rp. ' . number_format($item->room_price, 0, ',', '.') : '-' }}</td>
                                                         <td>{{ $item->time_checkout ?? '-' }}</td>
+                                                        <td>
+                                                            {{ $item->total_laundry ? 'Rp. ' .number_format($item->total_laundry, 0, ',', '.') : '-' }}
+                                                        </td>
                                                         <td>{{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}</td>
                                                         <td>
                                                             @if ($item->payment_method == 'Cash')
@@ -194,6 +198,7 @@
                                                 <td>{{ $sumTotalHari ?? '0' }}</td>
                                                 <td>{{ $sumRateCheckout ? 'Rp. ' . number_format($sumRateCheckout, 0, ',', '.') : '-' }}</td>
                                                 <td></td>
+                                                <td></td>
                                                 <td>{{ $sumJumlah ? 'Rp. ' . number_format($sumJumlah, 0, ',', '.') : '-' }}</td>
                                                 <td>{{ $sumJumlahCash ? 'Rp. ' . number_format($sumJumlahCash, 0, ',', '.') : '-' }}</td>
                                                 <td>{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
@@ -201,10 +206,10 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="23" style="height: 10px; background-color: #f8f9fa;"></td>
+                                                <td colspan="24" style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
                                             <tr class="text-xs">
-                                                <td colspan="16" style="height: 10px; background-color: #f8f9fa;"></td>
+                                                <td colspan="17" style="height: 10px; background-color: #f8f9fa;"></td>
                                                 @php
                                                     $totalHarga = $otherTransactions->where('tabel_referensi', 'other_transactions')->sum('harga');
                                                 @endphp
@@ -214,7 +219,7 @@
                                                 <td colspan="3" style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
                                             <tr class="text-xs">
-                                                <td colspan="16" style="height: 10px; background-color: #f8f9fa;"></td>
+                                                <td colspan="17" style="height: 10px; background-color: #f8f9fa;"></td>
                                                 <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle">Jumlah di Setor</td>
                                                 <td style="height: 10px;" class="align-middle">
                                                     @php
