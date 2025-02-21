@@ -26,39 +26,39 @@
                                     <table class="table table-bordered" style="width: 100%;" cellspacing="0">
                                         <thead>
                                             <tr class="text-center text-xs">
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">No</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Kamar</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Tipe Ruangan</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Status</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Uraian/Nama</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Group</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">M/T</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Berapa Hari</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Tanggal Masuk</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Jam Masuk</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">KM</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">ORG</th>
-                                                <th colspan="3" class="text-white text-center align-middle bg-dark">Stay (Hari) (Chek In)</th>
-                                                <th colspan="5" class="text-white text-center align-middle bg-dark">Pendapatan (Chek Out) (Rp)</th>
-                                                <th colspan="3" class="text-white text-center align-middle bg-dark">Pembayaran</th>
-                                                <th rowspan="2" class="text-white text-center align-middle bg-dark">Keterangan</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">No</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Kamar</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Tipe Ruangan</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Status</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Uraian/Nama</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Group</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">M/T</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Berapa Hari</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Tanggal Masuk</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Jam Masuk</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">KM</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">ORG</th>
+                                                <th colspan="3" class="text-white text-center align-middle table-dark">Stay (Hari) (Chek In)</th>
+                                                <th colspan="5" class="text-white text-center align-middle table-dark">Pendapatan (Chek Out) (Rp)</th>
+                                                <th colspan="3" class="text-white text-center align-middle table-dark">Pembayaran</th>
+                                                <th rowspan="2" class="text-white text-center align-middle table-dark">Keterangan</th>
                                             </tr>
                                             <tr class="text-xs">
-                                                <th class="text-white text-center align-middle bg-dark">HR</th>
-                                                {{-- <th class="text-white text-center align-middle bg-dark">KM</th> --}}
-                                                <th class="text-white text-center align-middle bg-dark">Rate</th>
-                                                <th class="text-white text-center align-middle bg-dark">Jumlah</th>
-                                                <th class="text-white text-center align-middle bg-dark">HR</th>
-                                                {{-- <th class="text-white text-center align-middle bg-dark">KM</th> --}}
-                                                <th class="text-white text-center align-middle bg-dark">Rate</th>
-                                                <th class="text-white text-center align-middle bg-dark">Jam Keluar</th>
-                                                {{-- <th class="text-white text-center align-middle bg-dark">F&B</th> --}}
-                                                <th class="text-white text-center align-middle bg-dark">Laundry</th>
-                                                {{-- <th class="text-white text-center align-middle bg-dark">Lain-lain</th> --}}
-                                                <th class="text-white text-center align-middle bg-dark">Total</th>
-                                                <th class="text-white text-center align-middle bg-dark">Cash</th>
-                                                <th class="text-white text-center align-middle bg-dark">Card</th>
-                                                <th class="text-white text-center align-middle bg-dark">Piutang</th>
+                                                <th class="text-white text-center align-middle table-dark">HR</th>
+                                                {{-- <th class="text-white text-center align-middle table-dark">KM</th> --}}
+                                                <th class="text-white text-center align-middle table-dark">Rate</th>
+                                                <th class="text-white text-center align-middle table-dark">Jumlah</th>
+                                                <th class="text-white text-center align-middle table-dark">HR</th>
+                                                {{-- <th class="text-white text-center align-middle table-dark">KM</th> --}}
+                                                <th class="text-white text-center align-middle table-dark">Rate</th>
+                                                <th class="text-white text-center align-middle table-dark">Jam Keluar</th>
+                                                {{-- <th class="text-white text-center align-middle table-dark">F&B</th> --}}
+                                                <th class="text-white text-center align-middle table-dark">Laundry</th>
+                                                {{-- <th class="text-white text-center align-middle table-dark">Lain-lain</th> --}}
+                                                <th class="text-white text-center align-middle table-dark">Total</th>
+                                                <th class="text-white text-center align-middle table-dark">Cash</th>
+                                                <th class="text-white text-center align-middle table-dark">Card</th>
+                                                <th class="text-white text-center align-middle table-dark">Piutang</th>
                                             </tr>
                                         </thead>
                                         @php
@@ -69,6 +69,7 @@
                                             $sumJumlahCash = 0;
                                             $sumJumlahNonCash = 0;
                                             $sumTotalLaundry = 0;
+                                            $sumBesarTransaksi = 0;
                                         @endphp
                                         <tbody>
                                             @php $no1 = 1; @endphp
@@ -114,10 +115,12 @@
                                                                 $jumlah = $hargaKamar + $item->total_laundry;
                                                                 $sumJumlah += $jumlah;
 
-                                                                if ($item->payment_method == 'Cash') {
-                                                                    $sumJumlahCash += $jumlah;
+                                                                $sumBesarTransaksi += $item->besar_transaksi;
+
+                                                                if ($item->jenis_transaksi == 'Cash') {
+                                                                    $sumJumlahCash += $item->besar_transaksi;
                                                                 } else {
-                                                                    $sumJumlahNonCash += $jumlah;
+                                                                    $sumJumlahNonCash += $item->besar_transaksi;
                                                                 }
                                                             @endphp
                                                             {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
@@ -128,15 +131,15 @@
                                                         <td>
                                                             {{ $item->total_laundry ? 'Rp. ' .number_format($item->total_laundry, 0, ',', '.') : '-' }}
                                                         </td>
-                                                        <td>{{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}</td>
+                                                        <td>{{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}</td>
                                                         <td>
-                                                            @if ($item->payment_method == 'Cash')
-                                                                {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
+                                                            @if ($item->jenis_transaksi == 'Cash')
+                                                                {{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($item->payment_method != 'Cash')
-                                                                {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
+                                                            @if ($item->jenis_transaksi != 'Cash')
+                                                                {{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}
                                                             @endif
                                                         </td>
                                                         <td>0</td>
@@ -182,7 +185,7 @@
                                              <tr>
                                                 <td colspan="28" style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
-                                            <tr class="text-xs">
+                                            <tr class="text-xs table-warning">
                                                 <td colspan="4" class="font-weight-bold text-center">Total Pendapatan Hari ini</td>
                                                 <td></td>
                                                 <td></td>
@@ -199,7 +202,7 @@
                                                 <td>{{ $sumRateCheckout ? 'Rp. ' . number_format($sumRateCheckout, 0, ',', '.') : '-' }}</td>
                                                 <td></td>
                                                 <td></td>
-                                                <td>{{ $sumJumlah ? 'Rp. ' . number_format($sumJumlah, 0, ',', '.') : '-' }}</td>
+                                                <td>{{ $sumBesarTransaksi ? 'Rp. ' . number_format($sumBesarTransaksi, 0, ',', '.') : '-' }}</td>
                                                 <td>{{ $sumJumlahCash ? 'Rp. ' . number_format($sumJumlahCash, 0, ',', '.') : '-' }}</td>
                                                 <td>{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
                                                 <td>0</td>
@@ -213,38 +216,39 @@
                                                 @php
                                                     $totalHarga = $otherTransactions->where('tabel_referensi', 'other_transactions')->sum('harga');
                                                 @endphp
-                                                <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle">Jumlah Pengeluaran</td>
-                                                <td style="height: 10px;" class="align-middle">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
-                                                <td style="height: 10px;" class="align-middle">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
+                                                <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle table-warning">Jumlah Pengeluaran</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
                                                 <td colspan="3" style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
                                             <tr class="text-xs">
                                                 <td colspan="17" style="height: 10px; background-color: #f8f9fa;"></td>
-                                                <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle">Jumlah di Setor</td>
-                                                <td style="height: 10px;" class="align-middle">
+                                                <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle table-warning">Jumlah di Setor</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">
                                                     @php
-                                                        $jumlahSetor = $sumJumlah - $totalHarga;
+                                                        $jumlahSetor = $sumBesarTransaksi - $totalHarga;
                                                         $jumlahSetor2 = $sumJumlahCash - $totalHarga;
                                                     @endphp
                                                     {{ $jumlahSetor ? 'Rp. ' . number_format($jumlahSetor, 0, ',', '.') : 'Rp. 0' }}
                                                 </td>
-                                                <td style="height: 10px;" class="align-middle">{{ $jumlahSetor2 ? 'Rp. ' . number_format($jumlahSetor2, 0, ',', '.') : '-' }}</td>
-                                                <td style="height: 10px;" class="align-middle">{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
-                                                <td style="height: 10px;" class="align-middle">0</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $jumlahSetor2 ? 'Rp. ' . number_format($jumlahSetor2, 0, ',', '.') : '-' }}</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">0</td>
                                                 <td style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
                                         </tfoot>
                                     </table>
 
+                                    {{-- Pengeluaran --}}
                                     <div class="row my-5 text-sm">
                                         <div class="col-6">
                                             <p class="font-weight-bold mb-0">Pengeluaran</p>
                                             <table class="table table-bordered" style="width: 100%;" cellspacing="0">
                                                 <thead>
                                                     <tr class="text-xs">
-                                                        <th class="text-white text-center align-middle bg-dark">No</th>
-                                                        <th class="text-white text-center align-middle bg-dark">Item</th>
-                                                        <th class="text-white text-center align-middle bg-dark">Jumlah</th>
+                                                        <th class="text-white text-center align-middle table-dark">No</th>
+                                                        <th class="text-white text-center align-middle table-dark">Item</th>
+                                                        <th class="text-white text-center align-middle table-dark">Jumlah</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -263,7 +267,7 @@
                                                     <tr>
                                                         <td colspan="3" style="height: 10px; background-color: #f8f9fa;"></td>
                                                     </tr>
-                                                    <tr class="text-xs">
+                                                    <tr class="text-xs table-warning">
                                                         <td colspan="2" class="font-weight-bold text-center">Total</td>
                                                         <td>{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
                                                     </tr>
