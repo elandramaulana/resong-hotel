@@ -31,7 +31,7 @@
                                 <th rowspan="2">No</th>
                                 <th rowspan="2">Tgl</th>
                                 <th colspan="3">STAY (HARI)</th>
-                                <th rowspan="1">Rekapan</th>
+                                <th colspan="3">Rekapan</th>
                                 <th colspan="2">PEMBAYARAN</th>
                                 <th rowspan="2">KET</th>
                                 <th rowspan="2">Aksi</th>
@@ -40,52 +40,67 @@
                                 <th>ORG</th>
                                 <th>HR</th>
                                 <th>KM</th>
-                                <th>Jumlah</th>
-                                <th>Card</th>
+                                <th>Debit</th>
+                                <th>Kredit</th>
+                                <th>Total</th>
+                                <th>CARD</th>
                                 <th>CASH</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             @forelse ($dataByDate as $index => $data)
+                                @php
+                                    // Cari data rekapan (debit & kredit) dari grouping transaksi berdasarkan created_at
+                                    $rekapan = collect($transaksiByDate)->firstWhere('date', $data['date']);
+                                    $rekapanDebit = $rekapan ? $rekapan['debit'] : 0;
+                                    $rekapanKredit = $rekapan ? $rekapan['kredit'] : 0;
+                                    $rekapanTotal = $rekapanDebit + $rekapanKredit;
+                                @endphp
                                 <tr class="text-center">
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ \Carbon\Carbon::parse($data['date'])->format('d-m-Y') }}</td>
                                     <td>{{ $data['org'] }}</td>
                                     <td>{{ $data['hr'] }}</td>
                                     <td>{{ $data['km'] }}</td>
-                                    <td>{{ number_format($data['rekapan_jumlah'], 2) }}</td>
+                                    <td>{{ number_format($rekapanDebit, 2) }}</td>
+                                    <td>{{ number_format($rekapanKredit, 2) }}</td>
+                                    <td>{{ number_format($rekapanTotal, 2) }}</td>
                                     <td>{{ number_format($data['pembayaran_card'], 2) }}</td>
                                     <td>{{ number_format($data['pembayaran_cash'], 2) }}</td>
-                                    <td><!-- Keterangan, nanti akan diisi logika tambahan --></td>
+                                    <td><!-- Keterangan, nantinya akan diisi logika tambahan --></td>
                                     <td>
-                                        <div>
-                                            <button style="margin-right: 10px" type="submit"
-                                                class="btn btn-warning btn-sm mt-2">
-                                                <a style="color: black" href="#"> <i class="fas fa-eye"></i></a>
-                                            </button>
-                                        </div>
+                                        <button style="margin-right: 10px" type="button"
+                                            class="btn btn-warning btn-sm mt-2">
+                                            <a style="color: black" href="#"><i class="fas fa-eye"></i></a>
+                                        </button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10" class="text-center">Tidak ada data transaksi.</td>
+                                    <td colspan="12" class="text-center">Tidak ada data transaksi.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                         <tfoot>
+                            @php
+                                // Total untuk Rekapan berdasarkan grouping transaksi (debit & kredit)
+                                $totalRekapanDebit = $totalTransaksi['debit'];
+                                $totalRekapanKredit = $totalTransaksi['kredit'];
+                                $totalRekapanTotal = $totalRekapanDebit + $totalRekapanKredit;
+                            @endphp
                             <tr class="table-warning text-center">
                                 <td colspan="2"><strong>Total Transaksi</strong></td>
                                 <td><strong>{{ number_format($total['org'], 0, ',', '.') }}</strong></td>
                                 <td><strong>{{ number_format($total['hr'], 0, ',', '.') }}</strong></td>
                                 <td><strong>{{ number_format($total['km'], 0, ',', '.') }}</strong></td>
-                                <td><strong>Rp {{ number_format($total['rekapan_jumlah'], 0, ',', '.') }}</strong></td>
+                                <td><strong>{{ number_format($totalRekapanDebit, 2) }}</strong></td>
+                                <td><strong>{{ number_format($totalRekapanKredit, 2) }}</strong></td>
+                                <td><strong>{{ number_format($totalRekapanTotal, 2) }}</strong></td>
                                 <td><strong>Rp {{ number_format($total['pembayaran_card'], 0, ',', '.') }}</strong></td>
                                 <td><strong>Rp {{ number_format($total['pembayaran_cash'], 0, ',', '.') }}</strong></td>
                                 <td colspan="2"></td>
                             </tr>
                         </tfoot>
-
                     </table>
                 </div>
             </div>

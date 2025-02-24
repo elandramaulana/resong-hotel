@@ -9,13 +9,13 @@ class WeeklyReportController extends Controller
 {
     public function index()
     {
-        // Query untuk Checkin + Checkout
+    
         $checkinCheckoutTransactions = DB::table('transaction_reports as t')
             ->leftJoin('checkins as c', function ($join) {
                 $join->on('t.id_referensi', '=', 'c.id')
                     ->where('t.tabel_referensi', '=', 'checkins');
             })
-            ->leftJoin('checkouts as co', 'c.id', '=', 'co.checkin_id') // Hubungkan checkin dengan checkout
+            ->leftJoin('checkouts as co', 'c.id', '=', 'co.checkin_id') 
             ->leftJoin('rooms as r', 'c.room_id', '=', 'r.id')
             ->leftJoin('guests as g', 'c.guest_id', '=', 'g.id')
             ->select(
@@ -36,9 +36,7 @@ class WeeklyReportController extends Controller
                 'r.room_status',
                 'r.room_price',
                 'g.name_guest',
-                // 'g.guest_email',
-                // 'co.checkout_date', // Data checkout terkait checkin
-                // 'co.total_payment'
+             
             )
             ->get();
 
@@ -56,7 +54,7 @@ class WeeklyReportController extends Controller
             )
             ->get();
 
-        // Gabungkan kedua koleksi menjadi satu
+        
         $transactions = $checkinCheckoutTransactions->merge($otherTransactions);
 
 

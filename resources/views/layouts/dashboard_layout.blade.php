@@ -55,7 +55,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar" >
+        <ul class="navbar-nav nav-bg sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -89,88 +89,88 @@
                 $humanCapital = Auth::user()->karyawanHasDivision()->where('divisi_id', '8')->first();
             @endphp
             <!-- Heading -->
-            @if($frontOffice || Auth::user()->level_user == 'SUPERADMIN')
-            <div class="sidebar-heading">
-                FRONT OFFICE
-            </div>
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-calendar-check"></i>
-                    <span>Check-In</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('checkin.normal') }}">Normal</a>
-                        <a class="collapse-item" href="{{ route('checkin.speedy') }}">Speedy</a>
-                    </div>
+            @if ($frontOffice || Auth::user()->level_user == 'SUPERADMIN')
+                <div class="sidebar-heading">
+                    FRONT OFFICE
                 </div>
-            </li>
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('checkout.list') }}">
-                    <i class="fas fa-fw fa-door-open"></i>
-                    <span>Check-Out</span></a>
-            </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-calendar-check"></i>
+                        <span>Check-In</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('checkin.normal') }}">Normal</a>
+                            <a class="collapse-item" href="{{ route('checkin.speedy') }}">Speedy</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('checkout.list') }}">
+                        <i class="fas fa-fw fa-door-open"></i>
+                        <span>Check-Out</span></a>
+                </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-desktop"></i>
-                    <span>Reservation</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('booking') }}">Booking</a>
-                        <a class="collapse-item" href="{{ route('reservation.list') }}">Reservation List</a>
-                        <a class="collapse-item" href="{{ route('booking.canceled') }}">Cancel Reservation</a>
-                        <a class="collapse-item" href="{{ route('booking.no_showed') }}">No Show Reserve</a>
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-desktop"></i>
+                        <span>Reservation</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('booking') }}">Booking</a>
+                            <a class="collapse-item" href="{{ route('reservation.list') }}">Reservation List</a>
+                            <a class="collapse-item" href="{{ route('booking.canceled') }}">Cancel Reservation</a>
+                            <a class="collapse-item" href="{{ route('booking.no_showed') }}">No Show Reserve</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuest"
-                    aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-user"></i>
-                    <span>Guest</span>
-                </a>
-                <div id="collapseGuest" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('inhouse.list') }}">In-house Guest</a>
-                        <a class="collapse-item" href="{{ route('checked_out.list') }}">Checkout History</a>
-                        <a class="collapse-item" href="{{ route('guest_database') }}">Guest Database</a>
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuest"
+                        aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-user"></i>
+                        <span>Guest</span>
+                    </a>
+                    <div id="collapseGuest" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('inhouse.list') }}">In-house Guest</a>
+                            <a class="collapse-item" href="{{ route('checked_out.list') }}">Checkout History</a>
+                            <a class="collapse-item" href="{{ route('guest_database') }}">Guest Database</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
-                    aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-bed"></i>
-                    <span>Rooms</span>
-                </a>
-                <div id="collapseRooms" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('daftar.room') }}">Room List</a>
-                        <a class="collapse-item" href="{{ route('daftar.roomcat') }}">Room Type</a>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRooms"
+                        aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-bed"></i>
+                        <span>Rooms</span>
+                    </a>
+                    <div id="collapseRooms" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('daftar.room') }}">Room List</a>
+                            <a class="collapse-item" href="{{ route('daftar.roomcat') }}">Room Type</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
             @endif
             <!-- Nav Item - Check-out -->
-            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('cleaningroom.list') }}">
-                    <i class="fas fa-fw fa-broom"></i>
-                    <span>House Keeping</span></a>
-            </li>
+            @if ($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('cleaningroom.list') }}">
+                        <i class="fas fa-fw fa-broom"></i>
+                        <span>House Keeping</span></a>
+                </li>
             @endif
 
 
@@ -187,7 +187,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('bill.report') }}">Bill Report</a>
                         <a class="collapse-item" href="{{ route('monthly.report') }}">Monthly Report</a>
-                        <a class="collapse-item" href="{{ route('weekly.report') }}">Weekly Report</a>
+                        <a class="collapse-item" href="{{ route('weekly.report') }}">Daily Report</a>
                     </div>
                 </div>
             </li>
@@ -196,85 +196,86 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            @if($kitchen || Auth::user()->level_user == 'SUPERADMIN')
-            <div class="sidebar-heading">
-                INVENTORY KITCHEN
-            </div>
+            @if ($kitchen || Auth::user()->level_user == 'SUPERADMIN')
+                <div class="sidebar-heading">
+                    INVENTORY KITCHEN
+                </div>
 
-            <!-- Heading -->
-            <!-- <div class="sidebar-heading">
+                <!-- Heading -->
+                <!-- <div class="sidebar-heading">
                 BACK OFFICE
             </div> -->
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('list.supplier') }}">
-                    <i class="fas fa-fw fa-handshake"></i>
-                    <span>Supplier</span>
-                </a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.supplier') }}">
+                        <i class="fas fa-fw fa-handshake"></i>
+                        <span>Supplier</span>
+                    </a>
+                </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('list.barang') }}">
-                    <i class="fas fa-fw fa-cubes"></i> <!-- Menggunakan ikon "cubes" -->
-                    <span>Barang</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.barang') }}">
+                        <i class="fas fa-fw fa-cubes"></i> <!-- Menggunakan ikon "cubes" -->
+                        <span>Barang</span>
+                    </a>
+                </li>
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('list.kategori') }}">
-                    <i class="fas fa-fw fa-tags"></i>
-                    <span>Manage Kategori Barang</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.kategori') }}">
+                        <i class="fas fa-fw fa-tags"></i>
+                        <span>Manage Kategori Barang</span></a>
+                </li>
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('list.trans') }}">
-                    <i class="fas fa-fw fa-exchange-alt"></i>
-                    <span>Transaksi Barang</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.trans') }}">
+                        <i class="fas fa-fw fa-exchange-alt"></i>
+                        <span>Transaksi Barang</span></a>
+                </li>
             @endif
             {{-- Inventaris barang --}}
             <!-- Heading -->
-            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
-            <div class="sidebar-heading mt-3">
-                INVENTORY ASSETS
-            </div>
-            {{-- Inventaris barang --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#inventoryAssets"
-                    aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-box"></i>
-                    <span>Inventory Assets</span>
-                </a>
-                <div id="inventoryAssets" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('inventory-assets.supplier.show') }}">Supplier</a>
-                        <a class="collapse-item" href="{{ route('inventory-assets.kategori.show') }}">Kategori
-                            Assets</a>
-                        <a class="collapse-item" href="{{ route('inventory-assets.asset.show') }}">Assets</a>
-                        <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi
-                            Assets</a>
-                    </div>
+            @if ($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
+                <div class="sidebar-heading mt-3">
+                    INVENTORY ASSETS
                 </div>
-            </li>
-            {{-- end Inventaris barang --}}
+                {{-- Inventaris barang --}}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                        data-target="#inventoryAssets" aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-box"></i>
+                        <span>Inventory Assets</span>
+                    </a>
+                    <div id="inventoryAssets" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                                href="{{ route('inventory-assets.supplier.show') }}">Supplier</a>
+                            <a class="collapse-item" href="{{ route('inventory-assets.kategori.show') }}">Kategori
+                                Assets</a>
+                            <a class="collapse-item" href="{{ route('inventory-assets.asset.show') }}">Assets</a>
+                            <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi
+                                Assets</a>
+                        </div>
+                    </div>
+                </li>
+                {{-- end Inventaris barang --}}
 
-            {{-- end Inventaris barang --}}
+                {{-- end Inventaris barang --}}
 
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Laundry
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('laundry') }}">
-                    <i class="fas fa-fw fa-tshirt"></i>
-                    <span>Laundry</span></a>
-            </li>
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Laundry
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('laundry') }}">
+                        <i class="fas fa-fw fa-tshirt"></i>
+                        <span>Laundry</span></a>
+                </li>
             @endif
             <hr class="sidebar-divider">
 
@@ -294,95 +295,95 @@
             </li> --}}
 
             <!-- Heading -->
-            @if($resto || Auth::user()->level_user == 'SUPERADMIN')
-            <div class="sidebar-heading">
-                Resto
-            </div>
+            @if ($resto || Auth::user()->level_user == 'SUPERADMIN')
+                <div class="sidebar-heading">
+                    Resto
+                </div>
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('kategori.menu') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Manage Kategori Menu</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('kategori.menu') }}">
+                        <i class="fas fa-fw fa-calendar"></i>
+                        <span>Manage Kategori Menu</span></a>
+                </li>
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('list.menu') }}">
-                    <i class="fas fa-fw fa-list"></i>
-                    <span>Manage Menu List</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.menu') }}">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>Manage Menu List</span></a>
+                </li>
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('daily.menu') }}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Manage Menu Daily</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('daily.menu') }}">
+                        <i class="fas fa-fw fa-calendar"></i>
+                        <span>Manage Menu Daily</span></a>
+                </li>
 
 
 
-            <!-- Nav Item - Check-out -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('resto.menu') }}">
-                    <i class="fas fa-fw fa-utensils"></i>
-                    <span>Resto</span></a>
-            </li>
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('resto.menu') }}">
+                        <i class="fas fa-fw fa-utensils"></i>
+                        <span>Resto</span></a>
+                </li>
             @endif
             <br>
 
 
             <!-- Heading -->
-            @if($humanCapital || Auth::user()->level_user == 'SUPERADMIN')
-            <div class="sidebar-heading">
-                Kepegawaian
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('system.settings')}}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>System Settings</span></a>
-            </li>
-
-              <!-- Nav Item - Check-out -->
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('daftar.hadir')}}">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Absensi Kehadiran</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKaryawan"
-                    aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-user"></i>
-                    <span>Pegawai</span>
-                </a>
-                <div id="collapseKaryawan" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('daftar.karyawan') }}">Data Karyawan</a>
-                        <a class="collapse-item" href="{{ route('daftar.divisi') }}">Data Divisi</a>
-                        <a class="collapse-item" href="{{ route('daftar.shift') }}">Data Shift</a>
-                    </div>
+            @if ($humanCapital || Auth::user()->level_user == 'SUPERADMIN')
+                <div class="sidebar-heading">
+                    Kepegawaian
                 </div>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('system.settings') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>System Settings</span></a>
+                </li>
 
-            <li class="nav-item">
+                <!-- Nav Item - Check-out -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('daftar.hadir') }}">
+                        <i class="fas fa-fw fa-calendar"></i>
+                        <span>Absensi Kehadiran</span></a>
+                </li>
 
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
-                    aria-expanded="true" aria-controls="collapseGuest">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>Payroll</span>
-                </a>
-                <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
-                        <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
-                        {{-- <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a> --}}
-                        <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                        data-target="#collapseKaryawan" aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-user"></i>
+                        <span>Pegawai</span>
+                    </a>
+                    <div id="collapseKaryawan" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('daftar.karyawan') }}">Data Karyawan</a>
+                            <a class="collapse-item" href="{{ route('daftar.divisi') }}">Data Divisi</a>
+                            <a class="collapse-item" href="{{ route('daftar.shift') }}">Data Shift</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                        data-target="#collapsePayroll" aria-expanded="true" aria-controls="collapseGuest">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Payroll</span>
+                    </a>
+                    <div id="collapsePayroll" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('data.gaji') }}">Gaji</a>
+                            <a class="collapse-item" href="{{ route('proses.gaji') }}">Proses</a>
+                            {{-- <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a> --}}
+                            <a class="collapse-item" href="{{ route('overtime') }}">Over Time</a>
+                        </div>
+                    </div>
+                </li>
             @endif
 
 
@@ -440,32 +441,31 @@
                             </div>
                         </li>
                         @php
-                        $Divisions = Auth::user()->isUserApproval();
-                    @endphp
-                    @if($Divisions)
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            $Divisions = Auth::user()->isUserApproval();
+                        @endphp
+                        @if ($Divisions)
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">My Team</span>
 
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ route('team.presentions') }}">
-                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Presensi
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('team.ot_request') }}">
-                                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    OT Approval
-                                </a>
-                            </div>
-                        </li>
-                    @endif
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="{{ route('team.presentions') }}">
+                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Presensi
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('team.ot_request') }}">
+                                        <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        OT Approval
+                                    </a>
+                                </div>
+                            </li>
+                        @endif
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -485,27 +485,24 @@
                                     Profile
                                 </a>
 
-                                @php
-                                    if(Auth::user()->isKaryawan()){
-                                        @endphp
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('absen.info') }}">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            History Absensi
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            History Slip Gaji
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('add.overtime') }}">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Request Overtime
-                                        </a>
-                                @php
-                                    }
-                                @endphp
+                                @if (Auth::user() && Auth::user()->isKaryawan())
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('absen.info') }}">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        History Absensi
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('slip_gaji.info') }}">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        History Slip Gaji
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('add.overtime') }}">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Request Overtime
+                                    </a>
+                                @endif
+
 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
@@ -564,7 +561,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <form id="frmLogout" action="{{route('logout')}}" method="POST">@csrf</form>
+                    <form id="frmLogout" action="{{ route('logout') }}" method="POST">@csrf</form>
                     <a class="btn btn-primary" id="btnLogout">Logout</a>
                 </div>
             </div>
@@ -584,49 +581,49 @@
 
     <!-- Script for table -->
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#btnLogout', function(e){
-            $("#frmLogout").submit();
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#btnLogout', function(e) {
+                $("#frmLogout").submit();
+            });
+            $('#checkInTable').DataTable();
+            $('#speedyCheckInTable').DataTable();
+            $('#checkOutTable').DataTable();
+            $('#countryTable').DataTable();
+            $('#ProvinceTable').DataTable();
+            $('#cityTable').DataTable();
+            // $('#reservationListTable').DataTable();
+            $('#cancelReservationListTable').DataTable();
+            $('#inhouseGuest').DataTable();
+            $('#guestDatabase').DataTable();
+            $('#listServiceGuestFood').DataTable();
+            $('#listServiceGuestDrinks').DataTable();
+            $('#listServiceGuestLaundry').DataTable();
+            $('#listServiceGuestOther').DataTable();
+            $('#listServiceOrder').DataTable();
+            $('#GuestDatabaseTable').DataTable();
+            $('#historyGuestTable').DataTable();
+            $('#houseKeepingTable').DataTable();
+            $('#cleaningHistoryTable').DataTable();
+            $('#billReporTable').DataTable();
+            $('#supplierTable').DataTable();
+            $('#barangTable').DataTable();
+            $('#barangMasukTable').DataTable();
+            $('#manageMenuTable').DataTable();
+            $('#daftarMenuTable').DataTable();
+            $('#layananRestoTable').DataTable();
+            $('#detailLayananRestoTable').DataTable();
+            $('#dataKaryawanTable').DataTable();
+            $('#dataDivisiTable').DataTable();
+            $('#dataShiftTable').DataTable();
+            $('#dataAbsensiTable').DataTable();
+            $('#dataGajiTable').DataTable();
+            $('#dataProsesTable').DataTable();
+            $('#dataBillTable').DataTable();
+            $('#dataRoomTable').DataTable();
+            $('#overtimeTable').DataTable();
         });
-        $('#checkInTable'). DataTable();
-        $('#speedyCheckInTable'). DataTable();
-        $('#checkOutTable').DataTable();
-        $('#countryTable').DataTable();
-        $('#ProvinceTable').DataTable();
-        $('#cityTable').DataTable();
-        // $('#reservationListTable').DataTable();
-        $('#cancelReservationListTable').DataTable();
-        $('#inhouseGuest').DataTable();
-        $('#guestDatabase').DataTable();
-        $('#listServiceGuestFood').DataTable();
-        $('#listServiceGuestDrinks').DataTable();
-        $('#listServiceGuestLaundry').DataTable();
-        $('#listServiceGuestOther').DataTable();
-        $('#listServiceOrder').DataTable();
-        $('#GuestDatabaseTable').DataTable();
-        $('#historyGuestTable').DataTable();
-        $('#houseKeepingTable').DataTable();
-        $('#cleaningHistoryTable').DataTable();
-        $('#billReporTable').DataTable();
-        $('#supplierTable').DataTable();
-        $('#barangTable').DataTable();
-        $('#barangMasukTable').DataTable();
-        $('#manageMenuTable').DataTable();
-        $('#daftarMenuTable').DataTable();
-        $('#layananRestoTable').DataTable();
-        $('#detailLayananRestoTable').DataTable();
-        $('#dataKaryawanTable').DataTable();
-        $('#dataDivisiTable').DataTable();
-        $('#dataShiftTable').DataTable();
-        $('#dataAbsensiTable').DataTable();
-        $('#dataGajiTable').DataTable();
-        $('#dataProsesTable').DataTable();
-        $('#dataBillTable').DataTable();
-        $('#dataRoomTable').DataTable();
-        $('#overtimeTable').DataTable();
-    });
-</script>
+    </script>
 
 
     {{-- show menu image --}}
