@@ -101,7 +101,7 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::post('/speedy-post', [CheckinController::class, 'speedy_post'])->name('checkin.speedy_post');
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
     Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
-    Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
+    // Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
 
     // checkout
     // checkout

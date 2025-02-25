@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentStoreRequest;
 use App\Http\Requests\ReserveRoomRequest;
+use App\Models\LatePointSetting;
 use App\Models\Rooms;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -185,10 +186,12 @@ class BookingController extends Controller
             'reservation_desc' => $dataSession['reservation_desc'] ?? "",
             'qty_hari' => daysInterval($reservation_checkin, $reservation_checkout)
         ];
+        $Settings = LatePointSetting::first();
         $Data = [
             'Title' => 'Peyment Reservation',
             'room_detail' => $room_detail,
-            'tamu_detail' => $detail_tamu
+            'tamu_detail' => $detail_tamu,
+            'Settings' => $Settings
         ];
         return view('frontoffice.reservation.booking_payment', $Data);
     }
