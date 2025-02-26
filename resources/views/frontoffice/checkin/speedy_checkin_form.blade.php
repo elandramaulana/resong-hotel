@@ -13,6 +13,15 @@
 <div class="container-fluid mt-4">
         <div class="card">
             <div class="card-body text-dark">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ route('checkin.speedy_post') }}" method="POST">
                     @csrf
                     <div class="row">
@@ -33,7 +42,7 @@
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="checkinHour" class="form-label">Check-in Time</label>
-                                    <input name="speedy_checkin_hour" type="time" class="form-control" id="checkinHour" >
+                                    <input name="speedy_checkin_hour" type="time" required class="form-control" id="checkinHour" >
                                 </div>
                             </div>
 
@@ -291,13 +300,67 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <p id="night-count">Night(s):</p>
-                                                                        <p id="room-rate-value">Room Rate: </p>
-                                                                        <p id="total-payment-value">Total Payment: </p>
-                                                                        <p id="down-payment-value">Down Payment: </p>
-                                                                        <p id="remaining-payment-value">Remaining Payment:</p>
-                                                                    </div>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td width="29">Night(s)</td>
+                                                                            <td width="2">:</td>
+                                                                            <td width="49" align="right"><div id="night-count"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Room Rate</td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="room-rate-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Total Room</td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="total-payment-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Extrabed</td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="extrabed-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Tax</td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="tax-payment-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Total Payment</td>
+                                                                            <td>:</td>
+                                                                            <td align="right" style="border-top:1px solid black ">
+                                                                                <div id="paymment_value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Down Payment </td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="down-payment-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Deposit</td>
+                                                                            <td>:</td>
+                                                                            <td><input type="text" name="deposit" id="deposit" id="deposit" class="form-control" required placeholder="Input Deposit Min 50.000" style="text-align: right"></td>
+                                                                        </tr>
+                                                                        <input type="text" name="remaining_payment" id="remaining_payment" hidden>
+                                                                        <tr>
+                                                                            <td>Remaining Payment</td>
+                                                                            <td>:</td>
+                                                                            <td align="right"><div id="remaining-payment-value"></div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Payment Method</td>
+                                                                            <td>:</td>
+                                                                            <td>
+                                                                                <select name="payment_method" id="payment_method" class="form-control" required>
+                                                                                    <option value="cash">Cash</option>
+                                                                                    <option value="transfer">Transfer</option>
+                                                                                    <option value="credit card">Credit Card</option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
                                                                 </div>
                                                             </div>
                                                         </div>

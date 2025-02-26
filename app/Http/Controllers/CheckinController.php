@@ -65,19 +65,24 @@ class CheckinController extends Controller
         } else {
             $guest_id = $Guest->id;
         }
+
         $checkinData = [
             'reservation_id' => $getDetailReservation->id,
             'no_invoice' => $invoice,
             'room_id' => $getDetailReservation->room_id,
             'chanel_checkin' => $getDetailReservation->reservation_chanel,
             'date_checkin' => $getDetailReservation->reservation_checkin,
+            'time_checkin' => $getDetailReservation->speedy_checkin_hour,
             'date_checkout' => $getDetailReservation->reservation_checkout,
             'guest_id' => $guest_id,
             'guest_adult' => $request->number_of_adult,
             'guest_kids' => $request->number_of_children,
             'payment_status' => $getDetailReservation->reservation_payment_status,
             'payment' => $getDetailReservation->reservation_payment,
-            'payment_method' => $getDetailReservation->reservation_payment_method
+            'payment_method' => $getDetailReservation->reservation_payment_method,
+            'tax_price' => $getDetailReservation->tax_payment,
+            'extrabed_price' => $getDetailReservation->extrabed_payment,
+            'deposit' => $request->deposit
         ];
 
         if ($Checkin = Checkin::create($checkinData)) {
@@ -96,12 +101,36 @@ class CheckinController extends Controller
                 'item_description' => "Item Speedy Checkin"
             ];
             CheckinDetail::create($DetailCheckin);
+            //insert checkin detail if extrabed exist
+            if ($getDetailReservation->extrabed_payment > 0) {
+                $DetailCheckin = [
+                    'checkin_id' => $Checkin->id,
+                    'item_category' => 'Extrabed',
+                    'item_name' => 'Extrabed',
+                    'item_price' => $getDetailReservation->extrabed_payment,
+                    'item_qty' => 1,
+                    'item_description' => "Item Speedy Checkin"
+                ];
+                CheckinDetail::create($DetailCheckin);
+            }
 
+            $transactionData = [
+                'tabel_referensi' => 'checkins',
+                'id_referensi' => $Checkin->id,
+                'type_transaksi' => 'IN',
+                'jenis_transaksi' => 'rooms',
+                'besar_transaksi' => $getDetailReservation->total_payment + $getDetailReservation->tax_payment + $getDetailReservation->tax_payment,
+                'keterangan_transaksi' => 'Checkin for ' . $name_guest
+            ];
+            TransaksiReport::create($transactionData);
             //set reservation checkedin
             $getDetailReservation->reservation_status = 'Checked-in';
             $getDetailReservation->save();
-            $return = ['status' => 'success', 'message' => 'Checkin untuk ' . $name_guest . ' Berhasil'];
-            return redirect()->route('dashboard')->with($return);
+            $pdfController = new PdfController();
+            $receipt = $pdfController->getReceipt($Checkin->id);
+            if ($receipt instanceof BinaryFileResponse) {
+                return redirect()->route('dashboard')->with('download_url', route('receipt.download', ['id' => $Checkin->id]));
+            }
         }
     }
     public function speedy()
