@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('checkouts', function (Blueprint $table) {
-            $table->dropColumn('checkout_payment');
-            $table->dropColumn('discount');
-            $table->dropColumn('description');
-            $table->boolean('refund_deposit')->after('checkin_id')->nullable();
-            $table->string('checkout_descriptions')->after('refund_deposit')->nullable();
+            // $table->dropColumn('checkout_payment');
+            // $table->dropColumn('discount');
+            // $table->dropColumn('description');
+            $table->boolean('refund_deposit')->after('checkin_id')->nullable()->change();
+            $table->string('checkout_descriptions')->after('refund_deposit')->nullable()->change();
         });
     }
 
