@@ -44,6 +44,7 @@ use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\WeeklyReportController;
 use App\Http\Controllers\MonthlyReportController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\PengeluaranController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -100,7 +101,7 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::post('/speedy-post', [CheckinController::class, 'speedy_post'])->name('checkin.speedy_post');
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
     Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
-    Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
+    // Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
 
     // checkout
     // checkout
@@ -314,6 +315,15 @@ Route::middleware('auth', 'checkDivisi:5')->group(function () {
         Route::get('/edit/{id}', [InventoryAssetSupplierController::class, 'edit'])->name('inventory-assets.supplier.edit');
         Route::post('/update/{id}', [InventoryAssetSupplierController::class, 'update'])->name('inventory-assets.supplier.update');
         Route::delete('/destroy/{id}', [InventoryAssetSupplierController::class, 'destroy'])->name('inventory-assets.supplier.destroy');
+
+    });
+    Route::prefix('pengeluaran')->group(function () {
+        Route::get('/show', [PengeluaranController::class, 'index'])->name('pengeluaran.show');
+        Route::get('/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
+        Route::post('/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
+        Route::get('/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
+        Route::post('/update', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
+        Route::delete('/destroy/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
     });
 
     Route::prefix('inventory-assets/category')->group(function () {

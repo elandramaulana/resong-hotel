@@ -256,8 +256,8 @@
                         <a class="collapse-item" href="{{ route('inventory-assets.kategori.show') }}">Kategori
                             Assets</a>
                         <a class="collapse-item" href="{{ route('inventory-assets.asset.show') }}">Assets</a>
-                        <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi
-                            Assets</a>
+                        <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi Assets</a>
+                        <a class="collapse-item" href="{{ route('pengeluaran.show') }}">Transaksi Keluar</a>
                     </div>
                 </div>
             </li>

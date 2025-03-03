@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="checkinHour" class="form-label">Check-in Time</label>
-                                    <input name="speedy_checkin_hour" type="time" class="form-control" id="checkinHour" readonly>
+                                    <input name="speedy_checkin_hour" type="time" class="form-control" id="checkinHour" >
                                 </div>
                             </div>
 
@@ -53,14 +53,14 @@
 
                             <!-- Check-out Time -->
                             <div class="row">
-                                <div class="mb-3 col-6">
+                                <div class="mb-3 col-12">
                                     <label for="checkoutTime" class="form-label">Check-out Date</label>
                                     <input readonly name="speedy_checkout_time" value="" type="text" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 </div>
-                                <div class="mb-3 col-6">
+                                {{-- <div class="mb-3 col-6">
                                     <label for="checkoutHour" class="form-label">Check-out Time</label>
                                     <input name="speedycheckout_hour" type="time" class="form-control" id="checkoutHour" readonly>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="mb-3">
@@ -270,6 +270,43 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </section>
+                        <h4>Lengkapi Pembayaran</h4>
+
+
+                        <section  id="form-detail">
+                            <div class="container-fluid mt-4 mb-5 ">
+                                <div class="card">
+                                    <div class="card-body text-dark">
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card">
+                                                            <div class="card-header bg-primary text-white">
+                                                                Rekap Transaksi
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <p id="night-count">Night(s):</p>
+                                                                        <p id="room-rate-value">Room Rate: </p>
+                                                                        <p id="total-payment-value">Total Payment: </p>
+                                                                        <p id="down-payment-value">Down Payment: </p>
+                                                                        <p id="remaining-payment-value">Remaining Payment:</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </section>
                         <div class="mt-4 mb-3 d-flex justify-content-start ">
