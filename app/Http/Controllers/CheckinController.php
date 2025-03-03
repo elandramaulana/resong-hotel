@@ -120,7 +120,8 @@ class CheckinController extends Controller
                 'type_transaksi' => 'IN',
                 'jenis_transaksi' => 'rooms',
                 'besar_transaksi' => $getDetailReservation->total_payment + $getDetailReservation->tax_payment + $getDetailReservation->tax_payment,
-                'keterangan_transaksi' => 'Checkin for ' . $name_guest
+                'keterangan_transaksi' => 'Checkin for ' . $name_guest,
+                'jenis_pembayaran' => $getDetailReservation->reservation_payment_method
             ];
             TransaksiReport::create($transactionData);
             //set reservation checkedin
@@ -257,7 +258,8 @@ class CheckinController extends Controller
                 'type_transaksi' => 'IN',
                 'jenis_transaksi' => 'rooms',
                 'besar_transaksi' => $request->total_price,
-                'keterangan_transaksi' => 'Checkin for ' . $name_guest
+                'keterangan_transaksi' => 'Checkin for ' . $name_guest,
+                'jenis_pembayaran' => $request->payment_method
             ];
             TransaksiReport::create($transactionData);
             //do download & print invoice

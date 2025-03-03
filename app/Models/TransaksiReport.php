@@ -18,6 +18,7 @@ class TransaksiReport extends Model
         'jenis_transaksi',
         'besar_transaksi',
         'keterangan_transaksi',
+        'jenis_pembayaran',
         'created_at',
         'updated_at'
     ];

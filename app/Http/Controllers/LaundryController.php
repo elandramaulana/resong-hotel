@@ -3,48 +3,164 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostLaundryRequest;
+use App\Models\Checkin;
 use App\Models\CheckinDetail;
 use App\Models\DetLaundry;
 use App\Models\Laundry;
+use App\Models\LaundryGuest;
+use App\Models\LaundryLinen;
+use App\Models\TransaksiReport;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\select;
 
 class LaundryController extends Controller
 {
+    public function index_guest() {
+        $query = Checkin::leftJoin('checkouts', 'checkouts.checkin_id', '=', 'checkins.id')
+                            ->join('rooms', 'rooms.id', '=', 'checkins.room_id')
+                            ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+                            ->where('checkouts.id', null)
+                            ->select('checkins.*','checkins.id as checkin_id', 'rooms.room_no', 'guests.name_guest')
+                            ->get();
+        $Data = [
+            'Title' => 'List Laundry Guest',
+            'checkin'=>$query
+        ];
+        return view('laundry.laundry_guest', $Data);
+
+    }
+    public function laundry_new_linen_store(Request $request) {
+        LaundryLinen::create([
+            'nama_item' => $request->nama_item,
+            'jumlah_satuan' => $request->jumlah_satuan,
+            'tgl_keluar' => $request->tgl_keluar,
+            'user_id_keluar' => Auth::id(),
+        ]);
+        return redirect()->route('laundry')->with('success', 'Data Laundry Berhasil dinput');
+    }
+    public function laundry_new_guest_store(Request $request)  {
+        $detCheckin = Checkin::find($request->checkin_id);
+        LaundryGuest::create([
+            'checkin_id' => $request->checkin_id,
+            'room_id' => $detCheckin->room_id,
+            'jenis_laundry' => $request->jenis_laundry,
+            'catatan'=>$request->catatan,
+            'fo_user_id_keluar' => Auth::id(),
+            'tgl_laundry_keluar'=>$request->tgl_keluar,
+            'status'=>'keluar'
+        ]);
+        return redirect()->route('laundry.guest')->with('success', 'Data Laundry Berhasil dinput');
+    }
+
+    public function laundry_linen_store(Request $request) {
+        $dataLinen = LaundryLinen::find($request->laundry_id);
+        $dataLinen->tgl_masuk = $request->tgl_masuk;
+        $dataLinen->user_id_masuk = Auth::id();
+        $dataLinen->status = 'masuk';
+        $dataLinen->harga = $request->harga;
+        $dataLinen->save();
+        //insert to transaction_report
+        $dataTransaction = [
+            'tabel_referensi'=>'laundry_linens',
+            'id_referensi'=>$request->laundry_id,
+            'type_transaksi'=>'debit',
+            'jenis_transaksi'=>'Laundry Linen',
+            'besar_transaksi'=>$request->harga,
+            'keterangan_transaksi'=>'Pembayaran Laundry '. $dataLinen->nama_item,
+            'jenis_pembayaran'=>'Cash'
+        ];
+        TransaksiReport::create($dataTransaction);
+        return redirect()->route('laundry')->with('success', 'Data Laundry Berhasil Diubah');
+    }
+    public function laundry_guest_store(Request $request) {
+        $dataGuest = LaundryGuest::find($request->laundry_id);
+        $dataGuest->tgl_laundry_masuk = $request->tgl_masuk;
+        $dataGuest->fo_user_id_masuk = Auth::id();
+        $dataGuest->status = 'masuk';
+        $dataGuest->harga = $request->harga;
+        if($dataGuest->save()){
+//insert to transaction_report
+            $dataTransaction = [
+                'tabel_referensi'=>'laundry_guests',
+                'id_referensi'=>$request->laundry_id,
+                'type_transaksi'=>'kredit',
+                'jenis_transaksi'=>'Laundry Guest',
+                'besar_transaksi'=>$request->harga,
+                'keterangan_transaksi'=>'Pembayaran Laundry Guest',
+                'jenis_pembayaran'=>'Cash'
+            ];
+            TransaksiReport::create($dataTransaction);
+            return redirect()->route('laundry.guest')->with('success', 'Data Laundry Berhasil Diubah');
+        }
+
+
+    }
+    public function dt_laundry_guest(Request $request) {
+        $filters = $request->input('filters', []);
+        $data = LaundryGuest::orderBy('created_at', 'desc');
+        $data->join('checkins', 'laundry_guests.checkin_id', '=', 'checkins.id');
+        $data->join('rooms', 'checkins.room_id', '=', 'rooms.id');
+        $data->join('guests', 'checkins.guest_id', '=', 'guests.id');
+        $data->addSelect('laundry_guests.*', 'checkins.room_id', 'rooms.room_name', 'guests.name_guest', 'guests.id as guest_id');
+        $data = $data->get();
+        foreach ($data as $key) {
+            $pengirim = $this->getName($key->fo_user_id_keluar);
+            $penerima = $this->getName($key->fo_user_id_masuk);
+            $return[] = [
+                'catatan' => $key->catatan,
+                'name_guest' => $key->name_guest,
+                'room'=>$key->room_name,
+                'jenis_laundry'=>$key->jenis_laundry,
+                'pengirim'=>$pengirim,
+                'tgl_laundry_keluar'=>date('d F Y', strtotime($key->tgl_laundry_keluar)),
+                'penerima'=>$penerima,
+                'tgl_laundry_masuk'=> $key->tgl_laundry_masuk ? date('d F Y', strtotime($key->tgl_laundry_masuk)) : '',
+                'harga'=>'Rp. ' . number_format($key->harga, 0, ',', '.'),
+                'action'=> $key->status == 'keluar' ? '<a href="javascript:void(0)" class="btn btn-sm btn-success btn-masuk" data-toggle="modal" data-id="' . $key->id . '" data-target="#setMasuk" title="Sudah Diterima"><i class="fas fa-check"></i></a>' : '',
+                'status'=>$key->laundry_status,
+            ];
+        }
+        return response()->json($return);
+    }
     public function list_laundry(Request $request)
     {
         $filters = $request->input('filters', []);
 
         // Query data based on filters
-        $query = Laundry::query();
-        $query->leftJoin('checkins', 'checkins.id', '=', 'laundries.checkin_id');
-        $query->leftJoin('rooms', 'rooms.id', '=', 'checkins.room_id');
-        $query->leftJoin('guests', 'guests.id', '=', 'checkins.guest_id');
-        $query->select('checkins.id as checkin_id');
-        $query->addSelect('rooms.id as room_id', 'rooms.room_no');
-        $query->addSelect('guests.id as guest_id', 'guests.name_guest');
-        $query->addSelect('laundries.laundry_type', 'laundries.id as laundry_id');
-        if (!empty($filters)) {
-            $query->whereIn('laundry_type', $filters);
-        }
-        $data = $query->get();
+        $data = LaundryLinen::orderBy('created_at', 'desc');
 
+        // if (!empty($filters)) {
+        //     $query->whereIn('laundry_type', $filters);
+        // }
+
+        $data = $data->get();
         foreach ($data as $key) {
             $price = $this->getSumPrice($key->laundry_id);
+            $pengirim = $this->getName($key->user_id_keluar);
+            $penerima = $this->getName($key->user_id_masuk);
             $return[] = [
-                'checkin_id' => $key->checkin_id,
-                'room_id' => $key->room_id,
-                'room_no' => $key->room_no,
-                'guest_id' => $key->guest_id,
-                'name_guest' => $key->name_guest,
-                'laundry_id' => $key->laundry_id,
-                'laundry_type' => $key->laundry_type,
-                'total_price' => formatCurrency($price)
+                'keterangan' => $key->nama_item,
+                'jumlah_satuan'=>$key->jumlah_satuan,
+                'tgl_keluar'=>date('d F Y', strtotime($key->tgl_keluar)),
+                'pengirim'=>$pengirim,
+                'tgl_masuk'=> $key->tgl_masuk ? date('d F Y', strtotime($key->tgl_masuk)) : '',
+                'penerima'=>$penerima,
+                'harga'=>'Rp. ' . number_format($key->harga, 0, ',', '.'),
+                'action'=> $key->status == 'keluar' ? '<a href="javascript:void(0)" class="btn btn-sm btn-success btn-masuk" data-toggle="modal" data-id="' . $key->id . '" data-target="#setMasuk" title="Sudah Diterima"><i class="fas fa-check"></i></a>' : '',
+                'invoice_laundry'=>$key->invoice_laundry,
+                'status'=>$key->laundry_status,
+
             ];
         }
         return response()->json($return);
+    }
+    public function getName($user_id) {
+        $query = User::find($user_id);
+        return $query ? $query->name : null;
     }
     public function getSumPrice($laundry_id)
     {

@@ -273,7 +273,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('laundry') }}">
                     <i class="fas fa-fw fa-tshirt"></i>
-                    <span>Laundry</span></a>
+                    <span>Laundry Linen</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('laundry.guest') }}">
+                    <i class="fas fa-fw fa-tshirt"></i>
+                    <span>Laundry Guest</span></a>
             </li>
             @endif
             <hr class="sidebar-divider">

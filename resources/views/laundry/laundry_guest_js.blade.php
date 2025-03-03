@@ -15,7 +15,7 @@
                 filters.push($(this).val());
             });
             $.ajax({
-                url: '{{ route('datatable.laundry') }}',
+                url: '{{ route('datatable.laundry_guest') }}',
                 method: 'GET',
                 dataType: 'json',
                 data: { filters: filters },
@@ -26,12 +26,14 @@
                     $.each(data, function (index, item) {
                         table.row.add([
                             index + 1,
-                            item.keterangan,
-                            item.jumlah_satuan,
+                            item.catatan,
+                            item.name_guest,
+                            item.room,
+                            item.jenis_laundry,
                             item.pengirim,
-                            item.tgl_keluar,
+                            item.tgl_laundry_keluar,
                             item.penerima,
-                            item.tgl_masuk,
+                            item.tgl_laundry_masuk,
                             '<span class="price">' + item.harga + '</span>',
                             item.action
                             // item.invoice_laundry,
