@@ -259,9 +259,9 @@
                                                         @if ($other->tabel_referensi == 'other_transactions' || $other->tabel_referensi == 'laundry_linens')
                                                             <tr class="text-xs">
                                                                 <td style="max-width: 10px; width: 10px;">{{ $no2++ }}</td>
-                                                                <td>{{ $other->item ?? $other->nama_item }}</td>
-                                                                <td>{{ $other->tabel_referensi == 'other_transactions' ? 'Pengeluaran Lainnya' : 'Laundry Linen' }}</td>
-                                                                <td>{{ $other->besar_transaksi ? 'Rp. ' . number_format($other->besar_transaksi, 0, ',', '.') : '-' }}</td>
+                                                                <td>{{ $other->item ?? $other->nama_item ?? '-' }}</td>
+                                                                <td>{{ $other->tabel_referensi ? ($other->tabel_referensi === 'other_transactions' ? 'Pengeluaran Lainnya' : 'Laundry Linen') : '-' }}</td>
+                                                                <td>{{ $other->besar_transaksi ? 'Rp. ' . number_format($other->besar_transaksi, 0, ',', '.') : 'Rp. 0' }}</td>
                                                             </tr>
                                                         @endif
                                                     @endforeach
