@@ -31,6 +31,7 @@
                     <button class="btn-danger btn"></button>
                 </div>
             </div>
+            <br>
         </div>
     </div>
 
@@ -81,7 +82,7 @@
                                         @php
                                             if ($room->room_status == 'VACANT READY') {
                                             @endphp
-                                                <a href="{{route('checkin.normal.form', $room->id)}}" class="btn-sm btn-primary" >Checkin</a>
+                                                <a href="{{route('checkin.normal.form', $room->id)}}" class="btn-sm btn-success" >Checkin</a>
                                             @php
                                             }
                                         @endphp

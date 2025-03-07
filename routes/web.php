@@ -393,7 +393,7 @@ Route::middleware('auth', 'checkDivisi:7')->group(function () {
     Route::get('/bill-report', [BillReportController::class, 'index'])->name('bill.report');
     Route::get('/bill-detail', [BillReportController::class, 'detail'])->name('bill.detail');
     Route::get('/monthly-report', [MonthlyReportController::class, 'index'])->name('monthly.report');
-    Route::get('/weekly-report', [WeeklyReportController::class, 'index'])->name('weekly.report');
+    Route::get('/daily-report', [WeeklyReportController::class, 'index'])->name('weekly.report');
 
 });
 

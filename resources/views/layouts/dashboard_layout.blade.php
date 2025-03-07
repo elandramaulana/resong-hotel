@@ -144,7 +144,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('inhouse.list') }}">In-house Guest</a>
                             <a class="collapse-item" href="{{ route('checked_out.list') }}">Checkout History</a>
-                            <a class="collapse-item" href="{{ route('guest_database') }}">Guest Database</a>
+                            {{-- <a class="collapse-item" href="{{ route('guest_database') }}">Guest Database</a> --}}
                         </div>
                     </div>
                 </li>
@@ -527,7 +527,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>&copy; 2024 Resong Hotel | Powered by PT Metro Indonesian Software
+                        <span>&copy; 2025 Resong Hotel | Powered by PT Metro Indonesian Software
                         </span>
                     </div>
                 </div>
