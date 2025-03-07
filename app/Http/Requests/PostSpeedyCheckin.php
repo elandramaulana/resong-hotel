@@ -26,6 +26,7 @@ class PostSpeedyCheckin extends FormRequest
             'speedy_checkin_time'=>['required'],
             'reservation_contact'=>['required'],
             'speedy_checkout_time'=>['required'],
+            'payment_method'=>['required'],
         ];
     }
 }

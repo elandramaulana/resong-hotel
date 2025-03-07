@@ -69,10 +69,14 @@
                                     <td>{{ number_format($data['pembayaran_cash'], 2) }}</td>
                                     <td><!-- Keterangan, nantinya akan diisi logika tambahan --></td>
                                     <td>
-                                        <button style="margin-right: 10px" type="button"
-                                            class="btn btn-warning btn-sm mt-2">
-                                            <a style="color: black" href="#"><i class="fas fa-eye"></i></a>
-                                        </button>
+                                        <div>
+                                            <button style="margin-right: 10px" type="submit"
+                                                class="btn btn-warning btn-sm mt-2">
+                                                <a style="color: black"
+                                                    href="{{ route('weekly.report', ['date' => $data['date']]) }}"> <i
+                                                        class="fas fa-eye"></i></a>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

@@ -28,6 +28,19 @@
                         success: function(data) {
                             $("#checkinTime").val(data.reservation_checkin);
                             $("#checkoutTime").val(data.reservation_checkout);
+
+                            // Calculate day interval
+                            var checkinDate = new Date(data.reservation_checkin);
+                            var checkoutDate = new Date(data.reservation_checkout);
+                            var timeDifference = checkoutDate.getTime() - checkinDate.getTime();
+                            var dayInterval = timeDifference / (1000 * 3600 * 24);
+
+                            $("#night-count").text('Night(s): ' + dayInterval + ' Night(s)');
+                            $("#room-rate-value").text('Room Rate: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.room_price));
+                            $("#total-payment-value").text('Total Payment: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dayInterval * data.room_price));
+                            $("#down-payment-value").text('Down Payment : ' + data.reservation_payment);
+                            $("#remaining-payment-value").text('Remaining Payment: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.reservation_payment - (dayInterval * data.room_price)));
+
                             $("#reservation_contact").val(data.reservation_contact);
                             $("#name_guest").val(data.reservation_name);
                             $("#adults").val(data.qty_guest);

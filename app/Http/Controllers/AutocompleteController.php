@@ -26,7 +26,7 @@ class AutocompleteController extends Controller
                         ->get()->first();
         return response()->json($Guest);
     }
-    
+
 
     public function speedy(Request $request) {
         $term = $request->input('term');
@@ -43,10 +43,9 @@ class AutocompleteController extends Controller
         // $reservation_checkout = $request->input('reservation_checkout');
 
         $Guest = Reservation::where('reservation_name', $reservation_name)
-                        // ->where('reservation_contact', $reservation_contact)
-                        // ->where('reservation_checkin', $reservation_checkin)
-                        // ->where('reservation_checkout', $reservation_checkout)
+                        ->join('rooms', 'rooms.id', '=', 'reservations.room_id')
                         ->get()->first();
+
         return response()->json($Guest);
     }
 }

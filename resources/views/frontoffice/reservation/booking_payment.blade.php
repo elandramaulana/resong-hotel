@@ -127,7 +127,6 @@
                                         <label for="reservation_payment_status">Status Pembayaran</label>
                                         <select name="reservation_payment_status" id="reservation_payment_status"
                                             class="form-control">
-                                            <option value="">Pilih Status Pembayaran</option>
                                             <option value="Lunas"
                                                 {{ 'Lunas' === old('reservation_payment_status') ? 'selected' : '' }}>Lunas
                                             </option>
@@ -160,31 +159,59 @@
                                         <x-input-error :messages="$errors->get('reservation_payment_method')" class="mt-2" />
                                     </div>
                                 </div>
+
                                 @php
                                     $total = $room_detail->room_price * $tamu_detail['qty_hari'];
                                     $showTotal = formatCurrency($total);
                                 @endphp
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="total_bayar">Pembayaran</label>
-                                        <input type="text" readonly class="form-control" name="total_bayar"
-                                            id="total_bayar" value="{{ $showTotal }}">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="extrabed" name="extrabed" value="1" {{ old('extrabed', 0) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="extrabed">Dengan Extrabed (Rp. {{ formatCurrency($Settings->extrabed_price) }} )</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="room_price">Room Price</label>
+                                        <input type="text" readonly class="form-control" name="room_price"
+                                            id="room_price" value="{{ $showTotal }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="reservation_tax">Pajak ({{ $Settings->pajak_checkin }}%)</label>
+                                        <input type="text" readonly class="form-control" name="reservation_tax"
+                                            id="reservation_tax" value="{{ 'Rp. ' . number_format($total * $Settings->pajak_checkin / 100, 0, ',', '.') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="total_bayar">Total Bayar</label>
+                                        <input type="text" readonly value="{{ old('total_bayar') }}"
+                                            class="form-control" name="total_bayar" id="total_bayar">
+                                        <x-input-error :messages="$errors->get('total_bayar')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="reservation_payment">Pembayaran</label>
-                                        <input type="text" readonly value="{{ old('reservation_payment') }}"
+                                        <input type="text" value="{{ old('reservation_payment') }}"
                                             class="form-control" name="reservation_payment" id="reservation_payment">
                                         <x-input-error :messages="$errors->get('reservation_payment')" class="mt-2" />
                                     </div>
                                 </div>
-
+                                <div class="col-lg-6">
+                                </div>
                                 <div class="col-lg-6">
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                 </div>
                             </div>
-
                             <small>Dp Minimal 50%</small>
                         </div>
                     </div>
