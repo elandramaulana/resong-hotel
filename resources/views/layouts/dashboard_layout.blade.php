@@ -187,7 +187,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('bill.report') }}">Bill Report</a>
                         <a class="collapse-item" href="{{ route('monthly.report') }}">Monthly Report</a>
-                        <a class="collapse-item" href="{{ route('weekly.report') }}">Weekly Report</a>
+                        <a class="collapse-item" href="{{ route('weekly.report') }}">Daily Report</a>
                     </div>
                 </div>
             </li>

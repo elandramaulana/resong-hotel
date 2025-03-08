@@ -58,17 +58,25 @@ class WeeklyReportController extends Controller
                 $join->on('t.id_referensi', '=', 'ot.id')
                     ->where('t.tabel_referensi', '=', 'other_transactions');
             })
+            ->leftJoin('laundry_linens as ll', function ($join) {
+                $join->on('t.id_referensi', '=', 'll.id')
+                    ->where('t.tabel_referensi', '=', 'laundry_linens');
+            })
             ->select(
                 't.*',
                 'ot.item',
                 'ot.qty',
-                'ot.harga'
+                'ot.harga',
+                'll.nama_item',
+                'll.jumlah_satuan',
+                'll.harga as laundry_harga'
             )
             ->whereDate('t.created_at', $date)
             ->get();
 
 
         $transactions = $checkinCheckoutTransactions->merge($otherTransactions);
+
 
 
         return view('frontoffice.report.weekly_report', compact('transactions', 'checkinCheckoutTransactions', 'otherTransactions'));

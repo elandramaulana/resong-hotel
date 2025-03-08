@@ -214,8 +214,9 @@
                                             <tr class="text-xs">
                                                 <td colspan="17" style="height: 10px; background-color: #f8f9fa;"></td>
                                                 @php
-                                                    $totalHarga = $otherTransactions->where('tabel_referensi', 'other_transactions')->sum('harga');
+                                                    $totalHarga = $otherTransactions->whereIn('tabel_referensi', ['other_transactions', 'laundry_linens'])->sum('besar_transaksi');
                                                 @endphp
+
                                                 <td colspan="2" style="height: 10px;" class="font-weight-bold align-middle table-warning">Jumlah Pengeluaran</td>
                                                 <td style="height: 10px;" class="align-middle table-warning">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
                                                 <td style="height: 10px;" class="align-middle table-warning">{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
@@ -231,8 +232,8 @@
                                                     @endphp
                                                     {{ $jumlahSetor ? 'Rp. ' . number_format($jumlahSetor, 0, ',', '.') : 'Rp. 0' }}
                                                 </td>
-                                                <td style="height: 10px;" class="align-middle table-warning">{{ $jumlahSetor2 ? 'Rp. ' . number_format($jumlahSetor2, 0, ',', '.') : '-' }}</td>
-                                                <td style="height: 10px;" class="align-middle table-warning">{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $jumlahSetor2 ? 'Rp. ' . number_format($jumlahSetor2, 0, ',', '.') : 'Rp. 0' }}</td>
+                                                <td style="height: 10px;" class="align-middle table-warning">{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : 'Rp. 0' }}</td>
                                                 <td style="height: 10px;" class="align-middle table-warning">0</td>
                                                 <td style="height: 10px; background-color: #f8f9fa;"></td>
                                             </tr>
@@ -248,27 +249,29 @@
                                                     <tr class="text-xs">
                                                         <th class="text-white text-center align-middle table-dark">No</th>
                                                         <th class="text-white text-center align-middle table-dark">Item</th>
+                                                        <th class="text-white text-center align-middle table-dark">Jenis</th>
                                                         <th class="text-white text-center align-middle table-dark">Jumlah</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php $no2 = 1; @endphp
                                                     @foreach ($otherTransactions as $other)
-                                                        @if ($other->tabel_referensi == 'other_transactions')
+                                                        @if ($other->tabel_referensi == 'other_transactions' || $other->tabel_referensi == 'laundry_linens')
                                                             <tr class="text-xs">
                                                                 <td style="max-width: 10px; width: 10px;">{{ $no2++ }}</td>
-                                                                <td>{{ $other->item }}</td>
-                                                                <td>{{ $other->harga ? 'Rp. ' . number_format($other->harga, 0, ',', '.') : '-' }}</td>
+                                                                <td>{{ $other->item ?? $other->nama_item ?? '-' }}</td>
+                                                                <td>{{ $other->tabel_referensi ? ($other->tabel_referensi === 'other_transactions' ? 'Pengeluaran Lainnya' : 'Laundry Linen') : '-' }}</td>
+                                                                <td>{{ $other->besar_transaksi ? 'Rp. ' . number_format($other->besar_transaksi, 0, ',', '.') : 'Rp. 0' }}</td>
                                                             </tr>
                                                         @endif
                                                     @endforeach
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="3" style="height: 10px; background-color: #f8f9fa;"></td>
+                                                        <td colspan="4" style="height: 10px; background-color: #f8f9fa;"></td>
                                                     </tr>
                                                     <tr class="text-xs table-warning">
-                                                        <td colspan="2" class="font-weight-bold text-center">Total</td>
+                                                        <td colspan="3" class="font-weight-bold text-center">Total</td>
                                                         <td>{{ $totalHarga ? 'Rp. ' . number_format($totalHarga, 0, ',', '.') : 'Rp. 0' }}</td>
                                                     </tr>
                                                 </tfoot>
