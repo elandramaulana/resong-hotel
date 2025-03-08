@@ -104,7 +104,7 @@ class BookingController extends Controller
         $totalPayment = $room_payment + $extrabedPayment;
         $percentTax = $Settings->pajak_checkin;
         $taxPayment = ($totalPayment * $percentTax) / 100;
-
+        $finalPrice = $totalPayment + $taxPayment;
         $data = [
             'reservation_chanel' => $request->get('reservation_chanel'),
             'room_id' => $request->get('room_id'),
@@ -123,12 +123,12 @@ class BookingController extends Controller
             'room_payment' => $room_payment,
             'tax_payment' => $taxPayment,
             'extrabed_payment' => $extrabedPayment,
-            'total_payment' => $totalPayment,
+            'total_payment' => $finalPrice,
             'reservation_payment' => $request->get('reservation_payment'),
             'reservation_desc' => $request->get('reservation_desc'),
             'reservation_status' => "New"
         ];
-        // dd($data);
+
         // die;
         //store to database
         if (Reservation::create($data)) {

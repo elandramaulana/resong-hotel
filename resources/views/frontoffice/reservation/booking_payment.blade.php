@@ -186,7 +186,9 @@
                                     <div class="form-group">
                                         <label for="reservation_tax">Pajak ({{ $Settings->pajak_checkin }}%)</label>
                                         <input type="text" readonly class="form-control" name="reservation_tax"
-                                            id="reservation_tax" value="{{ 'Rp. ' . number_format($total * $Settings->pajak_checkin / 100, 0, ',', '.') }}">
+                                            id="reservation_tax" value="{{ 'Rp. ' . number_format(($total * $Settings->pajak_checkin) / 100, 0, ',', '.') }}">
+                                        <x-input-error :messages="$errors->get('reservation_tax')" class="mt-2" />
+
                                     </div>
                                 </div>
 

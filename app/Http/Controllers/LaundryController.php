@@ -87,7 +87,7 @@ class LaundryController extends Controller
             $dataTransaction = [
                 'tabel_referensi'=>'laundry_guests',
                 'id_referensi'=>$request->laundry_id,
-                'type_transaksi'=>'kredit',
+                'type_transaksi'=>'credit',
                 'jenis_transaksi'=>'Laundry Guest',
                 'besar_transaksi'=>$request->harga,
                 'keterangan_transaksi'=>'Pembayaran Laundry Guest',
