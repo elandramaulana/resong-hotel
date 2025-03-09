@@ -77,7 +77,6 @@
                                                         class="fas fa-eye"></i></a>
                                             </button>
                                         </div>
-
                                     </td>
                                 </tr>
                             @empty

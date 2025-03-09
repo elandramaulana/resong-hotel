@@ -16,7 +16,7 @@ class WeeklyReportController extends Controller
                 $join->on('t.id_referensi', '=', 'c.id')
                     ->where('t.tabel_referensi', '=', 'checkins');
             })
-            ->leftJoin('checkouts as co', 'c.id', '=', 'co.checkin_id')
+            ->leftJoin('checkouts as co', 'c.id', '=', 'co.checkin_id') // Hubungkan checkin dengan checkout
             ->leftJoin('rooms as r', 'c.room_id', '=', 'r.id')
             ->leftJoin('guests as g', 'c.guest_id', '=', 'g.id')
             // Subquery untuk mendapatkan total laundry per checkin
@@ -47,7 +47,6 @@ class WeeklyReportController extends Controller
                 // 'g.guest_email',
                 // 'co.checkout_date', // Data checkout terkait checkin
                 // 'co.total_payment'
-
             )
             ->whereDate('t.created_at', $date)
             ->get();
@@ -74,7 +73,7 @@ class WeeklyReportController extends Controller
             ->whereDate('t.created_at', $date)
             ->get();
 
-
+        // Gabungkan kedua koleksi menjadi satu
         $transactions = $checkinCheckoutTransactions->merge($otherTransactions);
 
 
