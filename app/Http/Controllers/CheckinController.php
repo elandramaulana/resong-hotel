@@ -221,6 +221,7 @@ class CheckinController extends Controller
             'deposit' => $request->deposit
         ];
 
+
         if ($Checkin = Checkin::create($CheckinDetail)) {
 
             //get room detil
@@ -257,7 +258,7 @@ class CheckinController extends Controller
                 'id_referensi' => $Checkin->id,
                 'type_transaksi' => 'credit',
                 'jenis_transaksi' => 'rooms',
-                'besar_transaksi' => $request->total_price,
+                'besar_transaksi' => $request->total_price - $request->deposit,
                 'keterangan_transaksi' => 'Checkin for ' . $name_guest,
                 'jenis_pembayaran' => $request->payment_method
             ];
