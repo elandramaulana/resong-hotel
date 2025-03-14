@@ -50,11 +50,14 @@
                         <tbody>
                             @forelse ($dataByDate as $index => $data)
                                 @php
-                                    // Cari data rekapan (debit & kredit) dari grouping transaksi berdasarkan created_at
+                                    // Cari data transaksi grouping berdasarkan created_at
                                     $rekapan = collect($transaksiByDate)->firstWhere('date', $data['date']);
                                     $rekapanDebit = $rekapan ? $rekapan['debit'] : 0;
                                     $rekapanKredit = $rekapan ? $rekapan['kredit'] : 0;
                                     $rekapanTotal = $rekapanDebit + $rekapanKredit;
+                                    // Untuk pembayaran, gunakan grouping dari transaksi (jenis_pembayaran)
+                                    $pembayaranCard = $rekapan ? $rekapan['card'] : 0;
+                                    $pembayaranCash = $rekapan ? $rekapan['cash'] : 0;
                                 @endphp
                                 <tr class="text-center">
                                     <td>{{ $index + 1 }}</td>
@@ -65,16 +68,17 @@
                                     <td>{{ number_format($rekapanDebit, 2) }}</td>
                                     <td>{{ number_format($rekapanKredit, 2) }}</td>
                                     <td>{{ number_format($rekapanTotal, 2) }}</td>
-                                    <td>{{ number_format($data['pembayaran_card'], 2) }}</td>
-                                    <td>{{ number_format($data['pembayaran_cash'], 2) }}</td>
+                                    <td>{{ number_format($pembayaranCard, 2) }}</td>
+                                    <td>{{ number_format($pembayaranCash, 2) }}</td>
                                     <td><!-- Keterangan, nantinya akan diisi logika tambahan --></td>
                                     <td>
                                         <div>
                                             <button style="margin-right: 10px" type="submit"
                                                 class="btn btn-warning btn-sm mt-2">
                                                 <a style="color: black"
-                                                    href="{{ route('weekly.report', ['date' => $data['date']]) }}"> <i
-                                                        class="fas fa-eye"></i></a>
+                                                    href="{{ route('weekly.report', ['date' => $data['date']]) }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
                                             </button>
                                         </div>
                                     </td>
@@ -100,12 +104,13 @@
                                 <td><strong>{{ number_format($totalRekapanDebit, 2) }}</strong></td>
                                 <td><strong>{{ number_format($totalRekapanKredit, 2) }}</strong></td>
                                 <td><strong>{{ number_format($totalRekapanTotal, 2) }}</strong></td>
-                                <td><strong>Rp {{ number_format($total['pembayaran_card'], 0, ',', '.') }}</strong></td>
-                                <td><strong>Rp {{ number_format($total['pembayaran_cash'], 0, ',', '.') }}</strong></td>
+                                <td><strong>{{ number_format($totalTransaksi['card'], 2) }}</strong></td>
+                                <td><strong>{{ number_format($totalTransaksi['cash'], 2) }}</strong></td>
                                 <td colspan="2"></td>
                             </tr>
                         </tfoot>
                     </table>
+
                 </div>
             </div>
         </div>
