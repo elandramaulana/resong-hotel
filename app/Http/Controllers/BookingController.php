@@ -7,6 +7,7 @@ use App\Http\Requests\ReserveRoomRequest;
 use App\Models\LatePointSetting;
 use App\Models\Rooms;
 use App\Models\Reservation;
+use App\Models\TransaksiReport;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -94,10 +95,20 @@ class BookingController extends Controller
     public function booking_store(PaymentStoreRequest $request)
     {
         //collect data to be store
+        //calulate total payment and other data first
+        $roomData = Rooms::find($request->get('room_id'));
+        $intervalDays = daysInterval($request->get('reservation_checkin'), $request->get('reservation_checkout'));
+        $room_payment = $roomData->room_price * $intervalDays;
+        $Settings = LatePointSetting::first();
+        $extrabedPayment = $request->get('extrabed') ? $Settings->extrabed_price : 0;
+        $totalPayment = $room_payment + $extrabedPayment;
+        $percentTax = $Settings->pajak_checkin;
+        $taxPayment = ($totalPayment * $percentTax) / 100;
+        $finalPrice = $totalPayment + $taxPayment;
         $data = [
             'reservation_chanel' => $request->get('reservation_chanel'),
             'room_id' => $request->get('room_id'),
-            'is_extrabed' => 0,
+            'is_extrabed' => $request->get('extrabed') ? 1 : 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->get('reservation_checkin'),
             'reservation_time_checkin' => $request->get('res_in_hour'),
@@ -109,14 +120,30 @@ class BookingController extends Controller
             'qty_guest' => $request->get('qty_guest'),
             'reservation_payment_status' => $request->get('reservation_payment_status'),
             'reservation_payment_method' => $request->get('reservation_payment_method'),
+            'room_payment' => $room_payment,
+            'tax_payment' => $taxPayment,
+            'extrabed_payment' => $extrabedPayment,
+            'total_payment' => $finalPrice,
             'reservation_payment' => $request->get('reservation_payment'),
             'reservation_desc' => $request->get('reservation_desc'),
             'reservation_status' => "New"
         ];
-        // dd($data);
+
         // die;
         //store to database
         if (Reservation::create($data)) {
+            //insert into transaction_report
+            TransaksiReport::create(
+                [
+                'tabel_referensi' => 'reservations',
+                'id_referensi' => Reservation::latest()->first()->id,
+                'type_transaksi' => 'credit',
+                'jenis_transaksi' => 'Pembayaran Reservasi',
+                'besar_transaksi' => $request->get('reservation_payment'),
+                'keterangan_transaksi' => 'Pembayaran Reservasi ' . $request->get('reservation_name') . 'dengan pembayaran '. $request->get('reservation_payment_status'),
+                'jenis_pembayaran'=>$request->get('reservation_payment_method')
+                ]
+                );
             $return = ['status' => 'success', 'message' => 'Reservasi untuk ' . $request->get('reservation_name') . ' Berhasil'];
             return redirect()->route('dashboard')->with($return);
         }

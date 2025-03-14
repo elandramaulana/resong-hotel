@@ -7,7 +7,11 @@
             let pajak_checkin = {{$Settings->pajak_checkin}};
             let extrabed_price = {{$Settings->extrabed_price}};
             let extrabed = $("#extrabed").is(":checked") ? extrabed_price : 0;
-            total = ((room_price * qty_hari) + extrabed) + ((room_price * qty_hari) * (pajak_checkin / 100)) ;
+
+            var room_bill = (room_price * qty_hari) + extrabed;
+            var room_tax = room_bill * (pajak_checkin / 100);
+            $("#reservation_tax").val(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(room_tax));
+            total = room_bill + room_tax;
             // $("#total_price").val(total);
             // $("#total_price_input").val(total);
             $("#total_bayar").val(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(total));
@@ -18,9 +22,12 @@
             $("#reservation_payment").val(total);
         }
 
+        $("#extrabed").change(function() {
+            CalculateTotal();
+        });
 
         CalculateTotal();
-        $("#extrabed, #reservation_payment_status").change(function() {
+        $("#reservation_payment_status").change(function() {
             CalculateTotal();
         });
         // $("").change(function() {

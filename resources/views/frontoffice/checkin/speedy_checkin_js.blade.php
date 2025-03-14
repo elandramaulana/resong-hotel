@@ -34,12 +34,17 @@
                             var checkoutDate = new Date(data.reservation_checkout);
                             var timeDifference = checkoutDate.getTime() - checkinDate.getTime();
                             var dayInterval = timeDifference / (1000 * 3600 * 24);
-
-                            $("#night-count").text('Night(s): ' + dayInterval + ' Night(s)');
-                            $("#room-rate-value").text('Room Rate: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.room_price));
-                            $("#total-payment-value").text('Total Payment: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dayInterval * data.room_price));
-                            $("#down-payment-value").text('Down Payment : ' + data.reservation_payment);
-                            $("#remaining-payment-value").text('Remaining Payment: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.reservation_payment - (dayInterval * data.room_price)));
+                            var totalPayment = data.tax_payment + data.extrabed_payment + data.room_price * dayInterval;
+                            var remainingPayment = totalPayment - data.reservation_payment  ;
+                            $("#night-count").text(dayInterval + ' Night(s)');
+                            $("#room-rate-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.room_price));
+                            $("#total-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dayInterval * data.room_price));
+                            $("#extrabed-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.extrabed_payment));
+                            $("#tax-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.tax_payment));
+                            $("#paymment_value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalPayment));
+                            $("#down-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.reservation_payment));
+                            $("#remaining-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(remainingPayment));
+                            $("#remaining_payment").val(remainingPayment);
 
                             $("#reservation_contact").val(data.reservation_contact);
                             $("#name_guest").val(data.reservation_name);
@@ -49,6 +54,12 @@
                     });
             }
             });
+            $(document).on('keyup', '#deposit', function () {
+                var deposit = $(this).val();
+                var remainingPayment = $("#remaining_payment").val();
+                var newRemainingPayment = parseInt(remainingPayment) + parseInt(deposit);
+                $("#remaining-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(newRemainingPayment));
+            })
             $( "#id_number" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({

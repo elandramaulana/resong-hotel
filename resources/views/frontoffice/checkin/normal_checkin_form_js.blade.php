@@ -15,6 +15,7 @@
                 duration = 1;
             }
             let totalPrice = duration * roomPrice;
+            var deposit = $("#deposit").val();
             if (extrabed.checked) {
                 totalPrice += extrabedPrice;
                 $("#extrabed_price_input").val(extrabedPrice);
@@ -24,8 +25,7 @@
             }
             const taxRate = {{$Settings->pajak_checkin}};
             let taxAmount = totalPrice * (taxRate / 100);
-            totalPrice = totalPrice + taxAmount;
-
+            totalPrice += Number(taxAmount) + Number(deposit);
             $("#total_price").val(totalPrice);
             $("#tax").val(taxAmount);
 
@@ -39,7 +39,7 @@
         checkinDateInput.addEventListener('change', calculateSummary);
         checkoutDateInput.addEventListener('change', calculateSummary);
         extrabed.addEventListener('change', calculateSummary);
-
+        $('#deposit').on('keyup', calculateSummary);
         calculateSummary();
         function calculateDuration() {
             var checkinTime = $('#checkin_time').val();

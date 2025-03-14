@@ -148,13 +148,14 @@
                     </div>
 
                     <div class="col-sm-6">
-                        @if(!$isCheckedOut)
+                        {{-- @if(!$isCheckedOut)
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
                                     <i class="fas fa-plus"></i> AddOn Service
                                 </a>
                             </div>
-                        @endif
+                        @endif --}}
+
                     </div>
                 </div>
                 </div>

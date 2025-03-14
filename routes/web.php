@@ -181,15 +181,14 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     // Addon Service
     Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
     Route::get('/laundry_form', [LaundryController::class, 'form'])->name('laundry.form');
-    Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.post');
-    Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
-    Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
-    Route::get('/select2menuActive', [Select2Controller::class, 'menu_active'])->name('select2.menu_active');
-    Route::get('/select2menuCategory', [Select2Controller::class, 'menu_category'])->name('select2.menu_category');
-    Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
-    Route::get('/select2_shift/{divisi_id}', [Select2Controller::class, 'list_shift'])->name('select2.shift');
+    Route::post('/laundry_linen_store', [LaundryController::class, 'laundry_linen_store'])->name('laundry.store_linen');
+    Route::post('/laundry_new_linen_store', [LaundryController::class, 'laundry_new_linen_store'])->name('laundry.store_new_linen');
+    Route::post('/laundry_new_guest_store', [LaundryController::class, 'laundry_new_guest_store'])->name('laundry.store_new_guest');
+    Route::post('/laundry_guest_store', [LaundryController::class, 'laundry_guest_store'])->name('laundry.store_guest');
+
+    Route::get('/laundry_guest', [LaundryController::class, 'index_guest'])->name('laundry.guest');
+    Route::get('/dt_laundry_guest', [LaundryController::class, 'dt_laundry_guest'])->name('datatable.laundry_guest');
 });
 
 

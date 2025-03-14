@@ -37,7 +37,7 @@
                     <div class="card-header py-3">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h6 class="font-weight-bold text-warning left">Daftar Laundry Linen</h6>
+                                <h6 class="font-weight-bold text-warning left">Daftar Laundry Guest</h6>
                             </div>
                             <div class="col-lg-6 d-flex justify-content-end">
                                 <a  class="btn btn-extend right btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#modalAddLaundry" id="btnAddLaundry"><i class="fa fa-plus"></i> Tambah</a>
@@ -50,8 +50,10 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Keterangan</th>
-                                        <th>Jumlah(Kg)</th>
+                                        <th>Catatan</th>
+                                        <th>Nama</th>
+                                        <th>Room</th>
+                                        <th>Jenis Laundry</th>
                                         <th>Pengirim</th>
                                         <th>Tanggal Keluar</th>
                                         <th>Penerima</th>
@@ -79,7 +81,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('laundry.store_linen')}}" method="post">
+            <form action="{{route('laundry.store_guest')}}" method="post">
                 @csrf
                 <input type="text" id="laundry_id" name="laundry_id" hidden>
                 <div class="modal-body">
@@ -100,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                 </div>
         </form>
         </div>
@@ -116,10 +118,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('laundry.store_new_linen')}}" method="post">
+            <form action="{{route('laundry.store_new_guest')}}" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="tgl_keluar">Pilih Tamu</label>
+                                <select required name="checkin_id" class="form-control" id="checkin_id">
+                                    <option value="">Pilih Tamu</option>
+                                    @foreach ($checkin as $item){
+                                        <option value="{{$item->checkin_id}}">{{$item->name_guest}} - {{$item->room_no}}</option>
+                                    }
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="tgl_keluar">Tanggal Laundry</label>
@@ -128,14 +142,18 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea required placeholder="Keterangan Laundry" class="form-control" id="nama_item" name="nama_item"></textarea>
+                                <label for="jenis_laundry">Jenis Laundry</label>
+                                <select required name="jenis_laundry" id="jenis_laundry" class="form-control" >
+                                    <option value="">Pilih Jenis Laundry</option>
+                                    <option value="Reguler">Reguler</option>
+                                    <option value="Express">Express</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="jumlah_satuan">Jumlah Satuan</label>
-                                <input type="text" required placeholder="Jumlah Satuan" class="form-control" id="jumlah_satuan" name="jumlah_satuan">
+                                <label for="keterangan">Catatan</label>
+                                <textarea required placeholder="Keterangan Laundry" class="form-control" id="catatan" name="catatan"></textarea>
                             </div>
                         </div>
                     </div>
@@ -151,5 +169,5 @@
 <!-- /.container-fluid -->
 @endsection
 @section('jsSection')
-  @include('laundry.laundry_js')
+  @include('laundry.laundry_guest_js')
 @endsection
