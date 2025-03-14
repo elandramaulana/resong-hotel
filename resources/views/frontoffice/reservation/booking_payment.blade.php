@@ -168,8 +168,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="extrabed" name="extrabed" value="1" {{ old('extrabed', 0) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="extrabed">Dengan Extrabed (Rp. {{ formatCurrency($Settings->extrabed_price) }} )</label>
+                                            <input type="checkbox" class="form-check-input" id="extrabed" name="extrabed"
+                                                value="1" {{ old('extrabed', 0) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="extrabed">Dengan Extrabed (Rp.
+                                                {{ formatCurrency($Settings->extrabed_price) }} )</label>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +188,8 @@
                                     <div class="form-group">
                                         <label for="reservation_tax">Pajak ({{ $Settings->pajak_checkin }}%)</label>
                                         <input type="text" readonly class="form-control" name="reservation_tax"
-                                            id="reservation_tax" value="{{ 'Rp. ' . number_format($total * $Settings->pajak_checkin / 100, 0, ',', '.') }}">
+                                            id="reservation_tax"
+                                            value="{{ 'Rp. ' . number_format(($total * $Settings->pajak_checkin) / 100, 0, ',', '.') }}">
                                     </div>
                                 </div>
 
@@ -212,7 +215,7 @@
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                 </div>
                             </div>
-                            <small>Dp Minimal 50%</small>
+                            <small class="pt-2">Dp Minimal 50%</small>
                         </div>
                     </div>
                 </div>
