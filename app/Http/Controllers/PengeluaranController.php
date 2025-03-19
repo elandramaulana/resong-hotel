@@ -40,7 +40,7 @@ class PengeluaranController extends Controller
                     'jenis_transaksi' => 'Pengeluaran Lain-lain',
                     'besar_transaksi' => $save->harga * $save->qty,
                     'keterangan_transaksi' => $save->keterangan,
-                    'jenis_pembayaran' => 'Cash'
+                    'jenis_pembayaran' => 'cash'
                 ]
                 );
             return redirect()->route('pengeluaran.show')->with('success', 'Pengeluaran Berhasil Ditambahkan');

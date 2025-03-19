@@ -141,7 +141,7 @@ class BookingController extends Controller
                 'jenis_transaksi' => 'Pembayaran Reservasi',
                 'besar_transaksi' => $request->get('reservation_payment'),
                 'keterangan_transaksi' => 'Pembayaran Reservasi ' . $request->get('reservation_name') . 'dengan pembayaran '. $request->get('reservation_payment_status'),
-                'jenis_pembayaran'=>$request->get('reservation_payment_method')
+                'jenis_pembayaran'=>strtolower($request->get('reservation_payment_method'))
                 ]
                 );
             $return = ['status' => 'success', 'message' => 'Reservasi untuk ' . $request->get('reservation_name') . ' Berhasil'];

@@ -71,7 +71,7 @@ class LaundryController extends Controller
             'jenis_transaksi'=>'Laundry Linen',
             'besar_transaksi'=>$request->harga,
             'keterangan_transaksi'=>'Pembayaran Laundry '. $dataLinen->nama_item,
-            'jenis_pembayaran'=>'Cash'
+            'jenis_pembayaran'=>'cash'
         ];
         TransaksiReport::create($dataTransaction);
         return redirect()->route('laundry')->with('success', 'Data Laundry Berhasil Diubah');
@@ -91,7 +91,7 @@ class LaundryController extends Controller
                 'jenis_transaksi'=>'Laundry Guest',
                 'besar_transaksi'=>$request->harga,
                 'keterangan_transaksi'=>'Pembayaran Laundry Guest',
-                'jenis_pembayaran'=>'Cash'
+                'jenis_pembayaran'=>'cash'
             ];
             TransaksiReport::create($dataTransaction);
             return redirect()->route('laundry.guest')->with('success', 'Data Laundry Berhasil Diubah');
