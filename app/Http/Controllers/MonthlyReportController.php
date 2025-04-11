@@ -11,44 +11,29 @@ class MonthlyReportController extends Controller
 {
     public function index(Request $request)
     {
-        $bulan = $request->input('bulan');
-        $tahun = $request->input('tahun');
-    
-        $bulanMapping = [
-            'Januari'   => 1,
-            'Februari'  => 2,
-            'Maret'     => 3,
-            'April'     => 4,
-            'Mei'       => 5,
-            'Juni'      => 6,
-            'Juli'      => 7,
-            'Agustus'   => 8,
-            'September' => 9,
-            'Oktober'   => 10,
-            'November'  => 11,
-            'Desember'  => 12,
-        ];
-    
-        $month = ($bulan && isset($bulanMapping[$bulan])) ? $bulanMapping[$bulan] : null;
-    
-       
+        // Filter input
+        $tahun         = $request->input('tahun');
+        $tanggalAwal   = $request->input('tanggal_awal'); // format: YYYY-MM-DD
+        $tanggalAkhir  = $request->input('tanggal_akhir');  // format: YYYY-MM-DD
+
+        // Ambil semua transaksi berdasarkan filter tahun dan rentang tanggal
         $allTransactions = DB::table('transaction_reports as t')
-            ->when($month, function ($query, $month) {
-                return $query->whereMonth('t.created_at', $month);
-            })
             ->when($tahun, function ($query, $tahun) {
                 return $query->whereYear('t.created_at', $tahun);
             })
+            ->when($tanggalAwal && $tanggalAkhir, function ($query) use ($tanggalAwal, $tanggalAkhir) {
+                return $query->whereBetween('t.created_at', [$tanggalAwal, $tanggalAkhir]);
+            })
             ->get();
-    
-        
+
+        // Ambil ID untuk transaksi checkin
         $checkinIDs = $allTransactions
             ->where('tabel_referensi', 'checkins')
             ->pluck('id_referensi')
             ->unique()
             ->values();
-    
-        // Query detail checkin dari tabel checkins, join ke rooms, guests, dll
+
+        // Query detail checkin dari tabel checkins, join ke rooms, guests, dll.
         $checkinCheckoutTransactions = DB::table('transaction_reports as t')
             ->whereIn('t.id_referensi', $checkinIDs)
             ->where('t.tabel_referensi', 'checkins')
@@ -66,35 +51,33 @@ class MonthlyReportController extends Controller
                 'g.name_guest'
             )
             ->get();
-    
+
         $otherTransactions = $allTransactions->filter(function ($item) {
             return $item->tabel_referensi !== 'checkins';
         });
-    
-        // Gabungkan
+
+        // Gabungkan transaksi checkin dan non-checkin
         $transactions = $checkinCheckoutTransactions->merge($otherTransactions);
-    
-       
+
         $checkinTransactions = $transactions->filter(function ($t) {
             return $t->tabel_referensi === 'checkins'
                 && !empty($t->date_checkin)
                 && !empty($t->date_checkout);
         });
-    
-        // Sisanya (non-checkin) —> sekadar definisi jika masih mau dipisah
+
         $nonCheckinTrans = $transactions->filter(function ($t) {
             return $t->tabel_referensi !== 'checkins';
         });
-    
+
         $dataByDate = [];
-    
-        // -- LOGIKA PERHITUNGAN ORG, KM, HR--
+
+        // Proses transaksi checkin
         $checkinTransactions->each(function ($t) use (&$dataByDate) {
-            $date = \Carbon\Carbon::parse($t->date_checkin)->format('Y-m-d');
+            $date = Carbon::parse($t->date_checkin)->format('Y-m-d');
             $org = $t->guest_adult + $t->guest_kids;
-            $days = \Carbon\Carbon::parse($t->date_checkout)->diffInDays(\Carbon\Carbon::parse($t->date_checkin));
+            $days = Carbon::parse($t->date_checkout)->diffInDays(Carbon::parse($t->date_checkin));
             $income = $t->besar_transaksi;
-    
+
             if (!isset($dataByDate[$date])) {
                 $dataByDate[$date] = [
                     'date'            => $date,
@@ -104,30 +87,33 @@ class MonthlyReportController extends Controller
                     'rekapan_jumlah'  => 0,
                     'pembayaran_cash' => 0,
                     'pembayaran_card' => 0,
+                    'pembayaran_ota'  => 0,
                 ];
             }
-    
+
             $dataByDate[$date]['org'] += $org;
             $dataByDate[$date]['hr']  += $days;
             $dataByDate[$date]['km']  += 1;
             $dataByDate[$date]['rekapan_jumlah'] += $income;
-    
-           
+
             if (isset($t->jenis_pembayaran)) {
+                // Gunakan strtolower dan trim agar pengecekan tidak dipengaruhi kapital
                 $method = strtolower(trim($t->jenis_pembayaran));
                 if ($method === 'cash') {
                     $dataByDate[$date]['pembayaran_cash'] += $income;
-                } elseif ($method === 'card') {
+                } elseif ($method === 'card' || $method === 'credit') {
                     $dataByDate[$date]['pembayaran_card'] += $income;
+                } elseif ($method === 'ota') {
+                    $dataByDate[$date]['pembayaran_ota'] += $income;
                 }
             }
         });
-    
-        // -- Untuk data non-checkin (laundry, other, dsb), tetap catat pendapatan per tanggal created_at
+
+        // Proses transaksi non-checkin (misalnya laundry, lainnya)
         $nonCheckinTrans->each(function ($t) use (&$dataByDate) {
-            $date = \Carbon\Carbon::parse($t->created_at)->format('Y-m-d');
+            $date = Carbon::parse($t->created_at)->format('Y-m-d');
             $income = $t->besar_transaksi;
-    
+
             if (!isset($dataByDate[$date])) {
                 $dataByDate[$date] = [
                     'date'            => $date,
@@ -137,27 +123,28 @@ class MonthlyReportController extends Controller
                     'rekapan_jumlah'  => 0,
                     'pembayaran_cash' => 0,
                     'pembayaran_card' => 0,
+                    'pembayaran_ota'  => 0,
                 ];
             }
-    
+
             $dataByDate[$date]['rekapan_jumlah'] += $income;
-    
-            // Gunakan `jenis_pembayaran` untuk cek cash/card
+
             if (isset($t->jenis_pembayaran)) {
                 $method = strtolower(trim($t->jenis_pembayaran));
                 if ($method === 'cash') {
                     $dataByDate[$date]['pembayaran_cash'] += $income;
-                } elseif ($method === 'card') {
+                } elseif ($method === 'card' || $method === 'credit') {
                     $dataByDate[$date]['pembayaran_card'] += $income;
+                } elseif ($method === 'ota') {
+                    $dataByDate[$date]['pembayaran_ota'] += $income;
                 }
             }
         });
-    
-        // Urutkan dataByDate berdasarkan key (tanggal) dan jadikan array numerik
+
+        // Urutkan data berdasarkan tanggal
         ksort($dataByDate);
         $dataByDate = array_values($dataByDate);
-    
-       
+
         $total = [
             'org'                => 0,
             'hr'                 => 0,
@@ -165,8 +152,9 @@ class MonthlyReportController extends Controller
             'rekapan_jumlah'     => 0,
             'pembayaran_card'    => 0,
             'pembayaran_cash'    => 0,
+            'pembayaran_ota'     => 0,
         ];
-    
+
         foreach ($dataByDate as $data) {
             $total['org']             += $data['org'];
             $total['hr']              += $data['hr'];
@@ -174,15 +162,15 @@ class MonthlyReportController extends Controller
             $total['rekapan_jumlah']  += $data['rekapan_jumlah'];
             $total['pembayaran_card'] += $data['pembayaran_card'];
             $total['pembayaran_cash'] += $data['pembayaran_cash'];
+            $total['pembayaran_ota']  += $data['pembayaran_ota'];
         }
-    
-      
+
         $transaksiByDate = [];
-    
+
+        // Kelompokkan transaksi berdasarkan tanggal
         foreach ($transactions as $transaction) {
-            // Gunakan created_at sebagai acuan grouping
-            $date = \Carbon\Carbon::parse($transaction->created_at)->format('Y-m-d');
-    
+            $date = Carbon::parse($transaction->created_at)->format('Y-m-d');
+
             if (!isset($transaksiByDate[$date])) {
                 $transaksiByDate[$date] = [
                     'date'   => $date,
@@ -190,10 +178,11 @@ class MonthlyReportController extends Controller
                     'kredit' => 0,
                     'cash'   => 0,
                     'card'   => 0,
+                    'ota'    => 0,
                 ];
             }
-    
-            // Pisahkan debit/credit (type_transaksi)
+
+            // Pisahkan berdasarkan tipe transaksi (debit/credit)
             if (isset($transaction->type_transaksi)) {
                 $type = strtolower(trim($transaction->type_transaksi));
                 if ($type === 'debit') {
@@ -202,47 +191,47 @@ class MonthlyReportController extends Controller
                     $transaksiByDate[$date]['kredit'] += $transaction->besar_transaksi;
                 }
             }
-    
-            // Pisahkan cash/card (jenis_pembayaran)
+
+            // Pisahkan berdasarkan metode pembayaran (cash, card/credit, ota)
             if (isset($transaction->jenis_pembayaran)) {
                 $payMethod = strtolower(trim($transaction->jenis_pembayaran));
                 if ($payMethod === 'cash') {
                     $transaksiByDate[$date]['cash'] += $transaction->besar_transaksi;
-                } elseif ($payMethod === 'card') {
+                } elseif ($payMethod === 'card' || $payMethod === 'credit') {
                     $transaksiByDate[$date]['card'] += $transaction->besar_transaksi;
+                } elseif ($payMethod === 'ota') {
+                    $transaksiByDate[$date]['ota'] += $transaction->besar_transaksi;
                 }
             }
         }
-    
+
         ksort($transaksiByDate);
         $transaksiByDate = array_values($transaksiByDate);
-    
-        // Total keseluruhan untuk grouping transaksi
+
         $totalTransaksi = [
             'debit'  => 0,
             'kredit' => 0,
             'cash'   => 0,
             'card'   => 0,
+            'ota'    => 0,
         ];
-    
+
         foreach ($transaksiByDate as $row) {
             $totalTransaksi['debit']  += $row['debit'];
             $totalTransaksi['kredit'] += $row['kredit'];
             $totalTransaksi['cash']   += $row['cash'];
             $totalTransaksi['card']   += $row['card'];
+            $totalTransaksi['ota']    += $row['ota'];
         }
-    
+
         return view('frontoffice.report.monthly_report', compact(
-            'bulan',
             'tahun',
+            'tanggalAwal',
+            'tanggalAkhir',
             'dataByDate',
             'total',
             'transaksiByDate',
             'totalTransaksi'
         ));
     }
-    
 }
-
-
-//updatettt
