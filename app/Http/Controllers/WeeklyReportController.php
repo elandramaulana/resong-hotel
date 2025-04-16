@@ -49,6 +49,7 @@ class WeeklyReportController extends Controller
                 // 'co.total_payment'
             )
             ->whereDate('t.created_at', $date)
+            ->orderBy('c.chanel_checkin', 'asc')
             ->get();
 
         // Query untuk Other Transactions
