@@ -191,7 +191,12 @@
                                     <label for="name" class="col-sm-3 col-form-label">Deposit:</label>
                                     <div class="col-sm-8">
                                         @php
-                                            $showDeposit = formatCurrency($detailCheckin->deposit);
+                                            if($detailCheckin->jenis_deposit == 'Cash'){
+                                                $showDeposit = formatCurrency($detailCheckin->deposit);
+                                            }else {
+                                                $showDeposit = $detailCheckin->deposit_lain;
+                                            }
+
                                         @endphp
                                         <input name="deposit" value="{{ $showDeposit }}" type="text" class="form-control" id="inputName" disabled>
                                     </div>

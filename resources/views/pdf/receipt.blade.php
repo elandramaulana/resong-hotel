@@ -125,10 +125,39 @@
                     <td>{{ $detail['item_description'] }}</td>
                     <td style="text-align: right">{{ 'Rp.' . number_format($amount, 0, ',', '.') }}</td>
                 </tr>
+
                 @php
                     $totalAmount += $amount;
                 @endphp
             @endforeach
+            <tr>
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: center"></td>
+                <td></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: center"></td>
+                <td></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: center"></td>
+                <td></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: center"></td>
+                <td></td>
+                <td style="text-align: right"></td>
+            </tr>
                 @php
                     $tax = $totalAmount * $taxConvert;
                     $totalPlusPajak = $totalAmount + $tax;

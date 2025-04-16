@@ -42,7 +42,9 @@ class NormalCheckinRequest extends FormRequest
             $this->merge(['checkinHour' => date('H:i:s', strtotime($this->input('checkinHour')))]);
         }
         Log::info($this->input('checkin_time'));
-        return [
+
+
+        $rule = [
             //detail checkin
             'room_id'=>['required'],
             'invoice'=>['required'],
@@ -69,9 +71,16 @@ class NormalCheckinRequest extends FormRequest
             'frm_email'=>['required', 'email'],
             'telp_number'=>['required'],
             'document'=>['nullable'],
-            'deposit'=>['required'],
             'total_bayar'=>['required'],
             'payment_method'=>['required'],
         ];
+        $deposit_type = $this->input('jenis_deposit');
+        if($deposit_type == 'Cash'){
+            $rule['deposit'] = ['required'];
+        }else{
+            $rule['deposit_lain'] = ['required'];
+        }
+
+        return $rule;
     }
 }

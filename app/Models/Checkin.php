@@ -27,6 +27,8 @@ class Checkin extends Model
         'tax_price',
         'extrabed_price',
         'deposit',
+        'deposit_type',
+        'deposit_lain',
     ];
 
     public function detCheckin($checkin_id)

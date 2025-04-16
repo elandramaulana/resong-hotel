@@ -216,16 +216,34 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group">
+                                    <div class="form-group col-lg-6">
+                                        <label for="jenis_deposit">Jenis Deposit</label>
+                                        <div class="d-flex">
+                                            <div class="form-check mr-3">
+                                                <input class="form-check-input" checked type="radio" name="jenis_deposit" id="jenis_deposit_cash" value="Cash" {{ "Cash" === old('jenis_deposit') ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="jenis_deposit_cash">Cash</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="jenis_deposit" id="jenis_deposit_lain" value="Lain-lain" {{ "Lain-lain" === old('jenis_deposit') ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="jenis_deposit_lain">Lain-lain</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6" id="show_deposit_cash">
                                         <label for="deposit">Deposit (Rp)</label>
                                         <input type="text" class="form-control" id="deposit" name="deposit" value="{{ old('deposit') }}" placeholder="Masukan Besar Deposit">
                                         <x-input-error :messages="$errors->get('deposit')" class="mt-2" />
+                                    </div>
+                                    <div class="form-group col-lg-6" id="show_deposit_lain" >
+                                        <label for="deposit">Deposit Lain-lain</label>
+                                        <input type="text" class="form-control" id="deposit_lain" name="deposit_lain" value="{{ old('deposit_lain') }}" placeholder="Inputkan Deposit lain-lain Ex: KTP, SIM dan lain-lain ">
+                                        <x-input-error :messages="$errors->get('deposit_lain')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-lg-8">
                                         <label for="total_bayar">Total Harga Kamar (Rp)</label>
-                                        <input type="text" class="form-control" id="total_bayar" placeholder="Total Bayar " readonly name="total_bayar" value="{{ old('total_bayar') }}">
+                                        <input type="text" class="form-control" id="total_bayar" placeholder="Total Bayar " name="total_bayar" value="{{ old('total_bayar') }}">
                                         <x-input-error :messages="$errors->get('total_bayar')" class="mt-2" />
                                     </div>
                                     <div class="form-group col-lg-4">

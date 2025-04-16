@@ -260,7 +260,20 @@
                                                         <input value="{{ old('telp_number') }}" name="telp_number" type="text" class="form-control clearable" id="contact">
                                                         <x-input-error :messages="$errors->get('telp_number')" class="mt-2" />
                                                     </div>
+                                        </div>
+                                        <div class=" mt-3 row">
+                                            <div class="d-flex align-items-center">
+                                                <label for="" class="col-form-label mr-3">Jenis Deposit</label>
+                                                <div class="form-check mr-3">
+                                                    <input checked class="form-check-input" type="radio" name="jenis_deposit" id="jenis_deposit_cash" value="Cash" {{ "Cash" === old('jenis_deposit') ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="jenis_deposit_cash">Cash</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jenis_deposit" id="jenis_deposit_lain" value="Lain-lain" {{ "Lain-lain" === old('jenis_deposit') ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="jenis_deposit_lain">Lain-lain</label>
+                                                </div>
                                             </div>
+                                        </div>
 
 
                                         <!-- Upload Dokumen -->
@@ -340,7 +353,12 @@
                                                                         <tr>
                                                                             <td>Deposit</td>
                                                                             <td>:</td>
-                                                                            <td><input type="text" name="deposit" id="deposit" id="deposit" class="form-control" required placeholder="Input Deposit Min 50.000" style="text-align: right"></td>
+                                                                            <td id="show_deposit_cash">
+                                                                                <input type="text" name="deposit" id="deposit" id="deposit" class="form-control" placeholder="Input Deposit Min 50.000" style="text-align: right">
+                                                                            </td>
+                                                                            <td id="show_deposit_lain">
+                                                                                <input type="text" name="deposit_lain" id="deposit_lain" id="deposit_lain" class="form-control" placeholder="Inputkan Deposit lain-lain Ex: KTP, SIM dan lain-lain" style="text-align: right">
+                                                                            </td>
                                                                         </tr>
                                                                         <input type="text" name="remaining_payment" id="remaining_payment" hidden>
                                                                         <tr>

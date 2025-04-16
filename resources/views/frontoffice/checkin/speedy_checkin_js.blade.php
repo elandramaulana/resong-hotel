@@ -1,5 +1,26 @@
 <script type="text/javascript">
+        function checkDeposit(){
+            const deposit_type = $('input[name="jenis_deposit"]:checked').val();
+            if(deposit_type == 'Cash'){
+                $("#show_deposit_cash").css('display', 'block');
+                $("#deposit").prop('required',true);
+                $("#show_deposit_lain").css('display', 'none');
+                $("#deposit_lain").prop('required',false);
+            }else{
+                $("#show_deposit_cash").css('display', 'none');
+                $("#deposit_lain").prop('required',true);
+                $("#show_deposit_lain").css('display', 'block');
+                $("#deposit").prop('required',false);
+            }
+
+       }
+
        $(function () {
+        checkDeposit();
+        $('input[name="jenis_deposit"]').change(function() {
+                console.log('Selected:', $(this).val());
+                checkDeposit();
+        });
         $( "#reservation_name" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({

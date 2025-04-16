@@ -82,9 +82,16 @@ class CheckinController extends Controller
             'payment_method' => $getDetailReservation->reservation_payment_method,
             'tax_price' => $getDetailReservation->tax_payment,
             'extrabed_price' => $getDetailReservation->extrabed_payment,
-            'deposit' => $request->deposit
+            'deposit_type' => $request->jenis_deposit
         ];
 
+
+
+        if ($request->jenis_deposit == "Cash") {
+            $checkinData['deposit'] = $request->deposit;
+        } else {
+            $checkinData['deposit_lain'] = $request->deposit_lain;
+        }
         if ($Checkin = Checkin::create($checkinData)) {
             //get room detil
             $Rooms = Rooms::find($getDetailReservation->room_id);
@@ -113,7 +120,11 @@ class CheckinController extends Controller
                 ];
                 CheckinDetail::create($DetailCheckin);
             }
-
+            if($getDetailReservation->reservation_chanel != 'Walk-in' || $getDetailReservation->reservation_chanel != 'Phone-in'){
+                $jenis_pembayaran  = 'Ota';
+            }else{
+                $jenis_pembayaran = strtolower($getDetailReservation->reservation_payment_method);
+            }
             $transactionData = [
                 'tabel_referensi' => 'checkins',
                 'id_referensi' => $Checkin->id,
@@ -121,7 +132,7 @@ class CheckinController extends Controller
                 'jenis_transaksi' => 'rooms',
                 'besar_transaksi' => $getDetailReservation->total_payment + $getDetailReservation->tax_payment + $getDetailReservation->tax_payment,
                 'keterangan_transaksi' => 'Checkin for ' . $name_guest,
-                'jenis_pembayaran' => strtolower($getDetailReservation->reservation_payment_method)
+                'jenis_pembayaran' => $jenis_pembayaran
             ];
             TransaksiReport::create($transactionData);
             //set reservation checkedin
@@ -220,7 +231,13 @@ class CheckinController extends Controller
             'extrabed_price' => $request->extrabed_price,
             'deposit' => $request->deposit
         ];
-
+        if($request->deposit_type == 'Cash'){
+            $CheckinDetail['deposit_type'] = 'Cash';
+            $CheckinDetail['deposit'] = $request->deposit;
+        }else{
+            $CheckinDetail['deposit_type'] = 'Lain-lain';
+            $CheckinDetail['deposit_lain'] = $request->deposit_lain;
+        }
 
         if ($Checkin = Checkin::create($CheckinDetail)) {
 
@@ -253,6 +270,11 @@ class CheckinController extends Controller
             }
             $return = ['status' => 'success', 'message' => 'Checkin untuk ' . $name_guest . ' Berhasil'];
             //save transaction report
+            if($$channel != 'Walk-in' || $channel != 'Phone-in'){
+                $jenis_pembayaran  = 'Ota';
+            }else{
+                $jenis_pembayaran = strtolower($request->payment_method);
+            }
             $transactionData = [
                 'tabel_referensi' => 'checkins',
                 'id_referensi' => $Checkin->id,
@@ -260,7 +282,7 @@ class CheckinController extends Controller
                 'jenis_transaksi' => 'rooms',
                 'besar_transaksi' => $request->total_price - $request->deposit,
                 'keterangan_transaksi' => 'Checkin for ' . $name_guest,
-                'jenis_pembayaran' => strtolower($request->payment_method)
+                'jenis_pembayaran' => $jenis_pembayaran
             ];
             TransaksiReport::create($transactionData);
             //do download & print invoice

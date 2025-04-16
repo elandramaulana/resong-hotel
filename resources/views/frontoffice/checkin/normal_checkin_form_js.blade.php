@@ -14,8 +14,18 @@
             if (duration == 0) {
                 duration = 1;
             }
-            let totalPrice = duration * roomPrice;
+
+            // let totalPrice = duration * roomPrice;
+            var totalPrice = $("#total_bayar").val();
+            if (totalPrice == '') {
+                totalPrice = 0;
+            } else {
+                totalPrice = parseInt(totalPrice.replace(/\D/g, ''));
+            }
+            console.log('total' + totalPrice);
+
             var deposit = $("#deposit").val();
+
             if (extrabed.checked) {
                 totalPrice += extrabedPrice;
                 $("#extrabed_price_input").val(extrabedPrice);
@@ -36,10 +46,6 @@
             document.getElementById('showPajak').textContent = taxAmount.toLocaleString('id-ID');
         }
 
-        checkinDateInput.addEventListener('change', calculateSummary);
-        checkoutDateInput.addEventListener('change', calculateSummary);
-        extrabed.addEventListener('change', calculateSummary);
-        $('#deposit').on('keyup', calculateSummary);
         calculateSummary();
         function calculateDuration() {
             var checkinTime = $('#checkin_time').val();
@@ -70,9 +76,12 @@
 
         $(document).on('change', '#checkout_time, #checkin_time', function (e) {
            var days = calculateDuration();
-           console.log(days);
+           calculateSummary();
         });
+        $("#total_bayar").on('keyup', calculateSummary);
 
+        extrabed.addEventListener('change', calculateSummary);
+        $('#deposit').on('keyup', calculateSummary);
             $( "#id_number" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -145,6 +154,25 @@
                 document.getElementById("titleMr").checked = false;
                 document.getElementById("titleMrs").checked = false;
                 document.getElementById("titleMs").checked = false;
+            });
+       });
+       function checkDeposit(){
+            const deposit_type = $('input[name="jenis_deposit"]:checked').val();
+            if(deposit_type == 'Cash'){
+                $("#show_deposit_cash").css('display', 'block');
+                $("#show_deposit_lain").css('display', 'none');
+            }else{
+                $("#show_deposit_cash").css('display', 'none');
+                $("#show_deposit_lain").css('display', 'block');
+            }
+            console.log(deposit_type);
+       }
+       $(document).ready(function(){
+            checkDeposit();
+
+            $('input[name="jenis_deposit"]').change(function() {
+                console.log('Selected:', $(this).val());
+                checkDeposit();
             });
        });
 </script>
