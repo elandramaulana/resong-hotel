@@ -12,7 +12,6 @@
                 $("#show_deposit_lain").css('display', 'block');
                 $("#deposit").prop('required',false);
             }
-
        }
 
        $(function () {
