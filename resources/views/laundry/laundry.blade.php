@@ -51,7 +51,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Keterangan</th>
-                                        <th>Jumlah(Kg)</th>
+                                        <th>Jumlah(Lembar)</th>
                                         <th>Pengirim</th>
                                         <th>Tanggal Keluar</th>
                                         <th>Penerima</th>
@@ -90,10 +90,30 @@
                                 <input type="date" required class="form-control" id="tgl_masuk" name="tgl_masuk" value="{{ date('Y-m-d') }}">
                             </div>
                         </div>
+
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="harga">Harga Laundry</label>
                                 <input type="text" required placeholder="Harga Laundry" class="form-control" id="harga" name="harga">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="status_kembali">Status Kembali</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status_kembali" id="inlineRadio2" checked value="sebagian">
+                                    <label class="form-check-label" for="inlineRadio2">Sebagian</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status_kembali" id="inlineRadio1" value="selesai">
+                                    <label class="form-check-label" for="inlineRadio1">Selesai</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="keterangan_status">Keterangan Status</label>
+                                <textarea type="text" placeholder="Keterangan Laundry" class="form-control" id="keterangan_status" name="keterangan_status"></textarea>
                             </div>
                         </div>
                     </div>
@@ -134,8 +154,8 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="jumlah_satuan">Jumlah Satuan</label>
-                                <input type="text" required placeholder="Jumlah Satuan" class="form-control" id="jumlah_satuan" name="jumlah_satuan">
+                                <label for="jumlah_satuan">Jumlah Satuan (Lembar)</label>
+                                <input type="text" required placeholder="Jumlah Satuan (Lembar)" class="form-control" id="jumlah_satuan" name="jumlah_satuan">
                             </div>
                         </div>
                     </div>

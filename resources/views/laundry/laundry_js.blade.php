@@ -6,6 +6,23 @@
             e.preventDefault();
             var id = $(this).data('id');
             $('#laundry_id').val(id);
+            $.ajax({
+                url: '{{ route('laundry.get_laundry') }}',
+                method: 'GET',
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+                    console.log(data);
+                    if(data.status_kembali == 'selesai'){
+                        $('#inlineRadio1').prop('checked', true);
+                    }else{
+                        $('#inlineRadio2').prop('checked', true);
+                    }
+                    $('#keterangan_status').val(data.keterangan_status);
+                    $('#harga').val(data.harga);
+                }
+            });
+            console.log(id);
             $('#setMasuk').modal('show');
         })
         function loadLaudryData(){

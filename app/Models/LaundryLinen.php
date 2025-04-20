@@ -21,5 +21,7 @@ class LaundryLinen extends Model
         'harga',
         'invoice_laundry',
         'status',
+        'status_kembali',
+        'keterangan_status'
     ];
 }
