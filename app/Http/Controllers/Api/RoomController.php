@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $search = $request->input('search');
             $today = Carbon::today()->toDateString();
             $yesterday = Carbon::yesterday()->toDateString();
 
@@ -27,7 +28,8 @@ class RoomController extends Controller
                     'checkins.date_checkin',
                     'checkins.date_checkout'
                 )
-                ->whereBetween('checkins.date_checkin', [$yesterday, $today])
+                ->where("guests.name_guest", "like", "%$search%")
+                ->orWhere("rooms.room_no", "like", "%$search%")
                 ->get();
 
             $reserved = DB::table('reservations')
@@ -39,7 +41,8 @@ class RoomController extends Controller
                     'reservations.reservation_checkin as date_checkin',
                     'reservations.reservation_checkout as date_checkout'
                 )
-                ->whereBetween('reservations.reservation_checkin', [$yesterday, $today])
+                ->where("reservations.reservation_name", "like", "%$search%")
+                ->orWhere("rooms.room_no", "like", "%$search%")
                 ->get();
 
             $vacantRoomCount = DB::table('rooms')

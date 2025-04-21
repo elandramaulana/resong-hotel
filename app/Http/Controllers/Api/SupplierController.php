@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $suppliers = Supplier::all();
-            $totalSupplier = $suppliers->count();
+            $search = $request->input("search");
+            $suppliers = Supplier::where('supplier_name', 'like', '%' . $search . '%')->get();
+            $totalSupplier = Supplier::count();
             return new SupplierResource(true, 'Data Supplier', compact('suppliers', 'totalSupplier'));
         } catch (\Exception $e) {
             return new SupplierResource(false, 'Gagal mendapatkan data supplier', []);

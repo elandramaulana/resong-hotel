@@ -56,6 +56,7 @@ Route::middleware(('auth:sanctum'))->group(function () {
 
     Route::prefix('inventory')->group(function () {
         Route::get('/index', [InventoryController::class, 'index']);
+        Route::get('/kategori', [InventoryController::class, 'kategori']);
     });
 
     Route::prefix('supplier-asset')->group(function () {
@@ -64,6 +65,14 @@ Route::middleware(('auth:sanctum'))->group(function () {
 
     Route::prefix('laundry')->group(function () {
         Route::get('/index', [LaundryController::class, 'index']);
+    });
+
+    Route::prefix('laundry-guest')->group(function () {
+        Route::get('/index', [LaundryController::class, 'index_guest']);
+    });
+
+    Route::prefix('laundry-linen')->group(function () {
+        Route::get('/index', [LaundryController::class, 'index_linen']);
     });
 
     Route::prefix('resto')->group(function () {

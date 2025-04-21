@@ -120,7 +120,7 @@ class ReportController extends Controller
             'Asset' => $assetTotal,
             'SubTotalDebit' => $subTotalDebit,
             'SubTotalKredit' => $subTotalKredit,
-            'Total' => $subTotalKredit - $subTotalDebit
+            'Total' => $subTotalDebit - $subTotalKredit  
         ];
 
         // Convert all numeric 0 values and totals to string "0"
