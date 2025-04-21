@@ -187,6 +187,8 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::post('/laundry_new_guest_store', [LaundryController::class, 'laundry_new_guest_store'])->name('laundry.store_new_guest');
     Route::post('/laundry_guest_store', [LaundryController::class, 'laundry_guest_store'])->name('laundry.store_guest');
 
+    Route::get('/get_laundry', [LaundryController::class, 'get_laundry'])->name('laundry.get_laundry');
+
     Route::get('/laundry_guest', [LaundryController::class, 'index_guest'])->name('laundry.guest');
     Route::get('/dt_laundry_guest', [LaundryController::class, 'dt_laundry_guest'])->name('datatable.laundry_guest');
 });

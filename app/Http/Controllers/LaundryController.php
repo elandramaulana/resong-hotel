@@ -60,8 +60,12 @@ class LaundryController extends Controller
         $dataLinen = LaundryLinen::find($request->laundry_id);
         $dataLinen->tgl_masuk = $request->tgl_masuk;
         $dataLinen->user_id_masuk = Auth::id();
-        $dataLinen->status = 'masuk';
+        if($dataLinen->status_kembali == 'selesai'){
+            $dataLinen->status = 'masuk';
+        }
         $dataLinen->harga = $request->harga;
+        $dataLinen->status_kembali = $request->status_kembali;
+        $dataLinen->keterangan_status = $request->keterangan_status;
         $dataLinen->save();
         //insert to transaction_report
         $dataTransaction = [
@@ -82,6 +86,7 @@ class LaundryController extends Controller
         $dataGuest->fo_user_id_masuk = Auth::id();
         $dataGuest->status = 'masuk';
         $dataGuest->harga = $request->harga;
+
         if($dataGuest->save()){
 //insert to transaction_report
             $dataTransaction = [
@@ -150,7 +155,7 @@ class LaundryController extends Controller
                 'tgl_masuk'=> $key->tgl_masuk ? date('d F Y', strtotime($key->tgl_masuk)) : '',
                 'penerima'=>$penerima,
                 'harga'=>'Rp. ' . number_format($key->harga, 0, ',', '.'),
-                'action'=> $key->status == 'keluar' ? '<a href="javascript:void(0)" class="btn btn-sm btn-success btn-masuk" data-toggle="modal" data-id="' . $key->id . '" data-target="#setMasuk" title="Sudah Diterima"><i class="fas fa-check"></i></a>' : '',
+                'action'=> $key->status == 'keluar' ? '<a href="javascript:void(0)" class="btn btn-sm btn-success btn-masuk" data-toggle="modal" data-id="' . $key->id . '"  title="Sudah Diterima"><i class="fas fa-check"></i></a>' : '',
                 'invoice_laundry'=>$key->invoice_laundry,
                 'status'=>$key->laundry_status,
 
@@ -242,5 +247,11 @@ class LaundryController extends Controller
         }
         $response = ['status' => 'success', 'message' => 'Sukses, Transaksi Laundry Berhasil di simpan'];
         return response()->json($response);
+    }
+    public function get_laundry(Request $request)
+    {
+        $id = $request->id;
+        $data = LaundryLinen::find($id);
+        return response()->json($data);
     }
 }
