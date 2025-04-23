@@ -1,6 +1,9 @@
 <script type="text/javascript">
-    $(function () {
 
+    $(function () {
+        $('.close-modal').on('click', function () {
+            $(this).closest('.modal').modal('hide');
+        });
         loadLaudryData();
         $(document).on('click', '.btn-masuk', function (e) {
             e.preventDefault();

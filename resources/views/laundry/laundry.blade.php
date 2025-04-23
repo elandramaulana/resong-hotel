@@ -75,8 +75,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalDetailLaundryLabel">Detail Laundry</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close close-modal" data-dismiss="modal" aria-label="Close">
+
                 </button>
             </div>
             <form action="{{route('laundry.store_linen')}}" method="post">
@@ -120,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
                 </div>
         </form>
         </div>
@@ -132,7 +132,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAddLaundryLabel">Tambah Laundry</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
