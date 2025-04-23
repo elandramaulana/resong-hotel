@@ -69,11 +69,15 @@ class DashboardController extends Controller
                     ->where('room_status', 'VACANT DIRTY')
                     ->count();
 
-                $kehadiranCount = DB::table('kehadirans')->count();
+                $kehadiranHariIni = DB::table('kehadirans')
+                    ->whereDate('created_at', Carbon::today())
+                    ->count();
+                
+                $kehadiranHariIni = $kehadiranHariIni ?: 0;
+                    
 
-                    // dd($vacantRoomCount);
 
-            return view('dashboard', compact('kehadiranCount','coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
+            return view('dashboard', compact('kehadiranHariIni','coutKaryawan','coutSupplier', 'todayCheckin','todayCheckout','vacantRoomCount', 'occupiedRoomCount','bookedRoomCount', 'vacantDirtyRoomCount' ));
 
     }
 }

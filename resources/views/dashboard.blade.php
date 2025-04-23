@@ -22,7 +22,7 @@
         @endif
         @if (session('download_url'))
             <script>
-                window.onload = function () {
+                window.onload = function() {
                     window.location.href = "{{ session('download_url') }}";
                 };
             </script>
@@ -37,7 +37,10 @@
                             <!-- Page Heading -->
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">Overview</h1>
+                                <h5 id="current-date" class="text-muted">
                             </div>
+
+                            </p>
                             <div class="row">
                                 <!-- Available Rooms Content -->
                                 <div class="col-xl-3 col-md-6 mb-4">
@@ -88,7 +91,8 @@
 
                                                         {{ $bookedRoomCount }}
                                                     </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-white">Reserved Rooms</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-white">Reserved Rooms
+                                                    </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-desktop fa-5x text-white"></i>
@@ -108,7 +112,8 @@
 
                                                         {{ $vacantDirtyRoomCount }}
                                                     </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-white">Cleaning Rooms</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-white">Cleaning Rooms
+                                                    </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-broom fa-5x text-white"></i>
@@ -146,7 +151,7 @@
                                                 <div class="col mr-2">
                                                     <div class="h1 font-weight-bold text-white text-uppercase mb-1">
 
-                                                        {{ $kehadiranCount }}
+                                                        {{ $kehadiranHariIni }}
                                                     </div>
                                                     <div class="h5 font-weight-bold text-white">Absen Hari ini </div>
                                                 </div>
@@ -237,7 +242,22 @@
         </section>
 
 
+        <script>
+            const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const months = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
 
+            const today = new Date();
+            const dayName = days[today.getDay()];
+            const day = today.getDate();
+            const month = months[today.getMonth()];
+            const year = today.getFullYear();
+
+            const formattedDate = `${dayName}, ${day} ${month} ${year}`;
+            document.getElementById("current-date").textContent = formattedDate;
+        </script>
 
 
 
