@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
 
 //======================================= Frontoffice Divisi
 
-Route::middleware('auth', 'checkDivisi:1')->group(function () {
+Route::middleware('auth', 'checkDivisi:1,2')->group(function () {
     // checkin
     Route::get('/checkin-normal', [CheckinController::class, 'index'])->name('checkin.normal');
     Route::post('/checkin-normal', [CheckinController::class, 'store'])->name('checkin.normal.store');
@@ -307,8 +307,8 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
-//========================= Manajemen Asset Divisi
-Route::middleware('auth', 'checkDivisi:5')->group(function () {
+//========================= Manajemen Asset Divisi + housekeeping
+Route::middleware('auth', 'checkDivisi:2')->group(function () {
     Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
@@ -359,8 +359,8 @@ Route::middleware('auth', 'checkDivisi:5')->group(function () {
 });
 
 
-//===================== HRD Divisi
-Route::middleware('auth', 'checkDivisi:6')->group(function () {
+//===================== HRD Divisi + human capital
+Route::middleware('auth', 'checkDivisi:8')->group(function () {
     //Kepegawaian
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');

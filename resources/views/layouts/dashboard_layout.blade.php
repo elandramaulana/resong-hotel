@@ -175,7 +175,7 @@
 
 
 
-
+            @if($finance || Auth::user()->level_user == 'SUPERADMIN')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -191,6 +191,7 @@
                     </div>
                 </div>
             </li>
+            @endif
             {{-- @endif --}}
             <!-- Divider -->
             <hr class="sidebar-divider">
