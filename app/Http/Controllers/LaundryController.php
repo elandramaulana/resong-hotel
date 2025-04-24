@@ -60,12 +60,13 @@ class LaundryController extends Controller
         $dataLinen = LaundryLinen::find($request->laundry_id);
         $dataLinen->tgl_masuk = $request->tgl_masuk;
         $dataLinen->user_id_masuk = Auth::id();
-        if($dataLinen->status_kembali == 'selesai'){
+        if($request->status_kembali == 'selesai'){
             $dataLinen->status = 'masuk';
         }
         $dataLinen->harga = $request->harga;
         $dataLinen->status_kembali = $request->status_kembali;
         $dataLinen->keterangan_status = $request->keterangan_status;
+
         $dataLinen->save();
         //insert to transaction_report
         $dataTransaction = [
