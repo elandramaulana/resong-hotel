@@ -37,6 +37,15 @@
                             <!-- Page Heading -->
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">Overview</h1>
+                                <div class="col-auto">
+                                    <form action="{{ route('dashboard') }}" method="get" class="form-inline">
+                                        <div class="form-group">
+                                            <label class="mr-2" for="date">Filter Date: </label>
+                                            <input type="date" class="form-control" id="date" name="date" value="{{ request()->get('date') ?? date('Y-m-d') }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary ml-2">Filter</button>
+                                    </form>
+                                </div>
                             </div>
                             <div class="row">
                                 <!-- Available Rooms Content -->

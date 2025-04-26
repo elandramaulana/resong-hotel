@@ -33,7 +33,7 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                         <div class="table-responsive">
                             <table class="table table-bordered" id="tableID" width="100%" cellspacing="0">
                                 <thead>
@@ -45,10 +45,50 @@
                                         <th>Room Price</th>
                                         <th>Capacity</th>
                                         <th>Have Extrabed</th>
+                                        <th>Room Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    @foreach ($availableRoom as $room)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $room['room_no'] }}</td>
+                                            <td>{{ $room['room_name'] }}</td>
+                                            <td>{{ $room['room_type'] }}</td>
+                                            <td>{{ $room['room_price'] }}</td>
+                                            <td>{{ $room['room_capacity'] }}</td>
+                                            <td>
+                                                @if($room['have_extra_bed'] == 1)
+                                                    <span class="text-success">Yes</span>
+                                                @else
+                                                    <span class="text-danger">No</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($room['status'] == 'Available')
+                                                    @php
+                                                        $isDisabled = '';
+                                                    @endphp
+                                                    <span class="text-success">Available</span>
+                                                @elseif ($room['status'] == 'Occupied')
+                                                    @php
+                                                        $isDisabled = 'disabled';
+                                                    @endphp
+                                                    <span class="text-danger">Occupied</span>
+                                                @else
+                                                @php
+                                                        $isDisabled = 'disabled';
+                                                    @endphp
+                                                    <span class="text-warning">Booked</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{route('booking.payment', $room['id'])}}" class="btn btn-success btn-sm {{ $isDisabled }}" > Select</>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>

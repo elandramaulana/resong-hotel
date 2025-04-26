@@ -270,7 +270,7 @@ class CheckinController extends Controller
             }
             $return = ['status' => 'success', 'message' => 'Checkin untuk ' . $name_guest . ' Berhasil'];
             //save transaction report
-            if($$channel != 'Walk-in' || $channel != 'Phone-in'){
+            if($channel != 'Walk-in' || $channel != 'Phone-in'){
                 $jenis_pembayaran  = 'Ota';
             }else{
                 $jenis_pembayaran = strtolower($request->payment_method);
