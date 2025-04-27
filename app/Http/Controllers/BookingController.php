@@ -8,7 +8,10 @@ use App\Models\LatePointSetting;
 use App\Models\Rooms;
 use App\Models\Reservation;
 use App\Models\TransaksiReport;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BookingController extends Controller
@@ -160,7 +163,7 @@ class BookingController extends Controller
         // dd($reservation_checkin);
         $reservation_checkout = $data['reservation_checkout'];
         $qty_guest = $data['qty_guest'] ?? 1;
-        $availableRooms = $this->BookingEngine($reservation_checkin, $reservation_checkout, $qty_guest);
+        $availableRooms = $this->getRoomListStatus($reservation_checkin, $reservation_checkout);
         // print_r($availableRooms);
 
         $Data = [
@@ -190,6 +193,68 @@ class BookingController extends Controller
             });
         })->where('room_capacity', '>=', $qty_guest)->get();
         return $availableRooms;
+    }
+    public function getRoomListStatus($startDate, $endDate)
+    {
+        // Parse input dates
+        $dateStart = Carbon::parse($startDate);
+        $dateEnd = Carbon::parse($endDate);
+        // Fetch all rooms
+        $rooms = DB::table('rooms')->get();
+        // Fetch occupied rooms overlapping the range
+        $occupiedRoomIds = DB::table('checkins')
+            ->where(function($query) use ($dateStart, $dateEnd) {
+                $query->whereBetween('date_checkin', [$dateStart, $dateEnd])
+                      ->orWhereBetween('date_checkout', [$dateStart, $dateEnd])
+                      ->orWhere(function($query) use ($dateStart, $dateEnd) {
+                          $query->where('date_checkin', '<=', $dateStart)
+                                ->where('date_checkout', '>=', $dateEnd);
+                      });
+            })->leftJoin('checkouts', 'checkins.id', '=', 'checkouts.checkin_id')
+            ->whereNull('checkouts.id')
+            ->pluck('room_id')
+            ->toArray();
+
+        // Fetch reserved rooms overlapping the range
+        $reservedRoomIds = DB::table('reservations')
+            ->where('reservation_status', 'New') // adjust if needed
+            ->where(function($query) use ($dateStart, $dateEnd) {
+                $query->whereBetween('reservation_checkin', [$dateStart, $dateEnd])
+                      ->orWhereBetween('reservation_checkout', [$dateStart, $dateEnd])
+                      ->orWhere(function($query) use ($dateStart, $dateEnd) {
+                          $query->where('reservation_checkin', '<=', $dateStart)
+                                ->where('reservation_checkout', '>=', $dateEnd);
+                      });
+            })
+            ->pluck('room_id')
+            ->toArray();
+
+        // Prepare room list with status
+        $roomList = $rooms->map(function($room) use ($occupiedRoomIds, $reservedRoomIds) {
+            if (in_array($room->id, $occupiedRoomIds)) {
+                $status = 'Occupied';
+            } elseif (in_array($room->id, $reservedRoomIds)) {
+                $status = 'Reserved';
+            } elseif ($room->room_status == 'VACANT READY') {
+                $status = 'Available';
+            } else {
+                $status = 'Unavailable';
+            }
+
+            return [
+                'id' => $room->id,
+                'room_no' => $room->room_no,
+                'room_name' => $room->room_name,
+                'room_type' => $room->room_type,
+                'room_price' => $room->room_price,
+                'room_capacity' => $room->room_capacity,
+                'bed_type' => $room->bed_type,
+                'have_extra_bed' => $room->room_extrabed,
+                'status' => $status,
+            ];
+        });
+        Log::info($roomList);
+        return $roomList;
     }
 
     public function booking_payment($id)
