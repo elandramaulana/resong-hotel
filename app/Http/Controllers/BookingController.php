@@ -228,7 +228,7 @@ class BookingController extends Controller
             })
             ->pluck('room_id')
             ->toArray();
-
+// dd($reservedRoomIds);
         // Prepare room list with status
         $roomList = $rooms->map(function($room) use ($occupiedRoomIds, $reservedRoomIds) {
             if (in_array($room->id, $occupiedRoomIds)) {
@@ -237,8 +237,10 @@ class BookingController extends Controller
                 $status = 'Reserved';
             } elseif ($room->room_status == 'VACANT READY') {
                 $status = 'Available';
+            }elseif ($room->room_status == 'VACANT DIRTY') {
+                $status = 'Vacant Dirty';
             } else {
-                $status = 'Unavailable';
+                $status = 'Available';
             }
 
             return [
