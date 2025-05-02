@@ -47,46 +47,58 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Room Name</th>
                                     <th>Room No</th>
-                                    <th>Bed Type</th>
+                                    <th>Room Name</th>
+                                    <th>Room Type</th>
                                     <th>Room Price</th>
                                     <th>Capacity</th>
+                                    <th>Have Extrabed</th>
                                     <th>Room Status</th>
                                     <th>Checkin</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($rooms as $room)
-                                @php
-                                    $room_status = $room->room_status;
-                                    if($room_status == 'OCCUPIED'){
-                                        $status = 'btn-primary';
-                                    }elseif($room_status == 'VACANT READY'){
-                                        $status = 'btn-success';
-                                    }elseif($room_status == 'BOOKED'){
-                                        $status = 'btn-warning';
-                                    }elseif($room_status == 'VACANT DIRTY'){
-                                        $status = 'btn-danger';
-                                    }
-                                @endphp
                                 <tr>
-                                    <td align="center">{{ $loop->iteration }}</td>
-                                    <td>{{ $room->room_name }}</td>
-                                    <td>{{ $room->room_no }}</td>
-                                    <td>{{ $room->bed_type }}</td>
-                                    <td>{{ number_format($room->room_price, 2) }}</td>
-                                    <td align="center">{{ $room->room_capacity }}</td>
-                                    <td align="center"><a href="#" class=" btn-sm {{$status}}">{{$room->room_status}}</a></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $room['room_no'] }}</td>
+                                    <td>{{ $room['room_name'] }}</td>
+                                    <td>{{ $room['room_type'] }}</td>
+                                    <td>{{ $room['room_price'] }}</td>
+                                    <td>{{ $room['room_capacity'] }}</td>
                                     <td>
-                                        @php
-                                            if ($room->room_status == 'VACANT READY') {
-                                            @endphp
-                                                <a href="{{route('checkin.normal.form', $room->id)}}" class="btn-sm btn-success" >Checkin</a>
+                                        @if($room['have_extra_bed'] == 1)
+                                            <span class="text-success">Yes</span>
+                                        @else
+                                            <span class="text-danger">No</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($room['status'] == 'Available')
                                             @php
-                                            }
-                                        @endphp
+                                                $isDisabled = '';
+                                            @endphp
+                                            <span class="text-success">Available</span>
+                                        @elseif ($room['status'] == 'Occupied')
+                                            @php
+                                                $isDisabled = 'disabled';
+                                            @endphp
+                                            <span class="text-primary">Occupied</span>
 
+                                        @elseif ($room['status'] == 'Vacant Dirty')
+                                            @php
+                                                $isDisabled = 'disabled';
+                                            @endphp
+                                            <span class="text-danger">Vacant Dirty</span>
+                                        @else
+                                        @php
+                                                $isDisabled = 'disabled';
+                                            @endphp
+                                            <span class="text-warning">Booked</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{route('checkin.normal.form', $room['id'])}}" class="btn btn-success btn-sm {{ $isDisabled }}" > Select</>
                                     </td>
                                 </tr>
                                 @endforeach
