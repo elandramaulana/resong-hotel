@@ -25,6 +25,8 @@ class PaymentStoreRequest extends FormRequest
             'room_id'=>['required'],
             'reservation_payment_status'=>['required'],
             'reservation_payment_method'=>['required'],
+            'reservation_time_checkin' => ['nullable', 'date_format:H:i'],
+            'reservation_time_checkout' => ['nullable', 'date_format:H:i'],
             'reservation_payment'=>[
                 'required',
                 function ($attribute, $value, $fail) {

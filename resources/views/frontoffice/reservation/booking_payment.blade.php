@@ -152,9 +152,12 @@
                                             <option value="Qris"
                                                 {{ 'Qris' === old('reservation_payment_method') ? 'selected' : '' }}>Qris
                                             </option>
-                                            <option value="eWallet"
-                                                {{ 'eWallet' === old('reservation_payment_method') ? 'selected' : '' }}>
-                                                eWallet</option>
+                                            <option value="Dana"
+                                                {{ 'Dana' === old('reservation_payment_method') ? 'selected' : '' }}>
+                                                Dana</option>
+                                            <option value="Go-Pay"
+                                                {{ 'Go-Pay' === old('reservation_payment_method') ? 'selected' : '' }}>
+                                                Go-Pay</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('reservation_payment_method')" class="mt-2" />
                                     </div>

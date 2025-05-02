@@ -19,10 +19,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class CheckinController extends Controller
 {
     public function index() : View {
+        $bookingController = new BookingController();
+        $roomList = $bookingController->getRoomListStatus(date('Y-m-d'), date('Y-m-d', strtotime('+1 day')));
         $RoomData = Rooms::all();
         $Data = [
             'Title'=>'Regular Checking',
-            'rooms'=>$RoomData
+            'rooms'=>$roomList
         ];
         // return view('frontoffice.checkin.normal_checkin', $Data);
         return view('frontoffice.checkin.normal_checkin_table', $Data);
