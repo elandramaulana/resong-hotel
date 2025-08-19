@@ -1,9 +1,13 @@
 <script type="text/javascript">
     $(function () {
+        $(document).on('keyup', '#room_rate', function() {
+            CalculateTotal();
+        })
         function CalculateTotal() {
             let total = 0;
-            let room_price = {{$room_detail->room_price}};
+            let room_price = $("#room_rate").val();
             let qty_hari = {{$tamu_detail['qty_hari']}};
+            $("#room_price").val(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(room_price * qty_hari));
             let pajak_checkin = {{$Settings->pajak_checkin}};
             let extrabed_price = {{$Settings->extrabed_price}};
             let extrabed = $("#extrabed").is(":checked") ? extrabed_price : 0;

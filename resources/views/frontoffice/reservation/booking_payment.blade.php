@@ -21,6 +21,7 @@
             </div>
         @endif
         <form action="{{ route('booking.store') }}" method="post">
+
             @csrf
             <div class="form-speedy">
                 <div class="container-fluid mt-4">
@@ -93,7 +94,7 @@
                                                 <tr>
                                                     <td>Harga Kamar</td>
                                                     <td>:</td>
-                                                    <td>{{ $showHarga }}</td>
+                                                    <td><input type="text" name="room_rate" value="{{ $room_detail->room_price }}" id="room_rate"> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Tgl Checkin / Checkout</td>
@@ -155,16 +156,20 @@
                                             <option value="eWallet"
                                                 {{ 'eWallet' === old('reservation_payment_method') ? 'selected' : '' }}>
                                                 eWallet</option>
+                                            <option value="EDC"
+                                                {{ 'EDC' === old('reservation_payment_method') ? 'selected' : '' }}>EDC
+                                            </option>
+                                            <option value="OTA"
+                                            {{ 'OTA' === old('reservation_payment_method') ? 'selected' : '' }}>OTA
+                                        </option>
                                         </select>
                                         <x-input-error :messages="$errors->get('reservation_payment_method')" class="mt-2" />
                                     </div>
                                 </div>
-
                                 @php
                                     $total = $room_detail->room_price * $tamu_detail['qty_hari'];
                                     $showTotal = formatCurrency($total);
                                 @endphp
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check">
@@ -217,7 +222,6 @@
                                     <button class="btn btn-primary" type="submit">Simpan</button>
                                 </div>
                             </div>
-                            <small class="pt-2">Dp Minimal 50%</small>
                         </div>
                     </div>
                 </div>

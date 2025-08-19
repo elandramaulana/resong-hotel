@@ -99,6 +99,7 @@
                 <th style="width: 15%" align="right">Rate</th>
                 <th style="width: 15%" align="center">Qty</th>
                 <th style="width: 30%">Description</th>
+                <th>Channel/Payment Method</th>
                 <th style="width: 15%">Amount</th>
             </tr>
             @php
@@ -123,6 +124,7 @@
                     <td style="text-align: right">{{ 'Rp. ' . number_format($detail['item_price'], 0, ',', '.') }}</td>
                     <td style="text-align: center">{{ $detail['item_qty'] }}</td>
                     <td>{{ $detail['item_description'] }}</td>
+                    <td>{{$receipt['chanel_checkin']}}/{{ $receipt['payment_method'] }}</td>
                     <td style="text-align: right">{{ 'Rp.' . number_format($amount, 0, ',', '.') }}</td>
                 </tr>
 
@@ -135,12 +137,6 @@
                 <td style="text-align: right"></td>
                 <td style="text-align: center"></td>
                 <td></td>
-                <td style="text-align: right"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="text-align: right"></td>
-                <td style="text-align: center"></td>
                 <td></td>
                 <td style="text-align: right"></td>
             </tr>
@@ -149,12 +145,22 @@
                 <td style="text-align: right"></td>
                 <td style="text-align: center"></td>
                 <td></td>
+                <td></td>
                 <td style="text-align: right"></td>
             </tr>
             <tr>
                 <td></td>
                 <td style="text-align: right"></td>
                 <td style="text-align: center"></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: right"></td>
+                <td style="text-align: center"></td>
+                <td></td>
                 <td></td>
                 <td style="text-align: right"></td>
             </tr>
@@ -163,19 +169,19 @@
                     $totalPlusPajak = $totalAmount + $tax;
                 @endphp
                 <tr>
-                    <td colspan="4" style="text-align: left">
+                    <td colspan="5" style="text-align: left">
                         <strong>Subtotal</strong>
                     </td>
                     <td style="text-align: right">{{'Rp.' . number_format($totalAmount)}}</td>
                 </tr>
                 <tr>
-                    <td colspan="4" style="text-align: left">
+                    <td colspan="5" style="text-align: left">
                         <strong>Tax ({{$taxConfig}}%)</strong>
                     </td>
                     <td style="text-align: right">{{'Rp.' . number_format($tax)}}</td>
                 </tr>
                 <tr>
-                    <td colspan="4" style="text-align: left">
+                    <td colspan="5" style="text-align: left">
                         <strong>T O T A L (Pajak + Subtotal)</strong>
                     </td>
                     <td style="text-align: right">{{'Rp.' . number_format($totalPlusPajak)}}</td>
@@ -183,9 +189,9 @@
         </table>
 
         <p class="footer">Send Payment To:</p>
-        <p>Bank: Bank Rakyat Indonesia (BRI)</p>
-        <p>Account Name: PT RESONG CIPTA MANDIRI</p>
-        <p>Account No.: _______________________</p>
+        <p>Bank: {{ $bank_name }}</p>
+        <p>Account Name: {{ $bank_account_name }}</p>
+        <p>Account No.: {{ $bank_account_number }}</p>
         <p><em>*All item prices are inclusive of tax.</em></p>
         <div style="text-align:right;" class="signature">
             <p>________________________</p>

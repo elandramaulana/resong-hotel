@@ -16,15 +16,10 @@
             }
 
             // let totalPrice = duration * roomPrice;
-            var totalPrice = $("#total_bayar").val();
-            if (totalPrice == '') {
-                totalPrice = 0;
-            } else {
-                totalPrice = parseInt(totalPrice.replace(/\D/g, ''));
-            }
-            console.log('total' + totalPrice);
-
-            var deposit = $("#deposit").val();
+            var room_rate =parseInt($("#room_price_input").val());
+            var totalPrice = room_rate * duration;
+            $("#summary_room_price").text(totalPrice.toLocaleString('id-ID'));
+            var deposit = parseInt($("#deposit").val()) || 0;
 
             if (extrabed.checked) {
                 totalPrice += extrabedPrice;
@@ -36,9 +31,10 @@
             const taxRate = {{$Settings->pajak_checkin}};
             let taxAmount = totalPrice * (taxRate / 100);
             totalPrice += Number(taxAmount) + Number(deposit);
-            $("#total_price").val(totalPrice);
             $("#tax").val(taxAmount);
-
+            $("#total_price").val(totalPrice);
+            // var total_payment_dapo = totalPrice + deposit;
+            // $("#summary_total_payment").text(total_payment_dapo.toLocaleString('id-ID'));
             document.getElementById('summary_checkin_date').textContent = checkinDateInput.value;
             document.getElementById('summary_checkout_date').textContent = checkoutDateInput.value;
             document.getElementById('summary_duration').textContent = duration;
@@ -78,7 +74,7 @@
            var days = calculateDuration();
            calculateSummary();
         });
-        $("#total_bayar").on('keyup', calculateSummary);
+        $("#room_price_input").on('keyup', calculateSummary);
 
         extrabed.addEventListener('change', calculateSummary);
         $('#deposit').on('keyup', calculateSummary);

@@ -26,6 +26,9 @@ class KehadiranController extends Controller
     {
         $getSettings = LatePointSetting::first();
         if ($getSettings) {
+            $getSettings->bank_account_name = $request->account_name;
+            $getSettings->bank_account_number = $request->account_number;
+            $getSettings->bank_name = $request->bank_name;
             $getSettings->extrabed_price = $request->extrabed_price;
             $getSettings->pajak_checkin = $request->pajak_checkin;
             $getSettings->first_late = $request->first_late;

@@ -20,6 +20,9 @@ class LatePointSetting extends Model
         'besar_potongan',
         'besar_point',
         'payroll_period',
-        'ot_price'
+        'ot_price',
+        'bank_name',
+        'bank_account_number',
+        'bank_account_name',
     ];
 }

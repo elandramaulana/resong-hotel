@@ -165,7 +165,7 @@
                                     </div>
                                     <div class="form-group col-lg-3">
                                         <label for="room_price">Room Price / Night</label>
-                                        <input type="text" class="form-control" id="room_price" name="room_price" value="{{ number_format($Room->room_price, 0, ',', '.') }}" readonly>
+                                        <input type="text" readonly class="form-control" id="room_price" name="room_price" value="{{ $Room->room_price }}" >
                                     </div>
                                 </div>
                                 <div class="row">
@@ -204,9 +204,11 @@
                                         <select name="channel" id="channel" class="form-control">
                                             <option value="Walk-in" {{ "Walk-in" === old('channel') ? 'selected' : '' }}>Walk-in</option>
                                             <option value="Traveloka" {{ "Traveloka" === old('channel') ? 'selected' : '' }}>Traveloka</option>
+                                            <option value="booking.com" {{ "booking.com" === old('channel') ? 'selected' : '' }}>booking.com</option>
+                                            <option value="Travel Agent" {{ "Travel Agent" === old('channel') ? 'selected' : '' }}>Travel Agent</option>
+                                            <option value="Corporate" {{ "Corporate" === old('channel') ? 'selected' : '' }}>Corporate</option>
                                             <option value="Phone-in" {{ "Phone-in" === old('channel') ? 'selected' : '' }}>Phone-in</option>
                                             <option value="tiket.com" {{ "tiket.com" === old('channel') ? 'selected' : '' }}>Tiket.com</option>
-                                            <option value="syifa_travel" {{ "syifa_travel" === old('channel') ? 'selected' : '' }}>Syifa Travel</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6 form-check">
@@ -229,11 +231,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-lg-6" id="show_deposit_cash">
-                                        <label for="deposit">Deposit (Rp)</label>
-                                        <input type="text" class="form-control" id="deposit" name="deposit" value="{{ old('deposit') }}" placeholder="Masukan Besar Deposit">
-                                        <x-input-error :messages="$errors->get('deposit')" class="mt-2" />
-                                    </div>
                                     <div class="form-group col-lg-6" id="show_deposit_lain" >
                                         <label for="deposit">Deposit Lain-lain</label>
                                         <input type="text" class="form-control" id="deposit_lain" name="deposit_lain" value="{{ old('deposit_lain') }}" placeholder="Inputkan Deposit lain-lain Ex: KTP, SIM dan lain-lain ">
@@ -241,11 +238,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-lg-8">
-                                        <label for="total_bayar">Total Harga Kamar (Rp)</label>
-                                        <input type="text" class="form-control" id="total_bayar" placeholder="Total Bayar " name="total_bayar" value="{{ old('total_bayar') }}">
-                                        <x-input-error :messages="$errors->get('total_bayar')" class="mt-2" />
-                                    </div>
                                     <div class="form-group col-lg-4">
                                         <label for="payment_method">Payment Method</label>
                                         <select name="payment_method" id="payment_method" class="form-control">
@@ -276,11 +268,14 @@
                                         <input type="text" name="extrabed_price" id="extrabed_price_input" value="0" hidden>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p>Room Price / Night: Rp <span id="summary_room_price">{{ number_format($Room->room_price, 0, ',', '.') }}</span></p>
+                                        <p>Room Rate : Rp <input type="number" name="room_price_input" id="room_price_input" value="{{ $Room->room_price }}" > </p>
+                                        <p>Total Room Price: Rp <span id="summary_room_price">0</span></p>
                                         <p>Tax ({{$Settings->pajak_checkin}} %): <span id="showPajak"></span></p>
                                         <input type="text" name="tax" id="tax" value="{{$Settings->pajak_checkin}}" hidden>
                                         <p>Total Price: Rp <span id="summary_total_price">0</span></p>
                                         <input type="text" name="total_price" id="total_price" value="0" hidden>
+                                        <p>Deposit: <input type="text" id="deposit" class="form-control" name="deposit" value="{{ old('deposit') }}" placeholder="Masukan Besar Deposit" value="50000"></p>
+                                        <p>Pembayaran + Deposit: Rp <span id="summary_total_payment">0</span></p>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -54,7 +54,10 @@
                                     <label for="reservation_chanel" class="form-label">Check-in Channel</label>
                                         <select name="reservation_chanel" id="reservation_chanel" class="form-control">
                                             <option value=""            >Pilih Chanel</option>
+                                            <option value="booking.com" {{ old('reservation_chanel') == 'booking.com' ? 'selected' : '' }}  >Booking.com</option>
                                             <option value="Walk-in"   {{ old('reservation_chanel') == 'Walk-in' ? 'selected' : '' }}  >Walk-in</option>
+                                            <option value="Travel Agent" {{ old('reservation_chanel') == 'Travel Agent' ? 'selected' : '' }}  >Travel Agent</option>
+                                            <option value="Corporate"   {{ old('reservation_chanel') == 'Corporate' ? 'selected' : '' }}  >Corporate</option>
                                             <option value="Traveloka" {{ old('reservation_chanel') == 'Traveloka' ? 'selected' : '' }}  >Traveloka</option>
                                             <option value="Phone"     {{ old('reservation_chanel') == 'Phone' ? 'selected' : '' }}  >Phone</option>
                                         </select>

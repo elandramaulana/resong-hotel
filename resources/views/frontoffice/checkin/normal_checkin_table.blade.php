@@ -41,6 +41,19 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <p class="font-weight-bold fs-5">Select Room to Check-in</p>
+                    <form action="{{ route('checkin.normal_filter') }}" id="formDate" method="POST">
+                        @csrf
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label for="date_from" class="mr-2">From:</label>
+                                <input type="date" value="{{ date('Y-m-d') }}" readonly min="{{ date('Y-m-d') }}" id="date_from" name="date_from" class="form-control">
+                            </div>
+                            <div class="col-auto">
+                                <label for="date_to" class="mr-2">To:</label>
+                                <input type="date" id="date_to" name="date_to" class="form-control" value="{{ date('Y-m-d', strtotime('+1 days')) }}">
+                            </div>
+                        </div>
+                    </form>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered" width="100%" cellspacing="0">

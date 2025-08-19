@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="mb-3 col-6">
                                     <label for="checkinTime" class="form-label">Check-in Date</label>
-                                    <input name="speedy_checkin_time" value="" type="text" readonly class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <input name="speedy_checkin_time" value="" type="text"  class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="checkinHour" class="form-label">Check-in Time</label>
@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="mb-3 col-12">
                                     <label for="checkoutTime" class="form-label">Check-out Date</label>
-                                    <input readonly name="speedy_checkout_time" value="" type="text" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                    <input  name="speedy_checkout_time" value="" type="text" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
                                 </div>
                                 {{-- <div class="mb-3 col-6">
                                     <label for="checkoutHour" class="form-label">Check-out Time</label>
@@ -360,10 +360,11 @@
                                                                                 <input type="text" name="deposit_lain" id="deposit_lain" id="deposit_lain" class="form-control" placeholder="Inputkan Deposit lain-lain Ex: KTP, SIM dan lain-lain" style="text-align: right">
                                                                             </td>
                                                                         </tr>
-                                                                        <input type="text" name="remaining_payment" id="remaining_payment" hidden>
+                                                                        <input type="text" name="remaining_payment" id="remaining_payment" >
                                                                         <tr>
                                                                             <td>Remaining Payment</td>
                                                                             <td>:</td>
+                                                                            {{-- <input type="text" name="remaining_payment" id="remaining_payment" hidden style="text-align: right"> --}}
                                                                             <td align="right"><div id="remaining-payment-value"></div></td>
                                                                         </tr>
                                                                         <tr>
@@ -374,6 +375,7 @@
                                                                                     <option value="cash">Cash</option>
                                                                                     <option value="transfer">Transfer</option>
                                                                                     <option value="credit card">Credit Card</option>
+                                                                                    <option value="EDC">EDC</option>
                                                                                 </select>
                                                                             </td>
                                                                         </tr>

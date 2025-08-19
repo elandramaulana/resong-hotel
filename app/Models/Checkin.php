@@ -12,6 +12,7 @@ class Checkin extends Model
         'reservation_id',
         'no_invoice',
         'room_id',
+        'room_rate',
         'guest_id',
         'chanel_checkin',
         'date_checkin',

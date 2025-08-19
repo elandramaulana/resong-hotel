@@ -1,5 +1,8 @@
 <script type="text/javascript">
        $(function () {
+        $(document).on('change', '#date_to', function(){
+            $("#formDate").submit();
+        })
         check_rooms();
             function check_rooms(){
                 $('#showWaitme').waitMe({

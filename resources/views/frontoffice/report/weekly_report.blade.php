@@ -39,7 +39,7 @@
                                                 <th rowspan="2" class="text-white text-center align-middle table-dark">KM</th>
                                                 <th rowspan="2" class="text-white text-center align-middle table-dark">ORG</th>
                                                 <th colspan="3" class="text-white text-center align-middle table-dark">Stay (Hari) (Chek In)</th>
-                                                <th colspan="5" class="text-white text-center align-middle table-dark">Pendapatan (Chek Out) (Rp)</th>
+                                                <th colspan="4" class="text-white text-center align-middle table-dark">Pendapatan (Chek Out) (Rp)</th>
                                                 <th colspan="3" class="text-white text-center align-middle table-dark">Pembayaran</th>
                                                 <th rowspan="2" class="text-white text-center align-middle table-dark">Keterangan</th>
                                             </tr>
@@ -55,9 +55,8 @@
                                                 {{-- <th class="text-white text-center align-middle table-dark">F&B</th> --}}
                                                 <th class="text-white text-center align-middle table-dark">Laundry</th>
                                                 {{-- <th class="text-white text-center align-middle table-dark">Lain-lain</th> --}}
-                                                <th class="text-white text-center align-middle table-dark">Total</th>
-                                                <th class="text-white text-center align-middle table-dark">Cash</th>
-                                                <th class="text-white text-center align-middle table-dark">Card</th>
+                                                <th class="text-white text-center align-middle table-dark">Nominal</th>
+                                                <th class="text-white text-center align-middle table-dark">Method</th>
                                                 <th class="text-white text-center align-middle table-dark">Piutang</th>
                                             </tr>
                                         </thead>
@@ -74,7 +73,8 @@
                                         <tbody>
                                             @php $no1 = 1; @endphp
                                             @foreach ($checkinCheckoutTransactions as $item)
-                                                @if ($item->tabel_referensi == 'checkins')
+
+                                                @if ($item->tabel_referensi == 'checkins' )
                                                     <tr class="text-xs">
                                                         <td style="max-width: 10px; width: 10px;">{{ $no1 ++ }}</td>
                                                         <td>{{ $item->room_no ?? '-'  }}</td>
@@ -133,16 +133,89 @@
                                                         </td>
                                                         <td>{{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}</td>
                                                         <td>
-                                                            @if ($item->jenis_transaksi == 'Cash')
-                                                                {{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($item->jenis_transaksi != 'Cash')
-                                                                {{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}
-                                                            @endif
+                                                            {{ $item->payment_method ?? '-' }}
                                                         </td>
                                                         <td>0</td>
+                                                        <td>{{ $item->keterangan_transaksi ?? '-' }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                            @php
+                                                $totalPiutang = 0;
+                                            @endphp
+                                            @foreach ($reservationTransactions as $item)
+
+                                                @if ($item->tabel_referensi == 'reservations' )
+
+                                                    <tr class="text-xs">
+                                                        <td style="max-width: 10px; width: 10px;">{{ $no1 ++ }}</td>
+                                                        <td>{{ $item->room_no ?? '-'  }}</td>
+                                                        <td>{{ $item->room_type ?? '-' }}</td>
+                                                        <td>{{ $item->room_status ?? '-' }}</td>
+                                                        <td>{{ $item->name_guest ?? '-' }}</td>
+                                                        <td>{{ $item->chanel_checkin ?? '-' }}</td>
+                                                        <td>T</td>
+                                                        <td>
+                                                            @php
+                                                                $totalHari = ($item->date_checkin && $item->date_checkout)
+                                                                    ? \Carbon\Carbon::parse($item->date_checkin)->diffInDays(\Carbon\Carbon::parse($item->date_checkout))
+                                                                    : 0;
+                                                                $sumTotalHari += $totalHari;
+                                                            @endphp
+                                                            {{ $totalHari }}
+                                                        </td>
+                                                        <td>{{ $item->date_checkin ?? '-' }}</td>
+                                                        <td>{{ $item->time_checkin ?? '-' }}</td>
+                                                        <td>1</td>
+                                                        <td>
+                                                            @php
+                                                                $org = $item->guest_adult + $item->guest_kids;
+                                                                $totalOrg += $org;
+                                                            @endphp
+                                                            {{ $org ?? '0' }}
+                                                        </td>
+                                                        <td>1</td>
+                                                        <td>
+                                                            @php
+                                                                $sumRateCheckout += $item->room_price;
+                                                            @endphp
+                                                            {{ $item->room_price ? 'Rp. ' . number_format($item->room_price, 0, ',', '.') : '-' }}
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $hargaKamar = $totalHari * $item->room_price;
+                                                                $jumlah = $hargaKamar + $item->total_laundry;
+                                                                $sumJumlah += $jumlah;
+
+                                                                $sumBesarTransaksi += $item->besar_transaksi;
+
+                                                                if ($item->jenis_transaksi == 'Cash') {
+                                                                    $sumJumlahCash += $item->besar_transaksi;
+                                                                } else {
+                                                                    $sumJumlahNonCash += $item->besar_transaksi;
+                                                                }
+                                                            @endphp
+                                                            {{ $jumlah ? 'Rp. ' . number_format($jumlah, 0, ',', '.') : '-' }}
+                                                        </td>
+                                                        <td>{{ $totalHari }}</td>
+                                                        <td>{{ $item->room_price ? 'Rp. ' . number_format($item->room_price, 0, ',', '.') : '-' }}</td>
+                                                        <td>{{ $item->time_checkout ?? '-' }}</td>
+                                                        <td>
+                                                            {{ $item->total_laundry ? 'Rp. ' .number_format($item->total_laundry, 0, ',', '.') : '-' }}
+                                                        </td>
+                                                        <td>{{ $item->besar_transaksi ? 'Rp. ' . number_format($item->besar_transaksi, 0, ',', '.') : '-' }}</td>
+                                                        <td>
+                                                            {{$item->payment_method ?? '-'}}
+                                                        </td>
+
+                                                        <td>
+
+                                                            @php
+                                                                $piutang = $item->total_payment - $item->besar_transaksi;
+                                                                $totalPiutang += $piutang;
+                                                                echo $piutang ? 'Rp. ' . number_format($piutang, 0, ',', '.') : '-';
+                                                            @endphp
+                                                        </td>
                                                         <td>{{ $item->keterangan_transaksi ?? '-' }}</td>
                                                     </tr>
                                                 @endif
@@ -203,9 +276,8 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td>{{ $sumBesarTransaksi ? 'Rp. ' . number_format($sumBesarTransaksi, 0, ',', '.') : '-' }}</td>
-                                                <td>{{ $sumJumlahCash ? 'Rp. ' . number_format($sumJumlahCash, 0, ',', '.') : '-' }}</td>
-                                                <td>{{ $sumJumlahNonCash ? 'Rp. ' . number_format($sumJumlahNonCash, 0, ',', '.') : '-' }}</td>
-                                                <td>0</td>
+                                                <td></td>
+                                                <td>{{$totalPiutang ? 'Rp. ' . number_format($totalPiutang, 0, ',', '.') : '-'}}</td>
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -240,8 +312,51 @@
                                         </tfoot>
                                     </table>
 
-                                    {{-- Pengeluaran --}}
+                                    {{-- Deposit Table --}}
                                     <div class="row my-5 text-sm">
+                                        <div class="col-6">
+                                            <p class="font-weight-bold mb-0">Deposit</p>
+                                            <table class="table table-bordered" style="width: 100%;" cellspacing="0">
+                                                <thead>
+                                                    <tr class="text-xs">
+                                                        <th class="text-white text-center align-middle table-dark">No</th>
+                                                        <th class="text-white text-center align-middle table-dark">Room / Guest</th>
+                                                        <th class="text-white text-center align-middle table-dark">Deposit Type</th>
+                                                        <th class="text-white text-center align-middle table-dark">Other Deposit</th>
+                                                        <th class="text-white text-center align-middle table-dark">Cash</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php $no2 = 1; $totalDepositCash = 0;@endphp
+                                                    @foreach ($depositData as $deposit )
+                                                        <tr class="text-xs">
+                                                            <td class="text-center align-middle">{{ $no2++ }}</td>
+                                                            <td class="text-center align-middle">{{ $deposit->room_no }} / {{ $deposit->name_guest }}</td>
+                                                            <td class="text-center align-middle">{{ $deposit->deposit_type }}</td>
+                                                            <td class="text-center align-middle">
+                                                                {{ $deposit->deposit_lain }}
+                                                            </td>
+                                                            <td class="text-center align-middle">
+                                                                {{ $deposit->deposit ? 'Rp. ' . number_format($deposit->deposit, 0, ',', '.') : 'Rp. 0' }}
+                                                            </td>
+                                                        </tr>
+                                                        @php
+                                                            $totalDepositCash += $deposit->deposit;
+                                                        @endphp
+                                                    @endforeach
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5" style="height: 10px; background-color: #f8f9fa;"></td>
+                                                    </tr>
+                                                    <tr class="text-xs table-warning">
+                                                        <td colspan="4" class="font-weight-bold text-center align-middle">Total</td>
+                                                        <td>{{ $totalDepositCash ? 'Rp. ' . number_format($totalDepositCash, 0, ',', '.') : 'Rp. 0' }}</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
                                         <div class="col-6">
                                             <p class="font-weight-bold mb-0">Pengeluaran</p>
                                             <table class="table table-bordered" style="width: 100%;" cellspacing="0">
