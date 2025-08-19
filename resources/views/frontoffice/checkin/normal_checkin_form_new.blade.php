@@ -2,27 +2,28 @@
 
 @section('content')
 
-<section id="normal-checkin">
-    <!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-start">
-        <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1> <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
-    </div>
-    <div style="background: rgba(219, 176, 79, 0.3); padding-top:12px" class="row rounded text-dark text-center">
-        <div class="col-sm-3">
-            <p>Jam Check-In : 14:00</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Jam Check-Out : 12:00</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Early Check-In : 06:00 - 14.00</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Early Check-Out : 12:00 - 14.00</p>
-        </div>
-    </div>
+    <section id="normal-checkin">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-start">
+                <h1 class="h3 mb-0 text-gray-800">Normal Check-in</h1>
+                <p style="margin-top: 25px; margin-left:10px">Pilih Kamar yang tersedia</p>
+            </div>
+            <div style="background: rgba(219, 176, 79, 0.3); padding-top:12px" class="row rounded text-dark text-center">
+                <div class="col-sm-3">
+                    <p>Jam Check-In : 14:00</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>Jam Check-Out : 12:00</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>Early Check-In : 06:00 - 14.00</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>Early Check-Out : 12:00 - 14.00</p>
+                </div>
+            </div>
 
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
@@ -302,23 +303,23 @@
 </section>
 
 
-<!-- Form Detail Customer -->
+                <!-- Form Detail Customer -->
 
 
-<!-- Scripnya ada di view dashboard_layout.blade.php -->
+                <!-- Scripnya ada di view dashboard_layout.blade.php -->
 
-<div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
-    "Nama" at Room "Nomor room" Checked in Succesfully
-</div>
+                <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
+                    "Nama" at Room "Nomor room" Checked in Succesfully
+                </div>
 
-<div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
-    Failed To Submit
-</div>
-</form>
-    </div>
-</section>
+                <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
+                    Failed To Submit
+                </div>
+            </form>
+        </div>
+    </section>
 
 @endsection
 @section('jsSection')
-  @include('frontoffice.checkin.normal_checkin_form_js')
+    @include('frontoffice.checkin.normal_checkin_form_js')
 @endsection

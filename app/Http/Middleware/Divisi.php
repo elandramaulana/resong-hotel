@@ -14,7 +14,7 @@ class Divisi
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $divisiId): Response
+    public function handle(Request $request, Closure $next, ...$divisiIds): Response
     {
         $user = Auth::user();
 
@@ -26,10 +26,13 @@ class Divisi
             return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
         }
 
-        if ($user && $user->karyawanHasDivision()->where('user_id', $user->id)->where('divisi_id', $divisiId)->exists()) {
-            return $next($request);
+        // Check if the user belongs to any of the specified divisions
+        foreach ($divisiIds as $divisiId) {
+            if ($user->karyawanHasDivision()->where('user_id', $user->id)->where('divisi_id', $divisiId)->exists()) {
+                return $next($request);
+            }
         }
 
-        return redirect()->route('dashboard')->with('message', 'Anda harus memilih divisi terlebih dahulu');
+        return redirect()->route('dashboard')->with('message', 'Anda tidak memiliki akses ke bagian ini');
     }
 }

@@ -15,10 +15,12 @@ class KaryawanController extends Controller
     public function index(Request $request)
     {
         try {
+            $search = $request->input('search');
             $query = Karyawan::join('karyawan_has_divisions', 'karyawan_has_divisions.karyawan_id', '=', 'karyawan.id')
                 ->join('divisis', 'divisis.id', '=', 'karyawan_has_divisions.divisi_id')
                 ->leftJoin('karyawan_shifts', 'karyawan_shifts.karyawan_id', '=', 'karyawan.id')
-                ->leftJoin('shifts', 'shifts.id', '=', 'karyawan_shifts.shift_id');
+                ->leftJoin('shifts', 'shifts.id', '=', 'karyawan_shifts.shift_id')
+                ->where("karyawan.k_nama", "like", "%$search%");
 
             $query->whereExists(function ($subquery) {
                 $subquery->select(DB::raw(1))
@@ -27,6 +29,8 @@ class KaryawanController extends Controller
             });
 
             $tgl = $request->get('tanggal_absen');
+            $statusAbsen = $request->get('status_absen');
+
             if (!$tgl) {
                 $tgl = Carbon::now()->format('Y-m-d');
             }
@@ -55,6 +59,12 @@ class KaryawanController extends Controller
                 ];
             });
 
+            if ($statusAbsen) {
+                $absensiKaryawan = $absensiKaryawan->filter(function ($item) use ($statusAbsen) {
+                    return $item['status_absensi'] === $statusAbsen;
+                });
+            }
+
             $karyawans = Karyawan::all();
             $karyawansTotal = $karyawans->count();
             return new KaryawanResource(true, 'Data Karyawan', compact('absensiKaryawan', 'karyawansTotal'));
@@ -69,9 +79,10 @@ class KaryawanController extends Controller
             // Get the date range from the request or default to the current month
             $startDate = $request->get('start_date') ? Carbon::parse($request->get('start_date'))->startOfDay() : Carbon::now()->startOfMonth();
             $endDate = $request->get('end_date') ? Carbon::parse($request->get('end_date'))->endOfDay() : Carbon::now()->endOfMonth();
+            $search = $request->input('search');
 
             // Get all employees
-            $karyawans = Karyawan::all();
+            $karyawans = Karyawan::where("karyawan.k_nama", "like", "%$search%")->get();
 
             $reportData = $karyawans->map(function ($karyawan) use ($startDate, $endDate) {
                 $lateCount = 0;

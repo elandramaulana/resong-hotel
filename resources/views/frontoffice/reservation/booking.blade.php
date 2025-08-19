@@ -1,15 +1,14 @@
 @extends('layouts.dashboard_layout')
 
 @section('content')
-
-<section id="">
-    <!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-start">
-        <h1 class="h3 mb-0 text-gray-800">Reservation</h1>
-    </div>
-</div>
+    <section id="">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-start">
+                <h1 class="h3 mb-0 text-gray-800">Reservation</h1>
+            </div>
+        </div>
 
 <div class="form-speedy">
 <div class="container-fluid mt-4">
@@ -109,15 +108,13 @@
                             </div>
                         </div>
 
+                            </div>
+
+
+                        </form>
                     </div>
-
-
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</section>
-
-
+    </section>
 @endsection

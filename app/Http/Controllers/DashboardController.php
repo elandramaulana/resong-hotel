@@ -51,7 +51,7 @@ class DashboardController extends Controller
 
                 $coutSupplier = DB::table('suppliers')->count();
 
-                $coutKaryawan = DB::table('karyawan_has_divisions')->where('khr_isActive', '1')->count();
+                $coutKaryawan = DB::table('karyawan')->count();
                 $date = $request->input('date') ?: Carbon::today()->format('Y-m-d');
                 $getRoomStatus = $this->getRoomStatus($date);
 
@@ -65,7 +65,7 @@ class DashboardController extends Controller
                     ->where('room_status', 'VACANT DIRTY')
                     ->count();
 
-                $kehadiranCount = DB::table('kehadirans')->count();
+                $kehadiranCount = DB::table('kehadirans')->where('created_at', $date)->count();
 
                     // dd($vacantRoomCount);
 

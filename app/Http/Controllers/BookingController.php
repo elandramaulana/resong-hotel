@@ -61,7 +61,7 @@ class BookingController extends Controller
             'data' => $Reservation
         ];
 
-        // dd($Data);
+        //  dd($Data);
         return view('frontoffice.reservation.reservation_list', $Data);
     }
     public function booking_canceled(Request $request)
@@ -95,7 +95,7 @@ class BookingController extends Controller
         ];
         return view('frontoffice.reservation.noshow_reservation_list', $Data);
     }
-    public function booking_store(PaymentStoreRequest $request)
+    public function booking_store(Request $request)
     {
         //collect data to be store
         //calulate total payment and other data first
@@ -115,9 +115,9 @@ class BookingController extends Controller
             'is_extrabed' => $request->get('extrabed') ? 1 : 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->get('reservation_checkin'),
-            'reservation_time_checkin' => $request->get('res_in_hour'),
+            'reservation_time_checkin' => $checkin_time,
             'reservation_checkout' => $request->get('reservation_checkout'),
-            'reservation_time_checkout' => $request->get('res_out_hour'),
+            'reservation_time_checkout'   => $checkout_time,
             'reservation_name' => $request->get('reservation_name'),
             'reservation_contact' => $request->get('reservation_contact'),
             'reservation_email' => $request->get('reservation_email'),
@@ -159,8 +159,8 @@ class BookingController extends Controller
         $request->session()->put('form_data', $formData);
         $data = session('form_data');
         $reservation_checkin = $data['reservation_checkin'];
-        $res_in_hour = $data['res_in_hour'];
-        $res_out_hour = $data['res_out_hour'];
+        $res_in_hour = $data['reservation_time_checkin'];
+        $res_out_hour = $data['reservation_time_checkout'];
         // dd($reservation_checkin);
         $reservation_checkout = $data['reservation_checkout'];
         $qty_guest = $data['qty_guest'] ?? 1;
@@ -265,9 +265,9 @@ class BookingController extends Controller
         $room_detail = Rooms::find($id);
         $dataSession = session('form_data');
         $reservation_checkin = $dataSession['reservation_checkin'];
-        $reservation_time_checkin = $dataSession['res_in_hour'];
+        $reservation_time_checkin = $dataSession['reservation_time_checkin'];
         $reservation_checkout = $dataSession['reservation_checkout'];
-        $reservation_time_checkout = $dataSession['res_out_hour'];
+        $reservation_time_checkout = $dataSession['reservation_time_checkout'];
         $detail_tamu = [
             'reservation_name' => $dataSession['reservation_name'],
             'reservation_contact' => $dataSession['reservation_contact'],

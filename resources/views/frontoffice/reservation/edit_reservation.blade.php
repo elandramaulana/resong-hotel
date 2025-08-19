@@ -58,8 +58,15 @@
                                             <option value="Traveloka"
                                                 {{ $edit->reservation_chanel == 'Traveloka' ? 'selected' : '' }}>Traveloka
                                             </option>
-                                            <option value="Phone"
-                                                {{ $edit->reservation_chanel == 'Phone' ? 'selected' : '' }}>Phone</option>
+                                            <option value="Booking.com"
+                                                {{ $edit->reservation_chanel == 'Booking.com' ? 'selected' : '' }}>
+                                                Booking.com</option>
+                                            <option value="Tiket.com"
+                                                {{ $edit->reservation_chanel == 'Tiket.com' ? 'selected' : '' }}>
+                                                Tiket.com</option>
+                                            <option value="Agoda"
+                                                {{ $edit->reservation_chanel == 'Agoda' ? 'selected' : '' }}>
+                                                Agoda</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('reservation_chanel')" class="mt-2" />
                                     </div>
@@ -198,16 +205,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="total_bayar">Pembayaran</label>
-                                <input type="text" readonly class="form-control" name="total_bayar" id="total_bayar"
-                                    value="{{ number_format($edit->room->room_price, 0, ',', '.') }}">
+                                <input type="text" class="form-control currency-input" name="total_bayar"
+                                    id="total_bayar" value="{{ number_format($edit->room->room_price, 0, ',', '.') }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="reservation_payment">Pembayaran</label>
-                                <input type="text" readonly
-                                    value="{{ number_format($edit->reservation_payment, 0, ',', '.') }}"
-                                    class="form-control" name="reservation_payment" id="reservation_payment">
+                                <input type="text" class="form-control currency-input" name="reservation_payment"
+                                    id="reservation_payment"
+                                    value="{{ number_format($edit->reservation_payment, 0, ',', '.') }}">
                                 <x-input-error :messages="$errors->get('reservation_payment')" class="mt-2" />
                             </div>
                         </div>
@@ -224,6 +231,26 @@
             </form>
         </div>
     </section>
+
+    <script>
+        document.querySelectorAll('.currency-input').forEach(function(el) {
+            el.addEventListener('input', function(e) {
+                let value = this.value.replace(/\D/g, '');
+                if (value) {
+                    this.value = new Intl.NumberFormat('id-ID').format(value);
+                } else {
+                    this.value = '';
+                }
+            });
+
+            el.addEventListener('keypress', function(e) {
+                // Hanya izinkan angka
+                if (!/\d/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
