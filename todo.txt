@@ -1,22 +1,25 @@
-1. check sekarang apakah sesuai dengan tanggal periode penggajian (dari variable database)
-2. jika true maka hitung hari kerja dari tgl di bulan sebelumnya sampai tgl hari ini. {cm:2024-11-10}
-3. create data payrolls dengan status "CALCULATING" {cm:2024-11-10}
-4. jumlah hari dikurangi jumlah minggu adalah minimum hari kerja pegawai, jika kehadiran kurang dari hari minimum, potongan d berlakukan kelipatan hari. {cm:2024-11-10}
-5. panggil seluruh data karyawan aktif, {cm:2024-11-11}
-6. masukan komponen tetap gaji ke detail payrolls  {cm:2024-11-11}
-7. check keterlambatan pegawai dalam satu periode {cm:2024-11-12}
-8. kurangi pendapatan pegawai jika memiliki point keterlambatan {cm:2024-11-12}
-9. Hitung ketidakhadiran karyawan
-10. tambahkan potongan kehadiran jika melebihi batas izin
-11. check lembur yg di setujui, 
-12. tambahkan ke pendapatan jika pegawai memiliki lembur
-13. Proses otomatis selesai, update status payrolls "CHECKING"
-14. jika semua pegawai sudah di prosess admin dapat melakukan crosscheck terhadap payrolls perpegawai,
-15. jika ada admin dapat menambahkan potongan atau pendapatan bulan berjalan
-16. Proses otomatis Selesai
+21 Juni 2025 (10/21)
 
-Create Team Management Page (Diakses HRD & User Approval OT)
-1. Show Presensi Team ()
-2. Ganti Shift on Stage
-3. Re Calculate jika ada penggantian Shift
-4. Hanya dapat dilakukan edit sebelum periode penggajian dilakukan / Hari yang sama
+1 Email di reservasi nullable (Done)
+2 tambah channel booking.com, travel agen, corporate (Done)
+3 hapus tulisan minimal 50% di reservasi (done)
+4 tambahkan metode bayar mesin EDC di reservasi (Done)
+5 di booking normal belum ada indikasi booked (Done dengan improvemet)
+6 di reservasi,  harga Kamar bisa di edit (Done)
+7 untuk checkin field wajib nama. notelp (done)
+9 syfa travel hapus dari channel (Done)
+10 Bugs ( walaupun harga yg di reservasi sudah di edit, di invoice kembali ke harga normal) (Done)
+11 tambahkan channel dan metode pembayaran di receipt (Done)
+13 checkin dan checkout date speedy checkin dapat dirubah (Done) (Butuh recalculate)
+15 inputkan norek langsung di invoice (Done)
+19 layanan resto error (OK di branch Rizki)
+21 tambahkan pilihan metode pembayaran di pengeluaran. (done)
+    metode pembayaran untuk item pengeluaran
+    - cash
+    - transfer
+    - uang kas
+14 tampilkan juga dp di receipts 
+12 buat halaman download pdf untuk deposit (export pdf baru)
+16 bugs (metode pembayaran terdeteksi card di dailyreport) (re enginering) (Done)
+17 tampilkan table deposit di daily report (re enginering) (Done)
+18 fo bsa akses ke transaksi keluar

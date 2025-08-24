@@ -126,7 +126,15 @@
                             <input type="date" class="form-control" id="tanggal" name="tanggal" >
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal" class="col-form-label">Keterangan:</label>
+                            <label for="metode_bayar" class="col-form-label">Metode Bayar:</label>
+                            <select name="metode_bayar" id="metode_bayar" class="form-select">
+                                <option value="Cash" selected>Cash</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Uang Kas">Uang Kas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="keterangan" class="col-form-label">Keterangan:</label>
                             <textarea name="keterangan" id="keterangan" class="form-control" placeholder="Masukan Keterangan"></textarea>
                         </div>
                 </div>

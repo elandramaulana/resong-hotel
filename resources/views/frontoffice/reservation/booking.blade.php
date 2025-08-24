@@ -10,133 +10,103 @@
             </div>
         </div>
 
-        <div class="form-speedy">
-            <div class="container-fluid mt-4">
-                <div class="card">
-                    <div class="card-body text-dark">
-                        <form action="{{ route('booking.pick_room') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <h4>Data Tamu</h4>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="reservation_name" class="form-label">Nama</label>
-                                        <input placeholder="Masukan Nama" value="{{ old('reservation_name') }}"
-                                            name="reservation_name" type="text" class="form-control"
-                                            id="reservation_name">
-                                        <x-input-error :messages="$errors->get('reservation_name')" class="mt-2" />
-                                    </div>
+<div class="form-speedy">
+<div class="container-fluid mt-4">
+        <div class="card">
+            <div class="card-body text-dark">
+                <form action="{{ route('booking.pick_room') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <h4>Data Tamu</h4>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reservation_name" class="form-label">Nama</label>
+                                <input  placeholder="Masukan Nama" value="{{ old('reservation_name') }}" name="reservation_name" type="text" class="form-control" id="reservation_name">
+                                <x-input-error :messages="$errors->get('reservation_name')" class="mt-2" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reservation_contact" class="form-label">Kontak</label>
+                                <input  placeholder="Masukan Kontak" value="{{ old('reservation_contact') }}" name="reservation_contact" type="text" class="form-control" id="reservation_contact">
+                                <x-input-error :messages="$errors->get('reservation_contact')" class="mt-2" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reservation_email" class="form-label">Email</label>
+                                <input placeholder="Masukan email" value="{{ old('reservation_email') }}" name="reservation_email" type="text" class="form-control" id="reservation_email">
+                                <x-input-error :messages="$errors->get('reservation_email')" class="mt-2" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="qty_guest" class="form-label">Jumlah Tamu</label>
+                                <input  placeholder="Masukan Jumlah Tamu (Dapat dikosongkan)" value="{{ old('qty_guest') }}" name="qty_guest" type="number" class="form-control" id="qty_guest">
+                                <x-input-error :messages="$errors->get('qty_guest')" class="mt-2" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4>Data Reservasi</h4>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="reservation_chanel" class="form-label">Check-in Channel</label>
+                                        <select name="reservation_chanel" id="reservation_chanel" class="form-control">
+                                            <option value=""            >Pilih Chanel</option>
+                                            <option value="booking.com" {{ old('reservation_chanel') == 'booking.com' ? 'selected' : '' }}  >Booking.com</option>
+                                            <option value="Walk-in"   {{ old('reservation_chanel') == 'Walk-in' ? 'selected' : '' }}  >Walk-in</option>
+                                            <option value="Travel Agent" {{ old('reservation_chanel') == 'Travel Agent' ? 'selected' : '' }}  >Travel Agent</option>
+                                            <option value="Corporate"   {{ old('reservation_chanel') == 'Corporate' ? 'selected' : '' }}  >Corporate</option>
+                                            <option value="Traveloka" {{ old('reservation_chanel') == 'Traveloka' ? 'selected' : '' }}  >Traveloka</option>
+                                            <option value="Phone"     {{ old('reservation_chanel') == 'Phone' ? 'selected' : '' }}  >Phone</option>
+                                        </select>
+                                    <x-input-error :messages="$errors->get('reservation_chanel')" class="mt-2" />
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="reservation_contact" class="form-label">Kontak</label>
-                                        <input placeholder="Masukan Kontak" value="{{ old('reservation_contact') }}"
-                                            name="reservation_contact" type="text" class="form-control"
-                                            id="reservation_contact">
-                                        <x-input-error :messages="$errors->get('reservation_contact')" class="mt-2" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="reservation_email" class="form-label">Email</label>
-                                        <input placeholder="Masukan email" value="{{ old('reservation_email') }}"
-                                            name="reservation_email" type="text" class="form-control"
-                                            id="reservation_email">
-                                        <x-input-error :messages="$errors->get('reservation_email')" class="mt-2" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="qty_guest" class="form-label">Jumlah Tamu</label>
-                                        <input placeholder="Masukan Jumlah Tamu (Dapat dikosongkan)"
-                                            value="{{ old('qty_guest') }}" name="qty_guest" type="number"
-                                            class="form-control" id="qty_guest">
-                                        <x-input-error :messages="$errors->get('qty_guest')" class="mt-2" />
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="row">
-                                    <h4>Data Reservasi</h4>
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label for="reservation_chanel" class="form-label">Check-in Channel</label>
-                                            <select name="reservation_chanel" id="reservation_chanel" class="form-control">
-                                                <option value="">Pilih Chanel</option>
-                                                <option value="Walk-in"
-                                                    {{ old('reservation_chanel') == 'Walk-in' ? 'selected' : '' }}>Walk-in
-                                                </option>
-                                                <option value="Traveloka"
-                                                    {{ old('reservation_chanel') == 'Traveloka' ? 'selected' : '' }}>
-                                                    Traveloka</option>
-                                                <option value="Booking.com"
-                                                    {{ 'Booking.com' === old('reservation_chanel') ? 'selected' : '' }}>
-                                                    Booking.com
-                                                </option>
-                                                <option value="Tiket.com"
-                                                    {{ 'Tiket.com' === old('reservation_chanel') ? 'selected' : '' }}>
-                                                    Tiket.com
-                                                </option>
-                                                <option value="Agoda"
-                                                    {{ 'Agoda' === old('reservation_chanel') ? 'selected' : '' }}>
-                                                    Agoda</option>
-                                            </select>
-                                            <x-input-error :messages="$errors->get('reservation_chanel')" class="mt-2" />
-                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="reservation_checkin" class="form-label">Check-in Time</label>
+                                        <input value="" name="reservation_checkin" value="{{ old('reservation_checkin') }}" type="text" class="form-control" id="reservation_checkin" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                        <x-input-error :messages="$errors->get('reservation_checkin')" class="mt-2" />
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label for="reservation_checkin" class="form-label">Check-in Time</label>
-                                                <input value="" name="reservation_checkin"
-                                                    value="{{ old('reservation_checkin') }}" type="text"
-                                                    class="form-control" id="reservation_checkin"
-                                                    onfocus="(this.type='date');this.focus()"
-                                                    onblur="(this.type='text');this.value=formatDate(this.value)">
-                                                <x-input-error :messages="$errors->get('reservation_checkin')" class="mt-2" />
-                                            </div>
-                                            <div class="mb-3 col-6">
-                                                <label for="checkinHour" class="form-label">Check-in Time</label>
-                                                <input name="reservation_time_checkin" type="time" class="form-control"
-                                                    id="reservation_time_checkin">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Right Column -->
-                                    <div class="col-md-6">
-                                        <!-- Check-out Time -->
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label for="reservation_checkout" class="form-label">Check-out Time</label>
-                                                <input name="reservation_checkout" type="date"
-                                                    value="{{ old('reservation_checkout') }}" class="form-control"
-                                                    id="reservation_checkout" onfocus="(this.type='date');this.focus()"
-                                                    onblur="(this.type='text');this.value=formatDate(this.value)">
-                                                <x-input-error :messages="$errors->get('reservation_checkout')" class="mt-2" />
-                                            </div>
-                                            <div class="mb-3 col-6">
-                                                <label for="reservation_time_checkout" class="form-label">Check-out
-                                                    Time</label>
-                                                <input name="reservation_time_checkout" type="time"
-                                                    class="form-control" id="reservation_time_checkout">
-                                                <x-input-error :messages="$errors->get('reservation_time_checkout')" class="mt-2" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="reservation_desc">Keterangan</label>
-                                            <textarea name="reservation_desc" id="reservation_desc" class="form-control"
-                                                placeholder="Masukan Keterangan / Catatan"></textarea>
-                                            <x-input-error :messages="$errors->get('reservation_desc')" class="mt-2" />
-                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="checkinHour" class="form-label">Check-in Time</label>
+                                        <input name="res_in_hour" type="time" class="form-control" id="checkinHour">
                                     </div>
                                 </div>
-                                <div class="mt-4 mb-3 d-flex justify-content-start ">
-                                    <div class="">
-                                        <button type="submit" class="btn submit-btn mr-5">
-                                            Next
-                                        </button>
+                            </div>
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <!-- Check-out Time -->
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="reservation_checkout" class="form-label">Check-out Time</label>
+                                        <input name="reservation_checkout" type="date" value="{{ old('reservation_checkout') }}" class="form-control" id="reservation_checkout" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)">
+                                        <x-input-error :messages="$errors->get('reservation_checkout')" class="mt-2" />
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                        <input name="res_out_hour" type="time" class="form-control" id="checkoutHour">
+                                        <x-input-error :messages="$errors->get('res_out_hour')" class="mt-2" />
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="reservation_desc">Keterangan</label>
+                                    <textarea name="reservation_desc" id="reservation_desc" class="form-control" placeholder="Masukan Keterangan / Catatan"></textarea>
+                                    <x-input-error :messages="$errors->get('reservation_desc')" class="mt-2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-3 d-flex justify-content-start ">
+                            <div class="">
+                                <button type="submit" class="btn submit-btn mr-5">
+                                   Next
+                                </button>
+                            </div>
+                        </div>
 
                             </div>
 

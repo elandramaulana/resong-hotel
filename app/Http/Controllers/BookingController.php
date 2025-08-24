@@ -99,23 +99,19 @@ class BookingController extends Controller
     {
         //collect data to be store
         //calulate total payment and other data first
-        $dataSession = session('form_data', []);
-        $checkin_time  = $dataSession['reservation_time_checkin'] ?? $request->get('reservation_time_checkin');
-        $checkout_time = $dataSession['reservation_time_checkout'] ?? $request->get('reservation_time_checkout');
-    
-        $roomData = Rooms::find($request->get('room_id'));
+
         $intervalDays = daysInterval($request->get('reservation_checkin'), $request->get('reservation_checkout'));
-        $room_payment = $roomData->room_price * $intervalDays;
+        $room_payment = $request->get('room_rate') * $intervalDays;
         $Settings = LatePointSetting::first();
         $extrabedPayment = $request->get('extrabed') ? $Settings->extrabed_price : 0;
         $totalPayment = $room_payment + $extrabedPayment;
         $percentTax = $Settings->pajak_checkin;
         $taxPayment = ($totalPayment * $percentTax) / 100;
         $finalPrice = $totalPayment + $taxPayment;
-      
         $data = [
             'reservation_chanel' => $request->get('reservation_chanel'),
             'room_id' => $request->get('room_id'),
+            'room_rate' => $request->get('room_rate'),
             'is_extrabed' => $request->get('extrabed') ? 1 : 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->get('reservation_checkin'),
@@ -233,7 +229,7 @@ class BookingController extends Controller
             })
             ->pluck('room_id')
             ->toArray();
-// dd($reservedRoomIds);
+        // dd($reservedRoomIds);
         // Prepare room list with status
         $roomList = $rooms->map(function($room) use ($occupiedRoomIds, $reservedRoomIds) {
             if (in_array($room->id, $occupiedRoomIds)) {

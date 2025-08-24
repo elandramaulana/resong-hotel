@@ -25,7 +25,7 @@ class ReserveRoomRequest extends FormRequest
             'reservation_name'=>['required', 'min:5'],
             'reservation_contact'=>['required'],
             'reservation_chanel'=>['required'],
-            'reservation_email'=>['required', 'email'],
+            // 'reservation_email'=>['required', 'email'],
             'qty_guest'=>['nullable', 'numeric' ],
             'reservation_checkin'=>['required', 'date', 'after_or_equal:'.date('Y-m-d')],
             'reservation_checkout'=>['required', 'date', 'after_or_equal:'.$this->input('reservation_checkin')],

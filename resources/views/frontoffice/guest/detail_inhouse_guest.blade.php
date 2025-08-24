@@ -25,11 +25,11 @@
                     <h6 class="shape rounded p-2">{{ $CheckinData->room_type }} (@RP{{ $CheckinData->room_price }})</h6>
                 </div>
                     @if(!$isCheckedOut)
-                        <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
-                            <button class="btn btn-extend"  data-bs-toggle="modal" data-bs-target="#extendGuestData">
+                        {{-- <div class="col-sm-4 text-warning d-flex justify-content-end text-center">
+                            <a href="#" class="btn btn-extend"  data-bs-toggle="modal" data-bs-target="#extendGuestData">
                                 <i class="fas fa-plus"></i> Extend
-                            </button>
-                        </div>
+                            </a>
+                        </div> --}}
                     @endif
             </div>
             <input type="text" name="room_id" value="" hidden>

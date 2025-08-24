@@ -86,7 +86,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile_slipgaji_detail', [TeamController::class, 'profile_slipgaji_detail'])->name('profile.slipgaji.detail');
-
 });
 
 
@@ -95,7 +94,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'checkDivisi:1,2')->group(function () {
     // checkin
     Route::get('/checkin-normal', [CheckinController::class, 'index'])->name('checkin.normal');
-    Route::post('/checkin-normal', [CheckinController::class, 'store'])->name('checkin.normal.store');
+    Route::post('/checkin-normal', [CheckinController::class, 'index'])->name('checkin.normal_filter');
+    Route::post('/checkin-normal/store', [CheckinController::class, 'store'])->name('checkin.normal.store');
     Route::get('/checkin-normal-form/{id}', [CheckinController::class, 'form_normal'])->name('checkin.normal.form');
     Route::get('/checkin-speedy', [CheckinController::class, 'speedy'])->name('checkin.speedy');
     Route::post('/speedy-post', [CheckinController::class, 'speedy_post'])->name('checkin.speedy_post');

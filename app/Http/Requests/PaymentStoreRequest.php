@@ -25,19 +25,8 @@ class PaymentStoreRequest extends FormRequest
             'room_id'=>['required'],
             'reservation_payment_status'=>['required'],
             'reservation_payment_method'=>['required'],
-            'reservation_time_checkin' => ['nullable', 'date_format:H:i'],
-            'reservation_time_checkout' => ['nullable', 'date_format:H:i'],
-            'reservation_payment'=>[
-                'required',
-                function ($attribute, $value, $fail) {
-                    if ($this->reservation_payment_status === 'DP') {
-                        $halfPayment = (int)str_replace(['Rp. ', '.'], ['', ''], $this->total_bayar) / 2;
-                        if ($value < $halfPayment) {
-                            $fail('The ' . $attribute . ' must be at least ' . number_format($halfPayment, 0, ',', '.') . '.');
-                        }
-                    }
-                }
-            ]
+            'room_rate'=>['required'],
+            'reservation_payment'=>['required']
         ];
     }
 }

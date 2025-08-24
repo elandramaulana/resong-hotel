@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NormalCheckinRequest;
 use App\Http\Requests\PostSpeedyCheckin;
 use App\Models\Checkin;
+use App\Models\CheckinDeposits;
 use App\Models\CheckinDetail;
 use App\Models\Guest;
 use App\Models\LatePointSetting;
@@ -12,15 +13,17 @@ use App\Models\Reservation;
 use App\Models\Rooms;
 use App\Models\TransaksiReport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CheckinController extends Controller
 {
-    public function index() : View {
+    public function index(Request $request) : View {
         $bookingController = new BookingController();
-        $roomList = $bookingController->getRoomListStatus(date('Y-m-d'), date('Y-m-d', strtotime('+1 day')));
+        $date_to = $request->input('date_to') ? $request->input('date_to')  : date('Y-m-d', strtotime('+1 day'));
+        $roomList = $bookingController->getRoomListStatus(date('Y-m-d'), $date_to);
         $RoomData = Rooms::all();
         $Data = [
             'Title'=>'Regular Checking',
@@ -72,6 +75,7 @@ class CheckinController extends Controller
             'reservation_id' => $getDetailReservation->id,
             'no_invoice' => $invoice,
             'room_id' => $getDetailReservation->room_id,
+            'room_rate' => $getDetailReservation->room_rate,
             'chanel_checkin' => $getDetailReservation->reservation_chanel,
             'date_checkin' => $getDetailReservation->reservation_checkin,
             'time_checkin' => $getDetailReservation->speedy_checkin_hour,
@@ -105,7 +109,7 @@ class CheckinController extends Controller
                 'checkin_id' => $Checkin->id,
                 'item_category' => 'Rooms',
                 'item_name' => $Rooms->room_name,
-                'item_price' => $Rooms->room_price,
+                'item_price' => $getDetailReservation->room_rate,
                 'item_qty' => $days,
                 'item_description' => "Item Speedy Checkin"
             ];
@@ -132,11 +136,21 @@ class CheckinController extends Controller
                 'id_referensi' => $Checkin->id,
                 'type_transaksi' => 'credit',
                 'jenis_transaksi' => 'rooms',
-                'besar_transaksi' => $getDetailReservation->total_payment + $getDetailReservation->tax_payment + $getDetailReservation->tax_payment,
+                'besar_transaksi' => $request->remaining_payment,
                 'keterangan_transaksi' => 'Checkin for ' . $name_guest,
                 'jenis_pembayaran' => $jenis_pembayaran
             ];
             TransaksiReport::create($transactionData);
+
+            //insert deposit
+            $depositData = [
+                'checkin_id' => $Checkin->id,
+                'deposit_type' => $request->jenis_deposit,
+                'deposit' => $request->deposit,
+                'deposit_lain' => $request->deposit_lain,
+                'deposit_status' => 'New'
+            ];
+            CheckinDeposits::create($depositData);
             //set reservation checkedin
             $getDetailReservation->reservation_status = 'Checked-in';
             $getDetailReservation->save();
@@ -231,8 +245,9 @@ class CheckinController extends Controller
             'payment_method' => $request->payment_method,
             'tax_price' => $request->tax,
             'extrabed_price' => $request->extrabed_price,
-            'deposit' => $request->deposit
+            'room_rate'=>$request->room_price_input
         ];
+
         if($request->deposit_type == 'Cash'){
             $CheckinDetail['deposit_type'] = 'Cash';
             $CheckinDetail['deposit'] = $request->deposit;
@@ -242,7 +257,6 @@ class CheckinController extends Controller
         }
 
         if ($Checkin = Checkin::create($CheckinDetail)) {
-
             //get room detil
             $Rooms = Rooms::find($request->room_id);
             $Rooms->room_status = 'OCCUPIED';
@@ -287,6 +301,14 @@ class CheckinController extends Controller
                 'jenis_pembayaran' => $jenis_pembayaran
             ];
             TransaksiReport::create($transactionData);
+            $depositData = [
+                'checkin_id' => $Checkin->id,
+                'deposit_type' => $request->jenis_deposit,
+                'deposit' => $request->deposit,
+                'deposit_lain' => $request->deposit_lain,
+                'deposit_status' => 'New'
+            ];
+            CheckinDeposits::create($depositData);
             //do download & print invoice
             //here we gona create invoice pdf
             $pdfController = new PdfController();
