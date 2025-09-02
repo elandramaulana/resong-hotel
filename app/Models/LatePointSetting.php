@@ -9,6 +9,8 @@ class LatePointSetting extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'extrabed_price',
+        'pajak_checkin',
         'first_late',
         'first_latepoint',
         'second_late',

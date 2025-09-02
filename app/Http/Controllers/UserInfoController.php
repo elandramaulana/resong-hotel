@@ -6,6 +6,7 @@ use App\Models\DetailPayrolls;
 use App\Models\Divisi;
 use App\Models\Karyawan;
 use App\Models\Kehadiran;
+use App\Models\Payrolls;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

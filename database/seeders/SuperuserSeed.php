@@ -22,14 +22,12 @@ class SuperuserSeed extends Seeder
                 'username' => 'super.user',
                 'name' => 'SuperUser',
                 'email' => 'superuser@metrosoft.com',
-                'level_user' => 'SUPERADMIN',
                 'password' => Hash::make('123qweasd')
             ],
             [
                 'username' => 'admin.user',
                 'name' => 'AdminUser',
                 'email' => 'adminuser@metrosoft.com',
-                'level_user' => 'ADMIN',
                 'password' => Hash::make('123qweasd')
             ]
         ]);

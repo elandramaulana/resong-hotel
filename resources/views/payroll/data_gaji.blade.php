@@ -14,7 +14,7 @@
                             <div class="card-header py-3">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3 class="font-weight-bold text-dark">Data Gaji Karywan</h3>
+                                        <h3 class="font-weight-bold text-dark">Data Gaji Karyawan</h3>
                                     </div>
                                 </div>
                             </div>
@@ -37,28 +37,30 @@
                                             @php
                                                 $no = 1;
                                             @endphp
-                                            @foreach($payrollData as $pyr)
-                                            <tr>
-                                                <td>{{$no}}</td>
-                                                <td>{{$pyr->id_karyawan}}</td>
-                                                <td>{{$pyr->karyawan_nama}}</td>
-                                                <td>{{$pyr->gender_karyawan}}</td>
-                                                <td>{{$pyr->divisi_karyawan}}</td>
-                                                <td align="right">{{ number_format($pyr->thp, 2) }}</td>
-                                                <td>{{$pyr->k_norek}}</td>
-                                                <td>
-                                                    <div>
-                                                        <button style="margin-right: 10px" type="submit"
-                                                            class="btn btn-warning btn-sm mt-2">
-                                                            <a style="color: black" href="{{route('edit.gaji', ['id' => $pyr->id_karyawan])}}"> <i class="fas fa-edit"></i></a>
-                                                        </button>
-                                                       
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @php
-                                                $no++;
-                                            @endphp
+                                            @foreach ($payrollData as $pyr)
+                                                <tr>
+                                                    <td>{{ $no }}</td>
+                                                    <td>{{ $pyr->id_karyawan }}</td>
+                                                    <td>{{ $pyr->karyawan_nama }}</td>
+                                                    <td>{{ $pyr->gender_karyawan }}</td>
+                                                    <td>{{ $pyr->divisi_karyawan }}</td>
+                                                    <td align="right">{{ number_format($pyr->thp, 2) }}</td>
+                                                    <td>{{ $pyr->k_norek }}</td>
+                                                    <td>
+                                                        <div>
+                                                            <button style="margin-right: 10px" type="submit"
+                                                                class="btn btn-warning btn-sm mt-2">
+                                                                <a style="color: black"
+                                                                    href="{{ route('edit.gaji', ['id' => $pyr->id_karyawan]) }}">
+                                                                    <i class="fas fa-edit"></i></a>
+                                                            </button>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @php
+                                                    $no++;
+                                                @endphp
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -75,5 +77,5 @@
     <!-- /.container-fluid -->
 @endsection
 @section('jsSection')
-  @include('payroll.data_gaji_js')
+    @include('payroll.data_gaji_js')
 @endsection

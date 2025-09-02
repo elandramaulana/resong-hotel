@@ -9,7 +9,7 @@
     <div class="d-sm-flex align-items-center justify-content-start">
         <h2 class="h3 mb-0 text-gray-800">Detail In-house Guest</h2>
     </div>
-    
+
     <!-- form Room Number -->
     <form action="{{ route('checkin.normal.store') }}" method="POST">
         @csrf;
@@ -50,10 +50,17 @@
                             </div>
 
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input value="{{ $CheckinData->date_checkin }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
-                                <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input value="{{ $CheckinData->date_checkin }}" name="checkin_time" type="text" class="form-control" id="checkinTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                    <x-input-error :messages="$errors->get('checkin_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input value="{{ $CheckinData->time_checkin }}" name="checkin_hour" type="time" class="form-control" id="checkinHour" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                    <x-input-error :messages="$errors->get('checkin_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Adults -->
@@ -82,10 +89,17 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                <input value="{{ $CheckinData->date_checkout }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
-                                <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Time</label>
+                                    <input value="{{ $CheckinData->date_checkout }}" name="checkout_time" type="date" class="form-control" id="checkoutTime" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                    <x-input-error :messages="$errors->get('checkout_time')" class="mt-2" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutHour" class="form-label">Check-out Time</label>
+                                    <input value="{{ $CheckinData->time_checkout }}" name="checkout_hour" type="time" class="form-control" id="checkoutHour" onfocus="(this.type='date');this.focus()" onblur="(this.type='text');this.value=formatDate(this.value)" disabled>
+                                    <x-input-error :messages="$errors->get('checkout_hour')" class="mt-2" />
+                                </div>
                             </div>
 
                             <!-- Number of Children -->
@@ -134,13 +148,14 @@
                     </div>
 
                     <div class="col-sm-6">
-                        @if(!$isCheckedOut)
+                        {{-- @if(!$isCheckedOut)
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-extend" id="btn-extend " data-bs-toggle="modal" data-bs-target="#formAddOns">
                                     <i class="fas fa-plus"></i> AddOn Service
                                 </a>
                             </div>
-                        @endif
+                        @endif --}}
+
                     </div>
                 </div>
                 </div>
@@ -148,7 +163,7 @@
 
             <!-- BANG UNTUK LIST ORDER INI JSNYA ADA DI VIEW "layout.dashboard_layout", DIBAGIAN BAWAH BANG -->
             <!-- SOALNYA LAN GA TAU GIMANA SISTEM GENERATE INVOICENYA -->
-            
+
             <br>
 
             <div class="col-sm-12">
@@ -177,7 +192,7 @@
                                 $showprice = formatCurrency($invoice->item_price);
                                 $ShowTotal = formatCurrency($invoice->item_price * $invoice->item_qty);
                                 $subTotal += $invoice->item_price * $invoice->item_qty;
-                                
+
                             @endphp
                                 <tr>
                                     <td>{{ $No }}</td>
@@ -189,7 +204,7 @@
                                         if ($invoice->item_category !="Rooms") {
                                         @endphp
                                         @if(!$isCheckedOut)
-                                        <a href="#" data-id="{{ $invoice->id }}" class="btn btn-sm btn-primary del-addons" title="Hapus AddOns"><i class="fa fa-trash"></i></a>    
+                                        <a href="#" data-id="{{ $invoice->id }}" class="btn btn-sm btn-primary del-addons" title="Hapus AddOns"><i class="fa fa-trash"></i></a>
                                         @endif
                                         @php
                                         }
@@ -215,9 +230,9 @@
             </form>
             </div>
 
-         
+
                 </div>
-                
+
             </div>
         </div>
         <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
@@ -251,7 +266,7 @@
                         <div class="row">
                             <input type="text" name="checkin_id" id="form_checkin_id" value="{{ $CheckinData->checkin_id }}" hidden>
                             <!-- Left Column -->
-                            <div class="col-md-6">   
+                            <div class="col-md-6">
                                 <!-- Check-in Time -->
                                 <div class="mb-3">
                                     <label for="item_category" class="form-label">Kategori Layanan</label>
@@ -259,7 +274,7 @@
                                         <option value="Lain-Lain">Lain-Lain</option>
                                         <option value="Resto">Resto</option>
                                         <option value="House Keeping">House Keeping</option>
-                                    </select>    
+                                    </select>
                                     <small class="showerror"></small>
                                 </div>
                             </div>
@@ -274,7 +289,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">   
+                            <div class="col-md-6">
                                 <!-- Check-in Time -->
                                 <div class="mb-3">
                                     <label for="item_price" class="form-label">Harga</label>
@@ -306,12 +321,12 @@
                                     Submit
                                 </button>
                             </div>
-                        
+
                 </form>
                     </div>
         </div>
       </div>
-   
+
     </div>
   </div>
 </div>

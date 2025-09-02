@@ -41,6 +41,10 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransBarangController;
 use App\Http\Controllers\UserInfoController;
+use App\Http\Controllers\WeeklyReportController;
+use App\Http\Controllers\MonthlyReportController;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\PengeluaranController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
@@ -88,7 +92,7 @@ Route::middleware('auth')->group(function () {
 
 //======================================= Frontoffice Divisi
 
-Route::middleware('auth', 'checkDivisi:1')->group(function () {
+Route::middleware('auth', 'checkDivisi:1,2')->group(function () {
     // checkin
     Route::get('/checkin-normal', [CheckinController::class, 'index'])->name('checkin.normal');
     Route::post('/checkin-normal', [CheckinController::class, 'store'])->name('checkin.normal.store');
@@ -97,7 +101,7 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::post('/speedy-post', [CheckinController::class, 'speedy_post'])->name('checkin.speedy_post');
     Route::get('/ajax-selectrooms', [RoomAjaxRequest::class, 'ajax_select_room'])->name('ajax.selectrooms');
     Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
-    Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
+    // Route::get('/guest-autocomplete-speedy', [AutocompleteController::class, 'selected_speedy'])->name('autocomplete.selectedspeedy');
 
     // checkout
     // checkout
@@ -144,19 +148,19 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
     Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
     // Guest
-    Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
-    Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
-    Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
-    Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
-    Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
-    Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
-    Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
-    Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
-    Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
-    Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
-    Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
-    Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
-    Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
+    // Route::get('/inhouse-guest', [InhouseController::class, 'index'])->name('inhouse.list');
+    // Route::get('/checkout-history', [InhouseController::class, 'checkout_history'])->name('checked_out.list');
+    // Route::get('/inhouse-table', [InhouseController::class, 'call_table'])->name('inhouse.table');
+    // Route::get('/his_checkout-table', [InhouseController::class, 'his_checkout'])->name('his_checkout.table');
+    // Route::get('/inhouse-addextrabed', [InhouseController::class, 'add_extrabed'])->name('inhouse.add_extrabed');
+    // Route::post('/inhouse-postaddons', [InhouseController::class, 'add_addons'])->name('inhouse.postaddons');
+    // Route::get('/inhouse-deladdons', [InhouseController::class, 'del_addons'])->name('inhouse.del_addons');
+    // Route::get('/detail-inhouse-guest/{id}', [InhouseController::class, 'inhouse_detail'])->name('inhouse.details');
+    // Route::view('/detail-guest', 'frontoffice/guest/detail_guest')->name('detail_guest');
+    // Route::view('/guest-database', 'frontoffice/guest/guest_database')->name('guest_database');
+    // Route::get('/guest-autocomplete', [AutocompleteController::class, 'guests'])->name('autocomplete.guests');
+    // Route::get('/guest-speedy', [AutocompleteController::class, 'speedy'])->name('autocomplete.speedy');
+    // Route::get('/guest-autocomplete-selected', [AutocompleteController::class, 'selected_guest'])->name('autocomplete.selectedguest');
 
     // Rooms
     Route::get('/daftar-room', [RoomController::class, 'index'])->name('daftar.room');
@@ -177,15 +181,16 @@ Route::middleware('auth', 'checkDivisi:1')->group(function () {
     // Addon Service
     Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
     Route::get('/laundry_form', [LaundryController::class, 'form'])->name('laundry.form');
-    Route::post('/laundry_post', [LaundryController::class, 'post'])->name('laundry.post');
-    Route::get('/select2room_inhouse', [Select2Controller::class, 'room_inhouse'])->name('select2.room_inhouse');
-    Route::get('/select2room_cat_laundry', [Select2Controller::class, 'cat_laundry'])->name('select2.categoryLaundry');
-    Route::get('/select2menuActive', [Select2Controller::class, 'menu_active'])->name('select2.menu_active');
-    Route::get('/select2menuCategory', [Select2Controller::class, 'menu_category'])->name('select2.menu_category');
-    Route::get('/detail_menu', [Select2Controller::class, 'detail_menu'])->name('detail.menu');
     Route::get('/dt_laudry', [LaundryController::class, 'list_laundry'])->name('datatable.laundry');
-    Route::post('/ajax_detcatlaundrybyid', [AjaxController::class, 'detCatLaundryByID'])->name('ajax.detCatLaundryByID');
-    Route::get('/select2_shift/{divisi_id}', [Select2Controller::class, 'list_shift'])->name('select2.shift');
+    Route::post('/laundry_linen_store', [LaundryController::class, 'laundry_linen_store'])->name('laundry.store_linen');
+    Route::post('/laundry_new_linen_store', [LaundryController::class, 'laundry_new_linen_store'])->name('laundry.store_new_linen');
+    Route::post('/laundry_new_guest_store', [LaundryController::class, 'laundry_new_guest_store'])->name('laundry.store_new_guest');
+    Route::post('/laundry_guest_store', [LaundryController::class, 'laundry_guest_store'])->name('laundry.store_guest');
+
+    Route::get('/get_laundry', [LaundryController::class, 'get_laundry'])->name('laundry.get_laundry');
+
+    Route::get('/laundry_guest', [LaundryController::class, 'index_guest'])->name('laundry.guest');
+    Route::get('/dt_laundry_guest', [LaundryController::class, 'dt_laundry_guest'])->name('datatable.laundry_guest');
 });
 
 
@@ -224,6 +229,7 @@ Route::middleware('auth', 'checkDivisi:3')->group(function () {
     Route::post('/store-kategori', [KategoriBarangController::class, 'storeCategori'])->name('store.kategori');
     Route::get('/edit-kategori-detail/{id}', [KategoriBarangController::class, 'edit'])->name('edit.kategori');
     Route::delete('/kategori/destroy/{id}', [KategoriBarangController::class, 'destroy'])->name('destroy.kategori');
+    Route::put('/kategori/{id}', [KategoriBarangController::class, 'update'])->name('kategori.update');
 
     // Barang
     Route::get('/list-trans-barang', [TransBarangController::class, 'index'])->name('list.trans');
@@ -246,7 +252,6 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::put('/update-menu/{id}', [MenuController::class, 'update'])->name('update.menu');
 
     // daily Menu
-    // daily Menu
     Route::get('/daily-menu', [DaftarMenuController::class, 'index'])->name('daily.menu');
     Route::get('/tambah-daily-menu', [DaftarMenuController::class, 'create'])->name('tambah.daily.menu');
     Route::get('/manage-daily-menu/{id}', [DaftarMenuController::class, 'manage'])->name('manage.daily');
@@ -258,11 +263,9 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
     Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
     Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
-    // Kategori Menu
-    Route::get('/kategori-menu', [KategoriMenuController::class, 'index'])->name('kategori.menu');
-    Route::get('/tambah-kategori-menu', [KategoriMenuController::class, 'create'])->name('tambah.kategori.menu');
-    Route::post('/store-kategori-menu', [KategoriMenuController::class, 'storeKategori'])->name('store.kategori.menu');
-    Route::delete('/kategori-menu/destroy/{id}', [KategoriMenuController::class, 'destroy'])->name('destroy.kategori.menu');
+    Route::get('/kategori-menu/edit/{id}', [KategoriMenuController::class, 'edit'])->name('edit.kategori.menu');
+    Route::post('/kategori-menu/update/{id}', [KategoriMenuController::class, 'updateKategori'])->name('update.kategori.menu');
+
 
     // Daftar Menu
     Route::get('/resto-menu', [RestoMenuController::class, 'index'])->name('resto.menu'); //get available menu by day
@@ -304,8 +307,8 @@ Route::middleware('auth', 'checkDivisi:4')->group(function () {
     Route::get('/get-shifts-by-divisi/{divisiId}', [KehadiranController::class, 'getShiftsByDivisi'])->name('get.shifts.by.divisi');
     Route::get('/filter-absensi', [KehadiranController::class, 'filterAbsensi'])->name('filter.absensi');
 
-//========================= Manajemen Asset Divisi
-Route::middleware('auth', 'checkDivisi:5')->group(function () {
+//========================= Manajemen Asset Divisi + housekeeping
+Route::middleware('auth', 'checkDivisi:2')->group(function () {
     Route::prefix('inventory-assets/supplier')->group(function () {
         Route::get('/show', [InventoryAssetSupplierController::class, 'index'])->name('inventory-assets.supplier.show');
         Route::get('/create', [InventoryAssetSupplierController::class, 'create'])->name('inventory-assets.supplier.create');
@@ -313,6 +316,15 @@ Route::middleware('auth', 'checkDivisi:5')->group(function () {
         Route::get('/edit/{id}', [InventoryAssetSupplierController::class, 'edit'])->name('inventory-assets.supplier.edit');
         Route::post('/update/{id}', [InventoryAssetSupplierController::class, 'update'])->name('inventory-assets.supplier.update');
         Route::delete('/destroy/{id}', [InventoryAssetSupplierController::class, 'destroy'])->name('inventory-assets.supplier.destroy');
+
+    });
+    Route::prefix('pengeluaran')->group(function () {
+        Route::get('/show', [PengeluaranController::class, 'index'])->name('pengeluaran.show');
+        Route::get('/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
+        Route::post('/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
+        Route::get('/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
+        Route::post('/update', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
+        Route::delete('/destroy/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
     });
 
     Route::prefix('inventory-assets/category')->group(function () {
@@ -347,8 +359,8 @@ Route::middleware('auth', 'checkDivisi:5')->group(function () {
 });
 
 
-//===================== HRD Divisi
-Route::middleware('auth', 'checkDivisi:6')->group(function () {
+//===================== HRD Divisi + human capital
+Route::middleware('auth', 'checkDivisi:8')->group(function () {
     //Kepegawaian
     Route::get('/daftar-karyawan', [KaryawanController::class, 'index'])->name('daftar.karyawan');
     Route::get('/tambah-karyawan', [KaryawanController::class, 'add'])->name('tambah.karyawan');
@@ -391,6 +403,9 @@ Route::middleware('auth', 'checkDivisi:7')->group(function () {
     // Report
     Route::get('/bill-report', [BillReportController::class, 'index'])->name('bill.report');
     Route::get('/bill-detail', [BillReportController::class, 'detail'])->name('bill.detail');
+    Route::get('/monthly-report', [MonthlyReportController::class, 'index'])->name('monthly.report');
+    Route::get('/daily-report', [WeeklyReportController::class, 'index'])->name('weekly.report');
+
 });
 
 
@@ -416,4 +431,5 @@ Route::middleware('auth', 'checkDivisi:8')->group(function () {
 
 
 Route::get('/tgl', [KehadiranController::class, 'getTgl'])->name('tgl');
-Route::get('/test', [TestController::class, 'index'])->name('test');
+Route::get('/test/{id}', [PdfController::class, 'getReceipt'])->name('test');
+Route::get('/receipt/download/{id}', [PdfController::class, 'getReceipt'])->name('receipt.download');

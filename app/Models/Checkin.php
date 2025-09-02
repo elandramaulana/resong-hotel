@@ -15,24 +15,32 @@ class Checkin extends Model
         'guest_id',
         'chanel_checkin',
         'date_checkin',
+        'time_checkin',
         'date_checkout',
+        'time_checkout',
         'guest_adult',
         'guest_kids',
         'is_extrabed',
         'payment_status',
         'payment',
         'payment_method',
+        'tax_price',
+        'extrabed_price',
+        'deposit',
+        'deposit_type',
+        'deposit_lain',
     ];
 
-    public function detCheckin($checkin_id) {
+    public function detCheckin($checkin_id)
+    {
         $Query = $this->join('rooms', 'rooms.id', '=', 'checkins.room_id')
-                ->join('guests', 'guests.id', '=', 'checkins.guest_id')
-                ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id')
-                ->where('checkins.id', $checkin_id)
-                ->get()->first();
-        if($Query){
+            ->join('guests', 'guests.id', '=', 'checkins.guest_id')
+            ->select('checkins.*', 'rooms.*', 'guests.*', 'checkins.id as checkin_id')
+            ->where('checkins.id', $checkin_id)
+            ->get()->first();
+        if ($Query) {
             return $Query;
-        }else{
+        } else {
             return false;
         }
     }

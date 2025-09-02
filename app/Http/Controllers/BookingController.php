@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentStoreRequest;
 use App\Http\Requests\ReserveRoomRequest;
+use App\Models\LatePointSetting;
 use App\Models\Rooms;
 use App\Models\Reservation;
+use App\Models\TransaksiReport;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BookingController extends Controller
@@ -56,7 +61,7 @@ class BookingController extends Controller
             'data' => $Reservation
         ];
 
-        // dd($Data);
+        //  dd($Data);
         return view('frontoffice.reservation.reservation_list', $Data);
     }
     public function booking_canceled(Request $request)
@@ -90,28 +95,63 @@ class BookingController extends Controller
         ];
         return view('frontoffice.reservation.noshow_reservation_list', $Data);
     }
-    public function booking_store(PaymentStoreRequest $request)
+    public function booking_store(Request $request)
     {
         //collect data to be store
+        //calulate total payment and other data first
+        $dataSession = session('form_data', []);
+        $checkin_time  = $dataSession['reservation_time_checkin'] ?? $request->get('reservation_time_checkin');
+        $checkout_time = $dataSession['reservation_time_checkout'] ?? $request->get('reservation_time_checkout');
+    
+        $roomData = Rooms::find($request->get('room_id'));
+        $intervalDays = daysInterval($request->get('reservation_checkin'), $request->get('reservation_checkout'));
+        $room_payment = $roomData->room_price * $intervalDays;
+        $Settings = LatePointSetting::first();
+        $extrabedPayment = $request->get('extrabed') ? $Settings->extrabed_price : 0;
+        $totalPayment = $room_payment + $extrabedPayment;
+        $percentTax = $Settings->pajak_checkin;
+        $taxPayment = ($totalPayment * $percentTax) / 100;
+        $finalPrice = $totalPayment + $taxPayment;
+      
         $data = [
             'reservation_chanel' => $request->get('reservation_chanel'),
             'room_id' => $request->get('room_id'),
-            'is_extrabed' => 0,
+            'is_extrabed' => $request->get('extrabed') ? 1 : 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->get('reservation_checkin'),
+            'reservation_time_checkin' => $checkin_time,
             'reservation_checkout' => $request->get('reservation_checkout'),
+            'reservation_time_checkout'   => $checkout_time,
             'reservation_name' => $request->get('reservation_name'),
             'reservation_contact' => $request->get('reservation_contact'),
             'reservation_email' => $request->get('reservation_email'),
             'qty_guest' => $request->get('qty_guest'),
             'reservation_payment_status' => $request->get('reservation_payment_status'),
             'reservation_payment_method' => $request->get('reservation_payment_method'),
+            'room_payment' => $room_payment,
+            'tax_payment' => $taxPayment,
+            'extrabed_payment' => $extrabedPayment,
+            'total_payment' => $finalPrice,
             'reservation_payment' => $request->get('reservation_payment'),
             'reservation_desc' => $request->get('reservation_desc'),
             'reservation_status' => "New"
         ];
+
+        // die;
         //store to database
         if (Reservation::create($data)) {
+            //insert into transaction_report
+            TransaksiReport::create(
+                [
+                'tabel_referensi' => 'reservations',
+                'id_referensi' => Reservation::latest()->first()->id,
+                'type_transaksi' => 'credit',
+                'jenis_transaksi' => 'Pembayaran Reservasi',
+                'besar_transaksi' => $request->get('reservation_payment'),
+                'keterangan_transaksi' => 'Pembayaran Reservasi ' . $request->get('reservation_name') . 'dengan pembayaran '. $request->get('reservation_payment_status'),
+                'jenis_pembayaran'=>strtolower($request->get('reservation_payment_method'))
+                ]
+                );
             $return = ['status' => 'success', 'message' => 'Reservasi untuk ' . $request->get('reservation_name') . ' Berhasil'];
             return redirect()->route('dashboard')->with($return);
         }
@@ -123,17 +163,21 @@ class BookingController extends Controller
         $request->session()->put('form_data', $formData);
         $data = session('form_data');
         $reservation_checkin = $data['reservation_checkin'];
+        $res_in_hour = $data['reservation_time_checkin'];
+        $res_out_hour = $data['reservation_time_checkout'];
         // dd($reservation_checkin);
         $reservation_checkout = $data['reservation_checkout'];
         $qty_guest = $data['qty_guest'] ?? 1;
-        $availableRooms = $this->BookingEngine($reservation_checkin, $reservation_checkout, $qty_guest);
+        $availableRooms = $this->getRoomListStatus($reservation_checkin, $reservation_checkout);
         // print_r($availableRooms);
 
         $Data = [
             'Title' => 'Pilih Kamar',
             'availableRoom' => $availableRooms,
             'reservation_checkin' => $reservation_checkin,
+            'res_in_hour' => $res_in_hour,
             'reservation_checkout' => $reservation_checkout,
+            'res_out_hour' => $res_out_hour,
             'qty_guest' => $qty_guest,
         ];
         return view('frontoffice.reservation.booking_room_number', $Data);
@@ -155,13 +199,79 @@ class BookingController extends Controller
         })->where('room_capacity', '>=', $qty_guest)->get();
         return $availableRooms;
     }
+    public function getRoomListStatus($startDate, $endDate)
+    {
+        // Parse input dates
+        $dateStart = Carbon::parse($startDate);
+        $dateEnd = Carbon::parse($endDate);
+        // Fetch all rooms
+        $rooms = DB::table('rooms')->get();
+        // Fetch occupied rooms overlapping the range
+        $occupiedRoomIds = DB::table('checkins')
+            ->where(function($query) use ($dateStart, $dateEnd) {
+                $query->whereBetween('date_checkin', [$dateStart, $dateEnd])
+                      ->orWhereBetween('date_checkout', [$dateStart, $dateEnd])
+                      ->orWhere(function($query) use ($dateStart, $dateEnd) {
+                          $query->where('date_checkin', '<=', $dateStart)
+                                ->where('date_checkout', '>=', $dateEnd);
+                      });
+            })->leftJoin('checkouts', 'checkins.id', '=', 'checkouts.checkin_id')
+            ->whereNull('checkouts.id')
+            ->pluck('room_id')
+            ->toArray();
+
+        // Fetch reserved rooms overlapping the range
+        $reservedRoomIds = DB::table('reservations')
+            ->where('reservation_status', 'New') // adjust if needed
+            ->where(function($query) use ($dateStart, $dateEnd) {
+                $query->whereBetween('reservation_checkin', [$dateStart, $dateEnd])
+                      ->orWhereBetween('reservation_checkout', [$dateStart, $dateEnd])
+                      ->orWhere(function($query) use ($dateStart, $dateEnd) {
+                          $query->where('reservation_checkin', '<=', $dateStart)
+                                ->where('reservation_checkout', '>=', $dateEnd);
+                      });
+            })
+            ->pluck('room_id')
+            ->toArray();
+// dd($reservedRoomIds);
+        // Prepare room list with status
+        $roomList = $rooms->map(function($room) use ($occupiedRoomIds, $reservedRoomIds) {
+            if (in_array($room->id, $occupiedRoomIds)) {
+                $status = 'Occupied';
+            } elseif (in_array($room->id, $reservedRoomIds)) {
+                $status = 'Reserved';
+            } elseif ($room->room_status == 'VACANT READY') {
+                $status = 'Available';
+            }elseif ($room->room_status == 'VACANT DIRTY') {
+                $status = 'Vacant Dirty';
+            } else {
+                $status = 'Available';
+            }
+
+            return [
+                'id' => $room->id,
+                'room_no' => $room->room_no,
+                'room_name' => $room->room_name,
+                'room_type' => $room->room_type,
+                'room_price' => $room->room_price,
+                'room_capacity' => $room->room_capacity,
+                'bed_type' => $room->bed_type,
+                'have_extra_bed' => $room->room_extrabed,
+                'status' => $status,
+            ];
+        });
+        Log::info($roomList);
+        return $roomList;
+    }
 
     public function booking_payment($id)
     {
         $room_detail = Rooms::find($id);
         $dataSession = session('form_data');
         $reservation_checkin = $dataSession['reservation_checkin'];
+        $reservation_time_checkin = $dataSession['reservation_time_checkin'];
         $reservation_checkout = $dataSession['reservation_checkout'];
+        $reservation_time_checkout = $dataSession['reservation_time_checkout'];
         $detail_tamu = [
             'reservation_name' => $dataSession['reservation_name'],
             'reservation_contact' => $dataSession['reservation_contact'],
@@ -169,14 +279,18 @@ class BookingController extends Controller
             'reservation_chanel' => $dataSession['reservation_chanel'],
             'qty_guest' => $dataSession['qty_guest'],
             'reservation_checkin' => $reservation_checkin,
+            'reservation_time_checkin' => $reservation_time_checkin,
+            'reservation_time_checkout' => $reservation_time_checkout,
             'reservation_checkout' => $reservation_checkout,
             'reservation_desc' => $dataSession['reservation_desc'] ?? "",
             'qty_hari' => daysInterval($reservation_checkin, $reservation_checkout)
         ];
+        $Settings = LatePointSetting::first();
         $Data = [
             'Title' => 'Peyment Reservation',
             'room_detail' => $room_detail,
-            'tamu_detail' => $detail_tamu
+            'tamu_detail' => $detail_tamu,
+            'Settings' => $Settings
         ];
         return view('frontoffice.reservation.booking_payment', $Data);
     }
@@ -336,7 +450,9 @@ class BookingController extends Controller
             'qty_guest' => 'nullable|integer',
             'reservation_chanel' => 'required|string',
             'reservation_checkin' => 'required|date',
+            'reservation_time_checkin' => 'required|time',
             'reservation_checkout' => 'required|date',
+            'reservation_time_checkout' => 'required|time',
             'reservation_desc' => 'nullable|string',
             'room_id' => 'required|integer|exists:rooms,id',
             'reservation_payment_status' => 'required|string',
@@ -357,7 +473,9 @@ class BookingController extends Controller
             'is_extrabed' => 0,
             'reservation_date' => date("Y-m-d"),
             'reservation_checkin' => $request->reservation_checkin,
+            'reservation_time_checkin' => $request->reservation_checkin_hour,
             'reservation_checkout' => $request->reservation_checkout,
+            'reservation_time_checkout' => $request->reservation_checkout_hour,
             'reservation_name' => $request->reservation_name,
             'reservation_contact' => $request->reservation_contact,
             'reservation_email' => $request->reservation_email,

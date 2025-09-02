@@ -1,7 +1,7 @@
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+{{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script> --}}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script type="text/javascript">
-    $(function () {        
+    $(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -21,12 +21,12 @@
 
                 // Redirect to the updated URL
                 window.location.href = url.toString();
-                console.log('sampaikamari');
+                console.log('table updated');
             }
-           
+
         //load pilihan shift
         var divisi_id = {{ $divisionID }};
-        var selectedShift = "{{ request('shift') }}"; 
+        var selectedShift = "{{ request('shift') }}";
         $.ajax({
                 url: '{{ route('select2.shift', [$divisionID]) }}',
                 type: "GET",
@@ -37,42 +37,27 @@
                         allowClear: true,
                     });
                     if (selectedShift) {
-                        isProgrammaticChange = true; 
+                        isProgrammaticChange = true;
                         $("#shift_select2").val(selectedShift).trigger("change");
                     } else {
                         isProgrammaticChange = false;
                     }
                 });
-        $(document).on('change', '#shift_select2', function (e) { 
+        $(document).on('change', '#shift_select2', function (e) {
             if (isProgrammaticChange) {
                 isProgrammaticChange = false; // Reset the flag after programmatic change
             } else {
                 updateTable(); // Call the update function for user-initiated changes
             }
         });
-        //call daterange picker
-        $('#daterange').daterangepicker({
-            opens: 'right', // Options: 'left', 'right', 'center'
-            singleDatePicker: true,
-            autoApply: true,
-            autoUpdateInput: false,
-            showDropdowns: true,
-            maxDate: moment(),
-            locale: {
-                format: 'YYYY-MM-DD', // Date format
-                applyLabel: "Apply",
-                cancelLabel: "Cancel",
-            }
-        }, function(start, end, label) {
-            console.log("Selected range: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-        $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-            console.log("Date range selected: " + picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
-            $(this).val(picker.startDate.format('YYYY-MM-DD'));
+        var datevalue = $('#daterange').val();
+        console.log(datevalue);
+        $(document).on('change', '#daterange', function (e) {
+            console.log($(this).val());
+
             updateTable();
-            // You can perform any action here, for example, updating some content or making an API call
         });
-        $(document).on('change', '.shift_id', function (e) { 
+        $(document).on('change', '.shift_id', function (e) {
             var shift_id = $(this).val();
             var karyawan_id = $(this).data('id');
             var date = $(this).data('date');
@@ -111,11 +96,11 @@
                             }).then(function() {
                                 location.reload();
                             });
-                        }); 
+                        });
                     }
                 })
-            
-            
+
+
         })
     });
 </script>

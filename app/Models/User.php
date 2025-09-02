@@ -85,4 +85,9 @@ class User extends Authenticatable
             return false;
         }
     }
+
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class, 'user_id'); // Relasi satu ke satu
+    }
 }

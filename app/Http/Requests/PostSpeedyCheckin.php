@@ -21,11 +21,18 @@ class PostSpeedyCheckin extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rule =[
             'reservation_name'=>['required'],
             'speedy_checkin_time'=>['required'],
             'reservation_contact'=>['required'],
             'speedy_checkout_time'=>['required'],
+            'payment_method'=>['required'],
         ];
+        if($this->input('jenis_deposit') == "Cash"){
+            $rule['deposit'] = ['required'];
+        }else{
+            $rule['deposit_lain'] = ['required'];
+        }
+        return $rule;
     }
 }

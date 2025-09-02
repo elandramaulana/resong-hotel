@@ -1,25 +1,33 @@
 <script type="text/javascript">
-    $(function () {        
-        $(document).on('change', '#laundry_type', function (e) { 
-            var laundry_type = $(this).val();
-            var hiddenParagraph = document.getElementById("formSelectRoom");
-            if(laundry_type==='Guest'){
-                //show select room 
-                hiddenParagraph.style.display = "block";
-                $.ajax({
-                url: '{{ route('select2.room_inhouse') }}',
-                type: "GET",
-                dataType: "json",
-                }).done(function(data) {
-                    $("#checkin_id").select2({
-                        data: data,
-                    });
-                });
-            }else{
-                hiddenParagraph.style.display = "none";
-            }
-        })
+
+    $(function () {
+        $('.close-modal').on('click', function () {
+            $(this).closest('.modal').modal('hide');
+        });
         loadLaudryData();
+        $(document).on('click', '.btn-masuk', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            $('#laundry_id').val(id);
+            $.ajax({
+                url: '{{ route('laundry.get_laundry') }}',
+                method: 'GET',
+                dataType: 'json',
+                data: { id: id },
+                success: function (data) {
+                    console.log(data);
+                    if(data.status_kembali == 'selesai'){
+                        $('#inlineRadio1').prop('checked', true);
+                    }else{
+                        $('#inlineRadio2').prop('checked', true);
+                    }
+                    $('#keterangan_status').val(data.keterangan_status);
+                    $('#harga').val(data.harga);
+                }
+            });
+            console.log(id);
+            $('#setMasuk').modal('show');
+        })
         function loadLaudryData(){
             var table = $("#dtShow").DataTable();
             var filters = [];
@@ -32,24 +40,24 @@
                 dataType: 'json',
                 data: { filters: filters },
                 success: function (data) {
-                    table.clear().draw();     
+                    console.log(data);
+
+                    table.clear().draw();
                     $.each(data, function (index, item) {
-                        if(item.laundry_type!=='Guest'){
-                            var guest_name = "Internal";
-                            var room_no = "~"
-                        }else{
-                            var guest_name = item.name_guest;
-                            var room_no = item.room_no
-                        }
                         table.row.add([
                             index + 1,
-                            guest_name,
-                            room_no,
-                            item.laundry_type,
-                            '<span class="price">' + item.total_price + '</span>',                       
-                            ""
-                        ]).draw(false);
+                            item.keterangan,
+                            item.jumlah_satuan,
+                            item.pengirim,
+                            item.tgl_keluar,
+                            item.penerima,
+                            item.tgl_masuk,
+                            '<span class="price">' + item.harga + '</span>',
+                            item.action
+                            // item.invoice_laundry,
+                            // item.status,
 
+                        ]).draw(false);
                         table.column(4).cells().render({
                             "display": function (data, type, row) {
                                 // Check if it's display type
@@ -65,12 +73,6 @@
                     console.error("Failed to load data:", error);
                 }
             });
-        
         }
-        $('.filterCheckbox').change(function() {
-            loadLaudryData(); // Fetch data when checkbox state changes
-            console.log('ok');
-        });
-
     });
 </script>

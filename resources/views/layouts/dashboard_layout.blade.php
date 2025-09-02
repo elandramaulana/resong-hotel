@@ -20,8 +20,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="icon" type="image/png">
-    <link href="{{ asset('assets/img/web-icon.png') }}" rel="apple-touch-icon" sizes="16x16">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('assets/img/logo.png') }}" rel="apple-touch-icon" sizes="16x16">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -60,10 +60,10 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
-                    <img width="75" src="{{ asset('assets/img/logo.png') }}" alt="">
+                    <img width="75" src="{{ asset('assets/img/web-icon.png') }}" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">
-                    <img width="100" src="{{ asset('assets/img/resong-text.png') }}" alt="">
+                    <img width="80" src="{{ asset('assets/img/resong-text.png') }}" alt="">
                 </div>
             </a>
 
@@ -175,7 +175,7 @@
 
 
 
-
+            @if($finance || Auth::user()->level_user == 'SUPERADMIN')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
                     aria-expanded="true" aria-controls="collapseGuest">
@@ -186,11 +186,12 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('bill.report') }}">Bill Report</a>
-                        <a class="collapse-item" href="{{ route('guest_database') }}">Channel Report</a>
-                        <a class="collapse-item" href="{{ route('guest_database') }}">Room Report</a>
+                        <a class="collapse-item" href="{{ route('monthly.report') }}">Monthly Report</a>
+                        <a class="collapse-item" href="{{ route('weekly.report') }}">Daily Report</a>
                     </div>
                 </div>
             </li>
+            @endif
             {{-- @endif --}}
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -238,7 +239,7 @@
             @endif
             {{-- Inventaris barang --}}
             <!-- Heading -->
-            @if($manajemenAsset || Auth::user()->level_user == 'SUPERADMIN')
+            @if($houseKeeping || Auth::user()->level_user == 'SUPERADMIN')
             <div class="sidebar-heading mt-3">
                 INVENTORY ASSETS
             </div>
@@ -256,8 +257,8 @@
                         <a class="collapse-item" href="{{ route('inventory-assets.kategori.show') }}">Kategori
                             Assets</a>
                         <a class="collapse-item" href="{{ route('inventory-assets.asset.show') }}">Assets</a>
-                        <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi
-                            Assets</a>
+                        <a class="collapse-item" href="{{ route('inventory-assets.trans.show') }}">Transaksi Assets</a>
+                        <a class="collapse-item" href="{{ route('pengeluaran.show') }}">Transaksi Keluar</a>
                     </div>
                 </div>
             </li>
@@ -273,7 +274,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('laundry') }}">
                     <i class="fas fa-fw fa-tshirt"></i>
-                    <span>Laundry</span></a>
+                    <span>Laundry Linen</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('laundry.guest') }}">
+                    <i class="fas fa-fw fa-tshirt"></i>
+                    <span>Laundry Guest</span></a>
             </li>
             @endif
             <hr class="sidebar-divider">
@@ -337,11 +343,11 @@
             <div class="sidebar-heading">
                 Kepegawaian
             </div>
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Dashboard Karyawan</span></a>
-            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('system.settings')}}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>System Settings</span></a>
+            </li>
 
               <!-- Nav Item - Check-out -->
               <li class="nav-item">
@@ -368,8 +374,6 @@
 
             <li class="nav-item">
 
-
-
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayroll"
                     aria-expanded="true" aria-controls="collapseGuest">
                     <i class="fas fa-dollar-sign"></i>
@@ -380,7 +384,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('data.gaji')}}">Gaji</a>
                         <a class="collapse-item" href="{{route('proses.gaji')}}">Proses</a>
-                        <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a>
+                        {{-- <a class="collapse-item" href="{{route('bill.gaji')}}">Bill</a> --}}
                         <a class="collapse-item" href="{{route('overtime')}}">Over Time</a>
                     </div>
                 </div>
@@ -532,7 +536,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>&copy; 2025 Resong Hotel | Powered by PT Metro Indonesian Software
+                        </span>
                     </div>
                 </div>
             </footer>
@@ -791,7 +796,7 @@
 
     {{-- <-- SweetAlert2 --> --}}
     <script src="{{ asset('/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    @yield('jsSection');
+    @yield('jsSection')
 </body>
 
 </html>

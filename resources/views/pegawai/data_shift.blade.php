@@ -43,7 +43,7 @@
                                     @foreach ($shifts as $shift)
                                     <tr>
                                         <td>{{$no}}</td>
-                                        <td>{{$shift->divisi->d_nama}}</td>
+                                        <td>{{$shift->divisi?->d_nama ?? ''}}</td>
                                         <td>{{$shift->s_nama}}</td>
                                         <td>{{$shift->s_clock_in}}</td>
                                         <td>{{$shift->s_clock_out}}</td>

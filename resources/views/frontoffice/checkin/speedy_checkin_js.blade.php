@@ -1,5 +1,25 @@
 <script type="text/javascript">
+        function checkDeposit(){
+            const deposit_type = $('input[name="jenis_deposit"]:checked').val();
+            if(deposit_type == 'Cash'){
+                $("#show_deposit_cash").css('display', 'block');
+                $("#deposit").prop('required',true);
+                $("#show_deposit_lain").css('display', 'none');
+                $("#deposit_lain").prop('required',false);
+            }else{
+                $("#show_deposit_cash").css('display', 'none');
+                $("#deposit_lain").prop('required',true);
+                $("#show_deposit_lain").css('display', 'block');
+                $("#deposit").prop('required',false);
+            }
+       }
+
        $(function () {
+        checkDeposit();
+        $('input[name="jenis_deposit"]').change(function() {
+                console.log('Selected:', $(this).val());
+                checkDeposit();
+        });
         $( "#reservation_name" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -28,13 +48,38 @@
                         success: function(data) {
                             $("#checkinTime").val(data.reservation_checkin);
                             $("#checkoutTime").val(data.reservation_checkout);
+
+                            // Calculate day interval
+                            var checkinDate = new Date(data.reservation_checkin);
+                            var checkoutDate = new Date(data.reservation_checkout);
+                            var timeDifference = checkoutDate.getTime() - checkinDate.getTime();
+                            var dayInterval = timeDifference / (1000 * 3600 * 24);
+                            var totalPayment = data.tax_payment + data.extrabed_payment + data.room_price * dayInterval;
+                            var remainingPayment = totalPayment - data.reservation_payment  ;
+                            $("#night-count").text(dayInterval + ' Night(s)');
+                            $("#room-rate-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.room_price));
+                            $("#total-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dayInterval * data.room_price));
+                            $("#extrabed-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.extrabed_payment));
+                            $("#tax-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.tax_payment));
+                            $("#paymment_value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalPayment));
+                            $("#down-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.reservation_payment));
+                            $("#remaining-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(remainingPayment));
+                            $("#remaining_payment").val(remainingPayment);
+
                             $("#reservation_contact").val(data.reservation_contact);
                             $("#name_guest").val(data.reservation_name);
-                            
+                            $("#adults").val(data.qty_guest);
+
                         }
                     });
             }
             });
+            $(document).on('keyup', '#deposit', function () {
+                var deposit = $(this).val();
+                var remainingPayment = $("#remaining_payment").val();
+                var newRemainingPayment = parseInt(remainingPayment) + parseInt(deposit);
+                $("#remaining-payment-value").text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(newRemainingPayment));
+            })
             $( "#id_number" ).autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -98,9 +143,9 @@
                     });
             }
             });
-            $(document).on('keyup', '#id_number', function (param) { 
+            $(document).on('keyup', '#id_number', function (param) {
                 var elements = document.getElementsByClassName("clearable");
-    
+
                 // Iterate over the selected elements and clear their values
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].value = "";

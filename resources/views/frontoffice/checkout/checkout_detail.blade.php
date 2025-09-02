@@ -25,7 +25,7 @@
         </div>
     @endif
     <!-- Checkout Detail -->
-    
+
     <section  id="form-booking">
     <div class="container-fluid mt-4">
         <div class="card">
@@ -59,11 +59,17 @@
                                 <label for="nama" class="form-label">Nama</label>
                                 <input value="{{ $detailCheckin->name_guest }}" name="nama" type="text" class="form-control" id="invoice" disabled>
                             </div>
- 
+
                             <!-- Check-in Time -->
-                            <div class="mb-3">
-                                <label for="checkinTime" class="form-label">Check-in Time</label>
-                                <input value="{{ $detailCheckin->date_checkin }}" name="checkin_time" type="date" class="form-control" id="checkinTime" disabled>
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkinTime" class="form-label">Check-in Date</label>
+                                    <input value="{{ $detailCheckin->date_checkin }}" name="checkin_time" type="date" class="form-control" id="checkinTime" disabled>
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="checkinHour" class="form-label">Check-in Time</label>
+                                    <input name="checkin_hour" type="time" class="form-control" id="checkinHour" readonly value="{{ $detailCheckin->time_checkin }}">
+                                </div>
                             </div>
 
                             <!-- Number of Adults -->
@@ -73,7 +79,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <!-- Right Column -->
                         <div class="col-md-6">
@@ -83,24 +89,27 @@
                             </div>
 
                             <!-- Check-out Time -->
-                            <div class="mb-3">
-                                <label for="checkoutTime" class="form-label">Check-out Time</label>
-                                @php
-                                    if ($detailCheckin->date_checkout > date("Y-m-d") ){
-                                        $disabled = ""; 
-                                    }else{
-                                        $disabled = "disabled";
-                                    }
-                                @endphp
-                                
-                                <input value="{{ $detailCheckin->date_checkout }}"  type="date" class="form-control" name="checkoutTime" id="checkoutTime" {{ $disabled }}>
-                                <x-input-error :messages="$errors->get('checkoutTime')" class="mt-2"/>
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="checkoutTime" class="form-label">Check-out Time</label>
+                                    @php
+                                        if ($detailCheckin->date_checkout > date("Y-m-d") ){
+                                            $disabled = "";
+                                        }else{
+                                            $disabled = "disabled";
+                                        }
+                                    @endphp
+
+                                    <input value="{{ $detailCheckin->date_checkout }}"  type="date" class="form-control" name="checkoutTime" id="checkoutTime" {{ $disabled }}>
+                                    <x-input-error :messages="$errors->get('checkoutTime')" class="mt-2"/>
+                                </div>
+
                             </div>
 
                             <!-- Number of Children -->
                             <div class="mb-3">
                                 <label for="children" class="form-label">Jumlah Anak-anak</label>
-                                <input name="number_child" value="3" type="number" class="form-control" id="children" disabled>
+                                <input name="number_child" value="{{$detailCheckin->guest_kids}}" type="number" class="form-control" id="children" disabled>
                             </div>
                         </div>
                     </div>
@@ -125,12 +134,12 @@
                     {{-- <button class="btn btn-print" onclick="window.location='{{ route('generate.invoice', $detailCheckin->checkin_id) }}'">
                         Print PDF
                     </button> --}}
-                    
-                
+
+
                 </div>
 
             </div>
-           
+
             <div class="container-fluid">
                 <hr style="border-color: black; margin-left:-10px" class="col-12 mt-3 mb-2 border-bottom border-3">
             </div>
@@ -155,7 +164,7 @@
                             @php
                                 $showprice = formatCurrency($det->item_price);
                                 $ShowTotal = formatCurrency($det->item_price * $det->item_qty);
-                                $subTotal += $det->item_price * $det->item_qty; 
+                                $subTotal += $det->item_price * $det->item_qty;
                             @endphp
                             <tr>
                                 <td>{{ $det->item_name }}</td>
@@ -170,11 +179,11 @@
                     </tbody>
                 </table>
             </div>
-            
+
 
             <div class="container">
                     <form method="POST" action="{{ route("checkout.action") }}">
-                        @csrf   
+                        @csrf
                         <input type="text" hidden name="checkin_id" value="{{ $detailCheckin->checkin_id }}" >
                         <div class="row">
                                 <!-- Deposit -->
@@ -182,7 +191,12 @@
                                     <label for="name" class="col-sm-3 col-form-label">Deposit:</label>
                                     <div class="col-sm-8">
                                         @php
-                                            $showDeposit = formatCurrency($detailCheckin->payment);
+                                            if($detailCheckin->jenis_deposit == 'Cash'){
+                                                $showDeposit = formatCurrency($detailCheckin->deposit);
+                                            }else {
+                                                $showDeposit = $detailCheckin->deposit_lain;
+                                            }
+
                                         @endphp
                                         <input name="deposit" value="{{ $showDeposit }}" type="text" class="form-control" id="inputName" disabled>
                                     </div>
@@ -194,41 +208,31 @@
                                         <input name="total" value="{{ $ShowTotal }}" type="text" class="form-control" id="inputName" disabled>
                                     </div>
                                 </div>
-                                <!-- Discount -->
                                 <div class="mb-3 row">
-                                    <label for="name" class="col-sm-3 col-form-label">*Discount: (%)</label>
+                                    <label for="name" class="col-sm-3 col-form-label">Checkout Time:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputDiscount" name="inputDiscount">
+                                        <input type="time" name="checkout_hour" id="checkout_hour" class="form-control" required>
                                     </div>
                                 </div>
-                                <!-- Grand total -->
                                 <div class="mb-3 row">
-                                    <label for="name" class="col-sm-3 col-form-label">Grand total:</label>
+                                    <label for="name" class="col-sm-3 col-form-label">Is Deposit Refunded?</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputGrandTotal" name="inputGrandTotal" disabled>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="refund_deposit" id="refund_deposit" value="1">
+                                            <label class="form-check-label" for="refund_deposit">
+                                                Yes
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- Payment -->
                                 <div class="mb-3 row">
-                                    <label for="name" class="col-sm-3 col-form-label">Payment:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="inputPayment" name="inputPayment">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <select name="checkout_method" id="checkout_method" class="form-control">
-                                            <option value="CASH">CASH</option>
-                                            <option value="Qris">Qris</option>
-                                            <option value="Credit Card">Credit Card</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- Change -->
-                                <div class="mb-3 row">
-                                    <label for="name" class="col-sm-3 col-form-label">Change:</label>
+                                    <label for="name" class="col-sm-3 col-form-label">Descriptions</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="changeValue" class="form-control" id="changeValue"  disabled>
+                                        <textarea name="checkout_descriptions" id="checkout_descriptions" class="form-control" placeholder="You need to fill out this form if the deposit hasn’t been refunded"></textarea>
+                                        <x-input-error :messages="$errors->get('checkout_descriptions')" class="mt-2" />
                                     </div>
                                 </div>
+
                         </div>
                         <!-- Button -->
                         <div class="mt-5 mb-3 d-flex justify-content-start">
@@ -236,96 +240,13 @@
                                 {{-- <button type="submit"  class="btn ">
                                     Check Out
                                 </button> --}}
-
-                                <button type="submit" class="btn submit-btn" id="checkoutButton" disabled>
+                                <button type="submit" class="btn submit-btn" id="checkoutButton">
                                     Checkout
-                                 </button><script type="text/javascript">
-    $(function () {
-        // Initialize variables
-        var deposit = {{ $detailCheckin->payment }};
-        var total = {{ $subTotal }};
-        var grandTotal = {{ $subTotal }};
-        
-        // Set initial grand total value
-        $("#inputGrandTotal").val(formatCurrency(grandTotal));
-
-        // Handle discount keyup event
-        $("#inputDiscount").on('keyup change', function () {
-            var discount = $(this).val();
-
-            // Cap discount to 50% maximum
-            if (discount > 50) {
-                discount = $(this).val(50);
-            }
-
-            // Calculate grand total after discount
-            var discountAmount = (total * discount) / 100;
-            grandTotal = total - discountAmount;
-            $("#inputGrandTotal").val(formatCurrency(grandTotal));
-
-            // Recheck if checkout button should be enabled
-            validateCheckoutButton();
-        });
-
-        // Handle payment keyup event
-        $("#inputPayment").on("keyup", function () {
-            let paymentInput = $(this).val();
-            let formattedPayment = formatNumber(paymentInput);
-            $(this).val(formattedPayment);
-
-            let payment = reverseFormatNumber(formattedPayment);
-            let change = payment - grandTotal;
-            $("#changeValue").val(formatCurrency(change));
-
-            // Check if the checkout button should be enabled
-            validateCheckoutButton();
-        });
-
-        // Function to enable/disable the checkout button
-        function validateCheckoutButton() {
-            let payment = reverseFormatNumber($("#inputPayment").val());
-            let change = payment - grandTotal;
-
-            // Enable button if payment is sufficient, otherwise disable
-            if (payment >= grandTotal && change >= 0) {
-                $("#checkoutButton").removeAttr('disabled');
-            } else {
-                $("#checkoutButton").attr('disabled', 'disabled');
-            }
-        }
-        
-        // Format number for currency display
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
-        }
-
-        function formatNumber(value) {
-            return new Intl.NumberFormat('id-ID').format(value);
-        }
-
-        function reverseFormatNumber(value) {
-            return parseFloat(value.replace(/[^0-9\.-]+/g,""));
-        }
-    });
-</script>
-
+                                 </button>
                             </div>
-                            {{-- <div>
-                                <button class="btn cancel-btn">
-                                    Cancel
-                                </button>
-                            </div> --}}
                         </div>
-                        <!-- Scripnya ada di view dashboard_layout.blade.php -->
-                            <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display:none;">
-                                "Nama" at Room "Nomor room" Checked Out Succesfully
-                            </div>
-
-                            <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display:none;">
-                                Failed To Checkout
-                            </div>
                     </form>
-                    <small>* : Discount Maksimal 50%</small>
+
                 </div>
             </div>
         </div>
@@ -363,7 +284,7 @@
              <div class="card-header py-3">
                 <h3 class="font-weight-bolder">Extend</h3>
             </div>
-                   
+
                     <div class="card-body">
                     <form action="{{ route('checkout.extend') }}" method="POST" id="extendForm">
                         <div class="row">
@@ -397,16 +318,18 @@
                                     Submit
                                 </button>
                             </div>
-                        
                 </form>
                     </div>
         </div>
       </div>
-   
+
     </div>
   </div>
 </div>
+
+
 @endsection
 @section('jsSection')
   @include('frontoffice.checkout.detail_checkout_js')
+
 @endsection

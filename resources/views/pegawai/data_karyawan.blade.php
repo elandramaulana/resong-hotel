@@ -21,16 +21,13 @@
                                             <a style="text-decoration: none; color:white"
                                                 href="{{ route('tambah.karyawan') }}">Tambah</a>
                                         </button>
-                                        <button class="btn btn-extend">
-                                            <a style="text-decoration: none; color:white"
-                                                href="{{ route('register.karyawan') }}">Daftarkan Akun</a>
-                                        </button>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table  class="table table-bordered" id="dataKaryawanTable" width="100%"
+                                    <table class="table table-bordered" id="dataKaryawanTable" width="100%"
                                         cellspacing="0">
                                         <thead>
                                             <tr>
@@ -38,6 +35,7 @@
                                                 <th>Id</th>
                                                 <th>Nama</th>
                                                 <th>Kontak</th>
+                                                <th>Email</th>
                                                 <th>Jenis Kelamin</th>
                                                 <th>Tanggal Bergabung</th>
                                                 <th>Status Aktif</th>
@@ -57,36 +55,38 @@
                                             @foreach ($karyawanData as $kr)
                                                 <tr>
                                                     <td>{{ $counter_karyawan }}</td>
-                                                    <td>{{ $kr->karyawan_id  }}</td>
+                                                    <td>{{ $kr->karyawan_id }}</td>
                                                     <td>{{ $kr->nama_karyawan }}</td>
-                                                    <td>{{ $kr->kontak_karyawan  }}</td>
-                                                    <td>{{ $kr->gender_karyawan}}</td>
-
+                                                    <td>{{ $kr->kontak_karyawan }}</td>
+                                                    <td>{{ $kr->k_email }}</td>
+                                                    <td>{{ $kr->gender_karyawan }}</td>
                                                     <!-- Tanggal Bergabung -->
                                                     <td>
-                                                        {{ $kr->tanggal_bergabung  ?? 'Belum Ada' }}
+                                                        {{ $kr->tanggal_bergabung ?? 'Belum Ada' }}
                                                     </td>
-
                                                     <!-- Status Aktif -->
                                                     <td>
-                                                        {{ $kr->status_karyawan  ? 'Aktif' : 'Tidak Aktif' }}
+                                                        {{ $kr->status_karyawan ? 'Aktif' : 'Tidak Aktif' }}
                                                     </td>
-
                                                     <!-- Tanggal Keluar -->
                                                     <td>
-                                                        {{ $kr->tanggal_keluar  ?? 'Masih Bekerja' }}
+                                                        {{ $kr->tanggal_keluar ?? 'Masih Bekerja' }}
                                                     </td>
+                                                    <td>{{ $kr->alamat_karyawan }}</td>
 
-                                                    <td>{{ $kr->alamat_karyawan  }}</td>
-                                                    
                                                     <td>{{ $kr->nama_divisi }}</td>
 
                                                     <td>
-                                                       {{$kr->shift_karyawan }}
+                                                        {{ $kr->shift_karyawan }}
                                                     </td>
 
                                                     <td>{{ $kr->pin_karyawan }}</td>
-                                                    <td><p class="onoff"><input class="setApproval" data-id="{{ $kr->khd_id }}" {{ $kr->is_approval ? "checked" : "" }} type="checkbox" id="{{ $kr->nama_karyawan }}" na><label for="{{ $kr->nama_karyawan }}"></label></p>
+                                                    <td>
+                                                        <p class="onoff"><input class="setApproval"
+                                                                data-id="{{ $kr->khd_id }}"
+                                                                {{ $kr->is_approval ? 'checked' : '' }} type="checkbox"
+                                                                id="{{ $kr->nama_karyawan }}" na><label
+                                                                for="{{ $kr->nama_karyawan }}"></label></p>
                                                     </td>
 
                                                     <td>
@@ -94,7 +94,7 @@
                                                             <button style="margin-right: 10px" type="button"
                                                                 class="btn btn-warning btn-sm mt-2">
                                                                 <a style="color: black"
-                                                                    href="{{ route('edit.karyawan', ['id' => $kr->karyawan_id ]) }}">
+                                                                    href="{{ route('edit.karyawan', ['id' => $kr->karyawan_id]) }}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </a>
                                                             </button>
@@ -146,10 +146,10 @@
     </div>
     <!-- /.container-fluid -->
 @endsection
-@section("jsSection")
+@section('jsSection')
     <script type="text/javascript">
         $(document).ready(function() {
-            $(document).on('click', '.setApproval', function (e) { 
+            $(document).on('click', '.setApproval', function(e) {
                 var khd_id = $(this).data('id');
                 var is_approval = $(this).is(':checked');
 
